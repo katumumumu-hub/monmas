@@ -5,42 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>モンスターマスターズ - PROTOTYPE</title>
     <style>
-        /* --- デザイン設定 (image_0.pngの世界観を再現) --- */
         :root {
             --main-blue: #0288d1;
-            --gold: #fdd835;
-            --bg-light: #e0f7fa;
             --panel-bg: rgba(0, 30, 60, 0.85);
+            --gold: #fdd835;
         }
 
-        body { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; background: var(--bg-light); margin: 0; display: flex; justify-content: center; }
+        body { font-family: sans-serif; background: #e0f7fa; margin: 0; display: flex; justify-content: center; }
         #app-container { width: 100%; max-width: 450px; height: 100vh; background: white; position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
 
-        /* 共通：上部ステータスパネル */
-        .top-nav { position: absolute; top: 0; width: 100%; background: var(--panel-bg); color: white; padding: 10px; box-sizing: border-box; z-index: 100; font-size: 12px; }
-        .exp-bar-container { width: 100%; height: 8px; background: #444; border-radius: 4px; margin-top: 5px; overflow: hidden; }
-        #exp-fill { height: 100%; background: var(--main-blue); width: 0%; transition: width 0.3s; }
+        /* --- 性別選択画面 (初期表示) --- */
+        #setup-screen {
+            position: absolute; inset: 0; background: var(--panel-bg); color: white;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200;
+        }
+        .select-btn {
+            width: 200px; padding: 20px; margin: 10px; font-size: 18px; cursor: pointer;
+            border-radius: 10px; border: 2px solid white; background: transparent; color: white;
+        }
+        .select-btn:hover { background: rgba(255,255,255,0.2); }
 
-        /* 画面切り替え */
-        .screen { display: none; height: 100%; padding-top: 80px; box-sizing: border-box; position: relative; }
+        /* --- 共通：上部ステータス --- */
+        .top-nav { position: absolute; top: 0; width: 100%; background: var(--panel-bg); color: white; padding: 10px; box-sizing: border-box; z-index: 100; font-size: 12px; }
+        .exp-bar { width: 100%; height: 8px; background: #444; border-radius: 4px; margin-top: 5px; overflow: hidden; }
+        #exp-fill { height: 100%; background: var(--main-blue); width: 20%; transition: width 0.3s; }
+
+        /* --- 画面切り替え --- */
+        .screen { display: none; height: 100%; padding-top: 80px; box-sizing: border-box; }
         .active { display: block; }
 
-        /* ホーム画面：主人公とランダム3体 */
+        /* --- ホーム画面：主人公の画像表示 --- */
         #home-screen { background: linear-gradient(to bottom, #87CEEB, #fff); text-align: center; }
-        .stage { height: 50%; display: flex; align-items: flex-end; justify-content: center; gap: 10px; padding-bottom: 50px; }
-        .hero-unit { font-size: 80px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2)); }
+        .stage { height: 55%; display: flex; align-items: flex-end; justify-content: center; gap: 10px; padding-bottom: 40px; }
+        
+        /* ここがフォルダ内の画像を表示するメイン部分 */
+        #hero-img {
+            width: 160px; height: 240px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+            transition: background-image 0.5s;
+        }
         .buddy-unit { font-size: 50px; animation: bounce 2s infinite ease-in-out; }
 
-        /* 冒険画面：擬似方位磁石 */
-        #adv-screen { background: #f1f8e9; text-align: center; }
-        .compass-area { width: 200px; height: 200px; border: 5px solid #333; border-radius: 50%; margin: 50px auto; position: relative; display: flex; align-items: center; justify-content: center; }
-        #compass-needle { width: 4px; height: 100px; background: red; transition: transform 0.5s; position: absolute; top: 50px; }
-
-        /* 図鑑・ショップのグリッド */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 20px; }
-        .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 10px; text-align: center; font-size: 12px; }
-
-        /* 下部ナビゲーション */
+        /* --- 下部ナビゲーション --- */
         .bottom-nav { position: absolute; bottom: 0; width: 100%; height: 60px; background: #333; display: flex; justify-content: space-around; align-items: center; }
         .nav-btn { color: white; border: none; background: none; font-size: 10px; cursor: pointer; }
         .nav-btn span { font-size: 20px; display: block; }
@@ -51,228 +60,75 @@
 <body>
 
 <div id="app-container">
+    <div id="setup-screen">
+        <h2>主人公の性別を選んでね</h2>
+        <button class="select-btn" onclick="startGame('boy')">👦 男の子</button>
+        <button class="select-btn" onclick="startGame('girl')">👧 女の子</button>
+    </div>
+
     <div class="top-nav">
         <div style="display: flex; justify-content: space-between;">
             <div><b id="p-name">レン</b> <span id="p-rank" style="color:var(--gold)">Rank 1</span></div>
             <div>💰<span id="p-gold">500</span> 💎<span id="p-crystal">10</span></div>
         </div>
-        <div class="exp-bar-container"><div id="exp-fill"></div></div>
-        <div style="display: flex; justify-content: space-between; font-size: 10px; margin-top: 3px;">
-            <div id="env-info">📍はじまりの村 | ☀️晴天</div>
-            <div id="p-title">称号: なし</div>
-        </div>
+        <div class="exp-bar"><div id="exp-fill"></div></div>
     </div>
 
-    <div id="home-screen" class="screen active">
+    <div id="home-screen" class="screen">
         <div class="stage">
-            <div id="buddy-1" class="buddy-unit"></div>
-            <div class="hero-unit">👦</div>
-            <div id="buddy-2" class="buddy-unit"></div>
-            <div id="buddy-3" class="buddy-unit"></div>
+            <div id="buddy-1" class="buddy-unit">🐾</div>
+            <div id="hero-img"></div>
+            <div id="buddy-2" class="buddy-unit">🐾</div>
         </div>
-        <h3>モンスターマスターを目指そう！</h3>
-        <p id="total-steps-display">累計歩数: 0歩</p>
-    </div>
-
-    <div id="adv-screen" class="screen">
-        <div class="compass-area">
-            <div id="compass-needle"></div>
-            <b>N</b>
-        </div>
-        <button onclick="simulateMove()" style="padding:15px 30px; border-radius:30px; background:var(--main-blue); color:white; border:none; font-weight:bold;">周囲を探索する (歩く)</button>
-        <p id="adv-log" style="padding:20px; font-size:14px;"></p>
-    </div>
-
-    <div id="shop-screen" class="screen">
-        <h3 style="text-align:center;">ショップ</h3>
-        <div class="grid">
-            <div class="card">🍎好物A<br>100G<br><button onclick="buyItem('apple', 100)">購入</button></div>
-            <div class="card">🍖好物B<br>300G<br><button onclick="buyItem('meat', 300)">購入</button></div>
-        </div>
-        <p style="text-align:center;">所持アイテム: 🍎×<span id="s-apple">0</span> 🍖×<span id="s-meat">0</span></p>
+        <h3>モンスターマスターズの世界へ！</h3>
     </div>
 
     <div id="book-screen" class="screen">
-        <h3 style="text-align:center;">モンスター図鑑 (<span id="book-percent">0</span>%)</h3>
-        <div id="book-grid" class="grid"></div>
+        <h2 style="text-align:center;">図鑑画面</h2>
+        <p style="text-align:center;">（ここにモンスターが並びます）</p>
     </div>
 
     <div class="bottom-nav">
         <button class="nav-btn" onclick="showScreen('home-screen')"><span>🏠</span>ホーム</button>
-        <button class="nav-btn" onclick="showScreen('adv-screen')"><span>⚔️</span>冒険</button>
-        <button class="nav-btn" onclick="showScreen('shop-screen')"><span>🛒</span>ショップ</button>
         <button class="nav-btn" onclick="showScreen('book-screen')"><span>📖</span>図鑑</button>
     </div>
 </div>
 
 <script>
 /**
- * 1. データ定義 (企画書に基づく蓄積データ)
+ * 1. 性別選択とゲーム開始
  */
-const monsterDB = [
-    { id: 1, name: "ヒノワ", emoji: "🔥", type: "火", rare: 1 },
-    { id: 2, name: "ミズタマ", emoji: "💧", type: "水", rare: 1 },
-    { id: 3, name: "カゼノコ", emoji: "🍃", type: "風", rare: 1 },
-    { id: 4, name: "イナズマ", emoji: "⚡", type: "雷", rare: 2 },
-    { id: 5, name: "カイリュウ", emoji: "🐉", type: "水", rare: 3 }, // 水属性レア
-    { id: 6, name: "ゴレム", emoji: "🧱", type: "土", rare: 2 },
-    { id: 7, name: "ヤミッチ", emoji: "😈", type: "闇", rare: 2 },
-    { id: 8, name: "ヒカリノ", emoji: "✨", type: "光", rare: 2 },
-    { id: 9, name: "エンペラー", emoji: "👑", type: "光", rare: 3 },
-    { id: 10, name: "フェニクス", emoji: "🐦‍🔥", type: "火", rare: 3 }
-];
-
-let player = {
-    name: "レン",
-    rank: 1,
-    exp: 0,
-    gold: 500,
-    crystal: 10,
-    steps: 0,
-    items: { apple: 0, meat: 0 },
-    collection: {}, // { id: caught_count }
-    encounters: 0,
-    title: "新米マスター"
-};
-
-let env = { area: "はじまりの村", weather: "晴天", angle: 0 };
-
-/**
- * 2. システム関数 (初期化と監視)
- */
-function init() {
-    monsterDB.forEach(m => player.collection[m.id] = 0);
-    updateUI();
-    updateBuddies();
-}
-
-// 画面表示を最新の状態にする (データの監視・反映)
-function updateUI() {
-    document.getElementById('p-rank').innerText = `Rank ${player.rank}`;
-    document.getElementById('p-gold').innerText = player.gold;
-    document.getElementById('p-crystal').innerText = player.crystal;
-    document.getElementById('p-title').innerText = `称号: ${player.title}`;
-    document.getElementById('total-steps-display').innerText = `累計歩数: ${player.steps}歩`;
+function startGame(gender) {
+    // 選択された性別に応じて、画像フォルダのパスを決定
+    const heroImg = document.getElementById('hero-img');
     
-    // 経験値ゲージの計算
-    let expPercent = (player.exp % 100);
-    document.getElementById('exp-fill').style.width = expPercent + "%";
+    if (gender === 'boy') {
+        heroImg.style.backgroundImage = "url('images/hero/boy.jpg')";
+    } else {
+        heroImg.style.backgroundImage = "url('images/hero/girl.jpg')";
+    }
 
-    // 天候とエリア
-    document.getElementById('env-info').innerText = `📍${env.area} | ${env.weather}`;
-
-    // 図鑑完成度
-    let caughtCount = Object.values(player.collection).filter(count => count > 0).length;
-    let percent = Math.floor((caughtCount / monsterDB.length) * 100);
-    document.getElementById('book-percent').innerText = percent;
-
-    // ショップ在庫
-    document.getElementById('s-apple').innerText = player.items.apple;
-    document.getElementById('s-meat').innerText = player.items.meat;
+    // セットアップ画面を非表示にし、ホームを表示
+    document.getElementById('setup-screen').style.display = 'none';
+    showScreen('home-screen');
 }
 
 /**
- * 3. 冒険・エンカウントロジック (擬似センサー対応)
+ * 2. 画面切り替え関数
  */
-function simulateMove() {
-    player.steps += 25;
-    env.angle = (env.angle + 45) % 360; // 45度ずつ回転
-    document.getElementById('compass-needle').style.transform = `rotate(${env.angle}deg)`;
-    
-    // 天候をランダム変化 (雨の確率は20%)
-    env.weather = (Math.random() > 0.8) ? "雨天" : "晴天";
-
-    // 称号チェック (企画書の「実績監視」)
-    if (player.steps >= 100) player.title = "韋駄天";
-
-    // エンカウント判定
-    if (Math.random() > 0.5) {
-        startEncounter();
-    } else {
-        document.getElementById('adv-log').innerText = "何も見つからなかった...";
-    }
-    updateUI();
-}
-
-function startEncounter() {
-    player.encounters++;
-    let mon = monsterDB[Math.floor(Math.random() * monsterDB.length)];
-    
-    // 【さらに良い機能：天候シンクロ】
-    let catchChance = 0.5;
-    if (env.weather === "雨天" && mon.type === "水") {
-        catchChance = 0.8; // 雨の日は水属性が捕まりやすい！
-        document.getElementById('adv-log').innerHTML = `<b style="color:blue">天候ブースト！</b> ${mon.emoji}${mon.name}が現れた！`;
-    } else {
-        document.getElementById('adv-log').innerText = `${mon.emoji}${mon.name}が現れた！`;
-    }
-
-    // 簡易捕獲処理
-    setTimeout(() => {
-        if (Math.random() < catchChance) {
-            player.collection[mon.id]++;
-            player.exp += 20;
-            player.gold += 50;
-            alert(`${mon.name}を仲間にした！`);
-            if (player.exp >= player.rank * 100) player.rank++; // ランクアップ
-            updateBuddies();
-        } else {
-            alert("逃げられてしまった...");
-        }
-        updateUI();
-    }, 500);
-}
-
-/**
- * 4. ホーム画面・ショップ・図鑑
- */
-function updateBuddies() {
-    // 捕まえたモンスターからランダムに3体表示
-    let caught = monsterDB.filter(m => player.collection[m.id] > 0);
-    for (let i = 1; i <= 3; i++) {
-        let el = document.getElementById(`buddy-${i}`);
-        if (caught.length >= i) {
-            el.innerText = caught[Math.floor(Math.random() * caught.length)].emoji;
-        } else {
-            el.innerText = "🐾"; // まだいない場合
-        }
-    }
-}
-
-function buyItem(id, price) {
-    if (player.gold >= price) {
-        player.gold -= price;
-        player.items[id]++;
-        alert("購入しました！");
-        updateUI();
-    } else {
-        alert("お金が足りません！");
-    }
-}
-
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    if (id === 'book-screen') renderBook();
 }
 
-function renderBook() {
-    let grid = document.getElementById('book-grid');
-    grid.innerHTML = "";
-    monsterDB.forEach(m => {
-        let card = document.createElement('div');
-        card.className = "card";
-        if (player.collection[m.id] > 0) {
-            card.innerHTML = `<span style="font-size:24px">${m.emoji}</span><br>${m.name}<br>属性:${m.type}`;
-        } else {
-            card.innerHTML = `<span style="font-size:24px; filter:grayscale(1);">?</span><br>No.${m.id}<br>未発見`;
-        }
-        grid.appendChild(card);
-    });
+/**
+ * 3. 将来的にモンスターフォルダ（images/monsters/）から画像を出すための準備
+ * 例: loadMonsterImage(1) と呼べば images/monsters/mon_001.png を出す、など
+ */
+function loadMonsterImage(id) {
+    const formattedId = String(id).padStart(3, '0'); // 1 -> 001 に変換
+    return `images/monsters/mon_${formattedId}.png`;
 }
-
-// 実行
-init();
 </script>
 
 </body>
