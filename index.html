@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モンスターマスター - 冒険の旅</title>
+    <style>
+        /* 見た目を整えるCSS */
+        body { font-family: sans-serif; background: #e0f7fa; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 10px; }
+        #game-container { background: white; width: 100%; max-width: 400px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); overflow: hidden; }
+        .screen { padding: 20px; display: none; }
+        .active { display: block; }
+        
+        /* ステータス欄 */
+        #status-bar { background: #333; color: white; padding: 10px; font-size: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+        
+        /* メイン画面のモンスター表示 */
+        #encounter-zone { height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f1f8e9; border: 2px dashed #9ccc65; margin: 10px 0; border-radius: 10px; }
+        #monster-emoji { font-size: 80px; transition: transform 0.3s; }
+        
+        /* ボタン類 */
+        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        button { padding: 15px; font-size: 14px; cursor: pointer; border-radius: 8px; border: none; background: #0288d1; color: white; }
+        button:active { background: #01579b; }
+        button.secondary { background: #546e7a; }
+
+        /* 図鑑画面 */
+        .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .collection-item { border: 1px solid #ccc; padding: 10px; text-align: center; border-radius: 5px; background: #fff; }
+        .not-found { color: #ccc; font-size: 10px; }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="status-bar">
+        <div>場所: <span id="display-area">はじまりの森</span></div>
+        <div>歩数: <span id="display-steps">0</span>歩</div>
+        <div>時間: <span id="display-time">昼</span></div>
+        <div>天候: <span id="display-weather">晴れ</span></div>
+        <div>電池: <span id="display-battery">85</span>%</div>
+        <div>称号: <span id="display-rank">見習い</span></div>
+    </div>
+
+    <div id="main-screen" class="screen active">
+        <div id="encounter-zone">
+            <div id="monster-info">モンスターを探そう！</div>
+            <div id="monster-emoji">🐾</div>
+            <div id="capture-progress"></div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="walk()">歩く (10歩で判定)</button>
+            <button onclick="giveGift()">好物をあげる</button>
+            <button onclick="talk()">話しかける (マイク)</button>
+            <button onclick="shake()">スマホを振る</button>
+            <button class="secondary" onclick="showScreen('book-screen')">図鑑を見る</button>
+        </div>
+    </div>
+
+    <div id="book-screen" class="screen">
+        <h3>モンスター図鑑</h3>
+        <div id="collection-list" class="collection-grid"></div>
+        <button style="margin-top:20px; width:100%;" onclick="showScreen('main-screen')">戻る</button>
+    </div>
+</div>
+
+<script>
+/**
+ * 1. データ構造の定義
+ */
+const monsterDatabase = [
+    { id: 1, name: "シバリン", emoji: "🐕", area: "はじまりの森", condition: "normal" },
+    { id: 2, name: "ミズタマ", emoji: "💧", area: "しずくの池", condition: "normal" },
+    { id: 3, name: "コトリス", emoji: "🐿️", area: "はじまりの森", condition: "normal" },
+    { id: 4, name: "アメモーン", emoji: "👻", area: "しずくの池", condition: "rain_night" }, // 雨の夜限定
+    { id: 5, name: "ユキノコ", emoji: "❄️", area: "雪山", condition: "normal" },
+    { id: 6, name: "カミナリオン", emoji: "🦁", area: "しずくの池", condition: "hand_id_2" }, // ミズタマ所持で出現率UP
+    { id: 7, name: "カクレオン", emoji: "🦎", area: "はじまりの森", condition: "shake" }, // 振ると出現
+    { id: 8, name: "ホタルン", emoji: "💡", area: "しずくの池", condition: "night" },
+    { id: 9, name: "マグマン", emoji: "🔥", area: "火山", condition: "normal" },
+    { id: 10, name: "ドラゴラム", emoji: "🐉", area: "火山", condition: "rare" }
+];
+
+// プレイヤーの状態
+let player = {
+    steps: 0,
+    area: "はじまりの森",
+    rank: "見習いトレーナー",
+    inventory: 5, // 好物の数
+    collection: {} // 捕まえた記録用
+};
+
+// 環境の状態
+let environment = {
+    time: "昼",
+    weather: "晴れ",
+    battery: 85
+};
+
+// 現在遭遇中のモンスター
+let currentMonster = null;
+let currentLove = 0;
+
+/**
+ * 2. ゲームロジック
+ */
+
+// 図鑑を初期化（誰もいない状態）
+monsterDatabase.forEach(m => {
+    player.collection[m.id] = { found: false, caught: false, love: 0 };
+});
+
+function walk() {
+    player.steps += 10;
+    updateUI();
+    
+    // 10歩ごとにランダム出現判定
+    if (Math.random() > 0.5) {
+        checkEncounter();
+    }
+    
+    // 50歩ごとに天候と場所が変化（旅の演出）
+    if (player.steps % 50 === 0) {
+        changeEnvironment();
+    }
+}
+
+function changeEnvironment() {
+    const areas = ["はじまりの森", "しずくの池", "雪山", "火山"];
+    player.area = areas[Math.floor(Math.random() * areas.length)];
+    environment.time = (Math.random() > 0.5) ? "昼" : "夜";
+    environment.weather = (Math.random() > 0.7) ? "雨" : "晴れ";
+    updateUI();
+}
+
+function checkEncounter() {
+    // 現在の場所・条件に合うモンスターをフィルタリング
+    const possible = monsterDatabase.filter(m => {
+        if (m.area !== player.area) return false;
+        
+        // 特殊条件の判定
+        if (m.condition === "rain_night") {
+            return (environment.time === "夜" && environment.weather === "雨");
+        }
+        if (m.condition === "hand_id_2") {
+            return player.collection[2].caught; // ID:2のミズタマを捕まえていたら
+        }
+        return m.condition === "normal";
+    });
+
+    if (possible.length > 0) {
+        currentMonster = possible[Math.floor(Math.random() * possible.length)];
+        currentLove = 0;
+        player.collection[currentMonster.id].found = true;
+        
+        document.getElementById('monster-info').innerText = `野生の ${currentMonster.name} が現れた！`;
+        document.getElementById('monster-emoji').innerText = currentMonster.emoji;
+        document.getElementById('capture-progress').innerText = `なつき度: ${currentLove}%`;
+    }
+}
+
+function giveGift() {
+    if (!currentMonster) return alert("モンスターがいません");
+    currentLove += 25;
+    checkCapture();
+}
+
+function talk() {
+    if (!currentMonster) return alert("モンスターがいません");
+    // マイクの代わりにボタンで「声」をシミュレート
+    currentLove += 10;
+    checkCapture();
+}
+
+function shake() {
+    // 隠れているモンスター(ID:7)を特定確率で見つける
+    if (player.area === "はじまりの森") {
+        currentMonster = monsterDatabase.find(m => m.id === 7);
+        currentLove = 10;
+        document.getElementById('monster-info').innerText = "木を揺らして カクレオン を見つけた！";
+        document.getElementById('monster-emoji').innerText = currentMonster.emoji;
+        updateUI();
+    }
+}
+
+function checkCapture() {
+    if (currentLove >= 100) {
+        player.collection[currentMonster.id].caught = true;
+        alert(`${currentMonster.name} を仲間にした！図鑑をチェックしよう！`);
+        currentMonster = null;
+        document.getElementById('monster-info').innerText = "次を探そう！";
+        document.getElementById('monster-emoji').innerText = "🐾";
+        document.getElementById('capture-progress').innerText = "";
+        
+        checkMasterTitle();
+    } else {
+        document.getElementById('capture-progress').innerText = `なつき度: ${currentLove}%`;
+    }
+}
+
+function checkMasterTitle() {
+    const caughtCount = Object.values(player.collection).filter(c => c.caught).length;
+    if (caughtCount === monsterDatabase.length) {
+        player.rank = "モンスターマスター";
+        alert("おめでとう！全ての図鑑が埋まり、君はモンスターマスターになった！");
+    } else if (caughtCount > 5) {
+        player.rank = "ベテラントレーナー";
+    }
+    updateUI();
+}
+
+/**
+ * 3. 画面表示の更新
+ */
+function updateUI() {
+    document.getElementById('display-steps').innerText = player.steps;
+    document.getElementById('display-area').innerText = player.area;
+    document.getElementById('display-time').innerText = environment.time;
+    document.getElementById('display-weather').innerText = environment.weather;
+    document.getElementById('display-rank').innerText = player.rank;
+    
+    // 図鑑の更新
+    const list = document.getElementById('collection-list');
+    list.innerHTML = "";
+    monsterDatabase.forEach(m => {
+        const data = player.collection[m.id];
+        const item = document.createElement('div');
+        item.className = 'collection-item';
+        if (data.caught) {
+            item.innerHTML = `<div style="font-size:30px">${m.emoji}</div><div>${m.name}</div>`;
+        } else if (data.found) {
+            item.innerHTML = `<div style="font-size:30px; filter:grayscale(1);">?</div><div>発見済</div>`;
+        } else {
+            item.innerHTML = `<div class="not-found">No.${m.id}<br>???</div>`;
+        }
+        list.appendChild(item);
+    });
+}
+
+function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if (id === 'book-screen') updateUI();
+}
+
+// 初回UI更新
+updateUI();
+</script>
+
+</body>
+</html>
