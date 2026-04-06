@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー プロトタイプ</title>
+    <title>ハナモン・ブリーダー 完全版</title>
     <style>
         :root {
-            --bg-main: #f0f2f5;
+            --bg-main: #74b9ff;
             --header-dark: #2c3e50;
             --accent-green: #27ae60;
             --accent-blue: #2980b9;
@@ -15,278 +15,309 @@
         }
 
         body { font-family: 'Hiragino Kaku Gothic Pro', sans-serif; margin: 0; background: #333; display: flex; justify-content: center; color: #333; }
-        .app-container { width: 100%; max-width: 450px; height: 100vh; position: relative; overflow: hidden; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .app-container { width: 100%; max-width: 450px; height: 100vh; position: relative; overflow: hidden; background: white; }
 
-        /* 共通：画面表示制御 */
         section { display: none; width: 100%; height: 100%; flex-direction: column; position: absolute; top: 0; left: 0; }
         section.active { display: flex; }
 
-        /* --- 1. ホーム画面 --- */
+        /* --- ホーム画面 --- */
         #home-screen { background: linear-gradient(to bottom, #74b9ff, #a29bfe); }
         .player-info { background: rgba(0,0,0,0.7); color: white; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; font-size: 0.8rem; }
-        .next-action-display { background: white; margin: 10px auto; padding: 5px 20px; border-radius: 5px; font-weight: bold; font-size: 0.9rem; border: 2px solid var(--accent-blue); }
-        .main-visual { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; padding-top: 20px; }
-        .facility-list-panel { position: absolute; top: 10px; right: 10px; background: var(--panel-white); padding: 8px; border-radius: 8px; font-size: 0.7rem; border: 1px solid #ccc; width: 100px; }
-        .monster-img { font-size: 6rem; margin: 20px 0; animation: bounce 2s infinite ease-in-out; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        .evolution-countdown { color: white; background: var(--accent-red); padding: 4px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        .next-action-display { background: white; margin: 10px auto; padding: 5px 20px; border-radius: 5px; font-weight: bold; font-size: 0.9rem; border: 2px solid var(--accent-blue); min-height: 1.2rem; text-align: center;}
+        .main-visual { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .facility-list { position: absolute; top: 10px; right: 10px; background: var(--panel-white); padding: 8px; border-radius: 8px; font-size: 0.7rem; border: 1px solid #ccc; width: 100px; }
+        .monster-img { font-size: 6rem; margin: 20px 0; transition: 0.3s; }
+        .evolution-countdown { color: white; background: var(--accent-red); padding: 4px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; visibility: hidden; }
         
-        .status-gauges { background: var(--panel-white); width: 85%; padding: 12px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .gauge-row { display: flex; align-items: center; margin-bottom: 5px; font-size: 0.75rem; font-weight: bold; }
-        .gauge-label { width: 40px; }
+        .status-gauges { background: var(--panel-white); width: 85%; padding: 12px; border-radius: 12px; margin-bottom: 15px; }
+        .gauge-row { display: flex; align-items: center; margin-bottom: 5px; font-size: 0.75rem; }
+        .gauge-label { width: 40px; font-weight: bold; }
         .gauge-bg { flex: 1; height: 10px; background: #ddd; border-radius: 5px; overflow: hidden; margin-left: 10px; }
-        .gauge-fill { height: 100%; background: var(--accent-green); }
+        .gauge-fill { height: 100%; background: var(--accent-green); transition: width 0.3s; }
 
         .home-btns { display: flex; gap: 10px; width: 85%; margin-bottom: 20px; }
         .btn-large { flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 4px rgba(0,0,0,0.2); }
-        
+        .btn-large:active { transform: translateY(2px); box-shadow: none; }
+
         .bottom-nav { background: var(--header-dark); display: flex; justify-content: space-around; padding: 10px 0; }
         .nav-btn { color: white; text-align: center; font-size: 0.65rem; cursor: pointer; flex: 1; }
-        .nav-icon { display: block; font-size: 1.4rem; margin-bottom: 3px; }
 
-        /* --- 2. 育成スケジュール選択画面 --- */
+        /* --- スケジュール画面 --- */
         #schedule-screen { background: #fdfaf0; }
-        .tanemon-info-header { background: white; padding: 10px; border-bottom: 1px solid #ddd; display: flex; align-items: center; }
         .mode-selector { display: flex; justify-content: center; gap: 10px; padding: 10px; background: #eee; }
-        .mode-btn { padding: 8px 15px; border: 1px solid #bbb; border-radius: 5px; background: white; cursor: pointer; font-size: 0.8rem; }
-        .mode-btn.active { background: var(--accent-red); color: white; border-color: var(--accent-red); font-weight: bold; }
-        
+        .mode-btn { padding: 8px 15px; border: 1px solid #bbb; border-radius: 5px; background: white; cursor: pointer; }
+        .mode-btn.active { background: var(--accent-red); color: white; }
         .schedule-work-area { display: flex; flex: 1; overflow: hidden; }
-        .slot-scroll { flex: 1.2; overflow-y: auto; background: white; margin: 5px; padding: 5px; border-radius: 5px; }
+        .slot-scroll { flex: 1.2; overflow-y: auto; background: white; margin: 5px; padding: 5px; }
         .slot-row { display: flex; align-items: center; border-bottom: 1px solid #f0f0f0; padding: 6px 0; font-size: 0.75rem; }
-        .slot-day { width: 30px; text-align: center; color: #888; }
-        .slot-box { flex: 1; border: 1px dashed #ccc; border-radius: 4px; padding: 3px; text-align: center; color: #aaa; min-height: 1.2rem; }
-        .slot-box.filled { border-style: solid; border-color: var(--accent-blue); color: #333; background: #e3f2fd; }
-
-        .action-list-sidebar { flex: 0.8; background: var(--header-dark); padding: 8px; overflow-y: auto; }
+        .slot-box { flex: 1; border: 1px dashed #ccc; border-radius: 4px; padding: 3px; text-align: center; cursor: pointer; }
+        .slot-box.filled { background: #e3f2fd; border-style: solid; border-color: var(--accent-blue); color: #333; }
+        .action-sidebar { flex: 0.8; background: var(--header-dark); padding: 8px; overflow-y: auto; }
         .action-chip { background: white; margin-bottom: 8px; padding: 8px; border-radius: 5px; font-size: 0.7rem; text-align: center; cursor: pointer; }
-        
         .item-preview-row { display: flex; justify-content: center; gap: 15px; padding: 10px; background: #fff; border-top: 1px solid #ddd; }
-        .preview-circle { width: 45px; height: 45px; border: 2px dashed #aaa; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: #fafafa; }
-        .preview-circle.set { border-style: solid; border-color: var(--accent-green); background: #e8f8f0; }
+        .preview-circle { width: 45px; height: 45px; border: 2px dashed #aaa; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
 
-        .sch-footer-btns { display: flex; gap: 10px; padding: 15px; background: white; }
-        .btn-gray { background: #95a5a6; }
+        /* --- ショップ画面 --- */
+        #shop-screen { background: #fff; }
+        .shop-item { display: flex; padding: 15px; border-bottom: 1px solid #eee; align-items: center; }
+        .shop-info { flex: 1; margin-left: 15px; }
+        .btn-buy { padding: 8px 15px; background: var(--accent-blue); color: white; border: none; border-radius: 5px; font-weight: bold; }
+
+        /* 共通ボタンカラー */
         .btn-blue { background: var(--accent-blue); }
         .btn-green { background: var(--accent-green); }
-        .btn-disabled { background: #ccc; cursor: not-allowed; box-shadow: none; }
-
-        /* --- 3. アイテム選択画面 --- */
-        #item-screen { background: #e9ecef; }
-        .item-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; flex: 1; overflow-y: auto; }
-        .item-card { background: white; aspect-ratio: 1/1; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 3px solid transparent; cursor: pointer; }
-        .item-card.selected { border-color: var(--accent-green); background: #f0fff4; }
-        .item-desc-panel { background: white; padding: 15px; margin: 10px; border-radius: 12px; display: flex; gap: 15px; align-items: center; }
+        .btn-gray { background: #95a5a6; }
+        .btn-disabled { background: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-
     <section id="home-screen" class="active">
         <div class="player-info">
-            <span>👤 ブリーダー: ナマエ </span>
-            <span>🏆 ランク: ブロンズ </span>
-            <span>💰 所持金: 1,500G </span>
-            <span>💎 ダイヤ: 10 </span>
+            <span id="p-name">👤 ブリーダー: ナマエ</span>
+            <span id="p-rank">🏆 ランク: ブロンズ</span>
+            <span id="p-money">💰 所持金: 1500G</span>
+            <span>💎 ダイヤ: 10</span>
         </div>
-
         <div class="main-visual">
-            <div class="next-action-display">次：ひたすら腹筋 </div>
-            
-            <div class="facility-list-panel">
-                <div style="font-weight:bold; border-bottom:1px solid #ccc; margin-bottom:5px;">解放施設 </div>
-                ・体育館 Lv1 
-            </div>
-
-            <div class="monster-img">🌱 [cite: 5]</div>
-            <div class="evolution-countdown">進化まで あと 90 日 </div>
-
+            <div class="next-action-display" id="next-action-text">ショップでタネモンを購入してください</div>
+            <div class="facility-list" id="fac-list">解放施設<br>・なし</div>
+            <div class="monster-img" id="main-sprite">❓</div>
+            <div class="evolution-countdown" id="evo-days">進化まで あと 90 日</div>
             <div class="status-gauges">
-                <div class="gauge-row"><span class="gauge-label">体力</span><div class="gauge-bg"><div class="gauge-fill" style="width:100%"></div></div></div>
-                <div class="gauge-row"><span class="gauge-label">筋力</span><div class="gauge-bg"><div class="gauge-fill" style="width:15%"></div></div></div>
-                <div class="gauge-row"><span class="gauge-label">魔力</span><div class="gauge-bg"><div class="gauge-fill" style="width:10%"></div></div></div>
-                <div class="gauge-row"><span class="gauge-label">防御</span><div class="gauge-bg"><div class="gauge-fill" style="width:5%"></div></div></div>
-                <div class="gauge-row"><span class="gauge-label">俊敏</span><div class="gauge-bg"><div class="gauge-fill" style="width:20%"></div></div></div>
+                <div class="gauge-row"><span class="gauge-label">体力</span><div class="gauge-bg"><div class="gauge-fill" id="g-hp" style="width:0%"></div></div></div>
+                <div class="gauge-row"><span class="gauge-label">筋力</span><div class="gauge-bg"><div class="gauge-fill" id="g-str" style="width:0%"></div></div></div>
+                <div class="gauge-row"><span class="gauge-label">魔力</span><div class="gauge-bg"><div class="gauge-fill" id="g-mag" style="width:0%"></div></div></div>
+                <div class="gauge-row"><span class="gauge-label">防御</span><div class="gauge-bg"><div class="gauge-fill" id="g-def" style="width:0%"></div></div></div>
+                <div class="gauge-row"><span class="gauge-label">俊敏</span><div class="gauge-bg"><div class="gauge-fill" id="g-spd" style="width:0%"></div></div></div>
             </div>
-
             <div class="home-btns">
-                <button class="btn-large btn-blue" onclick="alert('行動しました')">行動する [cite: 8]</button>
-                <button class="btn-large btn-green" onclick="alert('全行動を一気に実施します')">全行動 [cite: 9]</button>
+                <button class="btn-large btn-blue" id="btn-do-action" onclick="game.processNextDay()">行動する</button>
+                <button class="btn-large btn-green" id="btn-all-action" onclick="game.processAllActions()">全行動</button>
             </div>
         </div>
-
         <nav class="bottom-nav">
-            <div class="nav-btn" onclick="changeScreen('schedule-screen')"><span class="nav-icon">🥚</span>育成 [cite: 16]</div>
-            <div class="nav-btn"><span class="nav-icon">🏗</span>増築 [cite: 16]</div>
-            <div class="nav-btn"><span class="nav-icon">🛒</span>ショップ [cite: 17]</div>
-            <div class="nav-btn"><span class="nav-icon">🎒</span>持ち物 [cite: 18]</div>
+            <div class="nav-btn" onclick="game.nav('schedule')">育成</div>
+            <div class="nav-btn">増築</div>
+            <div class="nav-btn" onclick="game.nav('shop')">ショップ</div>
+            <div class="nav-btn">持ち物</div>
         </nav>
     </section>
 
     <section id="schedule-screen">
-        <div class="tanemon-info-header">
-            <div style="font-size:2rem; margin-right:15px;">🌱</div>
-            <div style="font-size:0.8rem;">
-                <strong>ドロモン </strong> (Rank E)<br>体力: 10 / 筋力: 5 / 魔力: 5 [cite: 20]
-            </div>
-        </div>
-
+        <div style="padding:10px; background:#fff; border-bottom:1px solid #ddd; font-weight:bold;">スケジュール設定</div>
         <div class="mode-selector">
-            <button id="m-7" class="mode-btn" onclick="setScheduleMode(7)">7日 [cite: 22]</button>
-            <button id="m-30" class="mode-btn" onclick="setScheduleMode(30)">30日 [cite: 21]</button>
-            <button id="m-90" class="mode-btn active" onclick="setScheduleMode(90)">90日 [cite: 22]</button>
+            <button class="mode-btn" id="m-7" onclick="game.setMode(7)">7日</button>
+            <button class="mode-btn" id="m-30" onclick="game.setMode(30)">30日</button>
+            <button class="mode-btn active" id="m-90" onclick="game.setMode(90)">90日</button>
         </div>
-
         <div class="schedule-work-area">
-            <div class="slot-scroll" id="slot-container">
-                </div>
-            <div class="action-list-sidebar">
-                <div style="color:white; font-size:0.6rem; margin-bottom:5px;">行動リスト [cite: 24]</div>
-                <div class="action-chip" onclick="fillSlot('腹筋')">腹筋</div>
-                <div class="action-chip" onclick="fillSlot('瞑想')">瞑想</div>
-                <div class="action-chip" onclick="fillSlot('散歩')">散歩</div>
-                <div class="action-chip" onclick="fillSlot('昼寝')">昼寝</div>
+            <div class="slot-scroll" id="slot-container"></div>
+            <div class="action-sidebar">
+                <div class="action-chip" onclick="game.fillSlot('腹筋')">腹筋</div>
+                <div class="action-chip" onclick="game.fillSlot('瞑想')">瞑想</div>
+                <div class="action-chip" onclick="game.fillSlot('散歩')">散歩</div>
+                <div class="action-chip" onclick="game.fillSlot('昼寝')">昼寝</div>
             </div>
         </div>
-
         <div class="item-preview-row">
-            <div class="preview-circle" id="p-slot-1">1</div>
-            <div class="preview-circle" id="p-slot-2">2</div>
-            <div class="preview-circle" id="p-slot-3">3</div>
+            <div class="preview-circle" id="ps-1">1</div>
+            <div class="preview-circle" id="ps-2">2</div>
+            <div class="preview-circle" id="ps-3">3</div>
         </div>
-
-        <div class="sch-footer-btns">
-            <button class="btn-large btn-blue" onclick="changeScreen('item-screen')">アイテム選択 [cite: 32]</button>
-            <button id="start-btn" class="btn-large btn-disabled">育成開始 [cite: 33]</button>
+        <div style="display:flex; gap:10px; padding:15px; background:#fff;">
+            <button class="btn-large btn-blue" onclick="game.nav('item')">アイテム選択</button>
+            <button class="btn-large btn-disabled" id="start-train-btn" onclick="game.startEvolution()">育成開始</button>
         </div>
     </section>
 
     <section id="item-screen">
-        <div style="background:var(--header-dark); color:white; padding:15px; text-align:center; font-weight:bold;">補助アイテム選択 </div>
-        
-        <div class="item-grid">
-            <div class="item-card" onclick="toggleItem('💊', '栄養剤')"><span>💊</span><span style="font-size:0.6rem;">栄養剤</span></div>
-            <div class="item-card" onclick="toggleItem('🧪', '成長薬')"><span>🧪</span><span style="font-size:0.6rem;">成長薬</span></div>
-            <div class="item-card" onclick="toggleItem('🍖', '高級肉')"><span>🍖</span><span style="font-size:0.6rem;">高級肉</span></div>
-            <div class="item-card" onclick="toggleItem('✨', '不思議粉')"><span>✨</span><span style="font-size:0.6rem;">不思議粉</span></div>
-        </div>
-
-        <div class="item-desc-panel">
-            <div style="font-size:2.5rem;" id="detail-icon">❓</div>
-            <div>
-                <div style="font-weight:bold;" id="detail-name">アイテムを選択</div>
-                <div style="font-size:0.7rem; color:#666;" id="detail-effect">所持品から最大3つ選択できます。</div>
+        <div style="padding:15px; background:var(--header-dark); color:white; text-align:center;">補助アイテム選択</div>
+        <div id="item-inventory" style="flex:1; overflow-y:auto; padding:15px;">
             </div>
-        </div>
-
-        <div class="sch-footer-btns">
-            <button class="btn-large btn-gray" onclick="changeScreen('schedule-screen')">戻る</button>
-            <button class="btn-large btn-green" onclick="confirmItems()">選択完了</button>
-        </div>
+        <button class="btn-large btn-green" style="margin:15px;" onclick="game.nav('schedule')">完了</button>
     </section>
 
+    <section id="shop-screen">
+        <div style="padding:15px; background:var(--accent-blue); color:white; text-align:center;">ショップ</div>
+        <div style="flex:1; overflow-y:auto;">
+            <div class="shop-item">
+                <span style="font-size:2rem;">🌱</span>
+                <div class="shop-info"><strong>ドロモン</strong><br><small>500G / Rank E</small></div>
+                <button class="btn-buy" onclick="game.buy('tanemon', 'T01')">購入</button>
+            </div>
+            <div class="shop-item">
+                <span style="font-size:2rem;">💊</span>
+                <div class="shop-info"><strong>栄養剤</strong><br><small>300G / 体力消費軽減</small></div>
+                <button class="btn-buy" onclick="game.buy('item', 'I01')">購入</button>
+            </div>
+        </div>
+        <button class="btn-large btn-gray" style="margin:15px;" onclick="game.nav('home')">戻る</button>
+    </section>
 </div>
 
 <script>
-    let currentMode = 90;
-    let selectedItems = [];
-    let filledCount = 0;
+const game = {
+    state: {
+        money: 1500,
+        monster: null, // { name, sprite, stats, schedule, currentDay, items }
+        inventory: [], // [{name, icon, type}]
+        mode: 90,
+        tempSchedule: [],
+        tempItems: []
+    },
 
-    // 画面切り替え
-    function changeScreen(id) {
+    nav(id) {
         document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        if(id === 'schedule-screen') renderSlots();
-    }
+        document.getElementById(id + '-screen').classList.add('active');
+        if(id === 'schedule') this.renderSlots();
+        if(id === 'item') this.renderInventory();
+        this.updateUI();
+    },
 
-    // スケジュールモード設定 (7/30/90)
-    function setScheduleMode(days) {
-        currentMode = days;
-        filledCount = 0;
-        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('m-'+days).classList.add('active');
-        renderSlots();
-        checkStartable();
-    }
-
-    // スロット生成 [cite: 1, 25, 26, 27]
-    function renderSlots() {
-        const container = document.getElementById('slot-container');
-        container.innerHTML = '';
-        for(let i=1; i<=currentMode; i++) {
-            const row = document.createElement('div');
-            row.className = 'slot-row';
-            row.innerHTML = `<span class="slot-day">${i}</span><div class="slot-box" id="slot-${i}">行動を選択</div>`;
-            container.appendChild(row);
-        }
-    }
-
-    // 行動をセット
-    function fillSlot(action) {
-        for(let i=1; i<=currentMode; i++) {
-            const slot = document.getElementById('slot-'+i);
-            if(!slot.classList.contains('filled')) {
-                slot.innerText = action;
-                slot.classList.add('filled');
-                filledCount++;
-                break;
+    buy(type, id) {
+        if(type === 'tanemon') {
+            if(this.state.monster) return alert("既に育成中です");
+            if(this.state.money >= 500) {
+                this.state.money -= 500;
+                this.state.monster = { 
+                    name: "ドロモン", sprite: "🌱", currentDay: 0, 
+                    stats: { hp: 100, str: 10, mag: 10, def: 10, spd: 10 },
+                    schedule: [], items: [] 
+                };
+                alert("ドロモンを購入しました！育成設定へ進んでください。");
             }
-        }
-        checkStartable();
-    }
-
-    // アイテム選択トグル 
-    function toggleItem(icon, name) {
-        const idx = selectedItems.indexOf(icon);
-        if(idx > -1) {
-            selectedItems.splice(idx, 1);
-        } else if(selectedItems.length < 3) {
-            selectedItems.push(icon);
-        }
-        
-        document.getElementById('detail-icon').innerText = icon;
-        document.getElementById('detail-name').innerText = name;
-        document.getElementById('detail-effect').innerText = "この育成期間中の効率がアップします。";
-        
-        // 選択状態の見た目更新
-        document.querySelectorAll('.item-card').forEach(card => {
-            card.classList.toggle('selected', selectedItems.includes(card.querySelector('span').innerText));
-        });
-    }
-
-    // アイテム確定
-    function confirmItems() {
-        for(let i=1; i<=3; i++) {
-            const pSlot = document.getElementById('p-slot-'+i);
-            if(selectedItems[i-1]) {
-                pSlot.innerText = selectedItems[i-1];
-                pSlot.classList.add('set');
-            } else {
-                pSlot.innerText = i;
-                pSlot.classList.remove('set');
-            }
-        }
-        changeScreen('schedule-screen');
-    }
-
-    // 育成開始ボタンの有効化チェック
-    function checkStartable() {
-        const btn = document.getElementById('start-btn');
-        if(filledCount >= currentMode) {
-            btn.classList.remove('btn-disabled');
-            btn.classList.add('btn-green');
-            btn.onclick = () => { alert('育成を開始し、ホーム画面に戻ります。'); changeScreen('home-screen'); };
         } else {
-            btn.classList.add('btn-disabled');
-            btn.classList.remove('btn-green');
-            btn.onclick = null;
+            if(this.state.money >= 300) {
+                this.state.money -= 300;
+                this.state.inventory.push({ name: "栄養剤", icon: "💊" });
+                alert("栄養剤を購入しました。");
+            }
+        }
+        this.updateUI();
+    },
+
+    setMode(d) {
+        this.state.mode = d;
+        this.state.tempSchedule = [];
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('m-'+d).classList.add('active');
+        this.renderSlots();
+    },
+
+    renderSlots() {
+        const con = document.getElementById('slot-container');
+        con.innerHTML = '';
+        for(let i=1; i<=this.state.mode; i++) {
+            const div = document.createElement('div');
+            div.className = 'slot-row';
+            const val = this.state.tempSchedule[i-1] || "行動を選択";
+            div.innerHTML = `<span style="width:30px">${i}</span><div class="slot-box ${val!=='行動を選択'?'filled':''}" id="s-${i}">${val}</div>`;
+            con.appendChild(div);
+        }
+        this.checkReady();
+    },
+
+    fillSlot(act) {
+        if(this.state.tempSchedule.length < this.state.mode) {
+            this.state.tempSchedule.push(act);
+            this.renderSlots();
+        }
+    },
+
+    renderInventory() {
+        const con = document.getElementById('item-inventory');
+        con.innerHTML = this.state.inventory.length ? '' : '所持アイテムがありません';
+        this.state.inventory.forEach((item, i) => {
+            const div = document.createElement('div');
+            div.className = 'shop-item';
+            const isSelected = this.state.tempItems.includes(item);
+            div.style.background = isSelected ? '#e8f8f0' : '#fff';
+            div.innerHTML = `<span>${item.icon}</span><div class="shop-info">${item.name}</div>
+                             <button class="btn-buy" onclick="game.selectItem(${i})">${isSelected?'解除':'選択'}</button>`;
+            con.appendChild(div);
+        });
+    },
+
+    selectItem(idx) {
+        const item = this.state.inventory[idx];
+        const sIdx = this.state.tempItems.indexOf(item);
+        if(sIdx > -1) this.state.tempItems.splice(sIdx, 1);
+        else if(this.state.tempItems.length < 3) this.state.tempItems.push(item);
+        
+        this.renderInventory();
+        // スケジュール画面のスロット反映
+        for(let i=1; i<=3; i++) {
+            const ps = document.getElementById('ps-'+i);
+            ps.innerText = this.state.tempItems[i-1] ? this.state.tempItems[i-1].icon : i;
+            ps.style.borderColor = this.state.tempItems[i-1] ? 'var(--accent-green)' : '#aaa';
+        }
+    },
+
+    checkReady() {
+        const btn = document.getElementById('start-train-btn');
+        if(this.state.tempSchedule.length === this.state.mode) {
+            btn.className = 'btn-large btn-green';
+        } else {
+            btn.className = 'btn-large btn-disabled';
+        }
+    },
+
+    startEvolution() {
+        if(this.state.tempSchedule.length < this.state.mode) return;
+        let finalSched = [];
+        while(finalSched.length < 90) finalSched.push(...this.state.tempSchedule);
+        this.state.monster.schedule = finalSched.slice(0, 90);
+        this.state.monster.items = [...this.state.tempItems];
+        this.state.monster.currentDay = 1;
+        this.nav('home');
+    },
+
+    processNextDay() {
+        const m = this.state.monster;
+        if(!m || m.currentDay === 0 || m.currentDay > 90) return;
+        
+        const act = m.schedule[m.currentDay - 1];
+        if(act === '腹筋') { m.stats.str += 5; m.stats.hp -= 10; }
+        if(act === '瞑想') { m.stats.mag += 5; m.stats.hp -= 5; }
+        if(act === '散歩') { m.stats.spd += 5; m.stats.hp -= 3; }
+        if(act === '昼寝') { m.stats.hp += 20; }
+        
+        if(m.stats.hp < 0) m.stats.hp = 0;
+        if(m.stats.hp > 100) m.stats.hp = 100;
+
+        m.currentDay++;
+        if(m.currentDay > 90) alert("育成完了！ハナモンへ進化しました（図鑑登録）");
+        this.updateUI();
+    },
+
+    processAllActions() {
+        while(this.state.monster && this.state.monster.currentDay > 0 && this.state.monster.currentDay <= 90) {
+            this.processNextDay();
+        }
+    },
+
+    updateUI() {
+        document.getElementById('p-money').innerText = `💰 所持金: ${this.state.money}G`;
+        const m = this.state.monster;
+        if(m) {
+            document.getElementById('main-sprite').innerText = m.sprite;
+            document.getElementById('main-sprite').style.opacity = "1";
+            document.getElementById('evo-days').style.visibility = "visible";
+            document.getElementById('evo-days').innerText = `進化まで あと ${91 - m.currentDay} 日`;
+            
+            const next = m.schedule[m.currentDay - 1] || "スケジュール未設定";
+            document.getElementById('next-action-text').innerText = m.currentDay === 0 ? "育成を開始してください" : `次：${next}`;
+
+            document.getElementById('g-hp').style.width = m.stats.hp + "%";
+            document.getElementById('g-str').style.width = Math.min(m.stats.str, 100) + "%";
+            document.getElementById('g-mag').style.width = Math.min(m.stats.mag, 100) + "%";
+            document.getElementById('g-def').style.width = Math.min(m.stats.def, 100) + "%";
+            document.getElementById('g-spd').style.width = Math.min(m.stats.spd, 100) + "%";
         }
     }
-
-    // 初期化
-    renderSlots();
+};
 </script>
-
 </body>
 </html>
