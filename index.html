@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - 統合版</title>
+    <title>ハナモン・ブリーダー - 画像紐付け版</title>
     <style>
         :root {
             --bg-sky: linear-gradient(180deg, #74b9ff 0%, #a29bfe 100%);
@@ -12,7 +12,6 @@
             --accent-green: #55efc4;
             --accent-yellow: #ffeaa7;
             --accent-blue: #0984e3;
-            --nav-bg: #ffffff;
         }
 
         body { font-family: sans-serif; margin: 0; background: #222; display: flex; justify-content: center; }
@@ -21,27 +20,25 @@
         section { display: none; width: 100%; height: 100%; flex-direction: column; }
         section.active { display: flex; }
 
-        /* ヘッダー */
         .header-info { padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: rgba(0,0,0,0.2); }
         .info-slot { background: var(--panel-bg); padding: 5px 10px; border-radius: 4px; font-size: 0.7rem; color: white; display: flex; justify-content: space-between; }
         .info-label { color: var(--accent-yellow); font-weight: bold; }
 
-        /* メイン表示 */
+        /* モンスター表示エリア */
         .monster-display { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .monster-placeholder { width: 150px; height: 150px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        #monster-image-container { width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; }
+        #monster-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .monster-placeholder { font-size: 4rem; background: rgba(255,255,255,0.2); border-radius: 50%; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; }
 
-        /* ショップリスト */
         #shop-item-list { flex: 1; overflow-y: auto; padding: 15px; }
-        .shop-item-card { background: white; margin-bottom: 10px; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; color: #333; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .item-category { font-size: 0.6rem; color: #0984e3; font-weight: bold; text-transform: uppercase; }
+        .shop-item-card { background: white; margin-bottom: 10px; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; color: #333; }
 
-        /* ナビゲーション */
         .bottom-nav { height: 75px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 15px 15px 0 0; }
         .nav-button { flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 0.65rem; color: #95a5a6; cursor: pointer; border: none; background: none; }
         .nav-button.active { color: var(--accent-blue); font-weight: bold; }
-        .nav-icon { font-size: 1.5rem; margin-bottom: 2px; }
+        .nav-icon { font-size: 1.5rem; }
 
-        .btn-buy { background: var(--accent-blue); color: white; border: none; padding: 8px 12px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .btn-buy { background: var(--accent-blue); color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -49,25 +46,21 @@
 <div class="app-container">
     <section id="home-screen" class="active">
         <header class="header-info">
-            <div class="info-slot"><span class="info-label">PLAYER:</span><span id="player-name">ケンジ</span></div>
+            <div class="info-slot"><span class="info-label">PLAYER:</span><span>ケンジ</span></div>
             <div class="info-slot"><span class="info-label">MONEY:</span><span class="money-display">1500 G</span></div>
         </header>
         <div class="monster-display">
-            <div class="monster-placeholder">🌱</div>
-            <div style="margin-top:20px; font-weight:bold; font-size:1.2rem; color:white;">ドロモン</div>
+            <div id="monster-image-container">
+                <div class="monster-placeholder">🌱</div>
+            </div>
+            <div id="monster-name-display" style="margin-top:20px; font-weight:bold; font-size:1.2rem; color:white;">タネを選んでください</div>
         </div>
         <div class="bottom-nav">
             <button class="nav-button active" onclick="showPage('home-screen')">
                 <span class="nav-icon">🥚</span><span>育成</span>
             </button>
-            <button class="nav-button">
-                <span class="nav-icon">📖</span><span>図鑑</span>
-            </button>
             <button class="nav-button" onclick="showPage('shop-screen')">
                 <span class="nav-icon">🛒</span><span>ショップ</span>
-            </button>
-            <button class="nav-button">
-                <span class="nav-icon">🏗</span><span>増築</span>
             </button>
             <button class="nav-button">
                 <span class="nav-icon">🎒</span><span>持ち物</span>
@@ -80,95 +73,88 @@
             <div class="info-slot"><span class="info-label">MONEY:</span><span class="money-display">1500 G</span></div>
             <button onclick="showPage('home-screen')" style="color:white; background:none; border:none; cursor:pointer;">✖ 戻る</button>
         </header>
-        <div id="shop-item-list">
-            <p style="text-align:center; color:white;">アイテムを取得中...</p>
-        </div>
+        <div id="shop-item-list">取得中...</div>
     </section>
 </div>
 
 <script>
-    // --- 1. ゲームの状態管理 ---
-    let gameState = {
-        money: 1500,
-        inventory: []
+    // アイテム名と画像URLの紐付け辞書
+    const imageAssets = {
+        "ドロモン（最低ランク）": "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/images/doromon.png"
     };
 
-    // --- 2. 画面切り替え関数 ---
+    let gameState = {
+        money: 1500,
+        currentMonster: null // 現在ホームに表示するモンスター名
+    };
+
     function showPage(id) {
         document.querySelectorAll('section').forEach(s => s.style.display = 'none');
         document.getElementById(id).style.display = 'flex';
-        
-        if(id === 'shop-screen') {
-            fetchShopData();
-        }
+        if(id === 'shop-screen') fetchShopData();
     }
 
-    // --- 3. ショップデータの取得 (shop.jsonの構造に合わせて修正) ---
     async function fetchShopData() {
         const url = "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/shop.json";
         const container = document.getElementById('shop-item-list');
-        
         try {
             const response = await fetch(url);
             const data = await response.json();
-            
-            // shop.json 内の異なるカテゴリを1つのリストにまとめます
-            const allItems = [
-                ...data.shop_data.tanemon_list.map(i => ({...i, type: 'タネモン'})),
-                ...data.shop_data.consumable_items.map(i => ({...i, type: '消耗品'})),
-                ...data.shop_data.equipment_items.map(i => ({...i, type: '設備'}))
-            ];
-            
-            renderShop(allItems);
-        } catch (error) {
-            console.error("Fetch Error:", error);
-            container.innerHTML = "<p style='text-align:center; color:white;'>データの読み込みに失敗しました</p>";
+            // 全アイテムを統合
+            const items = [...data.shop_data.tanemon_list, ...data.shop_data.consumable_items, ...data.shop_data.equipment_items];
+            renderShop(items);
+        } catch (e) {
+            container.innerHTML = "読み込み失敗";
         }
     }
 
-    // --- 4. ショップ画面の描画 ---
     function renderShop(items) {
         const container = document.getElementById('shop-item-list');
         container.innerHTML = '';
-
         items.forEach(item => {
-            const itemCard = document.createElement('div');
-            itemCard.className = "shop-item-card";
-            itemCard.innerHTML = `
-                <div style="flex:1;">
-                    <div class="item-category">${item.type}</div>
-                    <div style="font-weight:bold;">${item.name}</div>
-                    <div style="font-size:0.7rem; color:#666;">${item.description}</div>
-                    <div style="color:#e67e22; font-weight:bold;">💰 ${item.price} G</div>
+            const card = document.createElement('div');
+            card.className = "shop-item-card";
+            card.innerHTML = `
+                <div style="flex:1">
+                    <div style="font-weight:bold">${item.name}</div>
+                    <div style="font-size:0.7rem; color:#666">${item.description}</div>
+                    <div style="color:#e67e22; font-weight:bold">💰 ${item.price} G</div>
                 </div>
                 <button class="btn-buy" onclick="buyItem('${item.name}', ${item.price})">購入</button>
             `;
-            container.appendChild(itemCard);
+            container.appendChild(card);
         });
     }
 
-    // --- 5. 購入処理 ---
     function buyItem(name, price) {
         if (gameState.money >= price) {
             gameState.money -= price;
-            gameState.inventory.push(name);
-            alert(`${name} を購入しました！`);
+            // 購入したのがタネモンの場合、ホーム画面に設定
+            if (imageAssets[name]) {
+                gameState.currentMonster = name;
+            }
+            alert(name + " を購入しました！");
             updateUI();
         } else {
-            alert("所持金が足りません！");
+            alert("お金が足りません！");
         }
     }
 
-    // --- 6. UIの更新 ---
     function updateUI() {
-        document.querySelectorAll('.money-display').forEach(el => {
-            el.innerText = gameState.money + " G";
-        });
+        // お金表示更新
+        document.querySelectorAll('.money-display').forEach(el => el.innerText = gameState.money + " G");
+        
+        // ホーム画面の画像更新
+        const container = document.getElementById('monster-image-container');
+        const nameDisplay = document.getElementById('monster-name-display');
+        
+        if (gameState.currentMonster && imageAssets[gameState.currentMonster]) {
+            container.innerHTML = `<img src="${imageAssets[gameState.currentMonster]}" alt="monster">`;
+            nameDisplay.innerText = gameState.currentMonster;
+        }
     }
 
-    // 初期化
     updateUI();
 </script>
-
 </body>
 </html>
