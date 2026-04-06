@@ -3,236 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - ホーム</title>
+    <title>ハナモン・ブリーダー - 育成スケジュール設定</title>
     <style>
         :root {
-            --bg-color: #f0f4f8;
-            --header-color: #2c3e50;
-            --accent-color: #27ae60;
-            --sub-accent: #f1c40f;
-            --text-light: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --bg-schedule: #f7f1e3;
+            --slot-bg: #ffffff;
+            --slot-border: #d1ccc0;
+            --accent: #ff5252;
+            --sidebar-bg: #2c3e50;
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Hiragino Kaku Gothic Pro', sans-serif;
             margin: 0;
-            background-color: var(--bg-color);
+            background: #333;
             display: flex;
             justify-content: center;
-            height: 100vh;
-            overflow: hidden;
         }
 
         .app-container {
             width: 100%;
             max-width: 450px;
-            background: linear-gradient(to bottom, #74b9ff, #a29bfe);
+            height: 100vh;
+            background-color: var(--bg-schedule);
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
         }
 
-        /* ヘッダー：プレイヤー情報 */
-        .header {
-            background-color: rgba(0, 0, 0, 0.6);
-            color: var(--text-light);
-            padding: 10px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            font-size: 0.85rem;
-            z-index: 10;
-        }
-
-        .header-item { margin: 2px 0; }
-
-        /* メインエリア：育成中のタネモン */
-        .main-game-area {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
-        }
-
-        .facility-status {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--card-bg);
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            border: 2px solid var(--accent-color);
-        }
-
-        .tanemon-container {
-            text-align: center;
-            animation: bounce 2s infinite ease-in-out;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .tanemon-sprite {
-            width: 150px;
-            height: 150px;
+        /* ヘッダーエリア */
+        .schedule-header {
             background: #fff;
-            border-radius: 50%;
+            padding: 10px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-bottom: 2px solid var(--slot-border);
         }
+        .mini-status { font-size: 0.75rem; flex: 1; }
+        .mini-sprite { width: 50px; height: 50px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-right: 10px; }
 
-        .evolution-timer {
-            background: rgba(255,255,255,0.8);
-            padding: 5px 15px;
-            border-radius: 20px;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #d63031;
-        }
-
-        /* ステータスカード */
-        .status-card {
-            background: var(--card-bg);
-            width: 90%;
-            border-radius: 15px;
-            padding: 15px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .stat-row {
+        /* メインコンテンツ：左右分割 */
+        .schedule-main {
             display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-
-        .stat-label { width: 50px; font-size: 0.75rem; font-weight: bold; }
-
-        .stat-bar-bg {
-            flex-grow: 1;
-            height: 8px;
-            background: #dfe6e9;
-            border-radius: 4px;
+            flex: 1;
             overflow: hidden;
         }
 
-        .stat-bar-fill {
-            height: 100%;
-            background: var(--accent-color);
+        /* 左側：スケジュールスロット */
+        .slot-container {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background: #fff;
+            margin: 5px;
+            border-radius: 8px;
+        }
+        .view-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .tab {
+            flex: 1;
+            padding: 5px;
+            text-align: center;
+            background: #ddd;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .tab.active { background: var(--accent); color: white; }
+
+        .day-slot {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.8rem;
+        }
+        .day-num { width: 30px; color: #888; font-weight: bold; }
+        .action-name { flex: 1; color: #ccc; border: 1px dashed #ccc; border-radius: 4px; padding: 2px 5px; text-align: center; }
+        .action-name.set { color: #333; border: 1px solid #3498db; background: #ebf5fb; }
+
+        /* 右側：行動リスト */
+        .action-list {
+            width: 140px;
+            background: var(--sidebar-bg);
+            padding: 10px;
+            overflow-y: auto;
+        }
+        .action-item {
+            background: #fff;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-align: center;
         }
 
-        /* 行動ボタン */
-        .action-buttons {
+        /* 下部：アイテムスロット & ボタン */
+        .schedule-footer {
+            background: #fff;
+            padding: 15px;
+            border-top: 2px solid var(--slot-border);
+        }
+        .item-slots {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .item-slot {
+            width: 50px;
+            height: 50px;
+            border: 2px dashed #bbb;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: #f9f9f9;
+        }
+        .btn-group {
             display: flex;
             gap: 10px;
-            width: 90%;
-            margin-top: 15px;
         }
-
-        .btn-action {
+        .btn {
             flex: 1;
             padding: 12px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px #218c53;
-            transition: 0.1s;
-        }
-
-        .btn-next { background-color: var(--accent-color); color: white; }
-        .btn-all { background-color: var(--sub-accent); color: #333; box-shadow: 0 4px #c29d0b; }
-        
-        .btn-action:active { transform: translateY(2px); box-shadow: none; }
-
-        /* フッターメニュー */
-        .footer-menu {
-            background-color: var(--header-color);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-        }
-
-        .menu-item {
+            cursor: not-allowed;
+            background: #ccc;
             color: white;
-            text-decoration: none;
-            font-size: 0.7rem;
-            text-align: center;
-            flex: 1;
         }
-
-        .menu-icon {
-            display: block;
-            font-size: 1.5rem;
-            margin-bottom: 2px;
+        .btn.active {
+            background: #27ae60;
+            cursor: pointer;
+            box-shadow: 0 4px #1e8449;
         }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    <div class="header">
-        <div class="header-item">👤 プレイヤー: ナマエ</div>
-        <div class="header-item">🏆 ランク: ブロンズ</div>
-        <div class="header-item">💰 所持金: 1,500G</div>
-        <div class="header-item">💎 ダイヤ: 10個</div>
-    </div>
-
-    <div class="main-game-area">
-        <div class="facility-status">
-            🏟 体育館 Lv1
-        </div>
-
-        <div class="tanemon-container">
-            <div class="tanemon-sprite">🌱</div>
-            <div class="evolution-timer">進化まで あと 82 日</div>
-        </div>
-
-        <div class="status-card">
-            <div style="font-size: 0.8rem; margin-bottom: 8px; font-weight: bold; color: #555;">
-                現在の行動：筋力トレーニング
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">体力</span>
-                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 60%;"></div></div>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">筋力</span>
-                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 45%;"></div></div>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">魔力</span>
-                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 20%;"></div></div>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">素早さ</span>
-                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 35%;"></div></div>
-            </div>
-        </div>
-
-        <div class="action-buttons">
-            <button class="btn-action btn-next">行動する</button>
-            <button class="btn-action btn-all">全行動（一括完了）</button>
+    <div class="schedule-header">
+        <div class="mini-sprite">🌱</div>
+        <div class="mini-status">
+            <strong>ドロモン</strong> (Rank E)<br>
+            体力: 10 / 筋力: 5 / 魔力: 5
         </div>
     </div>
 
-    <nav class="footer-menu">
-        <a href="#" class="menu-item"><span class="menu-icon">🥚</span>育成</a>
-        <a href="#" class="menu-item"><span class="menu-icon">📖</span>図鑑</a>
-        <a href="#" class="menu-item"><span class="menu-icon">🛒</span>ショップ</a>
-        <a href="#" class="menu-item"><span class="menu-icon">🏗</span>増築</a>
-        <a href="#" class="menu-item"><span class="menu-icon">🎒</span>持ち物</a>
-    </nav>
+    <div class="schedule-main">
+        <div class="slot-container">
+            <div class="view-tabs">
+                <div class="tab">1週</div>
+                <div class="tab">1月</div>
+                <div class="tab active">3月(90日)</div>
+            </div>
+            
+            <div id="slots">
+                <div class="day-slot"><span class="day-num">1</span> <div class="action-name set">ひたすら腹筋</div></div>
+                <div class="day-slot"><span class="day-num">2</span> <div class="action-name set">ひたすら腹筋</div></div>
+                <div class="day-slot"><span class="day-num">3</span> <div class="action-name">行動を選択</div></div>
+                <div class="day-slot"><span class="day-num">4</span> <div class="action-name">行動を選択</div></div>
+                <div class="day-slot"><span class="day-num">5</span> <div class="action-name">行動を選択</div></div>
+                <div class="day-slot"><span class="day-num">...</span> <div class="action-name">残り85日分</div></div>
+            </div>
+        </div>
+
+        <div class="action-list">
+            <div style="color: white; font-size: 0.7rem; margin-bottom: 10px;">行動一覧</div>
+            <div class="action-item">腹筋</div>
+            <div class="action-item">瞑想</div>
+            <div class="action-item">お花摘み</div>
+            <div class="action-item">日向ぼっこ</div>
+            <div class="action-item">読書</div>
+        </div>
+    </div>
+
+    <div class="schedule-footer">
+        <div style="font-size: 0.7rem; text-align: center; margin-bottom: 5px;">補助アイテム（3つまで）</div>
+        <div class="item-slots">
+            <div class="item-slot">💊</div>
+            <div class="item-slot"></div>
+            <div class="item-slot"></div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn active">補助アイテム選択</button>
+            <button class="btn">育成開始</button> 
+        </div>
+        <p style="font-size: 0.6rem; color: #666; text-align: center; margin-top: 5px;">
+            ※全てのスロットを埋めると「育成開始」が有効になります[span_0](end_span)
+        </p>
+    </div>
 </div>
 
 </body>
