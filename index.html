@@ -3,249 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - Home UI Framework</title>
+    <title>ハナモン・ブリーダー - 統合プロトタイプ</title>
     <style>
         :root {
-            /* カラーパレット */
             --bg-sky: linear-gradient(180deg, #74b9ff 0%, #a29bfe 100%);
             --panel-bg: rgba(0, 0, 0, 0.4);
             --text-white: #ffffff;
             --accent-green: #55efc4;
             --accent-yellow: #ffeaa7;
+            --accent-blue: #0984e3;
             --nav-bg: #ffffff;
-            --border-white: rgba(255, 255, 255, 0.3);
         }
 
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            background-color: #222;
-            display: flex;
-            justify-content: center;
-            height: 100vh;
-            color: var(--text-white);
-            overflow: hidden;
-        }
+        body { font-family: sans-serif; margin: 0; background: #222; display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 450px; height: 100vh; background: var(--bg-sky); position: relative; overflow: hidden; display: flex; flex-direction: column; }
 
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-            background: var(--bg-sky);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-        }
+        /* 画面共通：基本非表示 */
+        section { display: none; width: 100%; height: 100%; flex-direction: column; }
+        section.active { display: flex; }
 
-        /* --- 1. 上部：プレイヤー情報 --- */
-        .header-info {
-            padding: 15px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        .info-slot {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-white);
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 0.75rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            min-height: 20px;
-        }
-        .info-label { color: var(--accent-yellow); font-weight: bold; margin-right: 5px; }
+        /* ヘッダー */
+        .header-info { padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: rgba(0,0,0,0.2); }
+        .info-slot { background: var(--panel-bg); padding: 5px 10px; border-radius: 4px; font-size: 0.7rem; color: white; display: flex; justify-content: space-between; }
+        .info-label { color: var(--accent-yellow); font-weight: bold; }
 
-        /* --- 2. 中央：タネモン表示エリア --- */
-        .monster-display {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .monster-image-area {
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* ここにJSで画像を流し込む */
-        }
-        .days-badge {
-            background: rgba(0,0,0,0.5);
-            padding: 4px 25px;
-            border-radius: 20px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-top: 10px;
-            min-width: 100px;
-            text-align: center;
-        }
+        /* ホーム：メインエリア */
+        .monster-display { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .monster-placeholder { width: 150px; height: 150px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        
+        /* ショップ：リスト */
+        #shop-item-list { flex: 1; overflow-y: auto; padding: 15px; }
+        .shop-item-card { background: white; margin-bottom: 10px; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; color: #333; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
 
-        /* --- 3. ステータスパネル --- */
-        .status-panel {
-            width: 85%;
-            background: var(--panel-bg);
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        .status-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            font-size: 0.8rem;
-        }
-        .status-name { width: 50px; font-weight: bold; }
-        .status-bar-bg {
-            flex: 1;
-            height: 10px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 5px;
-            margin: 0 10px;
-            overflow: hidden;
-        }
-        .status-bar-fill {
-            height: 100%;
-            background: var(--accent-green);
-            width: 0%; /* 動的に変更 */
-        }
-        .status-value { width: 30px; text-align: right; }
+        /* 下部ナビ */
+        .bottom-nav { height: 75px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 15px 15px 0 0; }
+        .nav-button { flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 0.65rem; color: #95a5a6; cursor: pointer; border: none; background: none; }
+        .nav-button.active { color: var(--accent-blue); font-weight: bold; }
+        .nav-icon { font-size: 1.5rem; margin-bottom: 2px; }
 
-        /* --- 4. 行動ボタン --- */
-        .action-container {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .btn-main {
-            width: 130px;
-            padding: 12px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 0 rgba(0,0,0,0.2);
-            transition: transform 0.1s;
-        }
-        .btn-main:active { transform: translateY(3px); box-shadow: none; }
-        .btn-act { background: #55efc4; color: #00b894; }
-        .btn-all { background: #ffeaa7; color: #d63031; }
-
-        /* --- 5. 下部：ナビゲーション --- */
-        .bottom-nav {
-            background: var(--nav-bg);
-            height: 85px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-        }
-        .nav-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #636e72;
-            text-decoration: none;
-            font-size: 0.7rem;
-            font-weight: bold;
-            gap: 5px;
-        }
-        .nav-icon-placeholder {
-            width: 40px;
-            height: 40px;
-            background: #dfe6e9;
-            border-radius: 10px;
-        }
-        .nav-button.active { color: #0984e3; }
-        .nav-button.active .nav-icon-placeholder { background: #74b9ff; }
+        .btn-buy { background: var(--accent-blue); color: white; border: none; padding: 8px 12px; border-radius: 5px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
     
-    <header class="header-info">
-        <div class="info-slot"><span class="info-label">PLAYER:</span><span id="player-name"></span></div>
-        <div class="info-slot"><span class="info-label">MONEY:</span><span id="player-money"></span></div>
-        <div class="info-slot"><span class="info-label">RANK:</span><span id="player-rank"></span></div>
-        <div class="info-slot"><span class="info-label">DIAMOND:</span><span id="player-diamond"></span></div>
-    </header>
+    <section id="home-screen" class="active">
+        <header class="header-info">
+            <div class="info-slot"><span class="info-label">PLAYER:</span><span>ケンジ</span></div>
+            <div class="info-slot"><span class="info-label">MONEY:</span><span class="money-display">1500 G</span></div>
+        </header>
+        <div class="monster-display">
+            <div class="monster-placeholder">🌱</div>
+            <div style="margin-top:20px; font-weight:bold; font-size:1.2rem;">ドロモン</div>
+        </div>
+        <div class="bottom-nav">
+            <button class="nav-button active">
+                <span class="nav-icon">🥚</span><span>育成</span>
+            </button>
+            <button class="nav-button">
+                <span class="nav-icon">📖</span><span>図鑑</span>
+            </button>
+            <button class="nav-button" onclick="changePage('shop-screen')">
+                <span class="nav-icon">🛒</span><span>ショップ</span>
+            </button>
+            <button class="nav-button">
+                <span class="nav-icon">🏗</span><span>増築</span>
+            </button>
+            <button class="nav-button">
+                <span class="nav-icon">🎒</span><span>持ち物</span>
+            </button>
+        </div>
+    </section>
 
-    <main class="monster-display">
-        <div class="monster-image-area" id="monster-img">
-            </div>
-        <div class="days-badge" id="display-days">
-            </div>
-    </main>
-
-    <div style="display: flex; justify-content: center;">
-        <section class="status-panel">
-            <div class="status-row">
-                <span class="status-name">HP</span>
-                <div class="status-bar-bg"><div class="status-bar-fill" id="bar-hp"></div></div>
-                <span class="status-value" id="val-hp"></span>
-            </div>
-            <div class="status-row">
-                <span class="status-name">筋力</span>
-                <div class="status-bar-bg"><div class="status-bar-fill" id="bar-str"></div></div>
-                <span class="status-value" id="val-str"></span>
-            </div>
-            <div class="status-row">
-                <span class="status-name">魔力</span>
-                <div class="status-bar-bg"><div class="status-bar-fill" id="bar-mag"></div></div>
-                <span class="status-value" id="val-mag"></span>
-            </div>
-            <div class="status-row">
-                <span class="status-name">防御</span>
-                <div class="status-bar-bg"><div class="status-bar-fill" id="bar-def"></div></div>
-                <span class="status-value" id="val-def"></span>
-            </div>
-            <div class="status-row">
-                <span class="status-name">俊敏</span>
-                <div class="status-bar-bg"><div class="status-bar-fill" id="bar-spd"></div></div>
-                <span class="status-value" id="val-spd"></span>
-            </div>
-        </section>
-    </div>
-
-    <div style="display: flex; justify-content: center;">
-        <div class="action-container">
-            <button class="btn-main btn-act">行動</button>
-            <button class="btn-main btn-all">全行動</button>
+    <section id="shop-screen">
+        <header class="header-info">
+            <div class="info-slot"><span class="info-label">MONEY:</span><span class="money-display">1500 G</span></div>
+            <button onclick="changePage('home-screen')" style="color:white; background:none; border:none; cursor:pointer;">✖ 戻る</button>
+        </header>
+        <div id="shop-item-list">
+            <p style="text-align:center; color:white;">通信中...</p>
         </div>
-    </div>
-
-    <nav class="bottom-nav">
-        <div class="nav-button active">
-            <div class="nav-icon-placeholder"></div>
-            <span>育成</span>
-        </div>
-        <div class="nav-button">
-            <div class="nav-icon-placeholder"></div>
-            <span>図鑑</span>
-        </div>
-        <div class="nav-button">
-            <div class="nav-icon-placeholder"></div>
-            <span>ショップ</span>
-        </div>
-        <div class="nav-button">
-            <div class="nav-icon-placeholder"></div>
-            <span>増築</span>
-        </div>
-        <div class="nav-button">
-            <div class="nav-icon-placeholder"></div>
-            <span>持ち物</span>
-        </div>
-    </nav>
+    </section>
 
 </div>
 
+<script>
+    // --- 状態管理 ---
+    let gameState = {
+        money: 1500,
+        inventory: []
+    };
+
+    // --- 画面切り替え ---
+    function changePage(id) {
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        
+        if(id === 'shop-screen') {
+            loadShopData();
+        }
+    }
+
+    // --- ショップ機能 ---
+    async function loadShopData() {
+        const container = document.getElementById('shop-item-list');
+        const url = "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/shop.json";
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            container.innerHTML = ""; // クリア
+            data.items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "shop-item-card";
+                card.innerHTML = `
+                    <div style="flex:1">
+                        <div style="font-weight:bold">${item.name}</div>
+                        <div style="font-size:0.7rem; color:#7f8c8d">${item.description}</div>
+                        <div style="font-size:0.8rem; color:#e67e22; font-weight:bold">💰 ${item.price} G</div>
+                    </div>
+                    <button class="btn-buy" onclick="purchase('${item.name}', ${item.price})">購入</button>
+                `;
+                container.appendChild(card);
+            });
+        } catch (e) {
+            container.innerHTML = "<p style='color:white; text-align:center;'>読み込み失敗</p>";
+        }
+    }
+
+    function purchase(name, price) {
+        if(gameState.money >= price) {
+            gameState.money -= price;
+            gameState.inventory.push(name);
+            alert(name + " を購入しました！");
+            updateDisplay();
+        } else {
+            alert("お金が足りません！");
+        }
+    }
+
+    function updateDisplay() {
+        document.querySelectorAll('.money-display').forEach(el => {
+            el.innerText = gameState.money + " G";
+        });
+    }
+
+    // 初期表示の更新
+    updateDisplay();
+</script>
+// ゲームの状態管理（本来はJSONや保存データから読み込む）
+let gameState = {
+    money: 1500,
+    inventory: []
+};
+
+// 1. JSONデータの取得（GitHubのRawデータURLを使用）
+async function fetchShopData() {
+    const url = "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/shop.json";
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        renderShop(data.items); // アイテムリストを描画
+    } catch (error) {
+        console.error("ショップデータの読み込みに失敗しました:", error);
+    }
+}
+
+// 2. ショップ画面の描画
+function renderShop(items) {
+    const container = document.getElementById('shop-item-list');
+    container.innerHTML = ''; // 初期化
+
+    items.forEach(item => {
+        const itemCard = document.createElement('div');
+        itemCard.style = `
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        `;
+
+        itemCard.innerHTML = `
+            <div style="flex:1;">
+                <div style="font-weight:bold;">${item.name}</div>
+                <div style="font-size:0.7rem; color:#666;">${item.description}</div>
+                <div style="color:#e67e22; font-weight:bold;">💰 ${item.price} G</div>
+            </div>
+            <button onclick="buyItem('${item.name}', ${item.price})" 
+                style="background:#0984e3; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">
+                購入
+            </button>
+        `;
+        container.appendChild(itemCard);
+    });
+}
+
+// 3. 購入処理
+function buyItem(name, price) {
+    if (gameState.money >= price) {
+        gameState.money -= price;
+        gameState.inventory.push(name);
+        alert(`${name} を購入しました！`);
+        updateUI();
+    } else {
+        alert("所持金が足りません！");
+    }
+}
+
+// 4. UIの更新（お金の表示など）
+function updateUI() {
+    document.getElementById('player-money').innerText = gameState.money + " G";
+    const shopMoney = document.getElementById('shop-player-money');
+    if(shopMoney) shopMoney.innerText = gameState.money + " G";
+}
+
+// 5. ページ切り替え関数（既存のものがあれば統合）
+function showPage(id) {
+    document.querySelectorAll('section').forEach(s => s.style.display = 'none');
+    document.getElementById(id).style.display = 'flex';
+    
+    if(id === 'shop-screen') {
+        fetchShopData(); // ショップを開くたびに最新データを取得
+    }
+}
+
+// 初期化
+window.onload = () => {
+    updateUI();
+    // ショップボタンにイベントを割り当て
+    const shopBtn = document.querySelector('.nav-button:nth-child(3)'); // ショップボタン
+    if(shopBtn) shopBtn.onclick = () => showPage('shop-screen');
+};
 </body>
 </html>
