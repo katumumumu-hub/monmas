@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー 完全版</title>
+    <title>ハナモン・ブリーダー 完全版 (体力成長Ver)</title>
     <style>
         :root {
             --bg-main: #74b9ff;
@@ -20,7 +20,7 @@
         section { display: none; width: 100%; height: 100%; flex-direction: column; position: absolute; top: 0; left: 0; }
         section.active { display: flex; }
 
-        /* --- ホーム画面 --- */
+        /* --- 1. ホーム画面 --- */
         #home-screen { background: linear-gradient(to bottom, #74b9ff, #a29bfe); }
         .player-info { background: rgba(0,0,0,0.7); color: white; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; font-size: 0.8rem; }
         .next-action-display { background: white; margin: 10px auto; padding: 5px 20px; border-radius: 5px; font-weight: bold; font-size: 0.9rem; border: 2px solid var(--accent-blue); min-height: 1.2rem; text-align: center;}
@@ -34,6 +34,8 @@
         .gauge-label { width: 40px; font-weight: bold; }
         .gauge-bg { flex: 1; height: 10px; background: #ddd; border-radius: 5px; overflow: hidden; margin-left: 10px; }
         .gauge-fill { height: 100%; background: var(--accent-green); transition: width 0.3s; }
+        /* 体力（HP）だけ色を変えて強調 */
+        #g-hp { background: #ff7675; }
 
         .home-btns { display: flex; gap: 10px; width: 85%; margin-bottom: 20px; }
         .btn-large { flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 4px rgba(0,0,0,0.2); }
@@ -42,7 +44,7 @@
         .bottom-nav { background: var(--header-dark); display: flex; justify-content: space-around; padding: 10px 0; }
         .nav-btn { color: white; text-align: center; font-size: 0.65rem; cursor: pointer; flex: 1; }
 
-        /* --- スケジュール画面 --- */
+        /* --- 2. スケジュール画面 --- */
         #schedule-screen { background: #fdfaf0; }
         .mode-selector { display: flex; justify-content: center; gap: 10px; padding: 10px; background: #eee; }
         .mode-btn { padding: 8px 15px; border: 1px solid #bbb; border-radius: 5px; background: white; cursor: pointer; }
@@ -63,7 +65,7 @@
         .shop-info { flex: 1; margin-left: 15px; }
         .btn-buy { padding: 8px 15px; background: var(--accent-blue); color: white; border: none; border-radius: 5px; font-weight: bold; }
 
-        /* 共通ボタンカラー */
+        /* 共通カラー */
         .btn-blue { background: var(--accent-blue); }
         .btn-green { background: var(--accent-green); }
         .btn-gray { background: #95a5a6; }
@@ -109,8 +111,8 @@
         <div style="padding:10px; background:#fff; border-bottom:1px solid #ddd; font-weight:bold;">スケジュール設定</div>
         <div class="mode-selector">
             <button class="mode-btn" id="m-7" onclick="game.setMode(7)">7日</button>
-            <button class="mode-btn" id="m-30" onclick="game.setMode(30)">30日</button>
-            <button class="mode-btn active" id="m-90" onclick="game.setMode(90)">90日</button>
+            <button class="mode-btn" id="m-30" onclick="game.setMode(30)">1月</button>
+            <button class="mode-btn active" id="m-90" onclick="game.setMode(90)">3月</button>
         </div>
         <div class="schedule-work-area">
             <div class="slot-scroll" id="slot-container"></div>
@@ -134,8 +136,7 @@
 
     <section id="item-screen">
         <div style="padding:15px; background:var(--header-dark); color:white; text-align:center;">補助アイテム選択</div>
-        <div id="item-inventory" style="flex:1; overflow-y:auto; padding:15px;">
-            </div>
+        <div id="item-inventory" style="flex:1; overflow-y:auto; padding:15px;"></div>
         <button class="btn-large btn-green" style="margin:15px;" onclick="game.nav('schedule')">完了</button>
     </section>
 
@@ -149,7 +150,7 @@
             </div>
             <div class="shop-item">
                 <span style="font-size:2rem;">💊</span>
-                <div class="shop-info"><strong>栄養剤</strong><br><small>300G / 体力消費軽減</small></div>
+                <div class="shop-info"><strong>栄養剤</strong><br><small>300G / 成長効率UP</small></div>
                 <button class="btn-buy" onclick="game.buy('item', 'I01')">購入</button>
             </div>
         </div>
@@ -161,8 +162,8 @@
 const game = {
     state: {
         money: 1500,
-        monster: null, // { name, sprite, stats, schedule, currentDay, items }
-        inventory: [], // [{name, icon, type}]
+        monster: null,
+        inventory: [],
         mode: 90,
         tempSchedule: [],
         tempItems: []
@@ -183,7 +184,7 @@ const game = {
                 this.state.money -= 500;
                 this.state.monster = { 
                     name: "ドロモン", sprite: "🌱", currentDay: 0, 
-                    stats: { hp: 100, str: 10, mag: 10, def: 10, spd: 10 },
+                    stats: { hp: 10, str: 10, mag: 10, def: 10, spd: 10 }, // 体力の初期値を設定
                     schedule: [], items: [] 
                 };
                 alert("ドロモンを購入しました！育成設定へ進んでください。");
@@ -247,7 +248,6 @@ const game = {
         else if(this.state.tempItems.length < 3) this.state.tempItems.push(item);
         
         this.renderInventory();
-        // スケジュール画面のスロット反映
         for(let i=1; i<=3; i++) {
             const ps = document.getElementById('ps-'+i);
             ps.innerText = this.state.tempItems[i-1] ? this.state.tempItems[i-1].icon : i;
@@ -279,16 +279,18 @@ const game = {
         if(!m || m.currentDay === 0 || m.currentDay > 90) return;
         
         const act = m.schedule[m.currentDay - 1];
-        if(act === '腹筋') { m.stats.str += 5; m.stats.hp -= 10; }
-        if(act === '瞑想') { m.stats.mag += 5; m.stats.hp -= 5; }
-        if(act === '散歩') { m.stats.spd += 5; m.stats.hp -= 3; }
-        if(act === '昼寝') { m.stats.hp += 20; }
-        
-        if(m.stats.hp < 0) m.stats.hp = 0;
-        if(m.stats.hp > 100) m.stats.hp = 100;
+        const bonus = m.items.length > 0 ? 1.2 : 1.0; // アイテムによる成長補正(仮)
 
+        // 体力は減るものではなく、トレーニングで成長する
+        if(act === '腹筋') { m.stats.str += 5 * bonus; m.stats.hp += 3 * bonus; }
+        if(act === '瞑想') { m.stats.mag += 5 * bonus; m.stats.hp += 1 * bonus; }
+        if(act === '散歩') { m.stats.spd += 5 * bonus; m.stats.hp += 2 * bonus; }
+        if(act === '昼寝') { m.stats.hp += 8 * bonus; } // 昼寝でも体力が育つ
+        
         m.currentDay++;
-        if(m.currentDay > 90) alert("育成完了！ハナモンへ進化しました（図鑑登録）");
+        if(m.currentDay > 90) {
+            alert("90日が経過しました。育成完了！");
+        }
         this.updateUI();
     },
 
@@ -303,14 +305,14 @@ const game = {
         const m = this.state.monster;
         if(m) {
             document.getElementById('main-sprite').innerText = m.sprite;
-            document.getElementById('main-sprite').style.opacity = "1";
             document.getElementById('evo-days').style.visibility = "visible";
             document.getElementById('evo-days').innerText = `進化まで あと ${91 - m.currentDay} 日`;
             
             const next = m.schedule[m.currentDay - 1] || "スケジュール未設定";
             document.getElementById('next-action-text').innerText = m.currentDay === 0 ? "育成を開始してください" : `次：${next}`;
 
-            document.getElementById('g-hp').style.width = m.stats.hp + "%";
+            // 全ステータスが成長していくゲージ表示
+            document.getElementById('g-hp').style.width = Math.min(m.stats.hp, 100) + "%";
             document.getElementById('g-str').style.width = Math.min(m.stats.str, 100) + "%";
             document.getElementById('g-mag').style.width = Math.min(m.stats.mag, 100) + "%";
             document.getElementById('g-def').style.width = Math.min(m.stats.def, 100) + "%";
