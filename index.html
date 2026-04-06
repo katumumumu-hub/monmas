@@ -3,204 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - 育成スケジュール設定</title>
+    <title>ハナモン・ブリーダー Full Prototype</title>
     <style>
         :root {
+            --bg-main: #74b9ff;
             --bg-schedule: #f7f1e3;
-            --slot-bg: #ffffff;
-            --slot-border: #d1ccc0;
-            --accent: #ff5252;
-            --sidebar-bg: #2c3e50;
+            --bg-item: #dfe6e9;
+            --header-dark: #2c3e50;
+            --accent-green: #27ae60;
+            --accent-red: #ff5252;
+            --accent-blue: #0984e3;
+            --text-white: #ffffff;
         }
 
         body {
             font-family: 'Hiragino Kaku Gothic Pro', sans-serif;
             margin: 0;
-            background: #333;
+            background: #222;
             display: flex;
             justify-content: center;
+            color: #333;
         }
 
         .app-container {
             width: 100%;
             max-width: 450px;
             height: 100vh;
-            background-color: var(--bg-schedule);
-            display: flex;
-            flex-direction: column;
             position: relative;
-        }
-
-        /* ヘッダーエリア */
-        .schedule-header {
-            background: #fff;
-            padding: 10px;
-            display: flex;
-            border-bottom: 2px solid var(--slot-border);
-        }
-        .mini-status { font-size: 0.75rem; flex: 1; }
-        .mini-sprite { width: 50px; height: 50px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-right: 10px; }
-
-        /* メインコンテンツ：左右分割 */
-        .schedule-main {
-            display: flex;
-            flex: 1;
             overflow: hidden;
+            background: white;
         }
 
-        /* 左側：スケジュールスロット */
-        .slot-container {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-            background: #fff;
-            margin: 5px;
-            border-radius: 8px;
-        }
-        .view-tabs {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-        .tab {
-            flex: 1;
-            padding: 5px;
-            text-align: center;
-            background: #ddd;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-        .tab.active { background: var(--accent); color: white; }
-
-        .day-slot {
-            display: flex;
-            align-items: center;
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-            font-size: 0.8rem;
-        }
-        .day-num { width: 30px; color: #888; font-weight: bold; }
-        .action-name { flex: 1; color: #ccc; border: 1px dashed #ccc; border-radius: 4px; padding: 2px 5px; text-align: center; }
-        .action-name.set { color: #333; border: 1px solid #3498db; background: #ebf5fb; }
-
-        /* 右側：行動リスト */
-        .action-list {
-            width: 140px;
-            background: var(--sidebar-bg);
-            padding: 10px;
-            overflow-y: auto;
-        }
-        .action-item {
-            background: #fff;
-            padding: 8px;
-            margin-bottom: 8px;
-            border-radius: 5px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            text-align: center;
+        /* 画面共通設定 */
+        section {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
-        /* 下部：アイテムスロット & ボタン */
-        .schedule-footer {
-            background: #fff;
-            padding: 15px;
-            border-top: 2px solid var(--slot-border);
-        }
-        .item-slots {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .item-slot {
-            width: 50px;
-            height: 50px;
-            border: 2px dashed #bbb;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            background: #f9f9f9;
-        }
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
-        .btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: not-allowed;
-            background: #ccc;
-            color: white;
-        }
-        .btn.active {
-            background: #27ae60;
-            cursor: pointer;
-            box-shadow: 0 4px #1e8449;
-        }
+        section.active { display: flex; }
+
+        /* --- ホーム画面 --- */
+        #home-screen { background: linear-gradient(to bottom, #74b9ff, #a29bfe); }
+        .stats-header { background: rgba(0,0,0,0.7); color: white; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; font-size: 0.8rem; }
+        .main-view { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .monster-sprite { font-size: 5rem; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .status-card { background: rgba(255,255,255,0.9); width: 85%; padding: 15px; border-radius: 15px; margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .bar-bg { background: #eee; height: 8px; border-radius: 4px; margin: 4px 0 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--accent-green); }
+        .home-actions { display: flex; gap: 10px; width: 85%; margin-top: 15px; }
+        .btn-home { flex: 1; padding: 12px; border: none; border-radius: 10px; font-weight: bold; color: white; cursor: pointer; }
+        .footer-nav { background: var(--header-dark); display: flex; justify-content: space-around; padding: 10px 0; }
+        .nav-item { color: white; text-align: center; font-size: 0.7rem; cursor: pointer; }
+
+        /* --- スケジュール画面 --- */
+        #schedule-screen { background: var(--bg-schedule); }
+        .sch-header { background: white; padding: 10px; display: flex; border-bottom: 2px solid #ddd; align-items: center; }
+        .sch-main { display: flex; flex: 1; overflow: hidden; }
+        .slot-list { flex: 1; padding: 10px; overflow-y: auto; background: white; margin: 5px; border-radius: 8px; }
+        .day-row { display: flex; align-items: center; padding: 6px; border-bottom: 1px solid #eee; font-size: 0.8rem; }
+        .act-sidebar { width: 120px; background: var(--header-dark); padding: 10px; overflow-y: auto; }
+        .act-card { background: white; padding: 8px; margin-bottom: 8px; border-radius: 5px; font-size: 0.7rem; text-align: center; cursor: pointer; }
+        .sch-footer { background: white; padding: 15px; border-top: 2px solid #ddd; }
+        .item-row { display: flex; justify-content: center; gap: 10px; margin-bottom: 10px; }
+        .i-slot { width: 45px; height: 45px; border: 2px dashed #aaa; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+
+        /* --- アイテム選択画面 --- */
+        #item-screen { background: var(--bg-item); }
+        .item-grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; overflow-y: auto; }
+        .item-box { background: white; aspect-ratio: 1/1; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid transparent; cursor: pointer; }
+        .item-box.selected { border-color: var(--accent-blue); background: #e3f2fd; }
+        .detail-area { background: white; padding: 15px; border-radius: 15px 15px 0 0; display: flex; gap: 15px; }
+
+        /* ボタン共通 */
+        .btn-green { background: var(--accent-green); box-shadow: 0 4px #1e8449; }
+        .btn-blue { background: var(--accent-blue); box-shadow: 0 4px #0761a4; }
+        .btn-gray { background: #95a5a6; box-shadow: 0 4px #7f8c8d; }
+        .btn-action:active { transform: translateY(2px); box-shadow: none; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    <div class="schedule-header">
-        <div class="mini-sprite">🌱</div>
-        <div class="mini-status">
-            <strong>ドロモン</strong> (Rank E)<br>
-            体力: 10 / 筋力: 5 / 魔力: 5
+    
+    <section id="home-screen" class="active">
+        <div class="stats-header">
+            <span>👤 ブリーダー: ナマエ</span>
+            <span>🏆 ランク: ブロンズ</span>
+            <span>💰 所持金: 1,500G</span>
+            <span>💎 ダイヤ: 10</span>
         </div>
-    </div>
-
-    <div class="schedule-main">
-        <div class="slot-container">
-            <div class="view-tabs">
-                <div class="tab">1週</div>
-                <div class="tab">1月</div>
-                <div class="tab active">3月(90日)</div>
-            </div>
+        <div class="main-view">
+            <div style="position: absolute; top:10px; right:10px; background:white; padding:5px 10px; border-radius:20px; font-size:0.7rem;">🏟 体育館 Lv1</div>
+            <div class="monster-sprite">🌱</div>
+            <div style="background:white; padding:5px 15px; border-radius:20px; font-weight:bold; margin-top:10px; color:red;">進化まで あと 90 日</div>
             
-            <div id="slots">
-                <div class="day-slot"><span class="day-num">1</span> <div class="action-name set">ひたすら腹筋</div></div>
-                <div class="day-slot"><span class="day-num">2</span> <div class="action-name set">ひたすら腹筋</div></div>
-                <div class="day-slot"><span class="day-num">3</span> <div class="action-name">行動を選択</div></div>
-                <div class="day-slot"><span class="day-num">4</span> <div class="action-name">行動を選択</div></div>
-                <div class="day-slot"><span class="day-num">5</span> <div class="action-name">行動を選択</div></div>
-                <div class="day-slot"><span class="day-num">...</span> <div class="action-name">残り85日分</div></div>
+            <div class="status-card">
+                <div style="font-size:0.7rem; font-weight:bold; margin-bottom:5px;">ステータス</div>
+                <div style="font-size:0.6rem;">体力</div><div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div>
+                <div style="font-size:0.6rem;">筋力</div><div class="bar-bg"><div class="bar-fill" style="width:10%"></div></div>
+                <div style="font-size:0.6rem;">素早さ</div><div class="bar-bg"><div class="bar-fill" style="width:15%"></div></div>
+            </div>
+
+            <div class="home-actions">
+                <button class="btn-home btn-green" onclick="alert('行動しました（残り89日）')">行動する</button>
+                <button class="btn-home btn-blue" onclick="changeScreen('schedule-screen')">育成開始</button>
             </div>
         </div>
+        <nav class="footer-nav">
+            <div class="nav-item">🥚<br>育成</div>
+            <div class="nav-item">📖<br>図鑑</div>
+            <div class="nav-item">🛒<br>ショップ</div>
+            <div class="nav-item">🏗<br>増築</div>
+        </nav>
+    </section>
 
-        <div class="action-list">
-            <div style="color: white; font-size: 0.7rem; margin-bottom: 10px;">行動一覧</div>
-            <div class="action-item">腹筋</div>
-            <div class="action-item">瞑想</div>
-            <div class="action-item">お花摘み</div>
-            <div class="action-item">日向ぼっこ</div>
-            <div class="action-item">読書</div>
+    <section id="schedule-screen">
+        <div class="sch-header">
+            <div style="font-size:1.5rem; margin-right:10px;">🌱</div>
+            <div style="font-size:0.7rem;"><strong>ドロモン</strong><br>初期設定を行ってください</div>
         </div>
-    </div>
+        <div class="sch-main">
+            <div class="slot-list" id="day-slots">
+                </div>
+            <div class="act-sidebar">
+                <div style="color:white; font-size:0.6rem; margin-bottom:5px;">トレーニング</div>
+                <div class="act-card">腹筋</div>
+                <div class="act-card">瞑想</div>
+                <div class="act-card">散歩</div>
+                <div style="color:white; font-size:0.6rem; margin:10px 0 5px;">休養</div>
+                <div class="act-card">昼寝</div>
+            </div>
+        </div>
+        <div class="sch-footer">
+            <div class="item-row">
+                <div class="i-slot" id="slot-1"></div>
+                <div class="i-slot" id="slot-2"></div>
+                <div class="i-slot" id="slot-3"></div>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-home btn-blue" style="flex:1" onclick="changeScreen('item-screen')">アイテム選択</button>
+                <button class="btn-home btn-gray" style="flex:1" onclick="changeScreen('home-screen')">育成開始</button>
+            </div>
+        </div>
+    </section>
 
-    <div class="schedule-footer">
-        <div style="font-size: 0.7rem; text-align: center; margin-bottom: 5px;">補助アイテム（3つまで）</div>
-        <div class="item-slots">
-            <div class="item-slot">💊</div>
-            <div class="item-slot"></div>
-            <div class="item-slot"></div>
+    <section id="item-screen">
+        <div style="background:var(--accent-blue); color:white; padding:15px; text-align:center; font-weight:bold;">補助アイテム選択</div>
+        <div class="item-grid">
+            <div class="item-box selected" onclick="selectItem('💊')"><span>💊</span><span style="font-size:0.6rem;">栄養剤</span></div>
+            <div class="item-box" onclick="selectItem('🧪')"><span>🧪</span><span style="font-size:0.6rem;">成長薬</span></div>
+            <div class="item-box" onclick="selectItem('🍖')"><span>🍖</span><span style="font-size:0.6rem;">高級肉</span></div>
+            <div class="item-box" onclick="selectItem('💧')"><span>💧</span><span style="font-size:0.6rem;">聖水</span></div>
         </div>
+        <div class="detail-area">
+            <div style="width:50px; height:50px; background:#eee; display:flex; align-items:center; justify-content:center; font-size:1.5rem; border-radius:8px;">💊</div>
+            <div style="flex:1;">
+                <div style="font-weight:bold; font-size:0.8rem;">栄養剤</div>
+                <div style="font-size:0.7rem; color:#666;">トレーニング時の消費体力を軽減します。</div>
+            </div>
+        </div>
+        <div style="padding:15px; background:white; display:flex; gap:10px;">
+            <button class="btn-home btn-gray" style="flex:1" onclick="changeScreen('schedule-screen')">戻る</button>
+            <button class="btn-home btn-green" style="flex:2" onclick="confirmItems()">セット完了</button>
+        </div>
+    </section>
 
-        <div class="btn-group">
-            <button class="btn active">補助アイテム選択</button>
-            <button class="btn">育成開始</button> 
-        </div>
-        <p style="font-size: 0.6rem; color: #666; text-align: center; margin-top: 5px;">
-            ※全てのスロットを埋めると「育成開始」が有効になります[span_0](end_span)
-        </p>
-    </div>
 </div>
+
+<script>
+    // 画面切り替え関数
+    function changeScreen(screenId) {
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+        
+        if(screenId === 'schedule-screen') {
+            renderSlots();
+        }
+    }
+
+    // スケジュールスロットの生成 (簡易的に10日分)
+    function renderSlots() {
+        const container = document.getElementById('day-slots');
+        container.innerHTML = '';
+        for(let i=1; i<=90; i++) {
+            const div = document.createElement('div');
+            div.className = 'day-row';
+            div.innerHTML = `<span style="width:25px; color:#999;">${i}</span> <div style="flex:1; border:1px dashed #ccc; text-align:center; border-radius:4px; color:#aaa;">行動を選択</div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // アイテム選択の模擬挙動
+    let selectedEmoji = '💊';
+    function selectItem(emoji) {
+        selectedEmoji = emoji;
+        // 本来は複数選択ロジックを入れる
+    }
+
+    function confirmItems() {
+        document.getElementById('slot-1').innerText = selectedEmoji;
+        changeScreen('schedule-screen');
+    }
+</script>
 
 </body>
 </html>
