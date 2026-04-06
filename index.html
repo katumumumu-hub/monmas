@@ -3,133 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>モンスターマスターズ - PROTOTYPE</title>
+    <title>ハナモン・ブリーダー - ホーム</title>
     <style>
         :root {
-            --main-blue: #0288d1;
-            --panel-bg: rgba(0, 30, 60, 0.85);
-            --gold: #fdd835;
+            --bg-color: #f0f4f8;
+            --header-color: #2c3e50;
+            --accent-color: #27ae60;
+            --sub-accent: #f1c40f;
+            --text-light: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.9);
         }
 
-        body { font-family: sans-serif; background: #e0f7fa; margin: 0; display: flex; justify-content: center; }
-        #app-container { width: 100%; max-width: 450px; height: 100vh; background: white; position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
-
-        /* --- 性別選択画面 (初期表示) --- */
-        #setup-screen {
-            position: absolute; inset: 0; background: var(--panel-bg); color: white;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200;
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
         }
-        .select-btn {
-            width: 200px; padding: 20px; margin: 10px; font-size: 18px; cursor: pointer;
-            border-radius: 10px; border: 2px solid white; background: transparent; color: white;
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background: linear-gradient(to bottom, #74b9ff, #a29bfe);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
         }
-        .select-btn:hover { background: rgba(255,255,255,0.2); }
 
-        /* --- 共通：上部ステータス --- */
-        .top-nav { position: absolute; top: 0; width: 100%; background: var(--panel-bg); color: white; padding: 10px; box-sizing: border-box; z-index: 100; font-size: 12px; }
-        .exp-bar { width: 100%; height: 8px; background: #444; border-radius: 4px; margin-top: 5px; overflow: hidden; }
-        #exp-fill { height: 100%; background: var(--main-blue); width: 20%; transition: width 0.3s; }
+        /* ヘッダー：プレイヤー情報 */
+        .header {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: var(--text-light);
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            font-size: 0.85rem;
+            z-index: 10;
+        }
 
-        /* --- 画面切り替え --- */
-        .screen { display: none; height: 100%; padding-top: 80px; box-sizing: border-box; }
-        .active { display: block; }
+        .header-item { margin: 2px 0; }
 
-        /* --- ホーム画面：主人公の画像表示 --- */
-        #home-screen { background: linear-gradient(to bottom, #87CEEB, #fff); text-align: center; }
-        .stage { height: 55%; display: flex; align-items: flex-end; justify-content: center; gap: 10px; padding-bottom: 40px; }
+        /* メインエリア：育成中のタネモン */
+        .main-game-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .facility-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--card-bg);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 2px solid var(--accent-color);
+        }
+
+        .tanemon-container {
+            text-align: center;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .tanemon-sprite {
+            width: 150px;
+            height: 150px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .evolution-timer {
+            background: rgba(255,255,255,0.8);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #d63031;
+        }
+
+        /* ステータスカード */
+        .status-card {
+            background: var(--card-bg);
+            width: 90%;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .stat-label { width: 50px; font-size: 0.75rem; font-weight: bold; }
+
+        .stat-bar-bg {
+            flex-grow: 1;
+            height: 8px;
+            background: #dfe6e9;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            background: var(--accent-color);
+        }
+
+        /* 行動ボタン */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            width: 90%;
+            margin-top: 15px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px #218c53;
+            transition: 0.1s;
+        }
+
+        .btn-next { background-color: var(--accent-color); color: white; }
+        .btn-all { background-color: var(--sub-accent); color: #333; box-shadow: 0 4px #c29d0b; }
         
-        /* ここがフォルダ内の画像を表示するメイン部分 */
-        #hero-img {
-            width: 160px; height: 240px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: bottom;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
-            transition: background-image 0.5s;
+        .btn-action:active { transform: translateY(2px); box-shadow: none; }
+
+        /* フッターメニュー */
+        .footer-menu {
+            background-color: var(--header-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
         }
-        .buddy-unit { font-size: 50px; animation: bounce 2s infinite ease-in-out; }
 
-        /* --- 下部ナビゲーション --- */
-        .bottom-nav { position: absolute; bottom: 0; width: 100%; height: 60px; background: #333; display: flex; justify-content: space-around; align-items: center; }
-        .nav-btn { color: white; border: none; background: none; font-size: 10px; cursor: pointer; }
-        .nav-btn span { font-size: 20px; display: block; }
+        .menu-item {
+            color: white;
+            text-decoration: none;
+            font-size: 0.7rem;
+            text-align: center;
+            flex: 1;
+        }
 
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .menu-icon {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 2px;
+        }
     </style>
 </head>
 <body>
 
-<div id="app-container">
-    <div id="setup-screen">
-        <h2>主人公の性別を選んでね</h2>
-        <button class="select-btn" onclick="startGame('boy')">👦 男の子</button>
-        <button class="select-btn" onclick="startGame('girl')">👧 女の子</button>
+<div class="app-container">
+    <div class="header">
+        <div class="header-item">👤 プレイヤー: ナマエ</div>
+        <div class="header-item">🏆 ランク: ブロンズ</div>
+        <div class="header-item">💰 所持金: 1,500G</div>
+        <div class="header-item">💎 ダイヤ: 10個</div>
     </div>
 
-    <div class="top-nav">
-        <div style="display: flex; justify-content: space-between;">
-            <div><b id="p-name">レン</b> <span id="p-rank" style="color:var(--gold)">Rank 1</span></div>
-            <div>💰<span id="p-gold">500</span> 💎<span id="p-crystal">10</span></div>
+    <div class="main-game-area">
+        <div class="facility-status">
+            🏟 体育館 Lv1
         </div>
-        <div class="exp-bar"><div id="exp-fill"></div></div>
-    </div>
 
-    <div id="home-screen" class="screen">
-        <div class="stage">
-            <div id="buddy-1" class="buddy-unit">🐾</div>
-            <div id="hero-img"></div>
-            <div id="buddy-2" class="buddy-unit">🐾</div>
+        <div class="tanemon-container">
+            <div class="tanemon-sprite">🌱</div>
+            <div class="evolution-timer">進化まで あと 82 日</div>
         </div>
-        <h3>モンスターマスターズの世界へ！</h3>
+
+        <div class="status-card">
+            <div style="font-size: 0.8rem; margin-bottom: 8px; font-weight: bold; color: #555;">
+                現在の行動：筋力トレーニング
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">体力</span>
+                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 60%;"></div></div>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">筋力</span>
+                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 45%;"></div></div>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">魔力</span>
+                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 20%;"></div></div>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">素早さ</span>
+                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 35%;"></div></div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-action btn-next">行動する</button>
+            <button class="btn-action btn-all">全行動（一括完了）</button>
+        </div>
     </div>
 
-    <div id="book-screen" class="screen">
-        <h2 style="text-align:center;">図鑑画面</h2>
-        <p style="text-align:center;">（ここにモンスターが並びます）</p>
-    </div>
-
-    <div class="bottom-nav">
-        <button class="nav-btn" onclick="showScreen('home-screen')"><span>🏠</span>ホーム</button>
-        <button class="nav-btn" onclick="showScreen('book-screen')"><span>📖</span>図鑑</button>
-    </div>
+    <nav class="footer-menu">
+        <a href="#" class="menu-item"><span class="menu-icon">🥚</span>育成</a>
+        <a href="#" class="menu-item"><span class="menu-icon">📖</span>図鑑</a>
+        <a href="#" class="menu-item"><span class="menu-icon">🛒</span>ショップ</a>
+        <a href="#" class="menu-item"><span class="menu-icon">🏗</span>増築</a>
+        <a href="#" class="menu-item"><span class="menu-icon">🎒</span>持ち物</a>
+    </nav>
 </div>
-
-<script>
-/**
- * 1. 性別選択とゲーム開始
- */
-function startGame(gender) {
-    // 選択された性別に応じて、画像フォルダのパスを決定
-    const heroImg = document.getElementById('hero-img');
-    
-    if (gender === 'boy') {
-        heroImg.style.backgroundImage = "url('images/hero/boy.jpg')";
-    } else {
-        heroImg.style.backgroundImage = "url('images/hero/girl.jpg')";
-    }
-
-    // セットアップ画面を非表示にし、ホームを表示
-    document.getElementById('setup-screen').style.display = 'none';
-    showScreen('home-screen');
-}
-
-/**
- * 2. 画面切り替え関数
- */
-function showScreen(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-}
-
-/**
- * 3. 将来的にモンスターフォルダ（images/monsters/）から画像を出すための準備
- * 例: loadMonsterImage(1) と呼べば images/monsters/mon_001.png を出す、など
- */
-function loadMonsterImage(id) {
-    const formattedId = String(id).padStart(3, '0'); // 1 -> 001 に変換
-    return `images/monsters/mon_${formattedId}.png`;
-}
-</script>
 
 </body>
 </html>
