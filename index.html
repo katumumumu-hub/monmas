@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - 修正版</title>
+    <title>ハナモン・ブリーダー - 育成制限版</title>
     <style>
         :root {
             --bg-sky: linear-gradient(180deg, #74b9ff 0%, #a29bfe 100%);
@@ -26,7 +26,6 @@
         #monster-image-container { width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
         #monster-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
         
-        /* ステータスボード */
         #status-board { 
             background: var(--panel-bg); border-radius: 10px; padding: 12px; width: 85%; color: white; font-size: 0.8rem; display: none; 
         }
@@ -45,6 +44,7 @@
         .nav-icon { font-size: 1.5rem; }
 
         .btn-buy { background: var(--accent-blue); color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-buy:disabled { background: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -81,12 +81,11 @@
             <div class="info-slot"><span class="info-label">MONEY:</span><span class="money-display">1500 G</span></div>
             <button onclick="showPage('home-screen')" style="color:white; background:none; border:none; cursor:pointer; font-weight:bold;">✖ 戻る</button>
         </header>
-        <div id="shop-item-list">読み込み中...</div>
+        <div id="shop-item-list">取得中...</div>
     </section>
 </div>
 
 <script>
-    // hanamon.json.txt と画像パスを統合したデータ
     const monsterDataMaster = {
         "ドロモン（最低ランク）": {
             image: "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/images/doromon.png",
@@ -96,10 +95,9 @@
 
     let gameState = {
         money: 1500,
-        currentMonster: null
+        currentMonster: null // ここが null でなければ「育成中」とみなす
     };
 
-    // 画面切り替え（ここを showPage に統一）
     function showPage(id) {
         document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
@@ -112,11 +110,8 @@
         try {
             const response = await fetch(url);
             const data = await response.json();
-            // JSONの階層に合わせて取得
             renderShop(data.shop_data.tanemon_list);
-        } catch (e) { 
-            container.innerHTML = "<p style='color:white; text-align:center;'>通信失敗</p>"; 
-        }
+        } catch (e) { container.innerHTML = "通信失敗"; }
     }
 
     function renderShop(items) {
@@ -138,41 +133,42 @@
     }
 
     function buyItem(name, price) {
+        // --- 修正箇所：育成中チェック ---
+        if (gameState.currentMonster !== null) {
+            alert("すでに別のタネモンを育成中です！\n新しいタネモンを購入するには、今の育成を完了させてください。");
+            return;
+        }
+
         if (gameState.money >= price) {
             gameState.money -= price;
-            // 購入したのがタネモンの場合、ホーム画面に設定
             if (monsterDataMaster[name]) {
                 gameState.currentMonster = name;
             }
-            alert(name + " を入手しました！");
+            alert(name + " を入手しました！育成を開始します。");
             updateUI();
+            showPage('home-screen'); // 購入したらホームへ戻る
         } else { 
             alert("お金が足りません！"); 
         }
     }
 
     function updateUI() {
-        // お金表示の更新
         document.querySelectorAll('.money-display').forEach(el => el.innerText = gameState.money + " G");
         
-        // モンスター情報の更新
         if (gameState.currentMonster) {
             const data = monsterDataMaster[gameState.currentMonster];
-            document.getElementById('monster-image-container').innerHTML = `<img src="${data.image}" alt="monster">`;
+            document.getElementById('monster-image-container').innerHTML = `<img src="${data.image}">`;
             document.getElementById('monster-name-display').innerText = gameState.currentMonster;
             document.getElementById('status-board').style.display = 'block';
             
-            // ステータスとバーの更新
             for (let key in data.stats) {
                 const val = data.stats[key];
                 document.getElementById(`${key}-val`).innerText = val;
-                // バーの長さを計算（10を100%として表示）
                 document.getElementById(`${key}-bar`).style.width = (val * 10) + "%";
             }
         }
     }
 
-    // 初期化
     updateUI();
 </script>
 </body>
