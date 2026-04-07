@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - 育成制限版</title>
+    <title>ハナモン・ブリーダー - ショップ拡張版</title>
     <style>
         :root {
             --bg-sky: linear-gradient(180deg, #74b9ff 0%, #a29bfe 100%);
@@ -35,8 +35,10 @@
         .status-bar-fill { background: #55efc4; height: 100%; width: 0%; transition: width 0.5s; }
         .status-val { width: 25px; text-align: right; }
 
+        /* ショップリスト拡張 */
         #shop-item-list { flex: 1; overflow-y: auto; padding: 15px; }
         .shop-item-card { background: white; margin-bottom: 10px; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; color: #333; }
+        .item-type-badge { font-size: 0.6rem; color: #0984e3; font-weight: bold; margin-bottom: 2px; }
 
         .bottom-nav { height: 75px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 15px 15px 0 0; }
         .nav-button { flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 0.65rem; color: #95a5a6; cursor: pointer; border: none; background: none; }
@@ -44,7 +46,6 @@
         .nav-icon { font-size: 1.5rem; }
 
         .btn-buy { background: var(--accent-blue); color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .btn-buy:disabled { background: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -59,7 +60,7 @@
             <div id="monster-image-container">
                 <div style="font-size: 4rem; opacity: 0.3;">🌱</div>
             </div>
-            <div id="monster-name-display" style="font-weight:bold; color:white; margin-bottom:15px; font-size:1.2rem;">タネを選んでください</div>
+            <div id="monster-name-display" style="font-weight:bold; color:white; margin-bottom:15px; font-size:1.2rem;">ショップでタネを選ぼう</div>
             
             <div id="status-board">
                 <div class="status-row"><span class="status-label">HP</span><div class="status-bar-bg"><div id="hp-bar" class="status-bar-fill"></div></div><span id="hp-val" class="status-val">0</span></div>
@@ -81,12 +82,13 @@
             <div class="info-slot"><span class="info-label">MONEY:</span><span class="money-display">1500 G</span></div>
             <button onclick="showPage('home-screen')" style="color:white; background:none; border:none; cursor:pointer; font-weight:bold;">✖ 戻る</button>
         </header>
-        <div id="shop-item-list">取得中...</div>
+        <div id="shop-item-list">データ読み込み中...</div>
     </section>
 </div>
 
 <script>
-    const monsterDataMaster = {
+    // モンスターデータ（画像とステータス）
+    const monsterMaster = {
         "ドロモン（最低ランク）": {
             image: "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/images/doromon.png",
             stats: { hp: 10, str: 5, mag: 5, def: 5, spd: 5 }
@@ -95,7 +97,8 @@
 
     let gameState = {
         money: 1500,
-        currentMonster: null // ここが null でなければ「育成中」とみなす
+        currentMonster: null,
+        inventory: [] // アイテム保存用
     };
 
     function showPage(id) {
@@ -110,45 +113,66 @@
         try {
             const response = await fetch(url);
             const data = await response.json();
-            renderShop(data.shop_data.tanemon_list);
-        } catch (e) { container.innerHTML = "通信失敗"; }
+            
+            // 3つのカテゴリをまとめてリスト化
+            const allItems = [
+                ...data.shop_data.tanemon_list.map(i => ({...i, type: 'monster'})),
+                ...data.shop_data.consumable_items.map(i => ({...i, type: 'item'})),
+                ...data.shop_data.equipment_items.map(i => ({...i, type: 'equipment'}))
+            ];
+            
+            renderShop(allItems);
+        } catch (e) {
+            container.innerHTML = "<p style='color:white; text-align:center;'>通信失敗</p>";
+        }
     }
 
     function renderShop(items) {
         const container = document.getElementById('shop-item-list');
         container.innerHTML = '';
+        
         items.forEach(item => {
+            const typeLabel = item.type === 'monster' ? '【タネモン】' : (item.type === 'item' ? '【消耗品】' : '【設備】');
             const card = document.createElement('div');
             card.className = "shop-item-card";
             card.innerHTML = `
                 <div style="flex:1">
+                    <div class="item-type-badge">${typeLabel}</div>
                     <div style="font-weight:bold">${item.name}</div>
                     <div style="font-size:0.7rem; color:#666">${item.description}</div>
                     <div style="color:#e67e22; font-weight:bold">💰 ${item.price} G</div>
                 </div>
-                <button class="btn-buy" onclick="buyItem('${item.name}', ${item.price})">購入</button>
+                <button class="btn-buy" onclick="buyItem('${item.name}', ${item.price}, '${item.type}')">購入</button>
             `;
             container.appendChild(card);
         });
     }
 
-    function buyItem(name, price) {
-        // --- 修正箇所：育成中チェック ---
-        if (gameState.currentMonster !== null) {
-            alert("すでに別のタネモンを育成中です！\n新しいタネモンを購入するには、今の育成を完了させてください。");
+    function buyItem(name, price, type) {
+        // 所持金チェック
+        if (gameState.money < price) {
+            alert("お金が足りません！");
             return;
         }
 
-        if (gameState.money >= price) {
-            gameState.money -= price;
-            if (monsterDataMaster[name]) {
-                gameState.currentMonster = name;
-            }
-            alert(name + " を入手しました！育成を開始します。");
+        // モンスターのみの重複購入チェック
+        if (type === 'monster' && gameState.currentMonster !== null) {
+            alert("すでに別のタネモンを育成中です！");
+            return;
+        }
+
+        // 購入確定処理
+        gameState.money -= price;
+
+        if (type === 'monster') {
+            gameState.currentMonster = name;
+            alert(name + " の育成を開始します！");
             updateUI();
-            showPage('home-screen'); // 購入したらホームへ戻る
-        } else { 
-            alert("お金が足りません！"); 
+            showPage('home-screen'); // モンスター購入時はホームへ
+        } else {
+            gameState.inventory.push(name);
+            alert(name + " を購入して持ち物に追加しました。");
+            updateUI();
         }
     }
 
@@ -156,15 +180,17 @@
         document.querySelectorAll('.money-display').forEach(el => el.innerText = gameState.money + " G");
         
         if (gameState.currentMonster) {
-            const data = monsterDataMaster[gameState.currentMonster];
-            document.getElementById('monster-image-container').innerHTML = `<img src="${data.image}">`;
-            document.getElementById('monster-name-display').innerText = gameState.currentMonster;
-            document.getElementById('status-board').style.display = 'block';
-            
-            for (let key in data.stats) {
-                const val = data.stats[key];
-                document.getElementById(`${key}-val`).innerText = val;
-                document.getElementById(`${key}-bar`).style.width = (val * 10) + "%";
+            const data = monsterMaster[gameState.currentMonster];
+            if (data) {
+                document.getElementById('monster-image-container').innerHTML = `<img src="${data.image}">`;
+                document.getElementById('monster-name-display').innerText = gameState.currentMonster;
+                document.getElementById('status-board').style.display = 'block';
+                
+                for (let key in data.stats) {
+                    const val = data.stats[key];
+                    document.getElementById(`${key}-val`).innerText = val;
+                    document.getElementById(`${key}-bar`).style.width = (val * 10) + "%";
+                }
             }
         }
     }
