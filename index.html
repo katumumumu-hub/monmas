@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - 修正完了版</title>
+    <title>ハナモン・ブリーダー - バッグ説明追加版</title>
     <style>
         :root {
             --bg-sky: linear-gradient(180deg, #74b9ff 0%, #a29bfe 100%);
@@ -16,16 +16,13 @@
         body { font-family: sans-serif; margin: 0; background: #222; display: flex; justify-content: center; overflow: hidden; }
         .app-container { width: 100%; max-width: 450px; height: 100vh; background: var(--bg-sky); position: relative; display: flex; flex-direction: column; }
 
-        /* 画面管理 */
         section { display: none; width: 100%; flex: 1; flex-direction: column; overflow-y: auto; }
         section.active { display: flex; }
 
-        /* ヘッダー */
         .header-info { padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: rgba(0,0,0,0.2); }
         .info-slot { background: var(--panel-bg); padding: 5px 10px; border-radius: 4px; font-size: 0.75rem; color: white; display: flex; justify-content: space-between; }
         .info-label { color: var(--accent-yellow); font-weight: bold; }
 
-        /* ホーム画面：モンスター表示 */
         .monster-display { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
         #monster-image-container { width: 160px; height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
         #monster-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
@@ -35,7 +32,6 @@
         .status-bar-bg { flex: 1; background: #333; height: 8px; margin: 0 10px; border-radius: 4px; overflow: hidden; }
         .status-bar-fill { background: var(--accent-green); height: 100%; width: 0%; transition: width 0.4s; }
 
-        /* リスト系スタイル（ショップ・バッグ） */
         .list-container { padding: 15px; }
         .card { background: white; margin-bottom: 12px; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; color: #333; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .item-info { flex: 1; padding-right: 10px; }
@@ -44,7 +40,6 @@
         .item-desc { font-size: 0.75rem; color: #666; margin: 4px 0; }
         .item-price { font-weight: bold; color: #e67e22; font-size: 0.9rem; }
 
-        /* 下部ナビゲーション */
         .bottom-nav { height: 75px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 20px 20px 0 0; border-top: 1px solid #ddd; z-index: 100; }
         .nav-button { flex: 1; border: none; background: none; display: flex; flex-direction: column; align-items: center; cursor: pointer; color: #95a5a6; padding: 10px 0; }
         .nav-button.active { color: var(--accent-blue); }
@@ -106,12 +101,17 @@
 </div>
 
 <script>
-    // --- データ定義 ---
     const monsterMaster = {
         "ドロモン（最低ランク）": {
             image: "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/images/doromon.png",
             stats: { hp: 10, str: 5, mag: 5, def: 5, spd: 5 }
         }
+    };
+
+    // アイテムの説明文を管理する辞書（持ち物画面用）
+    const itemDescriptions = {
+        "栄養ドリンク": "トレーニング時の体力消費を10%抑える。使用するとSTRが2上がる。",
+        "奇跡の肥料": "高ランクへの進化確率がわずかに上昇する。使用すると全能力が1上がる。"
     };
 
     let gameState = {
@@ -121,24 +121,18 @@
         inventory: []
     };
 
-    // --- 画面切り替え ---
     function showPage(id) {
-        // すべてのセクションを隠す
         document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-        // 対象のセクションを表示
         document.getElementById(id).classList.add('active');
         
-        // ナビボタンの見た目を更新
         document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
         const activeBtn = Array.from(document.querySelectorAll('.nav-button')).find(btn => btn.getAttribute('onclick').includes(id));
         if(activeBtn) activeBtn.classList.add('active');
 
-        // データ読み込み発火
         if(id === 'shop-screen') fetchShopData();
         if(id === 'bag-screen') renderBag();
     }
 
-    // --- ショップ機能 ---
     async function fetchShopData() {
         const url = "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/shop.json";
         const container = document.getElementById('shop-item-list');
@@ -186,7 +180,6 @@
         updateUI();
     }
 
-    // --- 持ち物機能 ---
     function renderBag() {
         const container = document.getElementById('bag-item-list');
         document.getElementById('bag-count').innerText = gameState.inventory.length;
@@ -200,9 +193,12 @@
         gameState.inventory.forEach((itemName, index) => {
             const card = document.createElement('div');
             card.className = "card";
+            // 持ち物画面でも item-desc を使って説明を表示
+            const desc = itemDescriptions[itemName] || "不思議なアイテムです。";
             card.innerHTML = `
                 <div class="item-info">
                     <div class="item-name">${itemName}</div>
+                    <div class="item-desc">${desc}</div>
                 </div>
                 <button class="btn-action btn-use" onclick="useItem(${index})">使用</button>
             `;
@@ -227,12 +223,9 @@
         renderBag();
     }
 
-    // --- UI更新 ---
     function updateUI() {
-        // 所持金
         document.querySelectorAll('.money-display').forEach(el => el.innerText = gameState.money + " G");
         
-        // モンスター情報
         if (gameState.currentMonster) {
             const mData = monsterMaster[gameState.currentMonster];
             document.getElementById('monster-image-container').innerHTML = `<img src="${mData.image}" alt="monster">`;
@@ -242,13 +235,11 @@
             for (let s in gameState.monsterStats) {
                 const val = gameState.monsterStats[s];
                 document.getElementById(`${s}-val`).innerText = val;
-                // バーを更新（最大20と想定して計算）
                 document.getElementById(`${s}-bar`).style.width = Math.min(100, (val / 20) * 100) + "%";
             }
         }
     }
 
-    // 初期実行
     updateUI();
 </script>
 </body>
