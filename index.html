@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - バッグ説明追加版</title>
+    <title>ハナモン・ブリーダー - 育成開始版</title>
     <style>
         :root {
             --bg-sky: linear-gradient(180deg, #74b9ff 0%, #a29bfe 100%);
@@ -11,6 +11,7 @@
             --accent-yellow: #ffeaa7;
             --accent-blue: #0984e3;
             --accent-green: #55efc4;
+            --accent-red: #ff7675;
         }
 
         body { font-family: sans-serif; margin: 0; background: #222; display: flex; justify-content: center; overflow: hidden; }
@@ -19,35 +20,46 @@
         section { display: none; width: 100%; flex: 1; flex-direction: column; overflow-y: auto; }
         section.active { display: flex; }
 
+        /* ヘッダー */
         .header-info { padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: rgba(0,0,0,0.2); }
         .info-slot { background: var(--panel-bg); padding: 5px 10px; border-radius: 4px; font-size: 0.75rem; color: white; display: flex; justify-content: space-between; }
         .info-label { color: var(--accent-yellow); font-weight: bold; }
 
-        .monster-display { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        #monster-image-container { width: 160px; height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+        /* ホーム画面：モンスター表示 */
+        .monster-display { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; }
+        
+        /* 残り日数表示 */
+        #days-left-badge { 
+            background: var(--accent-red); color: white; padding: 4px 12px; border-radius: 20px; 
+            font-weight: bold; font-size: 0.9rem; margin-bottom: 10px; display: none;
+        }
+
+        #monster-image-container { width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
         #monster-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
         
-        #status-board { background: var(--panel-bg); border-radius: 12px; padding: 12px; width: 85%; color: white; font-size: 0.8rem; display: none; }
-        .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-        .status-bar-bg { flex: 1; background: #333; height: 8px; margin: 0 10px; border-radius: 4px; overflow: hidden; }
+        #status-board { background: var(--panel-bg); border-radius: 12px; padding: 10px; width: 85%; color: white; font-size: 0.75rem; display: none; }
+        .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+        .status-bar-bg { flex: 1; background: #333; height: 6px; margin: 0 10px; border-radius: 3px; overflow: hidden; }
         .status-bar-fill { background: var(--accent-green); height: 100%; width: 0%; transition: width 0.4s; }
 
-        .list-container { padding: 15px; }
-        .card { background: white; margin-bottom: 12px; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; color: #333; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .item-info { flex: 1; padding-right: 10px; }
-        .item-category { font-size: 0.6rem; color: var(--accent-blue); font-weight: bold; }
-        .item-name { font-weight: bold; font-size: 1rem; }
-        .item-desc { font-size: 0.75rem; color: #666; margin: 4px 0; }
-        .item-price { font-weight: bold; color: #e67e22; font-size: 0.9rem; }
+        /* 追加：育成アクションボタン */
+        #action-menu { display: none; grid-template-columns: 1fr 1fr; gap: 10px; width: 85%; margin-top: 15px; }
+        .btn-main-action { background: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; color: #333; cursor: pointer; font-size: 0.9rem; box-shadow: 0 3px 0 #ccc; }
+        .btn-main-action:active { transform: translateY(2px); box-shadow: none; }
 
-        .bottom-nav { height: 75px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 20px 20px 0 0; border-top: 1px solid #ddd; z-index: 100; }
-        .nav-button { flex: 1; border: none; background: none; display: flex; flex-direction: column; align-items: center; cursor: pointer; color: #95a5a6; padding: 10px 0; }
+        /* リスト系スタイル */
+        .list-container { padding: 15px; }
+        .card { background: white; margin-bottom: 12px; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; color: #333; }
+        .item-info { flex: 1; }
+        .item-desc { font-size: 0.7rem; color: #666; margin: 2px 0; }
+
+        /* ナビゲーション */
+        .bottom-nav { height: 75px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 20px 20px 0 0; z-index: 100; }
+        .nav-button { flex: 1; border: none; background: none; display: flex; flex-direction: column; align-items: center; cursor: pointer; color: #95a5a6; }
         .nav-button.active { color: var(--accent-blue); }
-        .nav-icon { font-size: 1.5rem; margin-bottom: 2px; }
         .nav-text { font-size: 0.7rem; font-weight: bold; }
 
-        .btn-action { background: var(--accent-blue); color: white; border: none; padding: 10px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; white-space: nowrap; }
-        .btn-use { background: var(--accent-green); color: #333; }
+        .btn-buy { background: var(--accent-blue); color: white; border: none; padding: 10px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -59,8 +71,11 @@
             <div class="info-slot"><span class="info-label">MONEY:</span><span class="money-display">1500 G</span></div>
         </header>
         <div class="monster-display">
+            <div id="days-left-badge">あと 90 日</div>
+
             <div id="monster-image-container"><div style="font-size: 4rem; opacity: 0.3;">🌱</div></div>
-            <div id="monster-name-display" style="font-weight:bold; color:white; margin-bottom:15px;">育成を開始してください</div>
+            <div id="monster-name-display" style="font-weight:bold; color:white; margin-bottom:10px;">ショップでタネモンを選ぼう</div>
+            
             <div id="status-board">
                 <div class="status-row"><span>HP</span><div class="status-bar-bg"><div id="hp-bar" class="status-bar-fill"></div></div><span id="hp-val">0</span></div>
                 <div class="status-row"><span>STR</span><div class="status-bar-bg"><div id="str-bar" class="status-bar-fill"></div></div><span id="str-val">0</span></div>
@@ -68,13 +83,18 @@
                 <div class="status-row"><span>DEF</span><div class="status-bar-bg"><div id="def-bar" class="status-bar-fill"></div></div><span id="def-val">0</span></div>
                 <div class="status-row"><span>SPD</span><div class="status-bar-bg"><div id="spd-bar" class="status-bar-fill"></div></div><span id="spd-val">0</span></div>
             </div>
+
+            <div id="action-menu">
+                <button class="btn-main-action" onclick="alert('トレーニング画面は準備中です')">🎮 行動</button>
+                <button class="btn-main-action" onclick="showPage('bag-screen')">🎒 アイテム</button>
+            </div>
         </div>
     </section>
 
     <section id="shop-screen">
         <header class="header-info">
             <div class="info-slot"><span class="info-label">MONEY:</span><span class="money-display">1500 G</span></div>
-            <button onclick="showPage('home-screen')" style="color:white; background:none; border:none; cursor:pointer; font-weight:bold;">✖ 閉じる</button>
+            <button onclick="showPage('home-screen')" style="color:white; background:none; border:none; font-weight:bold;">✖ 閉じる</button>
         </header>
         <div id="shop-item-list" class="list-container">取得中...</div>
     </section>
@@ -82,21 +102,15 @@
     <section id="bag-screen">
         <header class="header-info">
             <div class="info-slot"><span class="info-label">BAG:</span><span id="bag-count">0</span> アイテム</div>
-            <button onclick="showPage('home-screen')" style="color:white; background:none; border:none; cursor:pointer; font-weight:bold;">✖ 閉じる</button>
+            <button onclick="showPage('home-screen')" style="color:white; background:none; border:none; font-weight:bold;">✖ 閉じる</button>
         </header>
         <div id="bag-item-list" class="list-container">空っぽです</div>
     </section>
 
     <nav class="bottom-nav">
-        <button class="nav-button active" onclick="showPage('home-screen')">
-            <span class="nav-icon">🥚</span><span class="nav-text">育成</span>
-        </button>
-        <button class="nav-button" onclick="showPage('shop-screen')">
-            <span class="nav-icon">🛒</span><span class="nav-text">ショップ</span>
-        </button>
-        <button class="nav-button" onclick="showPage('bag-screen')">
-            <span class="nav-icon">🎒</span><span class="nav-text">持ち物</span>
-        </button>
+        <button class="nav-button active" onclick="showPage('home-screen')">🏠<span class="nav-text">ホーム</span></button>
+        <button class="nav-button" onclick="showPage('shop-screen')">🛒<span class="nav-text">ショップ</span></button>
+        <button class="nav-button" onclick="showPage('bag-screen')">🎒<span class="nav-text">持ち物</span></button>
     </nav>
 </div>
 
@@ -104,11 +118,11 @@
     const monsterMaster = {
         "ドロモン（最低ランク）": {
             image: "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/images/doromon.png",
-            stats: { hp: 10, str: 5, mag: 5, def: 5, spd: 5 }
+            stats: { hp: 10, str: 5, mag: 5, def: 5, spd: 5 },
+            days: 90
         }
     };
 
-    // アイテムの説明文を管理する辞書（持ち物画面用）
     const itemDescriptions = {
         "栄養ドリンク": "トレーニング時の体力消費を10%抑える。使用するとSTRが2上がる。",
         "奇跡の肥料": "高ランクへの進化確率がわずかに上昇する。使用すると全能力が1上がる。"
@@ -118,17 +132,15 @@
         money: 1500,
         currentMonster: null,
         monsterStats: null,
+        daysLeft: 90,
         inventory: []
     };
 
     function showPage(id) {
         document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        
         document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = Array.from(document.querySelectorAll('.nav-button')).find(btn => btn.getAttribute('onclick').includes(id));
-        if(activeBtn) activeBtn.classList.add('active');
-
+        
         if(id === 'shop-screen') fetchShopData();
         if(id === 'bag-screen') renderBag();
     }
@@ -139,43 +151,37 @@
         try {
             const res = await fetch(url);
             const data = await res.json();
-            
             const allItems = [
                 ...data.shop_data.tanemon_list.map(i => ({...i, type: 'monster', label: 'タネモン'})),
                 ...data.shop_data.consumable_items.map(i => ({...i, type: 'item', label: 'アイテム'}))
             ];
-
             container.innerHTML = '';
             allItems.forEach(item => {
                 const card = document.createElement('div');
                 card.className = "card";
-                card.innerHTML = `
-                    <div class="item-info">
-                        <div class="item-category">${item.label}</div>
-                        <div class="item-name">${item.name}</div>
-                        <div class="item-desc">${item.description}</div>
-                        <div class="item-price">💰 ${item.price} G</div>
-                    </div>
-                    <button class="btn-action" onclick="buyItem('${item.name}', ${item.price}, '${item.type}')">購入</button>
-                `;
+                card.innerHTML = `<div class="item-info">
+                    <div style="font-size:0.6rem; color:blue;">${item.label}</div>
+                    <b>${item.name}</b><br><small class="item-desc">${item.description}</small><br><b>💰 ${item.price} G</b>
+                </div><button class="btn-buy" onclick="buyItem('${item.name}', ${item.price}, '${item.type}')">購入</button>`;
                 container.appendChild(card);
             });
-        } catch(e) { container.innerHTML = "データの読み込みに失敗しました"; }
+        } catch(e) { container.innerHTML = "エラー"; }
     }
 
     function buyItem(name, price, type) {
-        if (gameState.money < price) return alert("お金が足りません！");
-        if (type === 'monster' && gameState.currentMonster) return alert("すでに育成中のモンスターがいます！");
+        if (gameState.money < price) return alert("お金不足");
+        if (type === 'monster' && gameState.currentMonster) return alert("育成中");
 
         gameState.money -= price;
         if (type === 'monster') {
             gameState.currentMonster = name;
             gameState.monsterStats = JSON.parse(JSON.stringify(monsterMaster[name].stats));
-            alert(name + " の育成を開始します！");
+            gameState.daysLeft = monsterMaster[name].days;
+            alert(name + " を購入！育成開始です！");
             showPage('home-screen');
         } else {
             gameState.inventory.push(name);
-            alert(name + " を購入しました！");
+            alert(name + " を購入！");
         }
         updateUI();
     }
@@ -183,41 +189,22 @@
     function renderBag() {
         const container = document.getElementById('bag-item-list');
         document.getElementById('bag-count').innerText = gameState.inventory.length;
-        
-        if (gameState.inventory.length === 0) {
-            container.innerHTML = "<p style='text-align:center; color:white; margin-top:50px;'>アイテムがありません</p>";
-            return;
-        }
-
+        if (gameState.inventory.length === 0) { container.innerHTML = "空です"; return; }
         container.innerHTML = '';
         gameState.inventory.forEach((itemName, index) => {
             const card = document.createElement('div');
             card.className = "card";
-            // 持ち物画面でも item-desc を使って説明を表示
-            const desc = itemDescriptions[itemName] || "不思議なアイテムです。";
-            card.innerHTML = `
-                <div class="item-info">
-                    <div class="item-name">${itemName}</div>
-                    <div class="item-desc">${desc}</div>
-                </div>
-                <button class="btn-action btn-use" onclick="useItem(${index})">使用</button>
-            `;
+            card.innerHTML = `<div class="item-info"><b>${itemName}</b><br><small class="item-desc">${itemDescriptions[itemName] || ""}</small></div>
+            <button class="btn-buy" style="background:var(--accent-green);color:#333" onclick="useItem(${index})">使用</button>`;
             container.appendChild(card);
         });
     }
 
     function useItem(index) {
-        if (!gameState.currentMonster) return alert("使用する相手（モンスター）がいません！");
+        if (!gameState.currentMonster) return alert("相手がいません");
         const itemName = gameState.inventory[index];
-        
-        if (itemName === "栄養ドリンク") {
-            gameState.monsterStats.str += 2;
-            alert("ドロモンの STR が 2 上がった！");
-        } else if (itemName === "奇跡の肥料") {
-            for(let key in gameState.monsterStats) gameState.monsterStats[key] += 1;
-            alert("ドロモンの 全ステータス が 1 上がった！");
-        }
-
+        if (itemName === "栄養ドリンク") gameState.monsterStats.str += 2;
+        else if (itemName === "奇跡の肥料") for(let k in gameState.monsterStats) gameState.monsterStats[k] += 1;
         gameState.inventory.splice(index, 1);
         updateUI();
         renderBag();
@@ -225,21 +212,19 @@
 
     function updateUI() {
         document.querySelectorAll('.money-display').forEach(el => el.innerText = gameState.money + " G");
-        
         if (gameState.currentMonster) {
-            const mData = monsterMaster[gameState.currentMonster];
-            document.getElementById('monster-image-container').innerHTML = `<img src="${mData.image}" alt="monster">`;
+            document.getElementById('days-left-badge').style.display = 'block';
+            document.getElementById('days-left-badge').innerText = `あと ${gameState.daysLeft} 日`;
+            document.getElementById('monster-image-container').innerHTML = `<img src="${monsterMaster[gameState.currentMonster].image}">`;
             document.getElementById('monster-name-display').innerText = gameState.currentMonster;
             document.getElementById('status-board').style.display = 'block';
-            
+            document.getElementById('action-menu').style.display = 'grid';
             for (let s in gameState.monsterStats) {
-                const val = gameState.monsterStats[s];
-                document.getElementById(`${s}-val`).innerText = val;
-                document.getElementById(`${s}-bar`).style.width = Math.min(100, (val / 20) * 100) + "%";
+                document.getElementById(`${s}-val`).innerText = gameState.monsterStats[s];
+                document.getElementById(`${s}-bar`).style.width = Math.min(100, (gameState.monsterStats[s] / 20) * 100) + "%";
             }
         }
     }
-
     updateUI();
 </script>
 </body>
