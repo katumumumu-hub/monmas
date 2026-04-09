@@ -1,0 +1,104 @@
+{
+  "consumable_items": [
+    {
+      "id": "I001",
+      "name": "栄養ドリンク",
+      "imageID": "drink_01",
+      "effect": { "target": "str", "value": 2 },
+      "price": 300,
+      "sell_price": 100,
+      "rarity": "Common",
+      "description": "トレーニングの効率を上げ、力がみなぎるドリンク。使用するとSTRが2上がる。"
+    },
+    {
+      "id": "I002",
+      "name": "奇跡の肥料",
+      "imageID": "fertilizer_01",
+      "effect": { "target": "all", "value": 1 },
+      "price": 2000,
+      "sell_price": 800,
+      "rarity": "Rare",
+      "description": "古代の土壌から抽出された養分。使用すると全能力が1上がる。"
+    },
+    {
+      "id": "I003",
+      "name": "ひんやりミスト",
+      "imageID": "mist_01",
+      "effect": { "target": "spd", "value": 3 },
+      "price": 500,
+      "sell_price": 200,
+      "rarity": "Common",
+      "description": "体温を下げて身軽にする霧吹き。使用するとSPDが3上がる。"
+    },
+    {
+      "id": "I004",
+      "name": "プロテインクッキー",
+      "imageID": "cookie_01",
+      "effect": { "target": "hp", "value": 5 },
+      "price": 800,
+      "sell_price": 300,
+      "rarity": "Common",
+      "description": "頑丈な体を作るお菓子。使用すると最大HPが5上がる。"
+    },
+    {
+      "id": "I005",
+      "name": "賢者のしずく",
+      "imageID": "drop_01",
+      "effect": { "target": "mag", "value": 4 },
+      "price": 1200,
+      "sell_price": 500,
+      "rarity": "Uncommon",
+      "description": "知恵を授ける透き通った水。使用するとMAGが4上がる。"
+    },
+    {
+      "id": "I006",
+      "name": "カチカチナッツ",
+      "imageID": "nuts_01",
+      "effect": { "target": "def", "value": 3 },
+      "price": 600,
+      "sell_price": 250,
+      "rarity": "Common",
+      "description": "皮が非常に硬い木の実。使用するとDEFが3上がる。"
+    },
+    {
+      "id": "I007",
+      "name": "時の砂時計",
+      "imageID": "clock_01",
+      "effect": { "target": "days", "value": 7 },
+      "price": 5000,
+      "sell_price": 2000,
+      "rarity": "SuperRare",
+      "description": "育成の時間を巻き戻す禁断の道具。育成残日数が7日増える。"
+    },
+    {
+      "id": "I008",
+      "name": "リフレッシュハーブ",
+      "imageID": "herb_01",
+      "effect": { "target": "condition", "value": "reset" },
+      "price": 400,
+      "sell_price": 150,
+      "rarity": "Common",
+      "description": "爽やかな香りの葉。疲労をリセットし、体調を「普通」に戻す。"
+    },
+    {
+      "id": "I009",
+      "name": "黄金の如雨露",
+      "imageID": "jouro_01",
+      "effect": { "target": "evolve_rate", "value": 1.5 },
+      "price": 8000,
+      "sell_price": 3500,
+      "rarity": "Epic",
+      "description": "伝説の職人が作った如雨露。次に進化した時のレアリティを大幅に上げやすくする。"
+    },
+    {
+      "id": "I010",
+      "name": "守りの護符",
+      "imageID": "talisman_01",
+      "effect": { "target": "injury_rate", "value": 0 },
+      "price": 1500,
+      "sell_price": 600,
+      "rarity": "Uncommon",
+      "description": "怪我を防ぐお守り。持っている間、トレーニングの失敗による怪我を防ぐ（1回使い切り）。"
+    }
+  ]
+}
