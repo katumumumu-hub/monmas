@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - 育成開始版</title>
+    <title>ハナモン・ブリーダー - バフ表示対応版</title>
     <style>
         :root {
             --bg-sky: linear-gradient(180deg, #74b9ff 0%, #a29bfe 100%);
@@ -12,6 +12,7 @@
             --accent-blue: #0984e3;
             --accent-green: #55efc4;
             --accent-red: #ff7675;
+            --buff-bg: rgba(255, 255, 255, 0.2);
         }
 
         body { font-family: sans-serif; margin: 0; background: #222; display: flex; justify-content: center; overflow: hidden; }
@@ -20,18 +21,29 @@
         section { display: none; width: 100%; flex: 1; flex-direction: column; overflow-y: auto; }
         section.active { display: flex; }
 
-        /* ヘッダー */
         .header-info { padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: rgba(0,0,0,0.2); }
         .info-slot { background: var(--panel-bg); padding: 5px 10px; border-radius: 4px; font-size: 0.75rem; color: white; display: flex; justify-content: space-between; }
         .info-label { color: var(--accent-yellow); font-weight: bold; }
 
-        /* ホーム画面：モンスター表示 */
         .monster-display { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; }
         
-        /* 残り日数表示 */
         #days-left-badge { 
             background: var(--accent-red); color: white; padding: 4px 12px; border-radius: 20px; 
-            font-weight: bold; font-size: 0.9rem; margin-bottom: 10px; display: none;
+            font-weight: bold; font-size: 0.9rem; margin-bottom: 5px; display: none;
+        }
+
+        /* --- 追加：バフスロットのスタイル --- */
+        #buff-container {
+            display: flex; gap: 5px; margin-bottom: 10px; height: 24px;
+        }
+        .buff-badge {
+            background: var(--accent-yellow); color: #333; font-size: 0.65rem;
+            padding: 2px 8px; border-radius: 4px; font-weight: bold;
+            border: 1px solid rgba(255,255,255,0.5);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; }
         }
 
         #monster-image-container { width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
@@ -42,18 +54,12 @@
         .status-bar-bg { flex: 1; background: #333; height: 6px; margin: 0 10px; border-radius: 3px; overflow: hidden; }
         .status-bar-fill { background: var(--accent-green); height: 100%; width: 0%; transition: width 0.4s; }
 
-        /* 追加：育成アクションボタン */
         #action-menu { display: none; grid-template-columns: 1fr 1fr; gap: 10px; width: 85%; margin-top: 15px; }
         .btn-main-action { background: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; color: #333; cursor: pointer; font-size: 0.9rem; box-shadow: 0 3px 0 #ccc; }
-        .btn-main-action:active { transform: translateY(2px); box-shadow: none; }
 
-        /* リスト系スタイル */
         .list-container { padding: 15px; }
         .card { background: white; margin-bottom: 12px; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; color: #333; }
-        .item-info { flex: 1; }
-        .item-desc { font-size: 0.7rem; color: #666; margin: 2px 0; }
-
-        /* ナビゲーション */
+        
         .bottom-nav { height: 75px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 20px 20px 0 0; z-index: 100; }
         .nav-button { flex: 1; border: none; background: none; display: flex; flex-direction: column; align-items: center; cursor: pointer; color: #95a5a6; }
         .nav-button.active { color: var(--accent-blue); }
@@ -72,6 +78,8 @@
         </header>
         <div class="monster-display">
             <div id="days-left-badge">あと 90 日</div>
+            
+            <div id="buff-container"></div>
 
             <div id="monster-image-container"><div style="font-size: 4rem; opacity: 0.3;">🌱</div></div>
             <div id="monster-name-display" style="font-weight:bold; color:white; margin-bottom:10px;">ショップでタネモンを選ぼう</div>
@@ -85,7 +93,7 @@
             </div>
 
             <div id="action-menu">
-                <button class="btn-main-action" onclick="alert('トレーニング画面は準備中です')">🎮 行動</button>
+                <button class="btn-main-action" onclick="doAction()">🎮 行動（1日経過）</button>
                 <button class="btn-main-action" onclick="showPage('bag-screen')">🎒 アイテム</button>
             </div>
         </div>
@@ -124,8 +132,9 @@
     };
 
     const itemDescriptions = {
-        "栄養ドリンク": "トレーニング時の体力消費を10%抑える。使用するとSTRが2上がる。",
-        "奇跡の肥料": "高ランクへの進化確率がわずかに上昇する。使用すると全能力が1上がる。"
+        "栄養ドリンク": "次の行動のみ、STRが一時的に大きく上昇する効果発動。",
+        "奇跡の肥料": "使用すると全能力が1上がる。",
+        "守りの護符": "持っている間、1回だけ怪我（トラブル）を防ぐ。"
     };
 
     let gameState = {
@@ -133,14 +142,13 @@
         currentMonster: null,
         monsterStats: null,
         daysLeft: 90,
-        inventory: []
+        inventory: [],
+        activeBuffs: [] // 発動中の効果（最大3つ）
     };
 
     function showPage(id) {
         document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
-        
         if(id === 'shop-screen') fetchShopData();
         if(id === 'bag-screen') renderBag();
     }
@@ -151,37 +159,34 @@
         try {
             const res = await fetch(url);
             const data = await res.json();
-            const allItems = [
-                ...data.shop_data.tanemon_list.map(i => ({...i, type: 'monster', label: 'タネモン'})),
-                ...data.shop_data.consumable_items.map(i => ({...i, type: 'item', label: 'アイテム'}))
-            ];
+            // 守りの護符を擬似的に追加
+            const items = [...data.shop_data.tanemon_list.map(i=>({...i,type:'monster'})), 
+                           ...data.shop_data.consumable_items.map(i=>({...i,type:'item'})),
+                           {name:"守りの護符", price:1500, description:"持っている間1回だけ怪我を防ぐ。", type:'item'}];
             container.innerHTML = '';
-            allItems.forEach(item => {
+            items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = "card";
-                card.innerHTML = `<div class="item-info">
-                    <div style="font-size:0.6rem; color:blue;">${item.label}</div>
-                    <b>${item.name}</b><br><small class="item-desc">${item.description}</small><br><b>💰 ${item.price} G</b>
-                </div><button class="btn-buy" onclick="buyItem('${item.name}', ${item.price}, '${item.type}')">購入</button>`;
+                card.innerHTML = `<div style="flex:1"><b>${item.name}</b><br><small>${item.description}</small><br>💰 ${item.price}G</div>
+                <button class="btn-buy" onclick="buyItem('${item.name}', ${item.price}, '${item.type}')">購入</button>`;
                 container.appendChild(card);
             });
-        } catch(e) { container.innerHTML = "エラー"; }
+        } catch(e){ container.innerHTML="通信エラー"; }
     }
 
     function buyItem(name, price, type) {
         if (gameState.money < price) return alert("お金不足");
         if (type === 'monster' && gameState.currentMonster) return alert("育成中");
-
+        
         gameState.money -= price;
         if (type === 'monster') {
             gameState.currentMonster = name;
             gameState.monsterStats = JSON.parse(JSON.stringify(monsterMaster[name].stats));
             gameState.daysLeft = monsterMaster[name].days;
-            alert(name + " を購入！育成開始です！");
-            showPage('home-screen');
         } else {
             gameState.inventory.push(name);
-            alert(name + " を購入！");
+            // 守りの護符は持っているだけでバフ表示
+            if(name === "守りの護符") addBuff("加護発動中");
         }
         updateUI();
     }
@@ -191,27 +196,64 @@
         document.getElementById('bag-count').innerText = gameState.inventory.length;
         if (gameState.inventory.length === 0) { container.innerHTML = "空です"; return; }
         container.innerHTML = '';
-        gameState.inventory.forEach((itemName, index) => {
+        gameState.inventory.forEach((name, index) => {
             const card = document.createElement('div');
             card.className = "card";
-            card.innerHTML = `<div class="item-info"><b>${itemName}</b><br><small class="item-desc">${itemDescriptions[itemName] || ""}</small></div>
-            <button class="btn-buy" style="background:var(--accent-green);color:#333" onclick="useItem(${index})">使用</button>`;
+            card.innerHTML = `<div style="flex:1"><b>${name}</b></div><button class="btn-buy" style="background:var(--accent-green);color:#333" onclick="useItem(${index})">使用</button>`;
             container.appendChild(card);
         });
     }
 
     function useItem(index) {
         if (!gameState.currentMonster) return alert("相手がいません");
-        const itemName = gameState.inventory[index];
-        if (itemName === "栄養ドリンク") gameState.monsterStats.str += 2;
-        else if (itemName === "奇跡の肥料") for(let k in gameState.monsterStats) gameState.monsterStats[k] += 1;
+        const name = gameState.inventory[index];
+        
+        if (name === "栄養ドリンク") {
+            addBuff("栄養UP");
+            alert("栄養ドリンクを使用！次の行動で効果が出ます。");
+        } else if (name === "奇跡の肥料") {
+            for(let k in gameState.monsterStats) gameState.monsterStats[k] += 1;
+        } else if (name === "守りの護符") {
+            alert("このアイテムは持っているだけで効果を発揮します。");
+            return;
+        }
+
         gameState.inventory.splice(index, 1);
         updateUI();
         renderBag();
     }
 
+    function addBuff(buffName) {
+        if (gameState.activeBuffs.length < 3) {
+            gameState.activeBuffs.push(buffName);
+        } else {
+            alert("これ以上効果を重複させられません！");
+        }
+    }
+
+    // 行動ボタン（1日経過させてバフを消すテスト用）
+    function doAction() {
+        if(gameState.daysLeft <= 0) return alert("育成終了しています");
+        gameState.daysLeft--;
+        // 「栄養UP」などの一時バフを消費する
+        gameState.activeBuffs = gameState.activeBuffs.filter(b => b === "加護発動中"); 
+        alert("1日経過しました。一時的なバフが解除されました。");
+        updateUI();
+    }
+
     function updateUI() {
         document.querySelectorAll('.money-display').forEach(el => el.innerText = gameState.money + " G");
+        
+        // バフ表示の更新
+        const buffContainer = document.getElementById('buff-container');
+        buffContainer.innerHTML = '';
+        gameState.activeBuffs.slice(0, 3).forEach(b => {
+            const span = document.createElement('span');
+            span.className = 'buff-badge';
+            span.innerText = `✨ ${b}`;
+            buffContainer.appendChild(span);
+        });
+
         if (gameState.currentMonster) {
             document.getElementById('days-left-badge').style.display = 'block';
             document.getElementById('days-left-badge').innerText = `あと ${gameState.daysLeft} 日`;
