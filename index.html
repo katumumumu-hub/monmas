@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - 体力システム実装版</title>
+    <title>ハナモン・ブリーダー - バフ効果適用版</title>
     <style>
         :root {
             --bg-sky: linear-gradient(180deg, #74b9ff 0%, #a29bfe 100%);
@@ -29,18 +29,16 @@
         
         #days-left-badge { background: var(--accent-red); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; margin-bottom: 5px; display: none; }
         #buff-container { display: flex; gap: 5px; margin-bottom: 10px; height: 24px; }
-        .buff-badge { background: var(--accent-yellow); color: #333; font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
+        .buff-badge { background: var(--accent-yellow); color: #333; font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; border: 1px solid rgba(255,255,255,0.5); }
 
         #monster-image-container { width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }
         #monster-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
         
-        /* ステータスボード */
         #status-board { background: var(--panel-bg); border-radius: 12px; padding: 10px; width: 85%; color: white; font-size: 0.75rem; display: none; }
         .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
         .status-bar-bg { flex: 1; background: #333; height: 6px; margin: 0 10px; border-radius: 3px; overflow: hidden; }
         .status-bar-fill { background: var(--accent-green); height: 100%; width: 0%; transition: width 0.4s; }
 
-        /* 追加：体力ゲージ専用スタイル */
         .energy-section { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.2); }
         .energy-label { font-weight: bold; color: var(--accent-orange); }
         .energy-bar-fill { background: linear-gradient(90deg, #ffeaa7, #fab1a0); transition: width 0.5s ease-out; }
@@ -90,8 +88,8 @@
             </div>
 
             <div id="action-menu">
-                <button class="btn-main-action" onclick="doAction('work')">🎮 行動 (-20)</button>
-                <button class="btn-main-action" onclick="doAction('rest')">💤 休憩 (+40)</button>
+                <button class="btn-main-action" onclick="doAction('work')">🎮 行動</button>
+                <button class="btn-main-action" onclick="doAction('rest')">💤 休憩</button>
                 <button class="btn-main-action" onclick="showPage('bag-screen')" style="grid-column: span 2; margin-top:5px; background:#f1f2f6;">🎒 アイテムを使う</button>
             </div>
         </div>
@@ -133,7 +131,7 @@
         money: 1500,
         currentMonster: null,
         monsterStats: null,
-        energy: 100, // 追加：初期体力
+        energy: 100,
         daysLeft: 90,
         inventory: [],
         activeBuffs: []
@@ -153,7 +151,8 @@
             const res = await fetch(url);
             const data = await res.json();
             const items = [...data.shop_data.tanemon_list.map(i=>({...i,type:'monster'})), 
-                           ...data.shop_data.consumable_items.map(i=>({...i,type:'item'}))];
+                           ...data.shop_data.consumable_items.map(i=>({...i,type:'item'})),
+                           {name:"守りの護符", price:1500, description:"持っている間、休憩の効率が上がる。", type:'item'}];
             container.innerHTML = '';
             items.forEach(item => {
                 const card = document.createElement('div');
@@ -176,6 +175,7 @@
             gameState.energy = 100;
         } else {
             gameState.inventory.push(name);
+            if(name === "守りの護符") addBuff("加護発動中");
         }
         updateUI();
     }
@@ -196,7 +196,7 @@
         if (!gameState.currentMonster) return;
         const name = gameState.inventory[index];
         if (name === "栄養ドリンク") {
-            gameState.activeBuffs.push("栄養UP");
+            addBuff("栄養UP");
         } else if (name === "奇跡の肥料") {
             for(let k in gameState.monsterStats) gameState.monsterStats[k] += 1;
         }
@@ -205,20 +205,40 @@
         renderBag();
     }
 
-    // 行動・休憩処理
+    function addBuff(buffName) {
+        if (gameState.activeBuffs.length < 3) gameState.activeBuffs.push(buffName);
+    }
+
+    // --- 今回のメイン修正：バフを参照した行動・休憩処理 ---
     function doAction(type) {
         if (!gameState.currentMonster || gameState.daysLeft <= 0) return;
 
         if (type === 'work') {
-            if (gameState.energy < 20) return alert("体力が足りません！休憩しましょう。");
-            gameState.energy -= 20;
-            // 行動による能力上昇（例：STR+1）
+            // バフ「栄養UP」があれば消費スタミナ半減
+            let cost = gameState.activeBuffs.includes("栄養UP") ? 10 : 20;
+            
+            if (gameState.energy < cost) return alert("体力が足りません！休憩しましょう。");
+            
+            gameState.energy -= cost;
             gameState.monsterStats.str += 1;
-            gameState.activeBuffs = gameState.activeBuffs.filter(b => b === "加護発動中"); 
-            alert("トレーニング完了！STRが1上がりました。");
-        } else if (type === 'rest') {
-            gameState.energy = Math.min(100, gameState.energy + 40);
-            alert("ゆっくり休みました。体力が40回復！");
+
+            // 「栄養UP」は使い切りなので削除
+            if (gameState.activeBuffs.includes("栄養UP")) {
+                const idx = gameState.activeBuffs.indexOf("栄養UP");
+                gameState.activeBuffs.splice(idx, 1);
+                alert("栄養ドリンクの効果で消費スタミナを抑えました！STR+1");
+            } else {
+                alert("トレーニング完了！STRが1上がりました。");
+            }
+        } 
+        else if (type === 'rest') {
+            // バフ「加護発動中」があれば回復量アップ
+            let recovery = gameState.activeBuffs.includes("加護発動中") ? 60 : 40;
+            gameState.energy = Math.min(100, gameState.energy + recovery);
+            
+            let msg = gameState.activeBuffs.includes("加護発動中") ? 
+                      "加護のおかげで、いつもより深く眠れました！体力+60" : "ゆっくり休みました。体力+40";
+            alert(msg);
         }
 
         gameState.daysLeft--;
@@ -227,7 +247,6 @@
 
     function updateUI() {
         document.querySelectorAll('.money-display').forEach(el => el.innerText = gameState.money + " G");
-        
         const buffContainer = document.getElementById('buff-container');
         buffContainer.innerHTML = '';
         gameState.activeBuffs.slice(0, 3).forEach(b => {
@@ -244,13 +263,10 @@
             document.getElementById('monster-name-display').innerText = gameState.currentMonster;
             document.getElementById('status-board').style.display = 'block';
             document.getElementById('action-menu').style.display = 'grid';
-            
-            // ステータス更新
             for (let s in gameState.monsterStats) {
                 document.getElementById(`${s}-val`).innerText = gameState.monsterStats[s];
                 document.getElementById(`${s}-bar`).style.width = Math.min(100, (gameState.monsterStats[s] / 20) * 100) + "%";
             }
-            // 体力ゲージ更新
             document.getElementById('energy-val').innerText = gameState.energy;
             document.getElementById('energy-bar').style.width = gameState.energy + "%";
         }
