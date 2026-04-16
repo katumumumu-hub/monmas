@@ -57,7 +57,7 @@
         .screen { display: none; flex: 1; flex-direction: column; }
         .active { display: flex; }
 
-        /* 画像エリアを大きく表示 */
+        /* 画像エリア：余白が出ないように修正 */
         .rank-image-box {
             flex: 1;
             background: #000;
@@ -72,7 +72,7 @@
         #rank-image {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* 画像の比率を保って表示 */
+            object-fit: cover; /* ここを cover に変更することで枠いっぱいに表示されます */
         }
 
         .home-bottom-area { flex-shrink: 0; }
@@ -92,7 +92,6 @@
             cursor: pointer;
         }
 
-        /* スキル詳細 */
         #skill-detail-panel {
             background: #222;
             padding: 10px;
@@ -132,33 +131,37 @@
         </div>
 
         <div id="event-screen" class="screen">
-            <h3 id="event-title"></h3>
-            <p id="event-text"></p>
-            <div id="choices-area"></div>
+            <div style="background: var(--panel-color); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <h3 id="event-title" style="margin-top:0;"></h3>
+                <p id="event-text"></p>
+            </div>
+            <div id="choices-area" style="display:flex; flex-direction:column; gap:10px;"></div>
         </div>
 
         <div id="result-screen" class="screen">
-            <h3>結果</h3>
-            <p id="result-text"></p>
-            <div id="change-log" style="color:#0f8;"></div>
-            <div id="skill-log" style="color:#fa0;"></div>
-            <button onclick="showScreen('home-screen')">戻る</button>
+            <div style="background: var(--panel-color); padding: 15px; border-radius: 8px; margin-bottom: 15px; flex:1;">
+                <h3 style="margin-top:0;">結果</h3>
+                <p id="result-text"></p>
+                <div id="change-log" style="color:#0f8; margin-top: 15px; font-size: 0.9rem;"></div>
+                <div id="skill-log" style="color:#fa0; margin-top: 5px; font-size: 0.9rem;"></div>
+            </div>
+            <button onclick="showScreen('home-screen')">ホームへ戻る</button>
         </div>
 
         <div id="status-screen" class="screen">
-            <h3>ステータス</h3>
+            <h3 style="margin-top:0;">ステータス</h3>
             <div class="status-grid" id="stat-list"></div>
-            <h3>内面性</h3>
+            <h3 style="margin-top:15px;">内面性</h3>
             <div class="status-grid" id="inner-list"></div>
         </div>
 
         <div id="skill-screen" class="screen">
-            <h3>取得済みスキル</h3>
+            <h3 style="margin-top:0;">取得済みスキル</h3>
             <div id="acquired-skills-list"></div>
             <div id="skill-detail-panel">
                 <div id="detail-skill-name" style="font-weight:bold;"></div>
-                <div id="detail-skill-bonus" style="color:#0f8; font-size:0.8rem;"></div>
-                <div id="detail-skill-desc" style="font-size:0.8rem; margin-top:5px;"></div>
+                <div id="detail-skill-bonus" style="color:#0f8; font-size:0.8rem; margin: 5px 0;"></div>
+                <div id="detail-skill-desc" style="font-size:0.8rem;"></div>
             </div>
         </div>
     </main>
@@ -171,7 +174,7 @@
 </div>
 
 <script>
-// マスターデータに画像パス(imagePath)を追加
+// マスターデータ
 const ranks = [
     { "id": 1, "name": "魔族の端くれ", "reqCombatPower": 0, "maxCrystals": 3, "imagePath": "assets/images/rank1.png" },
     { "id": 2, "name": "魔軍歩兵", "reqCombatPower": 1000, "maxCrystals": 4, "imagePath": "assets/images/rank2.png" }
@@ -184,7 +187,7 @@ const skills = [
 const events = [
     {
         "id": 1, "title": "特訓", "text": "独りで鍛錬した。", "minRankId": 1,
-        "choices": [{ "text": "筋力トレ", "req": null, "res": "筋肉がついた。", "change": {"physAtk": 10} }]
+        "choices": [{ "text": "筋力トレ", "req": null, "fail": "", "res": "筋肉がついた。", "change": {"physAtk": 10} }]
     }
 ];
 
@@ -212,10 +215,9 @@ function updateAll() {
     const subs = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
     const cp = Object.values(s).reduce((a,b)=>a+b,0) + Object.values(i).reduce((a,b)=>a+b,0) + Math.max(0, subs);
     
-    // UI更新
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     document.getElementById('rank-name').innerText = currentRank.name;
-    document.getElementById('rank-image').src = currentRank.imagePath; // 画像パスを反映
+    document.getElementById('rank-image').src = currentRank.imagePath;
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     document.getElementById('display-subordinates').innerText = Math.max(0, subs).toLocaleString() + "名";
     
@@ -255,7 +257,7 @@ function startEvent() {
     if(gameState.crystals <= 0) return;
     gameState.crystals--;
     gameState.lastPlayTime = Date.now();
-    const ev = events[0]; // サンプルとして1つ目
+    const ev = events[0]; 
     document.getElementById('event-title').innerText = ev.title;
     document.getElementById('event-text').innerText = ev.text;
     const area = document.getElementById('choices-area');
@@ -265,7 +267,13 @@ function startEvent() {
         b.innerText = c.text;
         b.onclick = () => {
             document.getElementById('result-text').innerText = c.res;
-            for(let k in c.change) gameState.stats[k] += c.change[k];
+            document.getElementById('change-log').innerHTML = '';
+            for(let k in c.change) {
+                if (gameState.stats[k] !== undefined) gameState.stats[k] += c.change[k];
+                else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += c.change[k];
+                const sign = c.change[k] > 0 ? "+" : "";
+                document.getElementById('change-log').innerHTML += `${LABELS[k]}: ${sign}${c.change[k]}<br>`;
+            }
             updateAll();
             showScreen('result-screen');
         };
@@ -274,11 +282,18 @@ function startEvent() {
     showScreen('event-screen');
 }
 
+// 修正ポイント：内面性（innerTraits）も描画するように追加しました
 function renderStats() {
-    const list = document.getElementById('stat-list');
-    list.innerHTML = '';
+    const statList = document.getElementById('stat-list');
+    statList.innerHTML = '';
     for(let k in gameState.stats) {
-        list.innerHTML += `<div class="status-item"><div class="status-label">${LABELS[k]}</div><div class="status-value">${gameState.stats[k]}</div></div>`;
+        statList.innerHTML += `<div class="status-item"><div class="status-label">${LABELS[k]}</div><div class="status-value">${gameState.stats[k]}</div></div>`;
+    }
+
+    const innerList = document.getElementById('inner-list');
+    innerList.innerHTML = '';
+    for(let k in gameState.innerTraits) {
+        innerList.innerHTML += `<div class="status-item"><div class="status-label">${LABELS[k]}</div><div class="status-value">${gameState.innerTraits[k]}</div></div>`;
     }
 }
 
