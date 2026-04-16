@@ -39,5 +39,169 @@
         "statChanges": {"charisma": -10, "responsibility": 5}
       }
     ]
+  },
+  {
+    "id": 2,
+    "title": "魔界のゴミ拾い",
+    "text": "上官から魔王城地下の清掃を命じられた。大量のガラクタの中に、何か光るものがある…。",
+    "minRankId": 1,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "真面目に清掃する",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "隅々まで磨き上げた。上官からの信頼が少し上がったようだ。",
+        "statChanges": {"responsibility": 15, "leadership": 5}
+      },
+      {
+        "choiceId": 2,
+        "text": "光るものをくすねる",
+        "reqCondition": [{"stat": "luck", "value": 10}],
+        "disabledReason": "運が悪く、監視の目があって手が出せない…",
+        "resultText": "監視の隙を突いて古びた魔導具を手に入れた！魔力が体に流れ込む。",
+        "statChanges": {"magAtk": 10, "cruelty": 5, "luck": -5}
+      },
+      {
+        "choiceId": 3,
+        "text": "適当にサボる",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "物陰で昼寝をした。体力が回復したが、統率者としての自覚に欠ける振る舞いだ。",
+        "statChanges": {"hp": 10, "responsibility": -10}
+      },
+      {
+        "choiceId": 4,
+        "text": "他の端くれにやらせる",
+        "reqCondition": [{"stat": "leadership", "value": 5}],
+        "disabledReason": "統率力が足りず、誰も言うことを聞いてくれない…",
+        "resultText": "威圧感で周囲を動かした。自分は一歩も動かずに作業を終わらせた。",
+        "statChanges": {"leadership": 10, "control": 10}
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "人間村への威力偵察",
+    "text": "魔界の境界付近にある人間の村を見つけた。どう動く？",
+    "minRankId": 1,
+    "weight": 90,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "村を焼き払う",
+        "reqCondition": [{"stat": "cruelty", "value": 15}],
+        "disabledReason": "そこまでの残虐性がまだ芽生えていない…",
+        "resultText": "無慈悲に火を放った。阿鼻叫喚の地獄絵図が、あなたを魔王の道へと駆り立てる。",
+        "statChanges": {"cruelty": 20, "magAtk": 5, "charisma": 10}
+      },
+      {
+        "choiceId": 2,
+        "text": "家畜を盗んで去る",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "村人が寝静まった頃、家畜を連れ去った。軍の食料として重宝されるだろう。",
+        "statChanges": {"physAtk": 5, "responsibility": 5}
+      },
+      {
+        "choiceId": 3,
+        "text": "井戸に毒を投げ込む",
+        "reqCondition": [{"stat": "magAtk", "value": 10}],
+        "disabledReason": "毒を生成できるほどの魔法力がない…",
+        "resultText": "ひっそりと毒を仕込んだ。翌日、村からは活気が消え失せた。",
+        "statChanges": {"magAtk": 10, "cruelty": 10, "luck": 5}
+      },
+      {
+        "choiceId": 4,
+        "text": "遠くから観察する",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "人間の生態を詳しく調査した。弱点を知ることは将来の支配に役立つ。",
+        "statChanges": {"magDef": 5, "physDef": 5}
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "魔界酒場の揉め事",
+    "text": "酒場で酔っ払った巨漢魔族が暴れている。近くの魔族が怯えているが…",
+    "minRankId": 1,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "正面から叩き伏せる",
+        "reqCondition": [{"stat": "physAtk", "value": 20}],
+        "disabledReason": "体格差がありすぎて、逆にボコボコにされそうだ…",
+        "resultText": "一撃で巨漢を沈めた。酒場にいた魔族たちが、あなたをリーダーと仰ぎ始めた。",
+        "statChanges": {"physAtk": 15, "leadership": 10, "charisma": 10}
+      },
+      {
+        "choiceId": 2,
+        "text": "説得して落ち着かせる",
+        "reqCondition": [{"stat": "charisma", "value": 10}],
+        "disabledReason": "言葉に重みがなく、聞き流されてしまった…",
+        "resultText": "不思議な威圧感で巨漢をなだめた。彼は大人しく席に戻り、感謝の杯を捧げた。",
+        "statChanges": {"charisma": 15, "leadership": 5}
+      },
+      {
+        "choiceId": 3,
+        "text": "背後から不意打ちする",
+        "reqCondition": [{"stat": "agility", "value": 10}],
+        "disabledReason": "動きが鈍く、不意打ちする前に気づかれそうだ…",
+        "resultText": "素早い動きで急所を突いた。狡猾な勝利に、ダークな名声が広まった。",
+        "statChanges": {"agility": 10, "cruelty": 5, "luck": 5}
+      },
+      {
+        "choiceId": 4,
+        "text": "騒ぎに乗じて酒を盗む",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "混乱に乗じて高級酒を手に入れた。支配欲が満たされるのを感じる。",
+        "statChanges": {"control": 15, "luck": 5}
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "不気味な魔法陣の発見",
+    "text": "洞窟の奥で、古代の魔王が残したとされる魔法陣を見つけた。脈打つような闇を感じる。",
+    "minRankId": 1,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "闇の力を吸収する",
+        "reqCondition": [{"stat": "magDef", "value": 15}],
+        "disabledReason": "闇の波動に耐えられるだけの魔法防御がない…",
+        "resultText": "強大な魔力を強引に奪い取った。全身の細胞が活性化していく！",
+        "statChanges": {"magAtk": 20, "mp": 20, "control": 10}
+      },
+      {
+        "choiceId": 2,
+        "text": "魔法陣を解析する",
+        "reqCondition": [{"stat": "magAtk", "value": 15}],
+        "disabledReason": "高度な魔導知識（魔法力）が足りない…",
+        "resultText": "古代の術式を解読した。効率的な魔力の運用法を学び、知恵がついた。",
+        "statChanges": {"magDef": 15, "physDef": 5}
+      },
+      {
+        "choiceId": 3,
+        "text": "供え物を捧げて祈る",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "丁寧に祈りを捧げた。魔王の加護か、運気が上がったような気がする。",
+        "statChanges": {"luck": 15, "responsibility": 5}
+      },
+      {
+        "choiceId": 4,
+        "text": "恐ろしくて逃げ出す",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "一目散に逃げた。命は助かったが、足腰が鍛えられたようだ。",
+        "statChanges": {"agility": 10, "charisma": -5}
+      }
+    ]
   }
 ]
