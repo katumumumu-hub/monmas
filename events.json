@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "title": "魔軍歩兵の因縁",
+    "text": "パトロール中の魔軍歩兵に「新入りのくせに生意気だ」と因縁をつけられた。どう対応する？",
+    "minRankId": 1,
+    "weight": 100,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "力で分からせる",
+        "reqCondition": [{"stat": "physAtk", "value": 5}],
+        "disabledReason": "物理攻撃力が足りず、返り討ちに合いそうだ…",
+        "resultText": "圧倒的な力で歩兵を黙らせた。周囲の端くれどもが畏怖の視線を送っている。",
+        "statChanges": {"physAtk": 5, "cruelty": 10, "charisma": 5}
+      },
+      {
+        "choiceId": 2,
+        "text": "魔法で驚かせる",
+        "reqCondition": [{"stat": "magAtk", "value": 5}],
+        "disabledReason": "魔法力が足りず、火花すら出ない…",
+        "resultText": "不気味な魔力を見せつけると、歩兵は逃げ出していった。",
+        "statChanges": {"magAtk": 5, "control": 10}
+      },
+      {
+        "choiceId": 3,
+        "text": "賄賂を渡して見逃してもらう",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "手持ちの魔石を握らせると、歩兵はニヤリと笑って去っていった。",
+        "statChanges": {"luck": 5, "responsibility": -5}
+      },
+      {
+        "choiceId": 4,
+        "text": "全力で謝罪する",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "地面に頭を擦り付けて謝った。歩兵は満足そうに鼻を鳴らして去った。",
+        "statChanges": {"charisma": -10, "responsibility": 5}
+      }
+    ]
+  }
+]
