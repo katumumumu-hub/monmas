@@ -39,7 +39,7 @@
             background: var(--panel-color);
             border-bottom: 2px solid var(--accent-color);
             text-align: center;
-            position: relative; /* 開発用ボタンの配置のため追加 */
+            position: relative;
         }
 
         #crystal-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 5px; }
@@ -107,24 +107,32 @@
         footer { display: flex; background: var(--panel-color); border-top: 1px solid #333; }
         footer button { flex: 1; background: transparent; border-right: 1px solid #333; padding: 12px; font-weight: normal; }
 
-        /* 開発用ボタンのスタイル */
+        /* 開発用ボタンのエリアとスタイル */
+        .dev-tools {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
         .dev-btn {
-            background: #ffaa00;
-            color: #000;
             padding: 4px 8px;
             font-size: 0.7rem;
             width: auto;
             border-radius: 4px;
-            margin: 0 auto 8px auto;
-            display: inline-block;
+            cursor: pointer;
         }
+        .btn-max { background: #ffaa00; color: #000; }
+        .btn-reset { background: #cc3333; color: #fff; }
     </style>
 </head>
 <body>
 
 <div id="game-container">
     <header>
-        <button class="dev-btn" onclick="devMaxCrystals()">[開発用] クリスタルMAX</button>
+        <div class="dev-tools">
+            <button class="dev-btn btn-max" onclick="devMaxCrystals()">[開発] クリスタルMAX</button>
+            <button class="dev-btn btn-reset" onclick="devResetSave()">[開発] セーブ初期化</button>
+        </div>
         
         <div id="rank-name">読み込み中...</div>
         <div id="crystal-container"></div>
@@ -235,15 +243,38 @@ async function init() {
     }
 }
 
-// 【追加】開発用：クリスタルをMAXにする機能
+// 【開発用】クリスタルをMAXにする
 function devMaxCrystals() {
     if (ranks.length === 0) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     gameState.crystals = currentRank.maxCrystals;
-    gameState.lastPlayTime = Date.now(); // MAXにしたので時刻をリセット
+    gameState.lastPlayTime = Date.now();
     save();
     updateAll();
     updateTimer();
+}
+
+// 【開発用】セーブデータを完全に初期化する
+function devResetSave() {
+    if (confirm("セーブデータを初期化して最初からやり直しますか？")) {
+        // ローカルストレージのデータを削除
+        localStorage.removeItem('devil_lord_save');
+        
+        // gameStateを初期状態に戻す
+        gameState = {
+            lastPlayTime: Date.now(),
+            crystals: ranks.length > 0 ? ranks[0].maxCrystals : 3, // 初期ランクのMAXクリスタル数
+            currentRankId: 1,
+            stats: { hp: 0, mp: 0, physAtk: 0, magAtk: 0, magDef: 0, physDef: 0, agility: 0, luck: 0 },
+            innerTraits: { cruelty: 0, leadership: 0, charisma: 0, control: 0, responsibility: 0 },
+            acquiredSkills: []
+        };
+        
+        save();
+        updateAll();
+        updateTimer();
+        alert("データをリセットしました！");
+    }
 }
 
 function recoverCrystals() {
@@ -276,7 +307,6 @@ function updateAll() {
     const subs = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
     const cp = Object.values(s).reduce((a,b)=>a+b,0) + Object.values(i).reduce((a,b)=>a+b,0) + Math.max(0, subs);
     
-    // 階級アップのチェック（もし戦闘力が超えていたら昇格）
     let currentRank = ranks.find(r => r.id === gameState.currentRankId);
     let nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
     
@@ -285,14 +315,17 @@ function updateAll() {
         currentRank = ranks.find(r => r.id === gameState.currentRankId);
         nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
         alert(`階級が【${currentRank.name}】に昇格しました！`);
+        
+        // 階級アップ時にクリスタルを回復（仕様に応じて変更可能）
+        if (gameState.crystals < currentRank.maxCrystals) {
+            gameState.crystals = currentRank.maxCrystals;
+        }
     }
 
-    // UIの描画更新
     document.getElementById('rank-name').innerText = currentRank.name;
     document.getElementById('rank-image').src = currentRank.imagePath;
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     
-    // 【変更】次までの昇格条件テキストの流し込み
     if (nextRank) {
         document.getElementById('display-next-req').innerText = `戦闘力${nextRank.reqCombatPower.toLocaleString()}で`;
         document.getElementById('display-next-name').innerText = `${nextRank.name}に昇格`;
