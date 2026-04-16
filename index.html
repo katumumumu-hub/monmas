@@ -57,7 +57,6 @@
         .screen { display: none; flex: 1; flex-direction: column; }
         .active { display: flex; }
 
-        /* 画像エリア：余白が出ないように修正 */
         .rank-image-box {
             flex: 1;
             background: #000;
@@ -72,7 +71,7 @@
         #rank-image {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* ここを cover に変更することで枠いっぱいに表示されます */
+            object-fit: cover;
         }
 
         .home-bottom-area { flex-shrink: 0; }
@@ -91,6 +90,9 @@
             width: 100%;
             cursor: pointer;
         }
+        button:disabled { background: var(--disabled-color); cursor: not-allowed; opacity: 0.6; }
+
+        .reason-text { font-size: 0.75rem; color: #ff8888; display: block; margin-top: 3px; font-weight: normal; }
 
         #skill-detail-panel {
             background: #222;
@@ -109,7 +111,7 @@
 
 <div id="game-container">
     <header>
-        <div id="rank-name">魔族の端くれ</div>
+        <div id="rank-name">読み込み中...</div>
         <div id="crystal-container"></div>
         <div id="crystal-timer">次まで: --分--秒</div>
     </header>
@@ -123,7 +125,7 @@
             <div class="home-bottom-area">
                 <div class="status-grid">
                     <div class="status-item"><div class="status-label">戦闘力</div><div class="status-value" id="display-combat-power">0</div></div>
-                    <div class="status-item"><div class="status-label">次まで</div><div class="status-value" id="display-next-rank">1,000</div></div>
+                    <div class="status-item"><div class="status-label">次まで</div><div class="status-value" id="display-next-rank">0</div></div>
                 </div>
                 <div class="status-item" style="margin-bottom:10px;"><div class="status-label">配下</div><div class="status-value" id="display-subordinates">0名</div></div>
                 <button onclick="startEvent()">イベント発生 (消費: 1)</button>
@@ -174,22 +176,10 @@
 </div>
 
 <script>
-// マスターデータ
-const ranks = [
-    { "id": 1, "name": "魔族の端くれ", "reqCombatPower": 0, "maxCrystals": 3, "imagePath": "assets/images/rank1.png" },
-    { "id": 2, "name": "魔軍歩兵", "reqCombatPower": 1000, "maxCrystals": 4, "imagePath": "assets/images/rank2.png" }
-];
-
-const skills = [
-    { "id": 1, "name": "強打", "description": "魔力を拳に込めて殴りつける。", "bonus": { "physAtk": 5 }, "reqs": [{ "stat": "physAtk", "val": 0 }] }
-];
-
-const events = [
-    {
-        "id": 1, "title": "特訓", "text": "独りで鍛錬した。", "minRankId": 1,
-        "choices": [{ "text": "筋力トレ", "req": null, "fail": "", "res": "筋肉がついた。", "change": {"physAtk": 10} }]
-    }
-];
+// 空の配列を用意（後でJSONからデータを流し込む）
+let ranks = [];
+let skills = [];
+let events = [];
 
 const LABELS = {hp:'HP', mp:'MP', physAtk:'物理攻撃', magAtk:'魔法力', magDef:'魔法防御', physDef:'物理防御', agility:'俊敏性', luck:'運', cruelty:'凶悪性', leadership:'統率力', charisma:'カリスマ', control:'支配欲', responsibility:'責任感'};
 
@@ -202,23 +192,51 @@ let gameState = {
     acquiredSkills: []
 };
 
-function init() {
-    const saved = localStorage.getItem('devil_lord_save');
-    if (saved) gameState = JSON.parse(saved);
-    updateAll();
-    setInterval(updateTimer, 1000);
+// init関数を async に変更し、外部ファイルを読み込む処理を追加
+async function init() {
+    try {
+        // 3つのJSONファイルを同時に読み込む
+        const [ranksRes, skillsRes, eventsRes] = await Promise.all([
+            fetch('ranks.json'),
+            fetch('skills.json'),
+            fetch('events.json')
+        ]);
+
+        // 読み込んだデータを配列にセット
+        ranks = await ranksRes.json();
+        skills = await skillsRes.json();
+        events = await eventsRes.json();
+
+        // セーブデータの復元
+        const saved = localStorage.getItem('devil_lord_save');
+        if (saved) gameState = JSON.parse(saved);
+
+        // UIとタイマーの初期化
+        updateAll();
+        setInterval(updateTimer, 1000);
+
+    } catch (error) {
+        console.error("データの読み込みに失敗しました:", error);
+        alert("データの読み込みに失敗しました。GitHub等に各JSONファイルが正しく配置されているか確認してください。");
+    }
 }
 
 function updateAll() {
+    // もしデータが空なら処理しない（エラー回避）
+    if (ranks.length === 0) return;
+
     const s = gameState.stats;
     const i = gameState.innerTraits;
     const subs = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
     const cp = Object.values(s).reduce((a,b)=>a+b,0) + Object.values(i).reduce((a,b)=>a+b,0) + Math.max(0, subs);
     
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
+    const nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
+
     document.getElementById('rank-name').innerText = currentRank.name;
     document.getElementById('rank-image').src = currentRank.imagePath;
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
+    document.getElementById('display-next-rank').innerText = nextRank ? nextRank.reqCombatPower.toLocaleString() : "MAX";
     document.getElementById('display-subordinates').innerText = Math.max(0, subs).toLocaleString() + "名";
     
     renderCrystalUI(currentRank);
@@ -237,6 +255,7 @@ function renderCrystalUI(rank) {
 }
 
 function updateTimer() {
+    if (ranks.length === 0) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     if (gameState.crystals >= currentRank.maxCrystals) {
         document.getElementById('crystal-timer').innerText = "MAX";
@@ -254,35 +273,56 @@ function showScreen(id) {
 }
 
 function startEvent() {
-    if(gameState.crystals <= 0) return;
+    if(gameState.crystals <= 0) return alert("クリスタルが足りません");
     gameState.crystals--;
     gameState.lastPlayTime = Date.now();
-    const ev = events[0]; 
+    
+    // 現在のランク以下で発生可能なイベントを絞り込んでランダムに1つ選ぶ
+    const currentEvents = events.filter(e => e.minRankId <= gameState.currentRankId);
+    const ev = currentEvents[Math.floor(Math.random() * currentEvents.length)];
+
     document.getElementById('event-title').innerText = ev.title;
     document.getElementById('event-text').innerText = ev.text;
     const area = document.getElementById('choices-area');
     area.innerHTML = '';
+    
     ev.choices.forEach(c => {
         const b = document.createElement('button');
-        b.innerText = c.text;
-        b.onclick = () => {
-            document.getElementById('result-text').innerText = c.res;
-            document.getElementById('change-log').innerHTML = '';
-            for(let k in c.change) {
-                if (gameState.stats[k] !== undefined) gameState.stats[k] += c.change[k];
-                else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += c.change[k];
-                const sign = c.change[k] > 0 ? "+" : "";
-                document.getElementById('change-log').innerHTML += `${LABELS[k]}: ${sign}${c.change[k]}<br>`;
+        b.style.textAlign = 'left';
+        b.style.background = '#2a2a4a';
+        b.innerHTML = c.text;
+
+        // ステータス条件のチェック（グレーアウト処理）
+        let disabled = false;
+        if (c.reqCondition && c.reqCondition.length > 0) {
+            for (let req of c.reqCondition) {
+                const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : gameState.innerTraits[req.stat];
+                if (currentVal < req.value) disabled = true;
             }
-            updateAll();
-            showScreen('result-screen');
-        };
+        }
+
+        if (disabled) {
+            b.disabled = true;
+            b.innerHTML += `<span class="reason-text">${c.disabledReason}</span>`;
+        } else {
+            b.onclick = () => {
+                document.getElementById('result-text').innerText = c.resultText;
+                document.getElementById('change-log').innerHTML = '';
+                for(let k in c.statChanges) {
+                    if (gameState.stats[k] !== undefined) gameState.stats[k] += c.statChanges[k];
+                    else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += c.statChanges[k];
+                    const sign = c.statChanges[k] > 0 ? "+" : "";
+                    document.getElementById('change-log').innerHTML += `${LABELS[k]}: ${sign}${c.statChanges[k]}<br>`;
+                }
+                updateAll();
+                showScreen('result-screen');
+            };
+        }
         area.appendChild(b);
     });
     showScreen('event-screen');
 }
 
-// 修正ポイント：内面性（innerTraits）も描画するように追加しました
 function renderStats() {
     const statList = document.getElementById('stat-list');
     statList.innerHTML = '';
@@ -299,6 +339,7 @@ function renderStats() {
 
 function save() { localStorage.setItem('devil_lord_save', JSON.stringify(gameState)); }
 
+// ゲームの起動処理を開始
 init();
 </script>
 </body>
