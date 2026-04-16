@@ -39,6 +39,7 @@
             background: var(--panel-color);
             border-bottom: 2px solid var(--accent-color);
             text-align: center;
+            position: relative; /* 開発用ボタンの配置のため追加 */
         }
 
         #crystal-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 5px; }
@@ -76,7 +77,7 @@
 
         .home-bottom-area { flex-shrink: 0; }
         .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-        .status-item { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; }
+        .status-item { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; display: flex; flex-direction: column; justify-content: center;}
         .status-label { font-size: 0.7rem; color: #aaa; }
         .status-value { font-size: 1rem; font-weight: bold; }
 
@@ -105,12 +106,26 @@
 
         footer { display: flex; background: var(--panel-color); border-top: 1px solid #333; }
         footer button { flex: 1; background: transparent; border-right: 1px solid #333; padding: 12px; font-weight: normal; }
+
+        /* 開発用ボタンのスタイル */
+        .dev-btn {
+            background: #ffaa00;
+            color: #000;
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            width: auto;
+            border-radius: 4px;
+            margin: 0 auto 8px auto;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
 
 <div id="game-container">
     <header>
+        <button class="dev-btn" onclick="devMaxCrystals()">[開発用] クリスタルMAX</button>
+        
         <div id="rank-name">読み込み中...</div>
         <div id="crystal-container"></div>
         <div id="crystal-timer">次まで: --分--秒</div>
@@ -125,7 +140,12 @@
             <div class="home-bottom-area">
                 <div class="status-grid">
                     <div class="status-item"><div class="status-label">戦闘力</div><div class="status-value" id="display-combat-power">0</div></div>
-                    <div class="status-item"><div class="status-label">次まで</div><div class="status-value" id="display-next-rank">0</div></div>
+                    
+                    <div class="status-item">
+                        <div class="status-label" id="display-next-req" style="font-size: 0.75rem;">戦闘力---で</div>
+                        <div class="status-value" id="display-next-name" style="font-size: 0.95rem;">---に昇格</div>
+                    </div>
+
                 </div>
                 <div class="status-item" style="margin-bottom:10px;"><div class="status-label">配下</div><div class="status-value" id="display-subordinates">0名</div></div>
                 <button onclick="startEvent()">イベント発生 (消費: 1)</button>
@@ -176,7 +196,6 @@
 </div>
 
 <script>
-// マスターデータ
 let ranks = [];
 let skills = [];
 let events = [];
@@ -192,7 +211,6 @@ let gameState = {
     acquiredSkills: []
 };
 
-// 外部ファイルの読み込みと起動
 async function init() {
     try {
         const [ranksRes, skillsRes, eventsRes] = await Promise.all([
@@ -204,15 +222,11 @@ async function init() {
         skills = await skillsRes.json();
         events = await eventsRes.json();
 
-        // セーブデータがあれば復元
         const saved = localStorage.getItem('devil_lord_save');
         if (saved) gameState = JSON.parse(saved);
 
-        // オフライン中のクリスタル回復処理を走らせる
         recoverCrystals();
-
         updateAll();
-        // 1秒ごとにタイマーを更新
         setInterval(updateTimer, 1000);
 
     } catch (error) {
@@ -221,22 +235,30 @@ async function init() {
     }
 }
 
-// 時間経過によるクリスタル回復処理
+// 【追加】開発用：クリスタルをMAXにする機能
+function devMaxCrystals() {
+    if (ranks.length === 0) return;
+    const currentRank = ranks.find(r => r.id === gameState.currentRankId);
+    gameState.crystals = currentRank.maxCrystals;
+    gameState.lastPlayTime = Date.now(); // MAXにしたので時刻をリセット
+    save();
+    updateAll();
+    updateTimer();
+}
+
 function recoverCrystals() {
     if (ranks.length === 0) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     if (!currentRank || gameState.crystals >= currentRank.maxCrystals) return;
 
-    const msPerCrystal = 60 * 60 * 1000; // 1時間（ミリ秒）
+    const msPerCrystal = 60 * 60 * 1000;
     const now = Date.now();
     const elapsed = now - gameState.lastPlayTime;
 
-    // 1時間以上経過している場合
     if (elapsed >= msPerCrystal) {
         const addedCrystals = Math.floor(elapsed / msPerCrystal);
         gameState.crystals = Math.min(currentRank.maxCrystals, gameState.crystals + addedCrystals);
         
-        // MAXに到達した場合は時間を現在にリセット、それ以外は余剰時間を保持
         if (gameState.crystals === currentRank.maxCrystals) {
             gameState.lastPlayTime = now;
         } else {
@@ -246,7 +268,6 @@ function recoverCrystals() {
     }
 }
 
-// 画面全体の更新
 function updateAll() {
     if (ranks.length === 0) return;
 
@@ -255,13 +276,31 @@ function updateAll() {
     const subs = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
     const cp = Object.values(s).reduce((a,b)=>a+b,0) + Object.values(i).reduce((a,b)=>a+b,0) + Math.max(0, subs);
     
-    const currentRank = ranks.find(r => r.id === gameState.currentRankId);
-    const nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
+    // 階級アップのチェック（もし戦闘力が超えていたら昇格）
+    let currentRank = ranks.find(r => r.id === gameState.currentRankId);
+    let nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
+    
+    if (nextRank && cp >= nextRank.reqCombatPower) {
+        gameState.currentRankId++;
+        currentRank = ranks.find(r => r.id === gameState.currentRankId);
+        nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
+        alert(`階級が【${currentRank.name}】に昇格しました！`);
+    }
 
+    // UIの描画更新
     document.getElementById('rank-name').innerText = currentRank.name;
     document.getElementById('rank-image').src = currentRank.imagePath;
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
-    document.getElementById('display-next-rank').innerText = nextRank ? nextRank.reqCombatPower.toLocaleString() : "MAX";
+    
+    // 【変更】次までの昇格条件テキストの流し込み
+    if (nextRank) {
+        document.getElementById('display-next-req').innerText = `戦闘力${nextRank.reqCombatPower.toLocaleString()}で`;
+        document.getElementById('display-next-name').innerText = `${nextRank.name}に昇格`;
+    } else {
+        document.getElementById('display-next-req').innerText = `昇格条件`;
+        document.getElementById('display-next-name').innerText = `最高階級（MAX）`;
+    }
+
     document.getElementById('display-subordinates').innerText = Math.max(0, subs).toLocaleString() + "名";
     
     renderCrystalUI(currentRank);
@@ -279,12 +318,10 @@ function renderCrystalUI(rank) {
     }
 }
 
-// 1秒ごとのタイマー更新処理
 function updateTimer() {
     if (ranks.length === 0) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     
-    // 常に回復条件を満たしているかチェック
     recoverCrystals();
 
     if (gameState.crystals >= currentRank.maxCrystals) {
@@ -295,7 +332,7 @@ function updateTimer() {
     const msPerCrystal = 60 * 60 * 1000;
     const now = Date.now();
     const elapsed = now - gameState.lastPlayTime;
-    const remaining = msPerCrystal - elapsed; // 残り時間を計算
+    const remaining = msPerCrystal - elapsed;
 
     const m = Math.floor(remaining / 1000 / 60);
     const s = Math.floor((remaining / 1000) % 60);
@@ -312,16 +349,14 @@ function startEvent() {
     
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     
-    // MAXの状態でクリスタルを消費した時だけ、カウントダウンを現在時刻からスタートさせる
     if (gameState.crystals >= currentRank.maxCrystals) {
         gameState.lastPlayTime = Date.now();
     }
     
     gameState.crystals--;
     save();
-    updateTimer(); // 即座にUIを更新
+    updateTimer(); 
     
-    // 現在のランク以下で発生可能なイベントを絞り込んでランダムに選ぶ
     const currentEvents = events.filter(e => e.minRankId <= gameState.currentRankId);
     const ev = currentEvents[Math.floor(Math.random() * currentEvents.length)];
 
@@ -336,7 +371,6 @@ function startEvent() {
         b.style.background = '#2a2a4a';
         b.innerHTML = c.text;
 
-        // ステータス条件のチェック
         let disabled = false;
         if (c.reqCondition && c.reqCondition.length > 0) {
             for (let req of c.reqCondition) {
