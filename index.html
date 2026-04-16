@@ -13,6 +13,7 @@
             --disabled-color: #444;
         }
 
+        /* 画面全体がスクロールしないように固定 */
         body {
             margin: 0;
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -21,7 +22,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            /* スマホのアドレスバー対策: 100vh ではなく 100dvh (dynamic viewport height) を使用するか、高さを固定化する */
+            height: 100dvh; 
             overflow: hidden;
         }
 
@@ -34,7 +36,9 @@
             background-color: var(--bg-color);
         }
 
+        /* ヘッダー部分は高さを固定（縮まない） */
         header {
+            flex-shrink: 0;
             padding: 10px;
             background: var(--panel-color);
             border-bottom: 2px solid var(--accent-color);
@@ -47,20 +51,23 @@
         .crystal-empty { background: #333; box-shadow: none; }
         #crystal-timer { font-size: 0.8rem; color: #aaa; }
 
+        /* メイン部分は残りの高さをすべて使うが、自身はスクロールしない */
         main {
             flex: 1;
-            padding: 15px;
-            overflow-y: auto;
             display: flex;
             flex-direction: column;
+            /* 余白を少し削って動画の面積を確保 */
+            padding: 10px 15px; 
+            overflow: hidden; /* ★ここを auto から hidden に変更して全体スクロールを阻止 */
         }
 
-        .screen { display: none; flex: 1; flex-direction: column; }
+        .screen { display: none; flex: 1; flex-direction: column; height: 100%; overflow: hidden;}
         .active { display: flex; }
 
-        /* 画像ボックスから動画ボックスへ変更 */
+        /* ★動画ボックスの修正: 画面内に収まるようにサイズを自動調整させる */
         .rank-image-box {
-            flex: 1;
+            flex: 1 1 0; /* 余ったスペースを埋めるが、必要なら縮む(0ベース) */
+            min-height: 0; /* これがないと中身の動画サイズに引っ張られてはみ出してしまう */
             background: #000;
             display: flex;
             justify-content: center;
@@ -70,14 +77,18 @@
             overflow: hidden;
             border: 1px solid #333;
         }
-        [span_1](start_span)/* 動画が枠いっぱいに広がるように設定[span_1](end_span) */
+
         #rank-video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* 枠に合わせてトリミング */
         }
 
-        .home-bottom-area { flex-shrink: 0; }
+        /* 下部のステータス＆ボタンエリアは高さを固定（縮まない） */
+        .home-bottom-area { 
+            flex-shrink: 0; 
+        }
+
         .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .status-item { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; display: flex; flex-direction: column; justify-content: center;}
         .status-label { font-size: 0.7rem; color: #aaa; }
@@ -106,14 +117,24 @@
             display: none;
         }
 
-        footer { display: flex; background: var(--panel-color); border-top: 1px solid #333; }
+        /* フッター部分は高さを固定（縮まない） */
+        footer { 
+            flex-shrink: 0;
+            display: flex; 
+            background: var(--panel-color); 
+            border-top: 1px solid #333; 
+        }
         footer button { flex: 1; background: transparent; border-right: 1px solid #333; padding: 12px; font-weight: normal; }
 
-        /* 開発用ボタンのスタイル */
         .dev-tools { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px; }
         .dev-btn { padding: 4px 8px; font-size: 0.7rem; width: auto; border-radius: 4px; cursor: pointer; }
         .btn-max { background: #ffaa00; color: #000; }
         .btn-reset { background: #cc3333; color: #fff; }
+
+        /* イベント・結果・ステータス・スキル画面は中身が長くなったらスクロールさせる */
+        #event-screen, #result-screen, #status-screen, #skill-screen {
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
