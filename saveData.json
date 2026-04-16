@@ -1,0 +1,23 @@
+{
+  "lastPlayTime": 1713240000000,
+  "crystals": 3,
+  "currentRankId": 1,
+  "stats": {
+    "hp": 0,
+    "mp": 0,
+    "physAtk": 0,
+    "magAtk": 0,
+    "magDef": 0,
+    "physDef": 0,
+    "agility": 0,
+    "luck": 0
+  },
+  "innerTraits": {
+    "cruelty": 0,
+    "leadership": 0,
+    "charisma": 0,
+    "control": 0,
+    "responsibility": 0
+  },
+  "acquiredSkills": []
+}

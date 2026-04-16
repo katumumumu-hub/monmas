@@ -1,0 +1,229 @@
+[
+  {
+    "id": 1,
+    "iconId": "fire_01",
+    "name": "火炎",
+    "category": "攻撃",
+    "element": "火",
+    "bonus": { "magAtk": 8 },
+    "requirements": [
+      { "stat": "magAtk", "value": 8 },
+      { "stat": "charisma", "value": 20 }
+    ]
+  },
+  {
+    "id": 2,
+    "iconId": "phys_01",
+    "name": "強打",
+    "category": "攻撃",
+    "element": "無",
+    "bonus": { "physAtk": 5 },
+    "requirements": [
+      { "stat": "physAtk", "value": 5 }
+    ]
+  },
+  {
+    "id": 3,
+    "iconId": "dark_01",
+    "name": "威圧",
+    "category": "変化",
+    "element": "闇",
+    "bonus": { "charisma": 5, "leadership": 5 },
+    "requirements": [
+      { "stat": "cruelty", "value": 10 }
+    ]
+  },
+  {
+    "id": 4,
+    "iconId": "move_01",
+    "name": "疾風",
+    "category": "援助",
+    "element": "風",
+    "bonus": { "agility": 10 },
+    "requirements": [
+      { "stat": "agility", "value": 10 }
+    ]
+  },
+  {
+    "id": 5,
+    "iconId": "def_01",
+    "name": "硬化",
+    "category": "変化",
+    "element": "土",
+    "bonus": { "physDef": 10 },
+    "requirements": [
+      { "stat": "physDef", "value": 8 }
+    ]
+  },
+  {
+    "id": 6,
+    "iconId": "dark_02",
+    "name": "下っ端の心得",
+    "category": "特殊",
+    "element": "無",
+    "bonus": { "responsibility": 10, "luck": 5 },
+    "requirements": [
+      { "stat": "responsibility", "value": 5 }
+    ]
+  },
+  {
+    "id": 7,
+    "iconId": "water_01",
+    "name": "水鉄砲",
+    "category": "攻撃",
+    "element": "水",
+    "bonus": { "magAtk": 5, "mp": 10 },
+    "requirements": [
+      { "stat": "magAtk", "value": 5 }
+    ]
+  },
+  {
+    "id": 8,
+    "iconId": "evil_01",
+    "name": "冷酷な視線",
+    "category": "変化",
+    "element": "無",
+    "bonus": { "cruelty": 10, "control": 5 },
+    "requirements": [
+      { "stat": "cruelty", "value": 15 }
+    ]
+  },
+  {
+    "id": 9,
+    "iconId": "phys_02",
+    "name": "連続攻撃",
+    "category": "攻撃",
+    "element": "無",
+    "bonus": { "physAtk": 10, "agility": 5 },
+    "requirements": [
+      { "stat": "physAtk", "value": 15 },
+      { "stat": "agility", "value": 10 }
+    ]
+  },
+  {
+    "id": 10,
+    "iconId": "heal_01",
+    "name": "自己再生",
+    "category": "援助",
+    "element": "特殊",
+    "bonus": { "hp": 20 },
+    "requirements": [
+      { "stat": "physDef", "value": 10 },
+      { "stat": "magDef", "value": 10 }
+    ]
+  },
+  {
+    "id": 11,
+    "iconId": "lead_01",
+    "name": "号令",
+    "category": "援助",
+    "element": "無",
+    "bonus": { "leadership": 15 },
+    "requirements": [
+      { "stat": "leadership", "value": 10 },
+      { "stat": "charisma", "value": 5 }
+    ]
+  },
+  {
+    "id": 12,
+    "iconId": "mag_01",
+    "name": "魔力集中",
+    "category": "変化",
+    "element": "無",
+    "bonus": { "magAtk": 10, "mp": 20 },
+    "requirements": [
+      { "stat": "mp", "value": 30 }
+    ]
+  },
+  {
+    "id": 13,
+    "iconId": "luck_01",
+    "name": "強運",
+    "category": "特殊",
+    "element": "特殊",
+    "bonus": { "luck": 15 },
+    "requirements": [
+      { "stat": "luck", "value": 10 }
+    ]
+  },
+  {
+    "id": 14,
+    "iconId": "dark_03",
+    "name": "闇の帳",
+    "category": "援助",
+    "element": "闇",
+    "bonus": { "magDef": 15 },
+    "requirements": [
+      { "stat": "magDef", "value": 12 }
+    ]
+  },
+  {
+    "id": 15,
+    "iconId": "evil_02",
+    "name": "略奪の才",
+    "category": "特殊",
+    "element": "無",
+    "bonus": { "control": 15, "cruelty": 5 },
+    "requirements": [
+      { "stat": "control", "value": 10 },
+      { "stat": "cruelty", "value": 5 }
+    ]
+  },
+  {
+    "id": 16,
+    "iconId": "phys_03",
+    "name": "鉄壁",
+    "category": "援助",
+    "element": "土",
+    "bonus": { "physDef": 20, "hp": 10 },
+    "requirements": [
+      { "stat": "physDef", "value": 20 }
+    ]
+  },
+  {
+    "id": 17,
+    "iconId": "fire_02",
+    "name": "残り火",
+    "category": "特殊",
+    "element": "火",
+    "bonus": { "magAtk": 5, "magDef": 5 },
+    "requirements": [
+      { "stat": "magAtk", "value": 10 },
+      { "stat": "magDef", "value": 5 }
+    ]
+  },
+  {
+    "id": 18,
+    "iconId": "move_02",
+    "name": "残像",
+    "category": "変化",
+    "element": "風",
+    "bonus": { "agility": 15, "luck": 5 },
+    "requirements": [
+      { "stat": "agility", "value": 20 }
+    ]
+  },
+  {
+    "id": 19,
+    "iconId": "lead_02",
+    "name": "魔族の誇り",
+    "category": "特殊",
+    "element": "無",
+    "bonus": { "charisma": 10, "responsibility": 10 },
+    "requirements": [
+      { "stat": "responsibility", "value": 15 },
+      { "stat": "charisma", "value": 15 }
+    ]
+  },
+  {
+    "id": 20,
+    "iconId": "dark_04",
+    "name": "支配の萌芽",
+    "category": "特殊",
+    "element": "闇",
+    "bonus": { "control": 20, "leadership": 5 },
+    "requirements": [
+      { "stat": "control", "value": 20 }
+    ]
+  }
+]
