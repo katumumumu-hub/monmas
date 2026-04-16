@@ -58,6 +58,7 @@
         .screen { display: none; flex: 1; flex-direction: column; }
         .active { display: flex; }
 
+        /* 画像ボックスから動画ボックスへ変更 */
         .rank-image-box {
             flex: 1;
             background: #000;
@@ -69,7 +70,8 @@
             overflow: hidden;
             border: 1px solid #333;
         }
-        #rank-image {
+        [span_1](start_span)/* 動画が枠いっぱいに広がるように設定[span_1](end_span) */
+        #rank-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -107,20 +109,9 @@
         footer { display: flex; background: var(--panel-color); border-top: 1px solid #333; }
         footer button { flex: 1; background: transparent; border-right: 1px solid #333; padding: 12px; font-weight: normal; }
 
-        /* 開発用ボタンのエリアとスタイル */
-        .dev-tools {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .dev-btn {
-            padding: 4px 8px;
-            font-size: 0.7rem;
-            width: auto;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+        /* 開発用ボタンのスタイル */
+        .dev-tools { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px; }
+        .dev-btn { padding: 4px 8px; font-size: 0.7rem; width: auto; border-radius: 4px; cursor: pointer; }
         .btn-max { background: #ffaa00; color: #000; }
         .btn-reset { background: #cc3333; color: #fff; }
     </style>
@@ -142,7 +133,7 @@
     <main>
         <div id="home-screen" class="screen active">
             <div class="rank-image-box">
-                <img id="rank-image" src="" alt="階級画像">
+                <video id="rank-video" autoplay loop muted playsinline src=""></video>
             </div>
             
             <div class="home-bottom-area">
@@ -153,7 +144,6 @@
                         <div class="status-label" id="display-next-req" style="font-size: 0.75rem;">戦闘力---で</div>
                         <div class="status-value" id="display-next-name" style="font-size: 0.95rem;">---に昇格</div>
                     </div>
-
                 </div>
                 <div class="status-item" style="margin-bottom:10px;"><div class="status-label">配下</div><div class="status-value" id="display-subordinates">0名</div></div>
                 <button onclick="startEvent()">イベント発生 (消費: 1)</button>
@@ -239,11 +229,10 @@ async function init() {
 
     } catch (error) {
         console.error("データの読み込みに失敗しました:", error);
-        alert("データの読み込みに失敗しました。GitHub等に各JSONファイルが正しく配置されているか確認してください。");
+        alert("データの読み込みに失敗しました。各JSONファイルを確認してください。");
     }
 }
 
-// 【開発用】クリスタルをMAXにする
 function devMaxCrystals() {
     if (ranks.length === 0) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
@@ -254,22 +243,17 @@ function devMaxCrystals() {
     updateTimer();
 }
 
-// 【開発用】セーブデータを完全に初期化する
 function devResetSave() {
     if (confirm("セーブデータを初期化して最初からやり直しますか？")) {
-        // ローカルストレージのデータを削除
         localStorage.removeItem('devil_lord_save');
-        
-        // gameStateを初期状態に戻す
         gameState = {
             lastPlayTime: Date.now(),
-            crystals: ranks.length > 0 ? ranks[0].maxCrystals : 3, // 初期ランクのMAXクリスタル数
+            crystals: ranks.length > 0 ? ranks[0].maxCrystals : 3,
             currentRankId: 1,
             stats: { hp: 0, mp: 0, physAtk: 0, magAtk: 0, magDef: 0, physDef: 0, agility: 0, luck: 0 },
             innerTraits: { cruelty: 0, leadership: 0, charisma: 0, control: 0, responsibility: 0 },
             acquiredSkills: []
         };
-        
         save();
         updateAll();
         updateTimer();
@@ -289,7 +273,6 @@ function recoverCrystals() {
     if (elapsed >= msPerCrystal) {
         const addedCrystals = Math.floor(elapsed / msPerCrystal);
         gameState.crystals = Math.min(currentRank.maxCrystals, gameState.crystals + addedCrystals);
-        
         if (gameState.crystals === currentRank.maxCrystals) {
             gameState.lastPlayTime = now;
         } else {
@@ -315,15 +298,12 @@ function updateAll() {
         currentRank = ranks.find(r => r.id === gameState.currentRankId);
         nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
         alert(`階級が【${currentRank.name}】に昇格しました！`);
-        
-        // 階級アップ時にクリスタルを回復（仕様に応じて変更可能）
-        if (gameState.crystals < currentRank.maxCrystals) {
-            gameState.crystals = currentRank.maxCrystals;
-        }
+        if (gameState.crystals < currentRank.maxCrystals) gameState.crystals = currentRank.maxCrystals;
     }
 
     document.getElementById('rank-name').innerText = currentRank.name;
-    document.getElementById('rank-image').src = currentRank.imagePath;
+    // imgタグではなくvideoタグのsrcを更新
+    document.getElementById('rank-video').src = currentRank.imagePath;
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     
     if (nextRank) {
@@ -354,19 +334,15 @@ function renderCrystalUI(rank) {
 function updateTimer() {
     if (ranks.length === 0) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
-    
     recoverCrystals();
-
     if (gameState.crystals >= currentRank.maxCrystals) {
         document.getElementById('crystal-timer').innerText = "MAX";
         return;
     }
-
     const msPerCrystal = 60 * 60 * 1000;
     const now = Date.now();
     const elapsed = now - gameState.lastPlayTime;
     const remaining = msPerCrystal - elapsed;
-
     const m = Math.floor(remaining / 1000 / 60);
     const s = Math.floor((remaining / 1000) % 60);
     document.getElementById('crystal-timer').innerText = `次まで: ${m}分${s.toString().padStart(2,'0')}秒`;
@@ -379,31 +355,22 @@ function showScreen(id) {
 
 function startEvent() {
     if(gameState.crystals <= 0) return alert("クリスタルが足りません");
-    
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
-    
-    if (gameState.crystals >= currentRank.maxCrystals) {
-        gameState.lastPlayTime = Date.now();
-    }
-    
+    if (gameState.crystals >= currentRank.maxCrystals) gameState.lastPlayTime = Date.now();
     gameState.crystals--;
     save();
     updateTimer(); 
-    
     const currentEvents = events.filter(e => e.minRankId <= gameState.currentRankId);
     const ev = currentEvents[Math.floor(Math.random() * currentEvents.length)];
-
     document.getElementById('event-title').innerText = ev.title;
     document.getElementById('event-text').innerText = ev.text;
     const area = document.getElementById('choices-area');
     area.innerHTML = '';
-    
     ev.choices.forEach(c => {
         const b = document.createElement('button');
         b.style.textAlign = 'left';
         b.style.background = '#2a2a4a';
         b.innerHTML = c.text;
-
         let disabled = false;
         if (c.reqCondition && c.reqCondition.length > 0) {
             for (let req of c.reqCondition) {
@@ -411,7 +378,6 @@ function startEvent() {
                 if (currentVal < req.value) disabled = true;
             }
         }
-
         if (disabled) {
             b.disabled = true;
             b.innerHTML += `<span class="reason-text">${c.disabledReason}</span>`;
@@ -440,7 +406,6 @@ function renderStats() {
     for(let k in gameState.stats) {
         statList.innerHTML += `<div class="status-item"><div class="status-label">${LABELS[k]}</div><div class="status-value">${gameState.stats[k]}</div></div>`;
     }
-
     const innerList = document.getElementById('inner-list');
     innerList.innerHTML = '';
     for(let k in gameState.innerTraits) {
@@ -449,7 +414,6 @@ function renderStats() {
 }
 
 function save() { localStorage.setItem('devil_lord_save', JSON.stringify(gameState)); }
-
 init();
 </script>
 </body>
