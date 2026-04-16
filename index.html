@@ -3,275 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハナモン・ブリーダー - バフ効果適用版</title>
+    <title>魔王育成計画</title>
     <style>
         :root {
-            --bg-sky: linear-gradient(180deg, #74b9ff 0%, #a29bfe 100%);
-            --panel-bg: rgba(0, 0, 0, 0.5);
-            --accent-yellow: #ffeaa7;
-            --accent-blue: #0984e3;
-            --accent-green: #55efc4;
-            --accent-red: #ff7675;
-            --accent-orange: #fab1a0;
+            --bg-color: #1a1a2e;
+            --panel-color: #16213e;
+            --accent-color: #e94560;
+            --text-color: #ffffff;
+            --disabled-color: #444;
         }
 
-        body { font-family: sans-serif; margin: 0; background: #222; display: flex; justify-content: center; overflow: hidden; }
-        .app-container { width: 100%; max-width: 450px; height: 100vh; background: var(--bg-sky); position: relative; display: flex; flex-direction: column; }
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #000;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-        section { display: none; width: 100%; flex: 1; flex-direction: column; overflow-y: auto; }
-        section.active { display: flex; }
+        /* スマホ画面サイズ */
+        #game-container {
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            max-height: 800px;
+            background-color: var(--bg-color);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #333;
+        }
 
-        .header-info { padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: rgba(0,0,0,0.2); }
-        .info-slot { background: var(--panel-bg); padding: 5px 10px; border-radius: 4px; font-size: 0.75rem; color: white; display: flex; justify-content: space-between; }
-        .info-label { color: var(--accent-yellow); font-weight: bold; }
+        /* ヘッダー：階級名とクリスタル */
+        header {
+            padding: 10px;
+            background: var(--panel-color);
+            border-bottom: 1px solid var(--accent-color);
+            text-align: center;
+        }
+        #rank-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 5px; }
+        #crystal-container { display: flex; justify-content: center; gap: 5px; }
+        .crystal-icon { width: 20px; height: 20px; background: cyan; border-radius: 50%; box-shadow: 0 0 10px cyan; }
+        .crystal-empty { background: #333; box-shadow: none; }
 
-        .monster-display { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; }
-        
-        #days-left-badge { background: var(--accent-red); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; margin-bottom: 5px; display: none; }
-        #buff-container { display: flex; gap: 5px; margin-bottom: 10px; height: 24px; }
-        .buff-badge { background: var(--accent-yellow); color: #333; font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; border: 1px solid rgba(255,255,255,0.5); }
+        /* メインコンテンツエリア */
+        main {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
 
-        #monster-image-container { width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }
-        #monster-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        
-        #status-board { background: var(--panel-bg); border-radius: 12px; padding: 10px; width: 85%; color: white; font-size: 0.75rem; display: none; }
-        .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
-        .status-bar-bg { flex: 1; background: #333; height: 6px; margin: 0 10px; border-radius: 3px; overflow: hidden; }
-        .status-bar-fill { background: var(--accent-green); height: 100%; width: 0%; transition: width 0.4s; }
+        .screen { display: none; height: 100%; }
+        .active { display: flex; flex-direction: column; }
 
-        .energy-section { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.2); }
-        .energy-label { font-weight: bold; color: var(--accent-orange); }
-        .energy-bar-fill { background: linear-gradient(90deg, #ffeaa7, #fab1a0); transition: width 0.5s ease-out; }
+        /* ホーム画面 */
+        #home-screen .rank-image-box {
+            width: 100%;
+            height: 200px;
+            background: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #444;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .rank-up-effect {
+            position: absolute;
+            color: yellow;
+            font-weight: bold;
+            animation: flash 1s infinite;
+        }
+        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        #action-menu { display: none; grid-template-columns: 1fr 1fr; gap: 10px; width: 85%; margin-top: 15px; }
-        .btn-main-action { background: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; color: #333; cursor: pointer; font-size: 0.85rem; box-shadow: 0 3px 0 #ccc; }
-        .btn-main-action:active { transform: translateY(2px); box-shadow: none; }
+        /* ボタン */
+        button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+        button:disabled { background: var(--disabled-color); cursor: not-allowed; opacity: 0.6; }
 
-        .list-container { padding: 15px; }
-        .card { background: white; margin-bottom: 12px; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; color: #333; }
-        
-        .bottom-nav { height: 75px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 20px 20px 0 0; z-index: 100; }
-        .nav-button { flex: 1; border: none; background: none; display: flex; flex-direction: column; align-items: center; cursor: pointer; color: #95a5a6; }
-        .nav-button.active { color: var(--accent-blue); }
-        .nav-text { font-size: 0.7rem; font-weight: bold; }
+        /* イベント画面 */
+        .event-box { background: var(--panel-color); padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+        .choice-btn { width: 100%; text-align: left; position: relative; }
+        .reason-text { font-size: 0.7rem; color: #ff8888; display: block; }
+
+        /* ステータス画面 */
+        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .status-item { background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 4px; }
+        .status-label { font-size: 0.8rem; color: #aaa; }
+
+        /* スキル画面 */
+        .skill-item { background: var(--panel-color); margin-bottom: 8px; padding: 10px; border-left: 4px solid var(--accent-color); }
+        .skill-name { font-weight: bold; }
+        .skill-bonus { font-size: 0.8rem; color: #00ff00; }
+
+        /* フッター：ナビゲーション */
+        footer {
+            display: flex;
+            background: var(--panel-color);
+            border-top: 1px solid #333;
+        }
+        footer button { flex: 1; margin: 0; border-radius: 0; background: transparent; border-right: 1px solid #333; }
+        footer button:last-child { border-right: none; }
+        footer button:hover { background: rgba(255,255,255,0.1); }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <section id="home-screen" class="active">
-        <header class="header-info">
-            <div class="info-slot"><span class="info-label">PLAYER:</span><span>ケンジ</span></div>
-            <div class="info-slot"><span class="info-label">MONEY:</span><span class="money-display">1500 G</span></div>
-        </header>
-        <div class="monster-display">
-            <div id="days-left-badge">あと 90 日</div>
-            <div id="buff-container"></div>
+<div id="game-container">
+    <header>
+        <div id="rank-name">魔族の端くれ</div>
+        <div id="crystal-container"></div>
+    </header>
 
-            <div id="monster-image-container"><div style="font-size: 4rem; opacity: 0.3;">🌱</div></div>
-            <div id="monster-name-display" style="font-weight:bold; color:white; margin-bottom:10px;">ショップへ行こう</div>
-            
-            <div id="status-board">
-                <div class="status-row"><span>HP</span><div class="status-bar-bg"><div id="hp-bar" class="status-bar-fill"></div></div><span id="hp-val">0</span></div>
-                <div class="status-row"><span>STR</span><div class="status-bar-bg"><div id="str-bar" class="status-bar-fill"></div></div><span id="str-val">0</span></div>
-                <div class="status-row"><span>MAG</span><div class="status-bar-bg"><div id="mag-bar" class="status-bar-fill"></div></div><span id="mag-val">0</span></div>
-                <div class="status-row"><span>DEF</span><div class="status-bar-bg"><div id="def-bar" class="status-bar-fill"></div></div><span id="def-val">0</span></div>
-                <div class="status-row"><span>SPD</span><div class="status-bar-bg"><div id="spd-bar" class="status-bar-fill"></div></div><span id="spd-val">0</span></div>
-
-                <div class="energy-section">
-                    <div class="status-row">
-                        <span class="energy-label">ENERGY</span>
-                        <div class="status-bar-bg"><div id="energy-bar" class="status-bar-fill energy-bar-fill"></div></div>
-                        <span id="energy-val">100</span>
-                    </div>
-                </div>
+    <main>
+        <div id="home-screen" class="screen active">
+            <div class="rank-image-box" id="rank-image-area">
+                <span>階級画像</span>
+                <div id="rank-up-msg" class="rank-up-effect" style="display:none;">RANK UP!!</div>
             </div>
-
-            <div id="action-menu">
-                <button class="btn-main-action" onclick="doAction('work')">🎮 行動</button>
-                <button class="btn-main-action" onclick="doAction('rest')">💤 休憩</button>
-                <button class="btn-main-action" onclick="showPage('bag-screen')" style="grid-column: span 2; margin-top:5px; background:#f1f2f6;">🎒 アイテムを使う</button>
+            <div class="status-grid">
+                <div class="status-item"><div class="status-label">戦闘力</div><div id="display-combat-power">0</div></div>
+                <div class="status-item"><div class="status-label">次まで</div><div id="display-next-rank">1,000</div></div>
+                <div class="status-item"><div class="status-label">配下</div><div id="display-subordinates">0名</div></div>
             </div>
+            <button onclick="startEvent()" style="margin-top: 20px;">イベント発生 (消費: 1)</button>
         </div>
-    </section>
 
-    <section id="shop-screen">
-        <header class="header-info">
-            <div class="info-slot"><span class="info-label">MONEY:</span><span class="money-display">1500 G</span></div>
-            <button onclick="showPage('home-screen')" style="color:white; background:none; border:none; font-weight:bold;">✖</button>
-        </header>
-        <div id="shop-item-list" class="list-container"></div>
-    </section>
+        <div id="event-screen" class="screen">
+            <div class="event-box">
+                <h3 id="event-title"></h3>
+                <p id="event-text"></p>
+            </div>
+            <div id="choices-area"></div>
+        </div>
 
-    <section id="bag-screen">
-        <header class="header-info">
-            <div class="info-slot"><span class="info-label">BAG:</span><span id="bag-count">0</span></div>
-            <button onclick="showPage('home-screen')" style="color:white; background:none; border:none; font-weight:bold;">✖</button>
-        </header>
-        <div id="bag-item-list" class="list-container"></div>
-    </section>
+        <div id="result-screen" class="screen">
+            <div class="event-box">
+                <h3>結果</h3>
+                <p id="result-text"></p>
+                <div id="change-log" style="color: #00ff00; font-size: 0.9rem; margin-top: 10px;"></div>
+                <div id="skill-log" style="color: #ffff00; font-size: 0.9rem; margin-top: 5px;"></div>
+            </div>
+            <button onclick="showScreen('home-screen')">ホームへ戻る</button>
+        </div>
 
-    <nav class="bottom-nav">
-        <button class="nav-button active" onclick="showPage('home-screen')">🏠<span class="nav-text">ホーム</span></button>
-        <button class="nav-button" onclick="showPage('shop-screen')">🛒<span class="nav-text">ショップ</span></button>
-        <button class="nav-button" onclick="showPage('bag-screen')">🎒<span class="nav-text">持ち物</span></button>
-    </nav>
+        <div id="status-screen" class="screen">
+            <h3>ステータス</h3>
+            <div class="status-grid" id="stat-list"></div>
+            <h3 style="margin-top:20px;">内面性</h3>
+            <div class="status-grid" id="inner-list"></div>
+        </div>
+
+        <div id="skill-screen" class="screen">
+            <h3>取得済みスキル</h3>
+            <div id="acquired-skills-list"></div>
+        </div>
+    </main>
+
+    <footer>
+        <button onclick="showScreen('home-screen')">戻る</button>
+        <button onclick="showScreen('skill-screen')">スキル</button>
+        <button onclick="showScreen('status-screen')">ステータス</button>
+    </footer>
 </div>
 
 <script>
-    const monsterMaster = {
-        "ドロモン（最低ランク）": {
-            image: "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/images/doromon.png",
-            stats: { hp: 10, str: 5, mag: 5, def: 5, spd: 5 },
-            days: 90
-        }
-    };
+// --- JSONデータ (マスターデータ) ---
+const ranks = [
+    { "id": 1, "name": "魔族の端くれ", "reqCombatPower": 0, "maxCrystals": 3 },
+    { "id": 2, "name": "魔軍歩兵", "reqCombatPower": 1000, "maxCrystals": 4 },
+    { "id": 3, "name": "魔軍小隊長", "reqCombatPower": 5000, "maxCrystals": 5 },
+    { "id": 4, "name": "魔将候補", "reqCombatPower": 20000, "maxCrystals": 6 },
+    { "id": 5, "name": "魔将", "reqCombatPower": 100000, "maxCrystals": 7 },
+    { "id": 6, "name": "上級魔将", "reqCombatPower": 500000, "maxCrystals": 8 },
+    { "id": 7, "name": "魔軍四天王", "reqCombatPower": 2500000, "maxCrystals": 9 },
+    { "id": 8, "name": "准魔王", "reqCombatPower": 10000000, "maxCrystals": 10 },
+    { "id": 9, "name": "魔王", "reqCombatPower": 50000000, "maxCrystals": 11 },
+    { "id": 10, "name": "真・魔王", "reqCombatPower": 100000000, "maxCrystals": 12 }
+];
 
-    let gameState = {
-        money: 1500,
-        currentMonster: null,
-        monsterStats: null,
-        energy: 100,
-        daysLeft: 90,
-        inventory: [],
-        activeBuffs: []
-    };
-
-    function showPage(id) {
-        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        if(id === 'shop-screen') fetchShopData();
-        if(id === 'bag-screen') renderBag();
+const events = [
+    {
+        "id": 1, "title": "魔軍歩兵の因縁", "text": "パトロール中の歩兵に生意気だと絡まれた。", "minRankId": 1,
+        "choices": [
+            { "text": "力で分からせる", "req": {"stat": "physAtk", "val": 5}, "fail": "力が足りない…", "res": "力でねじ伏せた！", "change": {"physAtk": 5, "cruelty": 10} },
+            { "text": "魔法で驚かせる", "req": {"stat": "magAtk", "val": 5}, "fail": "魔力が足りない…", "res": "魔力を見せつけた。", "change": {"magAtk": 5, "charisma": 5} },
+            { "text": "賄賂を渡す", "req": null, "res": "金で解決したが屈辱的だ。", "change": {"luck": 5, "responsibility": -5} },
+            { "text": "謝る", "req": null, "res": "プライドを捨てて謝罪した。", "change": {"responsibility": 10, "charisma": -5} }
+        ]
+    },
+    {
+        "id": 2, "title": "秘密特訓", "text": "独りで鍛錬に励む。何に集中する？", "minRankId": 1,
+        "choices": [
+            { "text": "筋力トレーニング", "req": null, "res": "体が引き締まった。", "change": {"physAtk": 10, "hp": 5} },
+            { "text": "瞑想", "req": null, "res": "魔力の流れを掴んだ。", "change": {"magAtk": 10, "mp": 5} },
+            { "text": "滝行", "req": {"stat": "hp", "val": 10}, "fail": "今の体力では流される…", "res": "精神を研ぎ澄ませた。", "change": {"responsibility": 15, "magDef": 5} },
+            { "text": "素振り", "req": null, "res": "技術が向上した。", "change": {"agility": 10, "physDef": 5} }
+        ]
     }
+    // ... 他のイベントも同様に追加可能
+];
 
-    async function fetchShopData() {
-        const url = "https://raw.githubusercontent.com/katumumumu-hub/monmas/main/shop.json";
-        const container = document.getElementById('shop-item-list');
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-            const items = [...data.shop_data.tanemon_list.map(i=>({...i,type:'monster'})), 
-                           ...data.shop_data.consumable_items.map(i=>({...i,type:'item'})),
-                           {name:"守りの護符", price:1500, description:"持っている間、休憩の効率が上がる。", type:'item'}];
-            container.innerHTML = '';
-            items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = "card";
-                card.innerHTML = `<div style="flex:1"><b>${item.name}</b><br><small>${item.description}</small><br>💰 ${item.price}G</div>
-                <button onclick="buyItem('${item.name}', ${item.price}, '${item.type}')" style="background:var(--accent-blue);color:white;border:none;padding:8px;border-radius:5px;">購入</button>`;
-                container.appendChild(card);
+const skills = [
+    { "id": 1, "name": "火炎", "bonus": { "magAtk": 8 }, "reqs": [{ "stat": "magAtk", "val": 8 }, { "stat": "charisma", "val": 20 }] },
+    { "id": 2, "name": "強打", "bonus": { "physAtk": 5 }, "reqs": [{ "stat": "physAtk", "val": 5 }] },
+    { "id": 3, "name": "号令", "bonus": { "leadership": 15 }, "reqs": [{ "stat": "leadership", "val": 10 }] }
+];
+
+// --- ゲーム状態管理 ---
+let gameState = {
+    lastPlayTime: Date.now(),
+    crystals: 3,
+    currentRankId: 1,
+    stats: { hp: 0, mp: 0, physAtk: 0, magAtk: 0, magDef: 0, physDef: 0, agility: 0, luck: 0 },
+    innerTraits: { cruelty: 0, leadership: 0, charisma: 0, control: 0, responsibility: 0 },
+    acquiredSkills: []
+};
+
+let subordinates = 0;
+let combatPower = 0;
+
+// --- 初期化 ---
+function init() {
+    const saved = localStorage.getItem('devil_lord_save');
+    if (saved) {
+        gameState = JSON.parse(saved);
+        recoverCrystals();
+    }
+    updateAll();
+    showScreen('home-screen');
+}
+
+// クリスタル回復
+function recoverCrystals() {
+    const now = Date.now();
+    const diffHours = Math.floor((now - gameState.lastPlayTime) / (1000 * 60 * 60));
+    if (diffHours > 0) {
+        const currentRank = ranks.find(r => r.id === gameState.currentRankId);
+        gameState.crystals = Math.min(currentRank.maxCrystals, gameState.crystals + diffHours);
+    }
+    gameState.lastPlayTime = now;
+}
+
+// 数値の更新
+function updateAll() {
+    const s = gameState.stats;
+    const i = gameState.innerTraits;
+
+    // 配下 = (HP,MP除くステ合計) + 統率 + カリスマ - 凶悪
+    subordinates = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
+    subordinates = Math.max(0, subordinates);
+
+    // 戦闘力 = ステ合計 + 内面性合計 + 配下
+    const statSum = Object.values(s).reduce((a, b) => a + b, 0);
+    const innerSum = Object.values(i).reduce((a, b) => a + b, 0);
+    combatPower = statSum + innerSum + subordinates;
+
+    checkRankUp();
+    checkSkills();
+    renderUI();
+    save();
+}
+
+// 階級アップ判定
+function checkRankUp() {
+    const nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
+    if (nextRank && combatPower >= nextRank.reqCombatPower) {
+        gameState.currentRankId++;
+        document.getElementById('rank-up-msg').style.display = 'block';
+        setTimeout(() => { document.getElementById('rank-up-msg').style.display = 'none'; }, 3000);
+        updateAll();
+    }
+}
+
+// スキル習得判定
+function checkSkills() {
+    let skillAdded = false;
+    skills.forEach(skill => {
+        if (!gameState.acquiredSkills.includes(skill.id)) {
+            const isMet = skill.reqs.every(req => {
+                const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : gameState.innerTraits[req.stat];
+                return currentVal >= req.val;
             });
-        } catch(e){ container.innerHTML="通信エラー"; }
+
+            if (isMet) {
+                gameState.acquiredSkills.push(skill.id);
+                // ボーナス加算
+                for (let key in skill.bonus) {
+                    if (gameState.stats[key] !== undefined) gameState.stats[key] += skill.bonus[key];
+                    else if (gameState.innerTraits[key] !== undefined) gameState.innerTraits[key] += skill.bonus[key];
+                }
+                skillAdded = true;
+                const log = document.getElementById('skill-log');
+                if (log) log.innerHTML += `スキル習得: 【${skill.name}】！<br>`;
+            }
+        }
+    });
+    if (skillAdded) updateAll();
+}
+
+// UI描画
+function renderUI() {
+    const currentRank = ranks.find(r => r.id === gameState.currentRankId);
+    document.getElementById('rank-name').innerText = currentRank.name;
+    document.getElementById('display-combat-power').innerText = combatPower.toLocaleString();
+    document.getElementById('display-subordinates').innerText = subordinates.toLocaleString() + "名";
+    
+    const nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
+    document.getElementById('display-next-rank').innerText = nextRank ? nextRank.reqCombatPower.toLocaleString() : "MAX";
+
+    // クリスタル表示
+    const crystalArea = document.getElementById('crystal-container');
+    crystalArea.innerHTML = '';
+    for (let i = 0; i < currentRank.maxCrystals; i++) {
+        const dot = document.createElement('div');
+        dot.className = i < gameState.crystals ? 'crystal-icon' : 'crystal-icon crystal-empty';
+        crystalArea.appendChild(dot);
     }
 
-    function buyItem(name, price, type) {
-        if (gameState.money < price) return alert("お金不足");
-        if (type === 'monster' && gameState.currentMonster) return alert("育成中");
-        gameState.money -= price;
-        if (type === 'monster') {
-            gameState.currentMonster = name;
-            gameState.monsterStats = JSON.parse(JSON.stringify(monsterMaster[name].stats));
-            gameState.daysLeft = monsterMaster[name].days;
-            gameState.energy = 100;
+    // ステータス画面
+    renderList('stat-list', gameState.stats, {hp:'HP', mp:'MP', physAtk:'物理攻撃', magAtk:'魔法力', magDef:'魔法防御', physDef:'物理防御', agility:'俊敏性', luck:'運'});
+    renderList('inner-list', gameState.innerTraits, {cruelty:'凶悪性', leadership:'統率力', charisma:'カリスマ', control:'支配欲', responsibility:'責任感'});
+
+    // スキルリスト
+    const skillList = document.getElementById('acquired-skills-list');
+    skillList.innerHTML = '';
+    gameState.acquiredSkills.forEach(sid => {
+        const sk = skills.find(s => s.id === sid);
+        skillList.innerHTML += `<div class="skill-item"><div class="skill-name">${sk.name}</div></div>`;
+    });
+}
+
+function renderList(targetId, data, labels) {
+    const target = document.getElementById(targetId);
+    target.innerHTML = '';
+    for (let key in data) {
+        target.innerHTML += `<div class="status-item"><div class="status-label">${labels[key]}</div><div>${data[key]}</div></div>`;
+    }
+}
+
+// 画面遷移
+function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+}
+
+// イベント開始
+function startEvent() {
+    if (gameState.crystals <= 0) return alert("クリスタルが足りません");
+    
+    gameState.crystals--;
+    gameState.lastPlayTime = Date.now();
+    save();
+
+    const currentEvents = events.filter(e => e.minRankId <= gameState.currentRankId);
+    const event = currentEvents[Math.floor(Math.random() * currentEvents.length)];
+
+    document.getElementById('event-title').innerText = event.title;
+    document.getElementById('event-text').innerText = event.text;
+    const choicesArea = document.getElementById('choices-area');
+    choicesArea.innerHTML = '';
+
+    event.choices.forEach((c, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        
+        // 条件チェック
+        let disabled = false;
+        if (c.req) {
+            const currentVal = gameState.stats[c.req.stat] !== undefined ? gameState.stats[c.req.stat] : gameState.innerTraits[c.req.stat];
+            if (currentVal < c.req.val) disabled = true;
+        }
+
+        btn.innerHTML = c.text;
+        if (disabled) {
+            btn.disabled = true;
+            btn.innerHTML += `<span class="reason-text">${c.fail}</span>`;
         } else {
-            gameState.inventory.push(name);
-            if(name === "守りの護符") addBuff("加護発動中");
+            btn.onclick = () => finishEvent(c);
         }
-        updateUI();
+        choicesArea.appendChild(btn);
+    });
+
+    showScreen('event-screen');
+}
+
+function finishEvent(choice) {
+    document.getElementById('result-text').innerText = choice.res;
+    document.getElementById('change-log').innerHTML = '';
+    document.getElementById('skill-log').innerHTML = '';
+
+    for (let key in choice.change) {
+        if (gameState.stats[key] !== undefined) gameState.stats[key] += choice.change[key];
+        else if (gameState.innerTraits[key] !== undefined) gameState.innerTraits[key] += choice.change[key];
+        document.getElementById('change-log').innerHTML += `${key}: ${choice.change[key]}<br>`;
     }
 
-    function renderBag() {
-        const container = document.getElementById('bag-item-list');
-        document.getElementById('bag-count').innerText = gameState.inventory.length;
-        container.innerHTML = gameState.inventory.length === 0 ? "空です" : "";
-        gameState.inventory.forEach((name, index) => {
-            const card = document.createElement('div');
-            card.className = "card";
-            card.innerHTML = `<div style="flex:1"><b>${name}</b></div><button onclick="useItem(${index})" style="background:var(--accent-green);border:none;padding:8px;border-radius:5px;">使用</button>`;
-            container.appendChild(card);
-        });
-    }
+    updateAll();
+    showScreen('result-screen');
+}
 
-    function useItem(index) {
-        if (!gameState.currentMonster) return;
-        const name = gameState.inventory[index];
-        if (name === "栄養ドリンク") {
-            addBuff("栄養UP");
-        } else if (name === "奇跡の肥料") {
-            for(let k in gameState.monsterStats) gameState.monsterStats[k] += 1;
-        }
-        gameState.inventory.splice(index, 1);
-        updateUI();
-        renderBag();
-    }
+function save() {
+    localStorage.setItem('devil_lord_save', JSON.stringify(gameState));
+}
 
-    function addBuff(buffName) {
-        if (gameState.activeBuffs.length < 3) gameState.activeBuffs.push(buffName);
-    }
-
-    // --- 今回のメイン修正：バフを参照した行動・休憩処理 ---
-    function doAction(type) {
-        if (!gameState.currentMonster || gameState.daysLeft <= 0) return;
-
-        if (type === 'work') {
-            // バフ「栄養UP」があれば消費スタミナ半減
-            let cost = gameState.activeBuffs.includes("栄養UP") ? 10 : 20;
-            
-            if (gameState.energy < cost) return alert("体力が足りません！休憩しましょう。");
-            
-            gameState.energy -= cost;
-            gameState.monsterStats.str += 1;
-
-            // 「栄養UP」は使い切りなので削除
-            if (gameState.activeBuffs.includes("栄養UP")) {
-                const idx = gameState.activeBuffs.indexOf("栄養UP");
-                gameState.activeBuffs.splice(idx, 1);
-                alert("栄養ドリンクの効果で消費スタミナを抑えました！STR+1");
-            } else {
-                alert("トレーニング完了！STRが1上がりました。");
-            }
-        } 
-        else if (type === 'rest') {
-            // バフ「加護発動中」があれば回復量アップ
-            let recovery = gameState.activeBuffs.includes("加護発動中") ? 60 : 40;
-            gameState.energy = Math.min(100, gameState.energy + recovery);
-            
-            let msg = gameState.activeBuffs.includes("加護発動中") ? 
-                      "加護のおかげで、いつもより深く眠れました！体力+60" : "ゆっくり休みました。体力+40";
-            alert(msg);
-        }
-
-        gameState.daysLeft--;
-        updateUI();
-    }
-
-    function updateUI() {
-        document.querySelectorAll('.money-display').forEach(el => el.innerText = gameState.money + " G");
-        const buffContainer = document.getElementById('buff-container');
-        buffContainer.innerHTML = '';
-        gameState.activeBuffs.slice(0, 3).forEach(b => {
-            const span = document.createElement('span');
-            span.className = 'buff-badge';
-            span.innerText = `✨ ${b}`;
-            buffContainer.appendChild(span);
-        });
-
-        if (gameState.currentMonster) {
-            document.getElementById('days-left-badge').style.display = 'block';
-            document.getElementById('days-left-badge').innerText = `あと ${gameState.daysLeft} 日`;
-            document.getElementById('monster-image-container').innerHTML = `<img src="${monsterMaster[gameState.currentMonster].image}">`;
-            document.getElementById('monster-name-display').innerText = gameState.currentMonster;
-            document.getElementById('status-board').style.display = 'block';
-            document.getElementById('action-menu').style.display = 'grid';
-            for (let s in gameState.monsterStats) {
-                document.getElementById(`${s}-val`).innerText = gameState.monsterStats[s];
-                document.getElementById(`${s}-bar`).style.width = Math.min(100, (gameState.monsterStats[s] / 20) * 100) + "%";
-            }
-            document.getElementById('energy-val').innerText = gameState.energy;
-            document.getElementById('energy-bar').style.width = gameState.energy + "%";
-        }
-    }
-    updateUI();
+init();
 </script>
+
 </body>
 </html>
