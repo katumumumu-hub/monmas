@@ -4,69 +4,69 @@
     "name": "魔族の端くれ",
     "reqCombatPower": 0,
     "maxCrystals": 3,
-    "imagePath": "assets/images/rank1.png"
+    "imagePath": "assets/images/rank1.mp4"
   },
   {
     "id": 2,
     "name": "下級魔族",
     "reqCombatPower": 100,
     "maxCrystals": 4,
-    "imagePath": "assets/images/rank2.png"
+    "imagePath": "assets/images/rank2.mp4"
   },
   {
     "id": 3,
     "name": "中級魔族",
     "reqCombatPower": 500,
     "maxCrystals": 5,
-    "imagePath": "assets/images/rank3.png"
+    "imagePath": "assets/images/rank3.mp4"
   },
   {
     "id": 4,
     "name": "上級魔族",
     "reqCombatPower": 2500,
     "maxCrystals": 6,
-    "imagePath": "assets/images/rank4.png"
+    "imagePath": "assets/images/rank4.mp4"
   },
   {
     "id": 5,
     "name": "悪魔騎士",
     "reqCombatPower": 10000,
     "maxCrystals": 7,
-    "imagePath": "assets/images/rank5.png"
+    "imagePath": "assets/images/rank5.mp4"
   },
   {
     "id": 6,
     "name": "悪魔男爵",
     "reqCombatPower": 50000,
     "maxCrystals": 8,
-    "imagePath": "assets/images/rank6.png"
+    "imagePath": "assets/images/rank6.mp4"
   },
   {
     "id": 7,
     "name": "悪魔公爵",
     "reqCombatPower": 250000,
     "maxCrystals": 9,
-    "imagePath": "assets/images/rank7.png"
+    "imagePath": "assets/images/rank7.mp4"
   },
   {
     "id": 8,
     "name": "魔王軍幹部",
     "reqCombatPower": 1500000,
     "maxCrystals": 10,
-    "imagePath": "assets/images/rank8.png"
+    "imagePath": "assets/images/rank8.mp4"
   },
   {
     "id": 9,
     "name": "魔王",
     "reqCombatPower": 10000000,
     "maxCrystals": 11,
-    "imagePath": "assets/images/rank9.png"
+    "imagePath": "assets/images/rank9.mp4"
   },
   {
     "id": 10,
     "name": "真・魔王",
     "reqCombatPower": 100000000,
     "maxCrystals": 12,
-    "imagePath": "assets/images/rank10.png"
+    "imagePath": "assets/images/rank10.mp4"
   }
 ]
