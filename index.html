@@ -6,9 +6,9 @@
     <title>魔王育成計画</title>
     <style>
         :root {
-            --bg-color: #1a1a2e; /* いただいた画像のようなダークブルー系 */
+            --bg-color: #1a1a2e;
             --panel-color: #16213e;
-            --accent-color: #e94560; /* ピンクレッド系のアクセント */
+            --accent-color: #e94560;
             --text-color: #ffffff;
             --disabled-color: #444;
         }
@@ -29,27 +29,23 @@
             width: 100%;
             max-width: 400px;
             height: 100%;
-            max-height: 850px;
-            background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            border: 1px solid #333;
+            background-color: var(--bg-color);
         }
 
-        /* ヘッダー周り */
         header {
             padding: 10px;
             background: var(--panel-color);
             border-bottom: 2px solid var(--accent-color);
             text-align: center;
         }
-        #rank-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 5px; }
+
         #crystal-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 5px; }
         .crystal-icon { width: 18px; height: 18px; background: #0f8; border-radius: 50%; box-shadow: 0 0 8px #0f8; }
         .crystal-empty { background: #333; box-shadow: none; }
-        #crystal-timer { font-size: 0.8rem; color: #aaa; } /* タイマーのスタイル */
+        #crystal-timer { font-size: 0.8rem; color: #aaa; }
 
-        /* メイン画面のベース設定 */
         main {
             flex: 1;
             padding: 15px;
@@ -57,95 +53,57 @@
             display: flex;
             flex-direction: column;
         }
+
         .screen { display: none; flex: 1; flex-direction: column; }
         .active { display: flex; }
 
-        /* ホーム画面：画像拡大レイアウト */
+        /* 画像エリアを大きく表示 */
         .rank-image-box {
-            flex: 1; /* 空きスペースをすべて画像エリアに割り当てる */
-            background: #222;
+            flex: 1;
+            background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid #444;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 15px;
-            position: relative;
-            min-height: 200px;
+            overflow: hidden;
+            border: 1px solid #333;
         }
-        .rank-up-effect {
-            position: absolute;
-            color: yellow;
-            font-weight: bold;
-            font-size: 1.5rem;
-            animation: flash 1s infinite;
+        #rank-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 画像の比率を保って表示 */
         }
-        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* ホーム画面下部のステータス＆ボタンエリア */
-        .home-bottom-area {
-            flex-shrink: 0; /* 画像に押されても縮まない */
-        }
-        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .status-item { background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 4px; }
-        .status-label { font-size: 0.75rem; color: #aaa; margin-bottom: 2px; }
-        .status-value { font-size: 1.1rem; font-weight: bold; }
+        .home-bottom-area { flex-shrink: 0; }
+        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .status-item { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; }
+        .status-label { font-size: 0.7rem; color: #aaa; }
+        .status-value { font-size: 1rem; font-weight: bold; }
 
-        /* 各種ボタン */
         button {
             background: var(--accent-color);
             color: white;
             border: none;
             padding: 15px;
             border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
             font-weight: bold;
             width: 100%;
+            cursor: pointer;
         }
-        button:disabled { background: var(--disabled-color); cursor: not-allowed; opacity: 0.6; }
 
-        /* イベント画面 */
-        .event-box { background: var(--panel-color); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-        .choice-btn { margin-bottom: 10px; text-align: left; background: #2a2a4a; }
-        .reason-text { font-size: 0.75rem; color: #ff8888; display: block; margin-top: 3px; font-weight: normal; }
-
-        /* スキル画面 */
-        #acquired-skills-list { flex: 1; overflow-y: auto; margin-bottom: 10px; }
-        .skill-item { 
-            background: var(--panel-color); 
-            margin-bottom: 8px; 
-            padding: 12px; 
-            border-left: 4px solid var(--accent-color); 
-            border-radius: 4px;
-            cursor: pointer; 
-            transition: background 0.2s; 
-        }
-        .skill-item.selected { background: rgba(255,255,255,0.15); border-left-color: #ffaa00; }
-        .skill-name { font-weight: bold; font-size: 1.1rem; }
-        
-        /* スキル詳細パネル */
+        /* スキル詳細 */
         #skill-detail-panel {
-            flex-shrink: 0;
             background: #222;
-            padding: 15px;
+            padding: 10px;
             border-radius: 8px;
             border: 1px solid var(--accent-color);
-            display: none; /* 初期は非表示 */
+            margin-top: 10px;
+            display: none;
         }
-        #detail-skill-name { font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
-        #detail-skill-bonus { color: #0f8; font-size: 0.85rem; margin-bottom: 8px; font-weight: bold; }
-        #detail-skill-desc { font-size: 0.85rem; color: #ddd; line-height: 1.4; }
 
-        /* フッター（ナビゲーション） */
-        footer {
-            display: flex;
-            background: var(--panel-color);
-            border-top: 1px solid #333;
-        }
-        footer button { flex: 1; margin: 0; border-radius: 0; background: transparent; border-right: 1px solid #333; font-weight: normal; padding: 12px; }
-        footer button:last-child { border-right: none; }
-        footer button:hover { background: rgba(255,255,255,0.1); }
+        footer { display: flex; background: var(--panel-color); border-top: 1px solid #333; }
+        footer button { flex: 1; background: transparent; border-right: 1px solid #333; padding: 12px; font-weight: normal; }
     </style>
 </head>
 <body>
@@ -159,9 +117,8 @@
 
     <main>
         <div id="home-screen" class="screen active">
-            <div class="rank-image-box" id="rank-image-area">
-                <span>階級画像</span>
-                <div id="rank-up-msg" class="rank-up-effect" style="display:none;">RANK UP!!</div>
+            <div class="rank-image-box">
+                <img id="rank-image" src="" alt="階級画像">
             </div>
             
             <div class="home-bottom-area">
@@ -169,46 +126,39 @@
                     <div class="status-item"><div class="status-label">戦闘力</div><div class="status-value" id="display-combat-power">0</div></div>
                     <div class="status-item"><div class="status-label">次まで</div><div class="status-value" id="display-next-rank">1,000</div></div>
                 </div>
-                <div class="status-grid" style="grid-template-columns: 1fr;">
-                    <div class="status-item"><div class="status-label">配下</div><div class="status-value" id="display-subordinates">0名</div></div>
-                </div>
+                <div class="status-item" style="margin-bottom:10px;"><div class="status-label">配下</div><div class="status-value" id="display-subordinates">0名</div></div>
                 <button onclick="startEvent()">イベント発生 (消費: 1)</button>
             </div>
         </div>
 
         <div id="event-screen" class="screen">
-            <div class="event-box">
-                <h3 id="event-title"></h3>
-                <p id="event-text"></p>
-            </div>
+            <h3 id="event-title"></h3>
+            <p id="event-text"></p>
             <div id="choices-area"></div>
         </div>
 
         <div id="result-screen" class="screen">
-            <div class="event-box" style="flex:1;">
-                <h3>結果</h3>
-                <p id="result-text"></p>
-                <div id="change-log" style="color: #0f8; font-size: 0.9rem; margin-top: 15px;"></div>
-                <div id="skill-log" style="color: #ffaa00; font-size: 0.9rem; margin-top: 5px;"></div>
-            </div>
-            <button onclick="showScreen('home-screen')" style="margin-top: 15px;">ホームへ戻る</button>
+            <h3>結果</h3>
+            <p id="result-text"></p>
+            <div id="change-log" style="color:#0f8;"></div>
+            <div id="skill-log" style="color:#fa0;"></div>
+            <button onclick="showScreen('home-screen')">戻る</button>
         </div>
 
         <div id="status-screen" class="screen">
             <h3>ステータス</h3>
             <div class="status-grid" id="stat-list"></div>
-            <h3 style="margin-top:10px;">内面性</h3>
+            <h3>内面性</h3>
             <div class="status-grid" id="inner-list"></div>
         </div>
 
         <div id="skill-screen" class="screen">
             <h3>取得済みスキル</h3>
             <div id="acquired-skills-list"></div>
-            
             <div id="skill-detail-panel">
-                <div id="detail-skill-name">スキル名</div>
-                <div id="detail-skill-bonus">上昇値</div>
-                <div id="detail-skill-desc">説明文</div>
+                <div id="detail-skill-name" style="font-weight:bold;"></div>
+                <div id="detail-skill-bonus" style="color:#0f8; font-size:0.8rem;"></div>
+                <div id="detail-skill-desc" style="font-size:0.8rem; margin-top:5px;"></div>
             </div>
         </div>
     </main>
@@ -221,36 +171,25 @@
 </div>
 
 <script>
-// --- JS用 定数マスターデータ（description付き） ---
+// マスターデータに画像パス(imagePath)を追加
 const ranks = [
-    { "id": 1, "name": "魔族の端くれ", "reqCombatPower": 0, "maxCrystals": 3 },
-    { "id": 2, "name": "魔軍歩兵", "reqCombatPower": 1000, "maxCrystals": 4 }
-    // ... 必要に応じてranks.jsonのデータを追加
+    { "id": 1, "name": "魔族の端くれ", "reqCombatPower": 0, "maxCrystals": 3, "imagePath": "assets/images/rank1.png" },
+    { "id": 2, "name": "魔軍歩兵", "reqCombatPower": 1000, "maxCrystals": 4, "imagePath": "assets/images/rank2.png" }
 ];
 
 const skills = [
-    { "id": 1, "name": "火炎", "description": "手のひらから灼熱の炎を放つ基本的な魔法。周囲の空気を焼き尽くす。", "bonus": { "magAtk": 8 }, "reqs": [{ "stat": "magAtk", "val": 8 }] },
-    { "id": 2, "name": "強打", "description": "魔力を拳に込めて力任せに殴りつける。単純だが破壊力は高い。", "bonus": { "physAtk": 5 }, "reqs": [{ "stat": "physAtk", "val": 5 }] },
-    { "id": 3, "name": "号令", "description": "部下を鼓舞する大音声。組織を動かす力となる。", "bonus": { "leadership": 15 }, "reqs": [{ "stat": "leadership", "val": 10 }] }
-    // ... skills.jsonのデータをここに追加
+    { "id": 1, "name": "強打", "description": "魔力を拳に込めて殴りつける。", "bonus": { "physAtk": 5 }, "reqs": [{ "stat": "physAtk", "val": 0 }] }
 ];
 
 const events = [
     {
-        "id": 1, "title": "魔軍歩兵の因縁", "text": "パトロール中の歩兵に生意気だと絡まれた。", "minRankId": 1,
-        "choices": [
-            { "text": "力で分からせる", "req": {"stat": "physAtk", "val": 5}, "fail": "力が足りない…", "res": "力でねじ伏せた！", "change": {"physAtk": 5, "cruelty": 10} },
-            { "text": "魔法で驚かせる", "req": {"stat": "magAtk", "val": 5}, "fail": "魔力が足りない…", "res": "魔力を見せつけた。", "change": {"magAtk": 5, "charisma": 5} },
-            { "text": "賄賂を渡す", "req": null, "res": "金で解決したが屈辱的だ。", "change": {"luck": 5, "responsibility": -5} },
-            { "text": "謝る", "req": null, "res": "プライドを捨てて謝罪した。", "change": {"responsibility": 10, "charisma": -5} }
-        ]
+        "id": 1, "title": "特訓", "text": "独りで鍛錬した。", "minRankId": 1,
+        "choices": [{ "text": "筋力トレ", "req": null, "res": "筋肉がついた。", "change": {"physAtk": 10} }]
     }
-    // ... events.jsonのデータをここに追加
 ];
 
 const LABELS = {hp:'HP', mp:'MP', physAtk:'物理攻撃', magAtk:'魔法力', magDef:'魔法防御', physDef:'物理防御', agility:'俊敏性', luck:'運', cruelty:'凶悪性', leadership:'統率力', charisma:'カリスマ', control:'支配欲', responsibility:'責任感'};
 
-// --- ゲーム状態管理 ---
 let gameState = {
     lastPlayTime: Date.now(),
     crystals: 3,
@@ -260,262 +199,92 @@ let gameState = {
     acquiredSkills: []
 };
 
-let subordinates = 0;
-let combatPower = 0;
-
-// --- 初期化 ---
 function init() {
     const saved = localStorage.getItem('devil_lord_save');
-    if (saved) {
-        gameState = JSON.parse(saved);
-        recoverCrystals();
-    }
+    if (saved) gameState = JSON.parse(saved);
     updateAll();
-    showScreen('home-screen');
-    
-    // タイマーを1秒ごとに更新
     setInterval(updateTimer, 1000);
 }
 
-// クリスタル回復ロジック（時間を正確に計算）
-function recoverCrystals() {
-    const now = Date.now();
-    const msPerCrystal = 60 * 60 * 1000; // 1時間 = 3600000ミリ秒
-    const elapsed = now - gameState.lastPlayTime;
-    const diffCrystals = Math.floor(elapsed / msPerCrystal);
-    
-    if (diffCrystals > 0) {
-        const currentRank = ranks.find(r => r.id === gameState.currentRankId);
-        const prevCrystals = gameState.crystals;
-        gameState.crystals = Math.min(currentRank.maxCrystals, gameState.crystals + diffCrystals);
-        
-        if (gameState.crystals < currentRank.maxCrystals) {
-            // MAXに達していない場合は、回復した時間分だけPlayTimeを進める（余剰時間を保持）
-            gameState.lastPlayTime += diffCrystals * msPerCrystal;
-        } else {
-            // MAXに達した場合は、基準時間をリセット
-            gameState.lastPlayTime = now;
-        }
-    }
-}
-
-// タイマー更新描画
-function updateTimer() {
-    const currentRank = ranks.find(r => r.id === gameState.currentRankId);
-    const timerElement = document.getElementById('crystal-timer');
-
-    if (gameState.crystals >= currentRank.maxCrystals) {
-        timerElement.innerText = "MAX";
-        return;
-    }
-    
-    const now = Date.now();
-    const msPerCrystal = 60 * 60 * 1000;
-    const elapsed = now - gameState.lastPlayTime;
-    
-    // アプリを開いたまま1時間が経過した時の処理
-    if (elapsed >= msPerCrystal) {
-        recoverCrystals();
-        updateAll(); // UIの再描画
-        return;
-    }
-    
-    // 次のクリスタルまでの残り時間を計算
-    const remaining = msPerCrystal - elapsed;
-    const m = Math.floor(remaining / 1000 / 60);
-    const s = Math.floor((remaining / 1000) % 60);
-    timerElement.innerText = `次まで: ${m}分${s.toString().padStart(2, '0')}秒`;
-}
-
-// 数値の更新
 function updateAll() {
     const s = gameState.stats;
     const i = gameState.innerTraits;
-
-    subordinates = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
-    subordinates = Math.max(0, subordinates);
-
-    const statSum = Object.values(s).reduce((a, b) => a + b, 0);
-    const innerSum = Object.values(i).reduce((a, b) => a + b, 0);
-    combatPower = statSum + innerSum + subordinates;
-
-    checkRankUp();
-    checkSkills();
-    renderUI();
+    const subs = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
+    const cp = Object.values(s).reduce((a,b)=>a+b,0) + Object.values(i).reduce((a,b)=>a+b,0) + Math.max(0, subs);
+    
+    // UI更新
+    const currentRank = ranks.find(r => r.id === gameState.currentRankId);
+    document.getElementById('rank-name').innerText = currentRank.name;
+    document.getElementById('rank-image').src = currentRank.imagePath; // 画像パスを反映
+    document.getElementById('display-combat-power').innerText = cp.toLocaleString();
+    document.getElementById('display-subordinates').innerText = Math.max(0, subs).toLocaleString() + "名";
+    
+    renderCrystalUI(currentRank);
+    renderStats();
     save();
 }
 
-function checkRankUp() {
-    const nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
-    if (nextRank && combatPower >= nextRank.reqCombatPower) {
-        gameState.currentRankId++;
-        document.getElementById('rank-up-msg').style.display = 'block';
-        setTimeout(() => { document.getElementById('rank-up-msg').style.display = 'none'; }, 3000);
-        updateAll();
+function renderCrystalUI(rank) {
+    const area = document.getElementById('crystal-container');
+    area.innerHTML = '';
+    for(let i=0; i<rank.maxCrystals; i++) {
+        const d = document.createElement('div');
+        d.className = i < gameState.crystals ? 'crystal-icon' : 'crystal-icon crystal-empty';
+        area.appendChild(d);
     }
 }
 
-function checkSkills() {
-    let skillAdded = false;
-    skills.forEach(skill => {
-        if (!gameState.acquiredSkills.includes(skill.id)) {
-            const isMet = skill.reqs.every(req => {
-                const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : gameState.innerTraits[req.stat];
-                return currentVal >= req.val;
-            });
-
-            if (isMet) {
-                gameState.acquiredSkills.push(skill.id);
-                for (let key in skill.bonus) {
-                    if (gameState.stats[key] !== undefined) gameState.stats[key] += skill.bonus[key];
-                    else if (gameState.innerTraits[key] !== undefined) gameState.innerTraits[key] += skill.bonus[key];
-                }
-                skillAdded = true;
-                const log = document.getElementById('skill-log');
-                if (log) log.innerHTML += `スキル習得: 【${skill.name}】！<br>`;
-            }
-        }
-    });
-    if (skillAdded) updateAll();
-}
-
-function renderUI() {
+function updateTimer() {
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
-    document.getElementById('rank-name').innerText = currentRank.name;
-    document.getElementById('display-combat-power').innerText = combatPower.toLocaleString();
-    document.getElementById('display-subordinates').innerText = subordinates.toLocaleString() + "名";
-    
-    const nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
-    document.getElementById('display-next-rank').innerText = nextRank ? nextRank.reqCombatPower.toLocaleString() : "MAX";
-
-    // クリスタル表示
-    const crystalArea = document.getElementById('crystal-container');
-    crystalArea.innerHTML = '';
-    for (let i = 0; i < currentRank.maxCrystals; i++) {
-        const dot = document.createElement('div');
-        dot.className = i < gameState.crystals ? 'crystal-icon' : 'crystal-icon crystal-empty';
-        crystalArea.appendChild(dot);
+    if (gameState.crystals >= currentRank.maxCrystals) {
+        document.getElementById('crystal-timer').innerText = "MAX";
+        return;
     }
-    updateTimer(); // 即座にタイマーも更新
-
-    // ステータス画面
-    renderList('stat-list', gameState.stats, LABELS);
-    renderList('inner-list', gameState.innerTraits, LABELS);
-
-    // スキルリスト描画
-    const skillList = document.getElementById('acquired-skills-list');
-    skillList.innerHTML = '';
-    gameState.acquiredSkills.forEach(sid => {
-        const sk = skills.find(s => s.id === sid);
-        // クリックで showSkillDetail() を呼ぶように設定
-        skillList.innerHTML += `<div class="skill-item" id="skill-item-${sk.id}" onclick="showSkillDetail(${sk.id})"><div class="skill-name">${sk.name}</div></div>`;
-    });
+    const remaining = (60 * 60 * 1000) - (Date.now() - gameState.lastPlayTime);
+    const m = Math.floor(remaining/1000/60);
+    const s = Math.floor((remaining/1000)%60);
+    document.getElementById('crystal-timer').innerText = `次まで: ${m}分${s.toString().padStart(2,'0')}秒`;
 }
 
-function renderList(targetId, data, labels) {
-    const target = document.getElementById(targetId);
-    target.innerHTML = '';
-    for (let key in data) {
-        target.innerHTML += `<div class="status-item"><div class="status-label">${labels[key]}</div><div class="status-value">${data[key]}</div></div>`;
-    }
-}
-
-// スキル詳細の表示
-function showSkillDetail(skillId) {
-    const skill = skills.find(s => s.id === skillId);
-    if (!skill) return;
-
-    // ボーナステキストの作成
-    let bonusText = "";
-    for (let key in skill.bonus) {
-        bonusText += `${LABELS[key]} +${skill.bonus[key]}　`;
-    }
-
-    document.getElementById('detail-skill-name').innerText = skill.name;
-    document.getElementById('detail-skill-bonus').innerText = `【上昇効果】\n${bonusText}`;
-    document.getElementById('detail-skill-desc').innerText = skill.description || "説明がありません。";
-
-    document.getElementById('skill-detail-panel').style.display = 'block';
-
-    // 選択中のハイライトを更新
-    document.querySelectorAll('.skill-item').forEach(el => el.classList.remove('selected'));
-    document.getElementById(`skill-item-${skillId}`).classList.add('selected');
-}
-
-function showScreen(screenId) {
+function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(screenId).classList.add('active');
+    document.getElementById(id).classList.add('active');
 }
 
 function startEvent() {
-    if (gameState.crystals <= 0) return alert("クリスタルが足りません");
-    
-    // クリスタル消費時にMAXだった場合は、そこから1時間のカウントダウンをスタートさせる
-    const currentRank = ranks.find(r => r.id === gameState.currentRankId);
-    if (gameState.crystals === currentRank.maxCrystals) {
-        gameState.lastPlayTime = Date.now();
-    }
-
+    if(gameState.crystals <= 0) return;
     gameState.crystals--;
-    save();
-    updateTimer(); // 即座にタイマー更新
-
-    const currentEvents = events.filter(e => e.minRankId <= gameState.currentRankId);
-    const event = currentEvents[Math.floor(Math.random() * currentEvents.length)];
-
-    document.getElementById('event-title').innerText = event.title;
-    document.getElementById('event-text').innerText = event.text;
-    const choicesArea = document.getElementById('choices-area');
-    choicesArea.innerHTML = '';
-
-    event.choices.forEach((c) => {
-        const btn = document.createElement('button');
-        btn.className = 'choice-btn';
-        
-        let disabled = false;
-        if (c.req) {
-            const currentVal = gameState.stats[c.req.stat] !== undefined ? gameState.stats[c.req.stat] : gameState.innerTraits[c.req.stat];
-            if (currentVal < c.req.val) disabled = true;
-        }
-
-        btn.innerHTML = c.text;
-        if (disabled) {
-            btn.disabled = true;
-            btn.innerHTML += `<span class="reason-text">${c.fail}</span>`;
-        } else {
-            btn.onclick = () => finishEvent(c);
-        }
-        choicesArea.appendChild(btn);
+    gameState.lastPlayTime = Date.now();
+    const ev = events[0]; // サンプルとして1つ目
+    document.getElementById('event-title').innerText = ev.title;
+    document.getElementById('event-text').innerText = ev.text;
+    const area = document.getElementById('choices-area');
+    area.innerHTML = '';
+    ev.choices.forEach(c => {
+        const b = document.createElement('button');
+        b.innerText = c.text;
+        b.onclick = () => {
+            document.getElementById('result-text').innerText = c.res;
+            for(let k in c.change) gameState.stats[k] += c.change[k];
+            updateAll();
+            showScreen('result-screen');
+        };
+        area.appendChild(b);
     });
-
     showScreen('event-screen');
 }
 
-function finishEvent(choice) {
-    document.getElementById('result-text').innerText = choice.res;
-    document.getElementById('change-log').innerHTML = '';
-    document.getElementById('skill-log').innerHTML = '';
-
-    for (let key in choice.change) {
-        if (gameState.stats[key] !== undefined) gameState.stats[key] += choice.change[key];
-        else if (gameState.innerTraits[key] !== undefined) gameState.innerTraits[key] += choice.change[key];
-        
-        // 変動値の表示（プラスなら+をつける）
-        const sign = choice.change[key] > 0 ? "+" : "";
-        document.getElementById('change-log').innerHTML += `${LABELS[key]}: ${sign}${choice.change[key]}<br>`;
+function renderStats() {
+    const list = document.getElementById('stat-list');
+    list.innerHTML = '';
+    for(let k in gameState.stats) {
+        list.innerHTML += `<div class="status-item"><div class="status-label">${LABELS[k]}</div><div class="status-value">${gameState.stats[k]}</div></div>`;
     }
-
-    updateAll();
-    showScreen('result-screen');
 }
 
-function save() {
-    localStorage.setItem('devil_lord_save', JSON.stringify(gameState));
-}
+function save() { localStorage.setItem('devil_lord_save', JSON.stringify(gameState)); }
 
-// 起動
 init();
 </script>
-
 </body>
 </html>
