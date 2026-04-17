@@ -129,7 +129,15 @@
             transition: transform 0.1s;
         }
         button:active { transform: scale(0.98); }
-        button:disabled { background: var(--disabled-color); border-color: #222; opacity: 0.5; cursor: not-allowed; }
+        
+        /* ★修正：無効化されたボタンのスタイル（クリック判定を残すためのクラス） */
+        button:disabled, button.disabled-btn { 
+            background: var(--disabled-color); 
+            border-color: #222; 
+            opacity: 0.5; 
+            cursor: not-allowed; 
+        }
+        button.disabled-btn:active { transform: scale(1); /* 押せないボタンは沈み込まない */ }
 
         .reason-text { font-size: 0.75rem; color: #ff5555; display: block; margin-top: 3px; font-weight: normal; }
 
@@ -159,8 +167,6 @@
             color: #d1c1e5;
         }
         footer button:last-child { border-right: none; }
-        
-        /* フッターボタンが無効時のスタイル調整 */
         footer button:disabled { background: #1a082e; color: #555; opacity: 1; }
 
         .dev-tools { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px; }
@@ -178,8 +184,8 @@
 <div id="game-container">
     <header>
         <div class="dev-tools">
-            <button class="dev-btn btn-max" onclick="devMaxCrystals()">[開発] クリスタルMAX</button>
-            <button class="dev-btn btn-reset" onclick="devResetSave()">[開発] セーブ初期化</button>
+            <button class="dev-btn btn-max" onclick="playSE('click'); devMaxCrystals()">[開発] クリスタルMAX</button>
+            <button class="dev-btn btn-reset" onclick="playSE('click'); devResetSave()">[開発] セーブ初期化</button>
         </div>
         <div id="rank-name">読み込み中...</div>
         <div id="crystal-container"></div>
@@ -223,7 +229,7 @@
                 <div id="change-log" style="color:var(--crystal-color); margin-top: 15px; font-size: 0.9rem; font-weight:bold;"></div>
                 <div id="skill-log" style="color:#ffdf00; margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
             </div>
-            <button onclick="showScreen('home-screen')">ホームへ</button>
+            <button onclick="playSE('click'); showScreen('home-screen')">ホームへ</button>
         </div>
 
         <div id="status-screen" class="screen">
@@ -245,13 +251,81 @@
     </main>
 
     <footer>
-        <button onclick="showScreen('home-screen')">ホーム</button>
-        <button onclick="showScreen('skill-screen')">スキル</button>
-        <button onclick="showScreen('status-screen')">ステータス</button>
+        <button onclick="playSE('click'); showScreen('home-screen')">ホーム</button>
+        <button onclick="playSE('click'); showScreen('skill-screen')">スキル</button>
+        <button onclick="playSE('click'); showScreen('status-screen')">ステータス</button>
     </footer>
 </div>
 
 <script>
+// ==========================================
+// ★ サウンドエフェクト（SE）管理システム
+// ==========================================
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+
+function initAudio() {
+    if (!audioCtx) {
+        audioCtx = new AudioContext();
+    }
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+}
+
+// シンセサイザーで音を作る関数
+function playTone(freq, type, duration, vol=0.1, delay=0) {
+    if (!audioCtx) return;
+    const startTime = audioCtx.currentTime + delay;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, startTime);
+    
+    gain.gain.setValueAtTime(0, startTime);
+    gain.gain.linearRampToValueAtTime(vol, startTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    
+    osc.start(startTime);
+    osc.stop(startTime + duration);
+}
+
+// イベントに応じた効果音を鳴らす関数
+function playSE(type) {
+    initAudio();
+    switch(type) {
+        case 'click':      // 通常クリック（ピッ）
+            playTone(800, 'sine', 0.1, 0.05, 0);
+            break;
+        case 'error':      // エラー・押せない（ブブッ）
+            playTone(150, 'sawtooth', 0.3, 0.05, 0);
+            playTone(140, 'sawtooth', 0.4, 0.05, 0.15);
+            break;
+        case 'finish':     // イベント完了（ピロリン）
+            playTone(523.25, 'sine', 0.3, 0.05, 0); 
+            playTone(659.25, 'sine', 0.3, 0.05, 0.1); 
+            playTone(783.99, 'sine', 0.4, 0.05, 0.2); 
+            break;
+        case 'skill':      // スキル習得（キラララン！）
+            playTone(880, 'square', 0.2, 0.03, 0);
+            playTone(1108.73, 'square', 0.2, 0.03, 0.1);
+            playTone(1318.51, 'square', 0.2, 0.03, 0.2);
+            playTone(1760, 'square', 0.6, 0.03, 0.3);
+            break;
+        case 'rankup':     // 階級昇格（ファンファーレ）
+            playTone(392.00, 'triangle', 0.2, 0.08, 0); 
+            playTone(392.00, 'triangle', 0.2, 0.08, 0.15); 
+            playTone(392.00, 'triangle', 0.2, 0.08, 0.30); 
+            playTone(523.25, 'triangle', 0.6, 0.08, 0.45); 
+            break;
+    }
+}
+// ==========================================
+
 let ranks = [];
 let skills = [];
 let events = [];
@@ -378,6 +452,7 @@ function checkAndRenderSkills() {
             btn.style.marginBottom = '5px';
             btn.innerText = `♦ ${skill.name}`;
             btn.onclick = () => {
+                playSE('click'); // スキル確認時にもクリック音
                 document.getElementById('skill-detail-panel').style.display = 'block';
                 document.getElementById('detail-skill-name').innerText = skill.name;
                 const bonusText = Object.entries(skill.bonus || {}).map(([k, v]) => `${LABELS[k]} +${v}`).join(' / ');
@@ -406,7 +481,12 @@ function updateAll() {
         gameState.currentRankId++;
         currentRank = ranks.find(r => r.id === gameState.currentRankId);
         nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
-        alert(`昇格：${currentRank.name}`);
+        
+        // ★ 昇格音を鳴らす
+        playSE('rankup');
+        // アラートで音が止まるのを防ぐため、少しだけ遅らせて表示
+        setTimeout(() => { alert(`昇格：${currentRank.name}`); }, 100);
+        
         if (gameState.crystals < currentRank.maxCrystals) gameState.crystals = currentRank.maxCrystals;
     }
 
@@ -458,27 +538,29 @@ function updateTimer() {
     document.getElementById('crystal-timer').innerText = `次まで: ${m}分${s.toString().padStart(2,'0')}秒`;
 }
 
-// ★修正：イベント画面に入った時はフッターボタンを無効化する処理を追加
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     
     const footerBtns = document.querySelectorAll('footer button');
     if (id === 'event-screen') {
-        // イベント中はフッターボタンを押せないようにする
         footerBtns.forEach(btn => btn.disabled = true);
     } else {
-        // それ以外の画面（結果画面やホーム画面）では有効に戻す
         footerBtns.forEach(btn => btn.disabled = false);
     }
 }
 
 function startEvent() {
-    if(gameState.crystals <= 0) return alert("魔力が足りません");
+    if(gameState.crystals <= 0) {
+        playSE('error'); // ★ 魔力不足エラー音
+        return alert("魔力が足りません");
+    }
+    
+    playSE('click'); // ★ 通常クリック音
+    
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     if (gameState.crystals >= currentRank.maxCrystals) gameState.lastPlayTime = Date.now();
     
-    // ★修正：ボタンを押した瞬間にクリスタルを減らし、即座に画面(UI)に反映させる
     gameState.crystals--;
     save();
     renderCrystalUI(currentRank);
@@ -490,10 +572,12 @@ function startEvent() {
     document.getElementById('event-text').innerText = ev.text;
     const area = document.getElementById('choices-area');
     area.innerHTML = '';
+    
     ev.choices.forEach(c => {
         const b = document.createElement('button');
         b.style.textAlign = 'left';
         b.innerHTML = c.text;
+        
         let disabled = false;
         if (c.reqCondition) {
             for (let req of c.reqCondition) {
@@ -501,11 +585,19 @@ function startEvent() {
                 if (currentVal < req.value) disabled = true;
             }
         }
+        
         if (disabled) {
-            b.disabled = true;
+            // ★ disabled属性を使わずクラスで制御（クリック判定を残すため）
+            b.classList.add('disabled-btn');
             b.innerHTML += `<span class="reason-text">${c.disabledReason}</span>`;
+            b.onclick = () => {
+                playSE('error'); // ★ 押せないボタンのエラー音
+            };
         } else {
             b.onclick = () => {
+                let oldRank = gameState.currentRankId;
+                let oldSkillCount = gameState.acquiredSkills.length;
+
                 document.getElementById('result-text').innerText = c.resultText;
                 document.getElementById('change-log').innerHTML = '';
                 document.getElementById('skill-log').innerHTML = ''; 
@@ -521,7 +613,19 @@ function startEvent() {
                 
                 updateAll(); 
                 
-                if (gameState.acquiredSkills.length > prevSkillCount) {
+                let rankedUp = (gameState.currentRankId > oldRank);
+                let skilledUp = (gameState.acquiredSkills.length > oldSkillCount);
+
+                // ★ 効果音の優先順位設定
+                if (!rankedUp) { // 昇格音はupdateAll内で鳴るので、それ以外の時だけ鳴らす
+                    if (skilledUp) {
+                        playSE('skill'); // ★ スキル習得音
+                    } else {
+                        playSE('finish'); // ★ 通常イベント完了音
+                    }
+                }
+                
+                if (skilledUp) {
                     const newSkills = gameState.acquiredSkills.slice(prevSkillCount);
                     newSkills.forEach(id => {
                         const s = skills.find(sk => sk.id === id);
@@ -537,7 +641,6 @@ function startEvent() {
         area.appendChild(b);
     });
     
-    // ★ここでイベント画面に遷移（この瞬間フッターボタンが無効になります）
     showScreen('event-screen');
 }
 
