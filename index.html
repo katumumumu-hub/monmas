@@ -21,7 +21,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100dvh; /* スマホのアドレスバー対策 */
+            height: 100dvh;
             overflow: hidden;
         }
 
@@ -59,7 +59,6 @@
         .screen { display: none; flex: 1; flex-direction: column; height: 100%; overflow: hidden;}
         .active { display: flex; }
 
-        /* 動画ボックス：画面内に収まるようにサイズを自動調整 */
         .rank-image-box {
             flex: 1 1 0; 
             min-height: 0; 
@@ -71,10 +70,9 @@
             margin-bottom: 15px;
             overflow: hidden;
             border: 1px solid #333;
-            cursor: pointer; /* タップできることを示す指マーク */
+            cursor: pointer;
         }
 
-        /* ★動画のスタイル変更なし */
         #rank-video {
             width: 100%;
             height: 100%;
@@ -146,7 +144,7 @@
     <main>
         <div id="home-screen" class="screen active">
             <div class="rank-image-box" onclick="playRankVideo()">
-                <video id="rank-video" muted playsinline src=""></video>
+                <video id="rank-video" muted playsinline preload="metadata" src=""></video>
             </div>
             
             <div class="home-bottom-area">
@@ -246,11 +244,10 @@ async function init() {
     }
 }
 
-// ★追加：動画をタップした時に再生する関数
 function playRankVideo() {
     const video = document.getElementById('rank-video');
     if (video) {
-        video.currentTime = 0; // 毎回最初から再生させる
+        video.currentTime = 0; 
         video.play();
     }
 }
@@ -324,7 +321,10 @@ function updateAll() {
     }
 
     document.getElementById('rank-name').innerText = currentRank.name;
-    document.getElementById('rank-video').src = currentRank.imagePath;
+    
+    // ★ 動画のパスの最後に `#t=0.001` を付けて、最初のフレームを強制的に表示させる（スマホ真っ暗対策）
+    document.getElementById('rank-video').src = currentRank.imagePath + "#t=0.001";
+    
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     
     if (nextRank) {
