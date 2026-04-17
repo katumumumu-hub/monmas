@@ -63,8 +63,9 @@
             border-radius: 50%; 
             box-shadow: 0 0 12px var(--crystal-color); 
             transform: rotate(45deg);
+            transition: all 0.3s;
         }
-        .crystal-empty { background: #1a0a25; box-shadow: inset 0 0 5px #000; }
+        .crystal-empty { background: #1a0a25; box-shadow: inset 0 0 5px #000; transform: rotate(45deg) scale(0.8); opacity: 0.5; }
         #crystal-timer { font-size: 0.8rem; color: #a894c2; }
 
         main {
@@ -158,6 +159,9 @@
             color: #d1c1e5;
         }
         footer button:last-child { border-right: none; }
+        
+        /* フッターボタンが無効時のスタイル調整 */
+        footer button:disabled { background: #1a082e; color: #555; opacity: 1; }
 
         .dev-tools { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px; }
         .dev-btn { padding: 4px 8px; font-size: 0.7rem; width: auto; border-radius: 4px; border:none; cursor: pointer; }
@@ -324,14 +328,12 @@ function recoverCrystals() {
     }
 }
 
-// ★追加・修正：スキルの習得判定と画面への描画を行う機能
 function checkAndRenderSkills() {
     const list = document.getElementById('acquired-skills-list');
     list.innerHTML = '';
     
     let isNewSkillAcquired = false;
 
-    // スキル習得判定
     skills.forEach(skill => {
         let meetsReq = true;
         if (skill.requirements && skill.requirements.length > 0) {
@@ -344,11 +346,9 @@ function checkAndRenderSkills() {
             }
         }
         
-        // 条件を満たしており、まだ習得していない場合
         if (meetsReq && !gameState.acquiredSkills.includes(skill.id)) {
             gameState.acquiredSkills.push(skill.id);
             isNewSkillAcquired = true;
-            // ボーナスを加算
             if (skill.bonus) {
                 for (let k in skill.bonus) {
                     if (gameState.stats[k] !== undefined) gameState.stats[k] += skill.bonus[k];
@@ -358,13 +358,11 @@ function checkAndRenderSkills() {
         }
     });
 
-    // スキル習得によるボーナスで別のスキル条件を満たす可能性があるため再帰処理
     if (isNewSkillAcquired) {
         checkAndRenderSkills();
         return;
     }
 
-    // スキル画面へのボタン描画
     if (gameState.acquiredSkills.length === 0) {
         list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">まだスキルを習得していません。</div>';
         return;
@@ -394,7 +392,6 @@ function checkAndRenderSkills() {
 function updateAll() {
     if (ranks.length === 0) return;
 
-    // ★ステータス計算の前にスキルの習得・ボーナス加算処理を走らせる
     checkAndRenderSkills();
 
     const s = gameState.stats;
@@ -461,17 +458,31 @@ function updateTimer() {
     document.getElementById('crystal-timer').innerText = `次まで: ${m}分${s.toString().padStart(2,'0')}秒`;
 }
 
+// ★修正：イベント画面に入った時はフッターボタンを無効化する処理を追加
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
+    
+    const footerBtns = document.querySelectorAll('footer button');
+    if (id === 'event-screen') {
+        // イベント中はフッターボタンを押せないようにする
+        footerBtns.forEach(btn => btn.disabled = true);
+    } else {
+        // それ以外の画面（結果画面やホーム画面）では有効に戻す
+        footerBtns.forEach(btn => btn.disabled = false);
+    }
 }
 
 function startEvent() {
     if(gameState.crystals <= 0) return alert("魔力が足りません");
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     if (gameState.crystals >= currentRank.maxCrystals) gameState.lastPlayTime = Date.now();
+    
+    // ★修正：ボタンを押した瞬間にクリスタルを減らし、即座に画面(UI)に反映させる
     gameState.crystals--;
     save();
+    renderCrystalUI(currentRank);
+    updateTimer();
     
     const currentEvents = events.filter(e => e.minRankId <= gameState.currentRankId);
     const ev = currentEvents[Math.floor(Math.random() * currentEvents.length)];
@@ -497,9 +508,8 @@ function startEvent() {
             b.onclick = () => {
                 document.getElementById('result-text').innerText = c.resultText;
                 document.getElementById('change-log').innerHTML = '';
-                document.getElementById('skill-log').innerHTML = ''; // クリア
+                document.getElementById('skill-log').innerHTML = ''; 
                 
-                // イベントによるステータス変動
                 for(let k in c.statChanges) {
                     if (gameState.stats[k] !== undefined) gameState.stats[k] += c.statChanges[k];
                     else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += c.statChanges[k];
@@ -507,12 +517,10 @@ function startEvent() {
                     document.getElementById('change-log').innerHTML += `${LABELS[k]}: ${sign}${c.statChanges[k]}<br>`;
                 }
 
-                // ★追加：スキル習得の演出
                 const prevSkillCount = gameState.acquiredSkills.length;
                 
-                updateAll(); // 全体を更新し、ここで新スキルの習得判定も行われる
+                updateAll(); 
                 
-                // もしイベントの結果、新たにスキルを習得していたら画面に表示
                 if (gameState.acquiredSkills.length > prevSkillCount) {
                     const newSkills = gameState.acquiredSkills.slice(prevSkillCount);
                     newSkills.forEach(id => {
@@ -528,6 +536,8 @@ function startEvent() {
         }
         area.appendChild(b);
     });
+    
+    // ★ここでイベント画面に遷移（この瞬間フッターボタンが無効になります）
     showScreen('event-screen');
 }
 
