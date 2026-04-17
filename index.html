@@ -13,7 +13,6 @@
             --disabled-color: #444;
         }
 
-        /* 画面全体がスクロールしないように固定 */
         body {
             margin: 0;
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -22,8 +21,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* スマホのアドレスバー対策: 100vh ではなく 100dvh (dynamic viewport height) を使用するか、高さを固定化する */
-            height: 100dvh; 
+            height: 100dvh; /* スマホのアドレスバー対策 */
             overflow: hidden;
         }
 
@@ -36,7 +34,6 @@
             background-color: var(--bg-color);
         }
 
-        /* ヘッダー部分は高さを固定（縮まない） */
         header {
             flex-shrink: 0;
             padding: 10px;
@@ -51,23 +48,21 @@
         .crystal-empty { background: #333; box-shadow: none; }
         #crystal-timer { font-size: 0.8rem; color: #aaa; }
 
-        /* メイン部分は残りの高さをすべて使うが、自身はスクロールしない */
         main {
             flex: 1;
             display: flex;
             flex-direction: column;
-            /* 余白を少し削って動画の面積を確保 */
             padding: 10px 15px; 
-            overflow: hidden; /* ★ここを auto から hidden に変更して全体スクロールを阻止 */
+            overflow: hidden;
         }
 
         .screen { display: none; flex: 1; flex-direction: column; height: 100%; overflow: hidden;}
         .active { display: flex; }
 
-        /* ★動画ボックスの修正: 画面内に収まるようにサイズを自動調整させる */
+        /* 動画ボックス：画面内に収まるようにサイズを自動調整 */
         .rank-image-box {
-            flex: 1 1 0; /* 余ったスペースを埋めるが、必要なら縮む(0ベース) */
-            min-height: 0; /* これがないと中身の動画サイズに引っ張られてはみ出してしまう */
+            flex: 1 1 0; 
+            min-height: 0; 
             background: #000;
             display: flex;
             justify-content: center;
@@ -76,18 +71,17 @@
             margin-bottom: 15px;
             overflow: hidden;
             border: 1px solid #333;
+            cursor: pointer; /* タップできることを示す指マーク */
         }
 
+        /* ★動画のスタイル変更なし */
         #rank-video {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 枠に合わせてトリミング */
+            object-fit: cover; 
         }
 
-        /* 下部のステータス＆ボタンエリアは高さを固定（縮まない） */
-        .home-bottom-area { 
-            flex-shrink: 0; 
-        }
+        .home-bottom-area { flex-shrink: 0; }
 
         .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .status-item { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; display: flex; flex-direction: column; justify-content: center;}
@@ -117,7 +111,6 @@
             display: none;
         }
 
-        /* フッター部分は高さを固定（縮まない） */
         footer { 
             flex-shrink: 0;
             display: flex; 
@@ -131,7 +124,6 @@
         .btn-max { background: #ffaa00; color: #000; }
         .btn-reset { background: #cc3333; color: #fff; }
 
-        /* イベント・結果・ステータス・スキル画面は中身が長くなったらスクロールさせる */
         #event-screen, #result-screen, #status-screen, #skill-screen {
             overflow-y: auto;
         }
@@ -153,8 +145,8 @@
 
     <main>
         <div id="home-screen" class="screen active">
-            <div class="rank-image-box">
-                <video id="rank-video" autoplay loop muted playsinline src=""></video>
+            <div class="rank-image-box" onclick="playRankVideo()">
+                <video id="rank-video" muted playsinline src=""></video>
             </div>
             
             <div class="home-bottom-area">
@@ -254,6 +246,15 @@ async function init() {
     }
 }
 
+// ★追加：動画をタップした時に再生する関数
+function playRankVideo() {
+    const video = document.getElementById('rank-video');
+    if (video) {
+        video.currentTime = 0; // 毎回最初から再生させる
+        video.play();
+    }
+}
+
 function devMaxCrystals() {
     if (ranks.length === 0) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
@@ -323,7 +324,6 @@ function updateAll() {
     }
 
     document.getElementById('rank-name').innerText = currentRank.name;
-    // imgタグではなくvideoタグのsrcを更新
     document.getElementById('rank-video').src = currentRank.imagePath;
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     
