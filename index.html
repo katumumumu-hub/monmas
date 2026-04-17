@@ -6,17 +6,22 @@
     <title>魔王育成計画</title>
     <style>
         :root {
-            --bg-color: #1a1a2e;
-            --panel-color: #16213e;
-            --accent-color: #e94560;
-            --text-color: #ffffff;
-            --disabled-color: #444;
+            /* ダークファンタジー風のカラーパレットに一新 */
+            --bg-color: #08040d; /* 背景の漆黒 */
+            --panel-color: rgba(32, 16, 48, 0.85); /* 半透明の深い紫 */
+            --border-color: #5c3a82; /* パネルの境界線（紫） */
+            --accent-gold: #e5b05c; /* ゴールドのアクセント（文字や重要枠） */
+            --text-color: #f0e6fa; /* わずかに紫がかった白テキスト */
+            --disabled-color: #332244;
+            --crystal-color: #d100ff; /* クリスタルの妖しい紫光 */
+            --btn-bg: linear-gradient(180deg, #4b2373 0%, #1e0936 100%); /* ボタンの立体グラデーション */
         }
 
         body {
             margin: 0;
             font-family: 'Helvetica Neue', Arial, sans-serif;
             background-color: #000;
+            background-image: radial-gradient(circle at top, #23113a, #000000); /* 放射状の背景グラデーション */
             color: var(--text-color);
             display: flex;
             justify-content: center;
@@ -31,22 +36,39 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            background-color: var(--bg-color);
+            background-color: transparent;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
 
         header {
             flex-shrink: 0;
-            padding: 10px;
+            padding: 12px 10px;
             background: var(--panel-color);
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 2px solid var(--accent-gold);
             text-align: center;
             position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        #rank-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-shadow: 0 0 5px rgba(229, 176, 92, 0.4);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
         }
 
         #crystal-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 5px; }
-        .crystal-icon { width: 18px; height: 18px; background: #0f8; border-radius: 50%; box-shadow: 0 0 8px #0f8; }
-        .crystal-empty { background: #333; box-shadow: none; }
-        #crystal-timer { font-size: 0.8rem; color: #aaa; }
+        .crystal-icon { 
+            width: 16px; height: 16px; 
+            background: var(--crystal-color); 
+            border-radius: 50%; 
+            box-shadow: 0 0 10px var(--crystal-color); 
+            transform: rotate(45deg); /* ひし形にしてクリスタル感をアップ */
+        }
+        .crystal-empty { background: #221133; box-shadow: inset 0 0 5px #000; }
+        #crystal-timer { font-size: 0.8rem; color: #a894c2; }
 
         main {
             flex: 1;
@@ -54,11 +76,13 @@
             flex-direction: column;
             padding: 10px 15px; 
             overflow: hidden;
+            background: rgba(10, 5, 20, 0.6);
         }
 
         .screen { display: none; flex: 1; flex-direction: column; height: 100%; overflow: hidden;}
         .active { display: flex; }
 
+        /* 画像/動画ボックスの装飾 */
         .rank-image-box {
             flex: 1 1 0; 
             min-height: 0; 
@@ -66,65 +90,113 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 8px;
+            border-radius: 4px;
             margin-bottom: 15px;
             overflow: hidden;
-            border: 1px solid #333;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 0 15px rgba(92, 58, 130, 0.6);
             cursor: pointer;
+            position: relative;
         }
 
         #rank-video {
             width: 100%;
             height: 100%;
             object-fit: cover; 
+            opacity: 0.9;
         }
 
         .home-bottom-area { flex-shrink: 0; }
 
         .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-        .status-item { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; display: flex; flex-direction: column; justify-content: center;}
-        .status-label { font-size: 0.7rem; color: #aaa; }
-        .status-value { font-size: 1rem; font-weight: bold; }
+        .status-item { 
+            background: linear-gradient(135deg, rgba(40,20,60,0.8), rgba(20,10,30,0.8)); 
+            padding: 10px; 
+            border-radius: 6px; 
+            border: 1px solid var(--border-color);
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .status-label { font-size: 0.75rem; color: #bcaed4; margin-bottom: 4px;}
+        .status-value { font-size: 1.1rem; font-weight: bold; color: var(--accent-gold); text-shadow: 1px 1px 2px #000;}
 
+        /* ボタンの装飾強化 */
         button {
-            background: var(--accent-color);
-            color: white;
-            border: none;
+            background: var(--btn-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
             padding: 15px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: bold;
+            font-size: 1.05rem;
             width: 100%;
             cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            text-shadow: 1px 1px 2px #000;
+            letter-spacing: 1px;
+            transition: all 0.1s;
         }
-        button:disabled { background: var(--disabled-color); cursor: not-allowed; opacity: 0.6; }
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        button:disabled { background: var(--disabled-color); border-color: #222; cursor: not-allowed; opacity: 0.6; transform: none; }
 
-        .reason-text { font-size: 0.75rem; color: #ff8888; display: block; margin-top: 3px; font-weight: normal; }
+        .reason-text { font-size: 0.75rem; color: #ff5555; display: block; margin-top: 5px; font-weight: normal; }
 
         #skill-detail-panel {
-            background: #222;
-            padding: 10px;
+            background: rgba(20,10,30,0.9);
+            padding: 12px;
             border-radius: 8px;
-            border: 1px solid var(--accent-color);
+            border: 1px solid var(--accent-gold);
             margin-top: 10px;
             display: none;
+            box-shadow: 0 0 10px rgba(229, 176, 92, 0.2);
         }
 
+        /* フッターの装飾強化 */
         footer { 
             flex-shrink: 0;
             display: flex; 
             background: var(--panel-color); 
-            border-top: 1px solid #333; 
+            border-top: 2px solid var(--border-color); 
         }
-        footer button { flex: 1; background: transparent; border-right: 1px solid #333; padding: 12px; font-weight: normal; }
+        footer button { 
+            flex: 1; 
+            background: transparent; 
+            border: none;
+            border-right: 1px solid var(--border-color); 
+            border-radius: 0;
+            padding: 15px 0; 
+            font-weight: bold; 
+            color: #d1c1e5;
+            box-shadow: none;
+        }
+        footer button:last-child { border-right: none; }
+        footer button:active { background: rgba(255,255,255,0.05); transform: none; }
 
         .dev-tools { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px; }
-        .dev-btn { padding: 4px 8px; font-size: 0.7rem; width: auto; border-radius: 4px; cursor: pointer; }
+        .dev-btn { padding: 4px 8px; font-size: 0.7rem; width: auto; border-radius: 4px; cursor: pointer; border:none; text-shadow:none; letter-spacing:0;}
         .btn-max { background: #ffaa00; color: #000; }
         .btn-reset { background: #cc3333; color: #fff; }
 
         #event-screen, #result-screen, #status-screen, #skill-screen {
             overflow-y: auto;
         }
+        
+        /* イベント画面などのボックス装飾 */
+        .event-box {
+            background: linear-gradient(to bottom, rgba(40,20,60,0.95), rgba(20,10,30,0.95));
+            padding: 18px; 
+            border-radius: 8px; 
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        
+        h3 { color: var(--accent-gold); border-bottom: 1px solid var(--border-color); padding-bottom: 5px; margin-top: 0; }
     </style>
 </head>
 <body>
@@ -152,53 +224,56 @@
                     <div class="status-item"><div class="status-label">戦闘力</div><div class="status-value" id="display-combat-power">0</div></div>
                     
                     <div class="status-item">
-                        <div class="status-label" id="display-next-req" style="font-size: 0.75rem;">戦闘力---で</div>
+                        <div class="status-label" id="display-next-req">戦闘力---で</div>
                         <div class="status-value" id="display-next-name" style="font-size: 0.95rem;">---に昇格</div>
                     </div>
                 </div>
-                <div class="status-item" style="margin-bottom:10px;"><div class="status-label">配下</div><div class="status-value" id="display-subordinates">0名</div></div>
+                <div class="status-item" style="margin-bottom:12px; align-items:center; flex-direction:row; justify-content:space-between;">
+                    <div class="status-label" style="margin:0;">配下総数</div>
+                    <div class="status-value" id="display-subordinates">0名</div>
+                </div>
                 <button onclick="startEvent()">イベント発生 (消費: 1)</button>
             </div>
         </div>
 
         <div id="event-screen" class="screen">
-            <div style="background: var(--panel-color); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                <h3 id="event-title" style="margin-top:0;"></h3>
-                <p id="event-text"></p>
+            <div class="event-box">
+                <h3 id="event-title"></h3>
+                <p id="event-text" style="line-height:1.5;"></p>
             </div>
-            <div id="choices-area" style="display:flex; flex-direction:column; gap:10px;"></div>
+            <div id="choices-area" style="display:flex; flex-direction:column; gap:12px;"></div>
         </div>
 
         <div id="result-screen" class="screen">
-            <div style="background: var(--panel-color); padding: 15px; border-radius: 8px; margin-bottom: 15px; flex:1;">
-                <h3 style="margin-top:0;">結果</h3>
-                <p id="result-text"></p>
-                <div id="change-log" style="color:#0f8; margin-top: 15px; font-size: 0.9rem;"></div>
-                <div id="skill-log" style="color:#fa0; margin-top: 5px; font-size: 0.9rem;"></div>
+            <div class="event-box" style="flex:1;">
+                <h3>結果</h3>
+                <p id="result-text" style="line-height:1.5;"></p>
+                <div id="change-log" style="color:var(--crystal-color); margin-top: 15px; font-size: 0.95rem; font-weight:bold; text-shadow:1px 1px 2px #000;"></div>
+                <div id="skill-log" style="color:var(--accent-gold); margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
             </div>
-            <button onclick="showScreen('home-screen')">ホームへ戻る</button>
+            <button onclick="showScreen('home-screen')">ホームへ</button>
         </div>
 
         <div id="status-screen" class="screen">
-            <h3 style="margin-top:0;">ステータス</h3>
+            <h3>ステータス</h3>
             <div class="status-grid" id="stat-list"></div>
             <h3 style="margin-top:15px;">内面性</h3>
             <div class="status-grid" id="inner-list"></div>
         </div>
 
         <div id="skill-screen" class="screen">
-            <h3 style="margin-top:0;">取得済みスキル</h3>
-            <div id="acquired-skills-list"></div>
+            <h3>取得済みスキル</h3>
+            <div id="acquired-skills-list" style="display:flex; flex-direction:column; gap:8px;"></div>
             <div id="skill-detail-panel">
-                <div id="detail-skill-name" style="font-weight:bold;"></div>
-                <div id="detail-skill-bonus" style="color:#0f8; font-size:0.8rem; margin: 5px 0;"></div>
-                <div id="detail-skill-desc" style="font-size:0.8rem;"></div>
+                <div id="detail-skill-name" style="font-weight:bold; color:var(--accent-gold); font-size:1.1rem; border-bottom:1px solid #444; padding-bottom:4px;"></div>
+                <div id="detail-skill-bonus" style="color:var(--crystal-color); font-size:0.85rem; margin: 8px 0; font-weight:bold;"></div>
+                <div id="detail-skill-desc" style="font-size:0.85rem; line-height:1.4;"></div>
             </div>
         </div>
     </main>
 
     <footer>
-        <button onclick="showScreen('home-screen')">戻る</button>
+        <button onclick="showScreen('home-screen')">ホーム</button>
         <button onclick="showScreen('skill-screen')">スキル</button>
         <button onclick="showScreen('status-screen')">ステータス</button>
     </footer>
@@ -321,10 +396,7 @@ function updateAll() {
     }
 
     document.getElementById('rank-name').innerText = currentRank.name;
-    
-    // ★ 動画のパスの最後に `#t=0.001` を付けて、最初のフレームを強制的に表示させる（スマホ真っ暗対策）
     document.getElementById('rank-video').src = currentRank.imagePath + "#t=0.001";
-    
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     
     if (nextRank) {
@@ -390,7 +462,6 @@ function startEvent() {
     ev.choices.forEach(c => {
         const b = document.createElement('button');
         b.style.textAlign = 'left';
-        b.style.background = '#2a2a4a';
         b.innerHTML = c.text;
         let disabled = false;
         if (c.reqCondition && c.reqCondition.length > 0) {
