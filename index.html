@@ -134,7 +134,7 @@
 
         #skill-detail-panel {
             background: var(--panel-color);
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
             border: 1px solid var(--accent-gold);
             margin-top: 10px;
@@ -217,7 +217,7 @@
                 <h3>結果</h3>
                 <p id="result-text"></p>
                 <div id="change-log" style="color:var(--crystal-color); margin-top: 15px; font-size: 0.9rem; font-weight:bold;"></div>
-                <div id="skill-log" style="color:var(--accent-gold); margin-top: 5px; font-size: 0.9rem; font-weight:bold;"></div>
+                <div id="skill-log" style="color:#ffdf00; margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
             </div>
             <button onclick="showScreen('home-screen')">ホームへ</button>
         </div>
@@ -225,7 +225,7 @@
         <div id="status-screen" class="screen">
             <h3>ステータス</h3>
             <div class="status-grid" id="stat-list"></div>
-            <h3>内面性</h3>
+            <h3 style="margin-top: 15px;">内面性</h3>
             <div class="status-grid" id="inner-list"></div>
         </div>
 
@@ -233,9 +233,9 @@
             <h3>取得済みスキル</h3>
             <div id="acquired-skills-list" style="display:flex; flex-direction:column; gap:8px;"></div>
             <div id="skill-detail-panel">
-                <div id="detail-skill-name"></div>
-                <div id="detail-skill-bonus"></div>
-                <div id="detail-skill-desc"></div>
+                <div id="detail-skill-name" style="font-weight:bold; font-size:1.1rem; color:var(--accent-gold); border-bottom:1px solid var(--border-color); padding-bottom:5px;"></div>
+                <div id="detail-skill-bonus" style="color:var(--crystal-color); font-size:0.85rem; font-weight:bold; margin: 8px 0;"></div>
+                <div id="detail-skill-desc" style="font-size:0.85rem; line-height:1.4;"></div>
             </div>
         </div>
     </main>
@@ -285,11 +285,10 @@ async function init() {
     }
 }
 
-// 動画タップ時に音を出して再生
 function playRankVideo() {
     const video = document.getElementById('rank-video');
     if (video) {
-        video.muted = false; // ★ ミュートを解除して音を出す
+        video.muted = false; 
         video.currentTime = 0; 
         video.play();
     }
@@ -325,8 +324,79 @@ function recoverCrystals() {
     }
 }
 
+// ★追加・修正：スキルの習得判定と画面への描画を行う機能
+function checkAndRenderSkills() {
+    const list = document.getElementById('acquired-skills-list');
+    list.innerHTML = '';
+    
+    let isNewSkillAcquired = false;
+
+    // スキル習得判定
+    skills.forEach(skill => {
+        let meetsReq = true;
+        if (skill.requirements && skill.requirements.length > 0) {
+            for (let req of skill.requirements) {
+                const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : gameState.innerTraits[req.stat];
+                if (currentVal < req.value) {
+                    meetsReq = false;
+                    break;
+                }
+            }
+        }
+        
+        // 条件を満たしており、まだ習得していない場合
+        if (meetsReq && !gameState.acquiredSkills.includes(skill.id)) {
+            gameState.acquiredSkills.push(skill.id);
+            isNewSkillAcquired = true;
+            // ボーナスを加算
+            if (skill.bonus) {
+                for (let k in skill.bonus) {
+                    if (gameState.stats[k] !== undefined) gameState.stats[k] += skill.bonus[k];
+                    else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += skill.bonus[k];
+                }
+            }
+        }
+    });
+
+    // スキル習得によるボーナスで別のスキル条件を満たす可能性があるため再帰処理
+    if (isNewSkillAcquired) {
+        checkAndRenderSkills();
+        return;
+    }
+
+    // スキル画面へのボタン描画
+    if (gameState.acquiredSkills.length === 0) {
+        list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">まだスキルを習得していません。</div>';
+        return;
+    }
+
+    gameState.acquiredSkills.forEach(skillId => {
+        const skill = skills.find(s => s.id === skillId);
+        if (skill) {
+            const btn = document.createElement('button');
+            btn.style.textAlign = 'left';
+            btn.style.padding = '12px';
+            btn.style.background = 'rgba(40,20,60,0.8)';
+            btn.style.marginBottom = '5px';
+            btn.innerText = `♦ ${skill.name}`;
+            btn.onclick = () => {
+                document.getElementById('skill-detail-panel').style.display = 'block';
+                document.getElementById('detail-skill-name').innerText = skill.name;
+                const bonusText = Object.entries(skill.bonus || {}).map(([k, v]) => `${LABELS[k]} +${v}`).join(' / ');
+                document.getElementById('detail-skill-bonus').innerText = bonusText ? `【効果】 ${bonusText}` : '';
+                document.getElementById('detail-skill-desc').innerText = skill.description;
+            };
+            list.appendChild(btn);
+        }
+    });
+}
+
 function updateAll() {
     if (ranks.length === 0) return;
+
+    // ★ステータス計算の前にスキルの習得・ボーナス加算処理を走らせる
+    checkAndRenderSkills();
+
     const s = gameState.stats;
     const i = gameState.innerTraits;
     const subs = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
@@ -345,8 +415,6 @@ function updateAll() {
 
     document.getElementById('rank-name').innerText = currentRank.name;
     const video = document.getElementById('rank-video');
-    
-    // 新しい階級の動画を設定。読み込み時はミュート状態にしておく
     const newSrc = currentRank.imagePath + "#t=0.001";
     if (video.src !== new URL(newSrc, document.baseURI).href) {
         video.src = newSrc;
@@ -429,13 +497,32 @@ function startEvent() {
             b.onclick = () => {
                 document.getElementById('result-text').innerText = c.resultText;
                 document.getElementById('change-log').innerHTML = '';
+                document.getElementById('skill-log').innerHTML = ''; // クリア
+                
+                // イベントによるステータス変動
                 for(let k in c.statChanges) {
                     if (gameState.stats[k] !== undefined) gameState.stats[k] += c.statChanges[k];
                     else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += c.statChanges[k];
                     const sign = c.statChanges[k] > 0 ? "+" : "";
                     document.getElementById('change-log').innerHTML += `${LABELS[k]}: ${sign}${c.statChanges[k]}<br>`;
                 }
-                updateAll();
+
+                // ★追加：スキル習得の演出
+                const prevSkillCount = gameState.acquiredSkills.length;
+                
+                updateAll(); // 全体を更新し、ここで新スキルの習得判定も行われる
+                
+                // もしイベントの結果、新たにスキルを習得していたら画面に表示
+                if (gameState.acquiredSkills.length > prevSkillCount) {
+                    const newSkills = gameState.acquiredSkills.slice(prevSkillCount);
+                    newSkills.forEach(id => {
+                        const s = skills.find(sk => sk.id === id);
+                        if (s) {
+                            document.getElementById('skill-log').innerHTML += `<br>★ スキル【${s.name}】を習得！`;
+                        }
+                    });
+                }
+
                 showScreen('result-screen');
             };
         }
