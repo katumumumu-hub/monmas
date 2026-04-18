@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg-color: #080410;
-            --panel-color: rgba(25, 12, 40, 0.9);
+            --panel-color: rgba(25, 12, 40, 0.95);
             --border-color: #5c3a82;
             --accent-gold: #e5b05c;
             --text-color: #f0e6fa;
@@ -130,14 +130,13 @@
         }
         button:active { transform: scale(0.98); }
         
-        /* ★修正：無効化されたボタンのスタイル（クリック判定を残すためのクラス） */
         button:disabled, button.disabled-btn { 
             background: var(--disabled-color); 
             border-color: #222; 
             opacity: 0.5; 
             cursor: not-allowed; 
         }
-        button.disabled-btn:active { transform: scale(1); /* 押せないボタンは沈み込まない */ }
+        button.disabled-btn:active { transform: scale(1); }
 
         .reason-text { font-size: 0.75rem; color: #ff5555; display: block; margin-top: 3px; font-weight: normal; }
 
@@ -162,7 +161,8 @@
             border: none;
             border-right: 1px solid var(--border-color); 
             border-radius: 0;
-            padding: 15px 0; 
+            padding: 12px 0; 
+            font-size: 0.85rem;
             font-weight: bold;
             color: #d1c1e5;
         }
@@ -174,9 +174,22 @@
         .btn-max { background: #ffaa00; color: #000; }
         .btn-reset { background: #cc3333; color: #fff; }
 
-        #event-screen, #result-screen, #status-screen, #skill-screen { overflow-y: auto; }
+        #event-screen, #result-screen, #status-screen, #skill-screen, #item-screen { overflow-y: auto; }
         .event-box { background: var(--panel-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; }
         h3 { color: var(--accent-gold); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
+        
+        /* アイテム画面用のスタイル */
+        .item-row { background: rgba(30,15,50,0.8); padding: 12px; border-radius: 6px; margin-bottom: 10px; border: 1px solid #4a2b6e; }
+        .item-rarity { font-size: 0.75rem; padding: 2px 6px; border-radius: 3px; margin-right: 6px; font-weight: bold; border: 1px solid currentColor;}
+        .rarity-SS { color: #ff3333; text-shadow: 0 0 5px #ff0000; }
+        .rarity-S { color: #ffdf00; }
+        .rarity-A { color: #d100ff; }
+        .rarity-B { color: #33aaff; }
+        .rarity-C { color: #33ff33; }
+        .rarity-D { color: #aaaaaa; }
+        .rarity-E { color: #888888; }
+        .rarity-F { color: #555555; }
+        .item-use-btn { background: #4a2b6e; padding: 6px 12px; font-size: 0.8rem; width: auto; border-radius: 4px; border: 1px solid #7c4bb3; margin-top: 8px;}
     </style>
 </head>
 <body>
@@ -217,7 +230,7 @@
         <div id="event-screen" class="screen">
             <div class="event-box">
                 <h3 id="event-title"></h3>
-                <p id="event-text"></p>
+                <p id="event-text" style="line-height:1.5;"></p>
             </div>
             <div id="choices-area" style="display:flex; flex-direction:column; gap:10px;"></div>
         </div>
@@ -225,9 +238,10 @@
         <div id="result-screen" class="screen">
             <div class="event-box" style="flex:1;">
                 <h3>結果</h3>
-                <p id="result-text"></p>
+                <p id="result-text" style="line-height:1.5;"></p>
                 <div id="change-log" style="color:var(--crystal-color); margin-top: 15px; font-size: 0.9rem; font-weight:bold;"></div>
                 <div id="skill-log" style="color:#ffdf00; margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
+                <div id="item-log" style="color:#00ffaa; margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
             </div>
             <button onclick="playSE('click'); showScreen('home-screen')">ホームへ</button>
         </div>
@@ -248,10 +262,16 @@
                 <div id="detail-skill-desc" style="font-size:0.85rem; line-height:1.4;"></div>
             </div>
         </div>
+
+        <div id="item-screen" class="screen">
+            <h3>所持アイテム</h3>
+            <div id="inventory-list"></div>
+        </div>
     </main>
 
     <footer>
         <button onclick="playSE('click'); showScreen('home-screen')">ホーム</button>
+        <button onclick="playSE('click'); showScreen('item-screen')">アイテム</button>
         <button onclick="playSE('click'); showScreen('skill-screen')">スキル</button>
         <button onclick="playSE('click'); showScreen('status-screen')">ステータス</button>
     </footer>
@@ -273,7 +293,6 @@ function initAudio() {
     }
 }
 
-// シンセサイザーで音を作る関数
 function playTone(freq, type, duration, vol=0.1, delay=0) {
     if (!audioCtx) return;
     const startTime = audioCtx.currentTime + delay;
@@ -294,29 +313,36 @@ function playTone(freq, type, duration, vol=0.1, delay=0) {
     osc.stop(startTime + duration);
 }
 
-// イベントに応じた効果音を鳴らす関数
 function playSE(type) {
     initAudio();
     switch(type) {
-        case 'click':      // 通常クリック（ピッ）
+        case 'click':      
             playTone(800, 'sine', 0.1, 0.05, 0);
             break;
-        case 'error':      // エラー・押せない（ブブッ）
+        case 'error':      
             playTone(150, 'sawtooth', 0.3, 0.05, 0);
             playTone(140, 'sawtooth', 0.4, 0.05, 0.15);
             break;
-        case 'finish':     // イベント完了（ピロリン）
+        case 'finish':     
             playTone(523.25, 'sine', 0.3, 0.05, 0); 
             playTone(659.25, 'sine', 0.3, 0.05, 0.1); 
             playTone(783.99, 'sine', 0.4, 0.05, 0.2); 
             break;
-        case 'skill':      // スキル習得（キラララン！）
+        case 'item':       // ドロップ音（チリン！）
+            playTone(1046.50, 'sine', 0.1, 0.05, 0); 
+            playTone(1318.51, 'sine', 0.2, 0.05, 0.1);
+            break;
+        case 'use_item':   // アイテム使用音（シュワァァン）
+            playTone(600, 'sine', 0.4, 0.05, 0);
+            playTone(800, 'triangle', 0.3, 0.03, 0.1);
+            break;
+        case 'skill':      
             playTone(880, 'square', 0.2, 0.03, 0);
             playTone(1108.73, 'square', 0.2, 0.03, 0.1);
             playTone(1318.51, 'square', 0.2, 0.03, 0.2);
             playTone(1760, 'square', 0.6, 0.03, 0.3);
             break;
-        case 'rankup':     // 階級昇格（ファンファーレ）
+        case 'rankup':     
             playTone(392.00, 'triangle', 0.2, 0.08, 0); 
             playTone(392.00, 'triangle', 0.2, 0.08, 0.15); 
             playTone(392.00, 'triangle', 0.2, 0.08, 0.30); 
@@ -329,8 +355,9 @@ function playSE(type) {
 let ranks = [];
 let skills = [];
 let events = [];
+let items = []; // ★アイテムデータを格納
 
-const LABELS = {hp:'HP', mp:'MP', physAtk:'物理攻撃', magAtk:'魔法力', magDef:'魔法防御', physDef:'物理防御', agility:'俊敏性', luck:'運', cruelty:'凶悪性', leadership:'統率力', charisma:'カリスマ', control:'支配欲', responsibility:'責任感'};
+const LABELS = {hp:'HP', mp:'MP', physAtk:'物理攻撃', magAtk:'魔法力', magDef:'魔法防御', physDef:'物理防御', agility:'俊敏性', luck:'運', cruelty:'凶悪性', leadership:'統率力', charisma:'カリスマ', control:'支配欲', responsibility:'責任感', crystals:'魔力石'};
 
 let gameState = {
     lastPlayTime: Date.now(),
@@ -338,22 +365,28 @@ let gameState = {
     currentRankId: 1,
     stats: { hp: 0, mp: 0, physAtk: 0, magAtk: 0, magDef: 0, physDef: 0, agility: 0, luck: 0 },
     innerTraits: { cruelty: 0, leadership: 0, charisma: 0, control: 0, responsibility: 0 },
-    acquiredSkills: []
+    acquiredSkills: [],
+    items: {} // ★アイテム所持数 { "アイテムID": 個数 }
 };
 
 async function init() {
     try {
-        const [ranksRes, skillsRes, eventsRes] = await Promise.all([
+        const [ranksRes, skillsRes, eventsRes, itemsRes] = await Promise.all([
             fetch('ranks.json'),
             fetch('skills.json'),
-            fetch('events.json')
+            fetch('events.json'),
+            fetch('items.json') // ★アイテムJSON読み込み
         ]);
         ranks = await ranksRes.json();
         skills = await skillsRes.json();
         events = await eventsRes.json();
+        items = await itemsRes.json();
 
         const saved = localStorage.getItem('devil_lord_save');
         if (saved) gameState = JSON.parse(saved);
+        
+        // 古いセーブデータとの互換性
+        if (!gameState.items) gameState.items = {};
 
         recoverCrystals();
         updateAll();
@@ -452,7 +485,7 @@ function checkAndRenderSkills() {
             btn.style.marginBottom = '5px';
             btn.innerText = `♦ ${skill.name}`;
             btn.onclick = () => {
-                playSE('click'); // スキル確認時にもクリック音
+                playSE('click');
                 document.getElementById('skill-detail-panel').style.display = 'block';
                 document.getElementById('detail-skill-name').innerText = skill.name;
                 const bonusText = Object.entries(skill.bonus || {}).map(([k, v]) => `${LABELS[k]} +${v}`).join(' / ');
@@ -482,9 +515,7 @@ function updateAll() {
         currentRank = ranks.find(r => r.id === gameState.currentRankId);
         nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
         
-        // ★ 昇格音を鳴らす
         playSE('rankup');
-        // アラートで音が止まるのを防ぐため、少しだけ遅らせて表示
         setTimeout(() => { alert(`昇格：${currentRank.name}`); }, 100);
         
         if (gameState.crystals < currentRank.maxCrystals) gameState.crystals = currentRank.maxCrystals;
@@ -510,6 +541,7 @@ function updateAll() {
     
     renderCrystalUI(currentRank);
     renderStats();
+    renderItems(); // アイテム画面の更新
     save();
 }
 
@@ -552,11 +584,11 @@ function showScreen(id) {
 
 function startEvent() {
     if(gameState.crystals <= 0) {
-        playSE('error'); // ★ 魔力不足エラー音
+        playSE('error'); 
         return alert("魔力が足りません");
     }
     
-    playSE('click'); // ★ 通常クリック音
+    playSE('click'); 
     
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     if (gameState.crystals >= currentRank.maxCrystals) gameState.lastPlayTime = Date.now();
@@ -587,12 +619,9 @@ function startEvent() {
         }
         
         if (disabled) {
-            // ★ disabled属性を使わずクラスで制御（クリック判定を残すため）
             b.classList.add('disabled-btn');
             b.innerHTML += `<span class="reason-text">${c.disabledReason}</span>`;
-            b.onclick = () => {
-                playSE('error'); // ★ 押せないボタンのエラー音
-            };
+            b.onclick = () => { playSE('error'); };
         } else {
             b.onclick = () => {
                 let oldRank = gameState.currentRankId;
@@ -601,7 +630,9 @@ function startEvent() {
                 document.getElementById('result-text').innerText = c.resultText;
                 document.getElementById('change-log').innerHTML = '';
                 document.getElementById('skill-log').innerHTML = ''; 
+                document.getElementById('item-log').innerHTML = ''; // アイテムログ初期化
                 
+                // ステータス増減
                 for(let k in c.statChanges) {
                     if (gameState.stats[k] !== undefined) gameState.stats[k] += c.statChanges[k];
                     else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += c.statChanges[k];
@@ -609,19 +640,36 @@ function startEvent() {
                     document.getElementById('change-log').innerHTML += `${LABELS[k]}: ${sign}${c.statChanges[k]}<br>`;
                 }
 
+                // ★ アイテムドロップ抽選処理
+                let droppedItemNames = [];
+                if (c.itemDrops) {
+                    c.itemDrops.forEach(drop => {
+                        if (gameState.currentRankId >= (drop.minRankId || 1)) {
+                            // 確率の判定
+                            if (Math.random() < drop.probability) {
+                                gameState.items[drop.itemId] = (gameState.items[drop.itemId] || 0) + 1;
+                                const itemData = items.find(i => i.id === drop.itemId);
+                                if (itemData) droppedItemNames.push(itemData.name);
+                            }
+                        }
+                    });
+                }
+
                 const prevSkillCount = gameState.acquiredSkills.length;
-                
                 updateAll(); 
                 
                 let rankedUp = (gameState.currentRankId > oldRank);
                 let skilledUp = (gameState.acquiredSkills.length > oldSkillCount);
+                let itemDropped = droppedItemNames.length > 0;
 
-                // ★ 効果音の優先順位設定
-                if (!rankedUp) { // 昇格音はupdateAll内で鳴るので、それ以外の時だけ鳴らす
+                // 効果音の優先順位（昇格＞スキル＞ドロップ＞通常）
+                if (!rankedUp) { 
                     if (skilledUp) {
-                        playSE('skill'); // ★ スキル習得音
+                        playSE('skill'); 
+                    } else if (itemDropped) {
+                        playSE('item'); 
                     } else {
-                        playSE('finish'); // ★ 通常イベント完了音
+                        playSE('finish'); 
                     }
                 }
                 
@@ -629,10 +677,13 @@ function startEvent() {
                     const newSkills = gameState.acquiredSkills.slice(prevSkillCount);
                     newSkills.forEach(id => {
                         const s = skills.find(sk => sk.id === id);
-                        if (s) {
-                            document.getElementById('skill-log').innerHTML += `<br>★ スキル【${s.name}】を習得！`;
-                        }
+                        if (s) document.getElementById('skill-log').innerHTML += `<br>★ スキル【${s.name}】を習得！`;
                     });
+                }
+
+                // アイテムドロップ結果の表示
+                if (itemDropped) {
+                    document.getElementById('item-log').innerHTML = `<br>🎁 ドロップ: ${droppedItemNames.join('、')} を獲得！`;
                 }
 
                 showScreen('result-screen');
@@ -656,6 +707,80 @@ function renderStats() {
             target.innerHTML += `<div class="status-item"><div class="status-label">${LABELS[k]}</div><div class="status-value">${l.data[k]}</div></div>`;
         }
     });
+}
+
+// ==========================================
+// ★ アイテム管理・使用システム
+// ==========================================
+function renderItems() {
+    const list = document.getElementById('inventory-list');
+    list.innerHTML = '';
+    
+    if (!gameState.items || Object.keys(gameState.items).length === 0) {
+        list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>';
+        return;
+    }
+    
+    let hasItem = false;
+    for (let itemId in gameState.items) {
+        const count = gameState.items[itemId];
+        if (count > 0) {
+            hasItem = true;
+            const itemData = items.find(i => i.id == itemId);
+            if (itemData) {
+                // アイテム効果のテキスト化
+                const effectsText = Object.entries(itemData.effects || {}).map(([k, v]) => `${LABELS[k]}+${v}`).join(' / ');
+                
+                list.innerHTML += `
+                    <div class="item-row">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="font-weight:bold; font-size:1.05rem; color:var(--text-color);">
+                                <span class="item-rarity rarity-${itemData.rarity}">${itemData.rarity}</span>
+                                ${itemData.name}
+                            </div>
+                            <div style="color:var(--accent-gold); font-weight:bold;">所持: ${count}</div>
+                        </div>
+                        <div style="font-size:0.8rem; color:#aaa; margin-top:6px; line-height:1.4;">${itemData.description}</div>
+                        <div style="font-size:0.8rem; color:var(--crystal-color); font-weight:bold; margin-top:4px;">【効果】 ${effectsText}</div>
+                        <button class="item-use-btn" onclick="useItem(${itemData.id})">使う</button>
+                    </div>`;
+            }
+        }
+    }
+    
+    if (!hasItem) {
+        list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>';
+    }
+}
+
+// アイテム消費処理
+function useItem(itemId) {
+    if (!gameState.items[itemId] || gameState.items[itemId] <= 0) return;
+    
+    const itemData = items.find(i => i.id == itemId);
+    if (!itemData || !itemData.effects) return;
+
+    const currentRank = ranks.find(r => r.id === gameState.currentRankId);
+
+    // 効果の適用（ステータス上昇 または クリスタル回復）
+    for (let k in itemData.effects) {
+        if (k === 'crystals') {
+            gameState.crystals = Math.min(currentRank.maxCrystals, gameState.crystals + itemData.effects[k]);
+        } else if (gameState.stats[k] !== undefined) {
+            gameState.stats[k] += itemData.effects[k];
+        } else if (gameState.innerTraits[k] !== undefined) {
+            gameState.innerTraits[k] += itemData.effects[k];
+        }
+    }
+
+    // アイテムを減らす
+    gameState.items[itemId]--;
+    
+    playSE('use_item'); // シュワァァン！という使用音
+    alert(`${itemData.name} を使用した！\n力が湧き上がってくるのを感じる…！`);
+
+    save();
+    updateAll(); // 画面全体の更新と再描画
 }
 
 function save() { localStorage.setItem('devil_lord_save', JSON.stringify(gameState)); }
