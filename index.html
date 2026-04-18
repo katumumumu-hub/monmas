@@ -278,9 +278,6 @@
 </div>
 
 <script>
-// ==========================================
-// ★ サウンドエフェクト（SE）管理システム
-// ==========================================
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 let audioCtx;
 
@@ -328,11 +325,11 @@ function playSE(type) {
             playTone(659.25, 'sine', 0.3, 0.05, 0.1); 
             playTone(783.99, 'sine', 0.4, 0.05, 0.2); 
             break;
-        case 'item':       // ドロップ音（チリン！）
+        case 'item':
             playTone(1046.50, 'sine', 0.1, 0.05, 0); 
             playTone(1318.51, 'sine', 0.2, 0.05, 0.1);
             break;
-        case 'use_item':   // アイテム使用音（シュワァァン）
+        case 'use_item':
             playTone(600, 'sine', 0.4, 0.05, 0);
             playTone(800, 'triangle', 0.3, 0.03, 0.1);
             break;
@@ -350,12 +347,11 @@ function playSE(type) {
             break;
     }
 }
-// ==========================================
 
 let ranks = [];
 let skills = [];
 let events = [];
-let items = []; // ★アイテムデータを格納
+let items = [];
 
 const LABELS = {hp:'HP', mp:'MP', physAtk:'物理攻撃', magAtk:'魔法力', magDef:'魔法防御', physDef:'物理防御', agility:'俊敏性', luck:'運', cruelty:'凶悪性', leadership:'統率力', charisma:'カリスマ', control:'支配欲', responsibility:'責任感', crystals:'魔力石'};
 
@@ -366,7 +362,7 @@ let gameState = {
     stats: { hp: 0, mp: 0, physAtk: 0, magAtk: 0, magDef: 0, physDef: 0, agility: 0, luck: 0 },
     innerTraits: { cruelty: 0, leadership: 0, charisma: 0, control: 0, responsibility: 0 },
     acquiredSkills: [],
-    items: {} // ★アイテム所持数 { "アイテムID": 個数 }
+    items: {}
 };
 
 async function init() {
@@ -375,7 +371,7 @@ async function init() {
             fetch('ranks.json'),
             fetch('skills.json'),
             fetch('events.json'),
-            fetch('items.json') // ★アイテムJSON読み込み
+            fetch('items.json')
         ]);
         ranks = await ranksRes.json();
         skills = await skillsRes.json();
@@ -385,7 +381,6 @@ async function init() {
         const saved = localStorage.getItem('devil_lord_save');
         if (saved) gameState = JSON.parse(saved);
         
-        // 古いセーブデータとの互換性
         if (!gameState.items) gameState.items = {};
 
         recoverCrystals();
@@ -424,7 +419,8 @@ function devResetSave() {
 function recoverCrystals() {
     if (ranks.length === 0) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
-    const msPerCrystal = 60 * 60 * 1000;
+    // ★ 1時間から10分に変更 (10 * 60 * 1000 = 600,000ミリ秒)
+    const msPerCrystal = 10 * 60 * 1000;
     const now = Date.now();
     const elapsed = now - gameState.lastPlayTime;
     if (elapsed >= msPerCrystal && gameState.crystals < currentRank.maxCrystals) {
@@ -541,7 +537,7 @@ function updateAll() {
     
     renderCrystalUI(currentRank);
     renderStats();
-    renderItems(); // アイテム画面の更新
+    renderItems(); 
     save();
 }
 
@@ -563,7 +559,8 @@ function updateTimer() {
         document.getElementById('crystal-timer').innerText = "MAX";
         return;
     }
-    const msPerCrystal = 60 * 60 * 1000;
+    // ★ 1時間から10分に変更 (10 * 60 * 1000 = 600,000ミリ秒)
+    const msPerCrystal = 10 * 60 * 1000;
     const remaining = msPerCrystal - (Date.now() - gameState.lastPlayTime);
     const m = Math.floor(remaining / 1000 / 60);
     const s = Math.floor((remaining / 1000) % 60);
@@ -630,9 +627,8 @@ function startEvent() {
                 document.getElementById('result-text').innerText = c.resultText;
                 document.getElementById('change-log').innerHTML = '';
                 document.getElementById('skill-log').innerHTML = ''; 
-                document.getElementById('item-log').innerHTML = ''; // アイテムログ初期化
+                document.getElementById('item-log').innerHTML = ''; 
                 
-                // ステータス増減
                 for(let k in c.statChanges) {
                     if (gameState.stats[k] !== undefined) gameState.stats[k] += c.statChanges[k];
                     else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += c.statChanges[k];
@@ -640,12 +636,10 @@ function startEvent() {
                     document.getElementById('change-log').innerHTML += `${LABELS[k]}: ${sign}${c.statChanges[k]}<br>`;
                 }
 
-                // ★ アイテムドロップ抽選処理
                 let droppedItemNames = [];
                 if (c.itemDrops) {
                     c.itemDrops.forEach(drop => {
                         if (gameState.currentRankId >= (drop.minRankId || 1)) {
-                            // 確率の判定
                             if (Math.random() < drop.probability) {
                                 gameState.items[drop.itemId] = (gameState.items[drop.itemId] || 0) + 1;
                                 const itemData = items.find(i => i.id === drop.itemId);
@@ -662,7 +656,6 @@ function startEvent() {
                 let skilledUp = (gameState.acquiredSkills.length > oldSkillCount);
                 let itemDropped = droppedItemNames.length > 0;
 
-                // 効果音の優先順位（昇格＞スキル＞ドロップ＞通常）
                 if (!rankedUp) { 
                     if (skilledUp) {
                         playSE('skill'); 
@@ -681,7 +674,6 @@ function startEvent() {
                     });
                 }
 
-                // アイテムドロップ結果の表示
                 if (itemDropped) {
                     document.getElementById('item-log').innerHTML = `<br>🎁 ドロップ: ${droppedItemNames.join('、')} を獲得！`;
                 }
@@ -709,9 +701,6 @@ function renderStats() {
     });
 }
 
-// ==========================================
-// ★ アイテム管理・使用システム
-// ==========================================
 function renderItems() {
     const list = document.getElementById('inventory-list');
     list.innerHTML = '';
@@ -728,7 +717,6 @@ function renderItems() {
             hasItem = true;
             const itemData = items.find(i => i.id == itemId);
             if (itemData) {
-                // アイテム効果のテキスト化
                 const effectsText = Object.entries(itemData.effects || {}).map(([k, v]) => `${LABELS[k]}+${v}`).join(' / ');
                 
                 list.innerHTML += `
@@ -753,7 +741,6 @@ function renderItems() {
     }
 }
 
-// アイテム消費処理
 function useItem(itemId) {
     if (!gameState.items[itemId] || gameState.items[itemId] <= 0) return;
     
@@ -762,7 +749,6 @@ function useItem(itemId) {
 
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
 
-    // 効果の適用（ステータス上昇 または クリスタル回復）
     for (let k in itemData.effects) {
         if (k === 'crystals') {
             gameState.crystals = Math.min(currentRank.maxCrystals, gameState.crystals + itemData.effects[k]);
@@ -773,14 +759,13 @@ function useItem(itemId) {
         }
     }
 
-    // アイテムを減らす
     gameState.items[itemId]--;
     
-    playSE('use_item'); // シュワァァン！という使用音
+    playSE('use_item');
     alert(`${itemData.name} を使用した！\n力が湧き上がってくるのを感じる…！`);
 
     save();
-    updateAll(); // 画面全体の更新と再描画
+    updateAll(); 
 }
 
 function save() { localStorage.setItem('devil_lord_save', JSON.stringify(gameState)); }
