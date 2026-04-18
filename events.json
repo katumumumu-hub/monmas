@@ -12,7 +12,8 @@
         "reqCondition": [{"stat": "physAtk", "value": 5}],
         "disabledReason": "物理攻撃力が足りず、返り討ちに合いそうだ…",
         "resultText": "圧倒的な力で歩兵を黙らせた。周囲の端くれどもが畏怖の視線を送っている。",
-        "statChanges": {"physAtk": 5, "cruelty": 10, "charisma": 5}
+        "statChanges": {"physAtk": 5, "cruelty": 10, "charisma": 5},
+        "itemDrops": [ { "itemId": 2, "probability": 0.4, "minRankId": 1 }, { "itemId": 9, "probability": 0.1, "minRankId": 2 } ]
       },
       {
         "choiceId": 2,
@@ -20,23 +21,17 @@
         "reqCondition": [{"stat": "magAtk", "value": 5}],
         "disabledReason": "魔法力が足りず、火花すら出ない…",
         "resultText": "不気味な魔力を見せつけると、歩兵は逃げ出していった。",
-        "statChanges": {"magAtk": 5, "control": 10}
+        "statChanges": {"magAtk": 5, "control": 10},
+        "itemDrops": [ { "itemId": 1, "probability": 0.5, "minRankId": 1 }, { "itemId": 13, "probability": 0.05, "minRankId": 2 } ]
       },
       {
         "choiceId": 3,
-        "text": "賄賂を渡して見逃してもらう",
-        "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "手持ちの魔石を握らせると、歩兵はニヤリと笑って去っていった。",
-        "statChanges": {"luck": 5, "responsibility": -5}
-      },
-      {
-        "choiceId": 4,
         "text": "全力で謝罪する",
         "reqCondition": [],
         "disabledReason": "",
         "resultText": "地面に頭を擦り付けて謝った。歩兵は満足そうに鼻を鳴らして去った。",
-        "statChanges": {"charisma": -10, "responsibility": 5}
+        "statChanges": {"charisma": -10, "responsibility": 5},
+        "itemDrops": [ { "itemId": 6, "probability": 0.2, "minRankId": 1 } ]
       }
     ]
   },
@@ -45,7 +40,7 @@
     "title": "魔界のゴミ拾い",
     "text": "上官から魔王城地下の清掃を命じられた。大量のガラクタの中に、何か光るものがある…。",
     "minRankId": 1,
-    "weight": 80,
+    "weight": 100,
     "choices": [
       {
         "choiceId": 1,
@@ -53,15 +48,17 @@
         "reqCondition": [],
         "disabledReason": "",
         "resultText": "隅々まで磨き上げた。上官からの信頼が少し上がったようだ。",
-        "statChanges": {"responsibility": 15, "leadership": 5}
+        "statChanges": {"responsibility": 15, "leadership": 5},
+        "itemDrops": [ { "itemId": 5, "probability": 0.4, "minRankId": 1 }, { "itemId": 11, "probability": 0.2, "minRankId": 1 } ]
       },
       {
         "choiceId": 2,
         "text": "光るものをくすねる",
         "reqCondition": [{"stat": "luck", "value": 10}],
         "disabledReason": "運が悪く、監視の目があって手が出せない…",
-        "resultText": "監視の隙を突いて古びた魔導具を手に入れた！魔力が体に流れ込む。",
-        "statChanges": {"magAtk": 10, "cruelty": 5, "luck": -5}
+        "resultText": "監視の隙を突いて古びた魔導具を手に入れた！",
+        "statChanges": {"magAtk": 10, "cruelty": 5, "luck": -5},
+        "itemDrops": [ { "itemId": 1, "probability": 0.8, "minRankId": 1 }, { "itemId": 13, "probability": 0.1, "minRankId": 2 } ]
       },
       {
         "choiceId": 3,
@@ -69,138 +66,656 @@
         "reqCondition": [],
         "disabledReason": "",
         "resultText": "物陰で昼寝をした。体力が回復したが、統率者としての自覚に欠ける振る舞いだ。",
-        "statChanges": {"hp": 10, "responsibility": -10}
-      },
-      {
-        "choiceId": 4,
-        "text": "他の端くれにやらせる",
-        "reqCondition": [{"stat": "leadership", "value": 5}],
-        "disabledReason": "統率力が足りず、誰も言うことを聞いてくれない…",
-        "resultText": "威圧感で周囲を動かした。自分は一歩も動かずに作業を終わらせた。",
-        "statChanges": {"leadership": 10, "control": 10}
+        "statChanges": {"hp": 10, "responsibility": -10},
+        "itemDrops": []
       }
     ]
   },
   {
     "id": 3,
-    "title": "人間村への威力偵察",
-    "text": "魔界の境界付近にある人間の村を見つけた。どう動く？",
+    "title": "野良スライムの群れ",
+    "text": "沼地を歩いていると、凶暴化した野良スライムの群れに遭遇した！",
     "minRankId": 1,
     "weight": 90,
     "choices": [
       {
         "choiceId": 1,
-        "text": "村を焼き払う",
-        "reqCondition": [{"stat": "cruelty", "value": 15}],
-        "disabledReason": "そこまでの残虐性がまだ芽生えていない…",
-        "resultText": "無慈悲に火を放った。阿鼻叫喚の地獄絵図が、あなたを魔王の道へと駆り立てる。",
-        "statChanges": {"cruelty": 20, "magAtk": 5, "charisma": 10}
+        "text": "物理で叩き潰す",
+        "reqCondition": [{"stat": "physAtk", "value": 10}],
+        "disabledReason": "攻撃力が足りず、取り込まれてしまいそうだ…",
+        "resultText": "スライムを片っ端から粉砕した！べたつく液体と共に核が転がった。",
+        "statChanges": {"physAtk": 5, "hp": -5},
+        "itemDrops": [ { "itemId": 14, "probability": 0.5, "minRankId": 1 }, { "itemId": 6, "probability": 0.3, "minRankId": 1 } ]
       },
       {
         "choiceId": 2,
-        "text": "家畜を盗んで去る",
-        "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "村人が寝静まった頃、家畜を連れ去った。軍の食料として重宝されるだろう。",
-        "statChanges": {"physAtk": 5, "responsibility": 5}
+        "text": "魔法で焼き払う",
+        "reqCondition": [{"stat": "magAtk", "value": 10}],
+        "disabledReason": "広範囲を焼くほどの魔法力がない…",
+        "resultText": "一撃でスライムを蒸発させた。効率の良い戦い方だ。",
+        "statChanges": {"magAtk": 5, "mp": -5},
+        "itemDrops": [ { "itemId": 14, "probability": 0.3, "minRankId": 1 }, { "itemId": 1, "probability": 0.4, "minRankId": 1 } ]
       },
       {
         "choiceId": 3,
-        "text": "井戸に毒を投げ込む",
-        "reqCondition": [{"stat": "magAtk", "value": 10}],
-        "disabledReason": "毒を生成できるほどの魔法力がない…",
-        "resultText": "ひっそりと毒を仕込んだ。翌日、村からは活気が消え失せた。",
-        "statChanges": {"magAtk": 10, "cruelty": 10, "luck": 5}
-      },
-      {
-        "choiceId": 4,
-        "text": "遠くから観察する",
-        "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "人間の生態を詳しく調査した。弱点を知ることは将来の支配に役立つ。",
-        "statChanges": {"magDef": 5, "physDef": 5}
+        "text": "こっそり逃げる",
+        "reqCondition": [{"stat": "luck", "value": 5}],
+        "disabledReason": "運が悪く、足を取られて逃げられない…",
+        "resultText": "気づかれずにその場を離脱した。少し情けないが無傷だ。",
+        "statChanges": {"luck": 5},
+        "itemDrops": [ { "itemId": 3, "probability": 0.2, "minRankId": 1 } ]
       }
     ]
   },
   {
     "id": 4,
-    "title": "魔界酒場の揉め事",
-    "text": "酒場で酔っ払った巨漢魔族が暴れている。近くの魔族が怯えているが…",
+    "title": "怪しい商人",
+    "text": "マントを羽織った怪しい魔族が「良いものがあるぞ」と声をかけてきた。",
     "minRankId": 1,
-    "weight": 70,
+    "weight": 80,
     "choices": [
       {
         "choiceId": 1,
-        "text": "正面から叩き伏せる",
-        "reqCondition": [{"stat": "physAtk", "value": 20}],
-        "disabledReason": "体格差がありすぎて、逆にボコボコにされそうだ…",
-        "resultText": "一撃で巨漢を沈めた。酒場にいた魔族たちが、あなたをリーダーと仰ぎ始めた。",
-        "statChanges": {"physAtk": 15, "leadership": 10, "charisma": 10}
+        "text": "取引に応じる",
+        "reqCondition": [{"stat": "luck", "value": 15}],
+        "disabledReason": "騙されそうで手を出せない…",
+        "resultText": "運良く価値のある品を手に入れた！商人は舌打ちして去っていった。",
+        "statChanges": {"luck": 5, "charisma": 5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.6, "minRankId": 1 }, { "itemId": 13, "probability": 0.1, "minRankId": 2 } ]
       },
       {
         "choiceId": 2,
-        "text": "説得して落ち着かせる",
-        "reqCondition": [{"stat": "charisma", "value": 10}],
-        "disabledReason": "言葉に重みがなく、聞き流されてしまった…",
-        "resultText": "不思議な威圧感で巨漢をなだめた。彼は大人しく席に戻り、感謝の杯を捧げた。",
-        "statChanges": {"charisma": 15, "leadership": 5}
+        "text": "力ずくで奪う",
+        "reqCondition": [{"stat": "physAtk", "value": 15}, {"stat": "cruelty", "value": 10}],
+        "disabledReason": "相手の方が強そうで手を出せない…",
+        "resultText": "商人を脅して荷物を奪い取った。魔族らしい邪悪な行いだ。",
+        "statChanges": {"cruelty": 10, "luck": -5},
+        "itemDrops": [ { "itemId": 6, "probability": 0.5, "minRankId": 1 }, { "itemId": 9, "probability": 0.3, "minRankId": 1 } ]
       },
       {
         "choiceId": 3,
-        "text": "背後から不意打ちする",
-        "reqCondition": [{"stat": "agility", "value": 10}],
-        "disabledReason": "動きが鈍く、不意打ちする前に気づかれそうだ…",
-        "resultText": "素早い動きで急所を突いた。狡猾な勝利に、ダークな名声が広まった。",
-        "statChanges": {"agility": 10, "cruelty": 5, "luck": 5}
-      },
-      {
-        "choiceId": 4,
-        "text": "騒ぎに乗じて酒を盗む",
+        "text": "無視して立ち去る",
         "reqCondition": [],
         "disabledReason": "",
-        "resultText": "混乱に乗じて高級酒を手に入れた。支配欲が満たされるのを感じる。",
-        "statChanges": {"control": 15, "luck": 5}
+        "resultText": "関わらないのが一番だ。商人は他のカモを探しに去った。",
+        "statChanges": {"responsibility": 5},
+        "itemDrops": []
       }
     ]
   },
   {
     "id": 5,
-    "title": "不気味な魔法陣の発見",
-    "text": "洞窟の奥で、古代の魔王が残したとされる魔法陣を見つけた。脈打つような闇を感じる。",
+    "title": "コウモリの群れ",
+    "text": "洞窟を歩いていると、凶暴な吸血コウモリの群れに襲われた！",
+    "minRankId": 1,
+    "weight": 90,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "武器を振り回す",
+        "reqCondition": [{"stat": "physAtk", "value": 8}],
+        "disabledReason": "攻撃速度が遅く、叩き落とせそうにない…",
+        "resultText": "迫り来るコウモリを次々と叩き落とした！",
+        "statChanges": {"physAtk": 5, "hp": -5},
+        "itemDrops": [ { "itemId": 8, "probability": 0.6, "minRankId": 1 }, { "itemId": 2, "probability": 0.3, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "身をかがめてやり過ごす",
+        "reqCondition": [{"stat": "agility", "value": 10}],
+        "disabledReason": "俊敏性が足りず、避けきれない…",
+        "resultText": "素早い動きで岩陰に隠れ、群れが過ぎ去るのを待った。",
+        "statChanges": {"agility": 5},
+        "itemDrops": [ { "itemId": 4, "probability": 0.2, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "配下を盾にする",
+        "reqCondition": [{"stat": "control", "value": 10}],
+        "disabledReason": "言うことを聞く配下がいない…",
+        "resultText": "近くにいた弱い魔族を前に押し出した。非道だが効果的だ。",
+        "statChanges": {"cruelty": 10, "leadership": -5},
+        "itemDrops": [ { "itemId": 5, "probability": 0.5, "minRankId": 1 } ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "怪しい泉",
+    "text": "青白く光る怪しい泉を見つけた。微かな魔力を感じる。",
+    "minRankId": 1,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "泉の水を飲む",
+        "reqCondition": [{"stat": "magDef", "value": 10}],
+        "disabledReason": "魔力に耐えられず、お腹を下しそうだ…",
+        "resultText": "水は冷たく、体の内側から魔力が湧き上がってくるのを感じた！",
+        "statChanges": {"magAtk": 5, "mp": 10},
+        "itemDrops": [ { "itemId": 7, "probability": 0.4, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "泉の中を漁る",
+        "reqCondition": [{"stat": "luck", "value": 10}],
+        "disabledReason": "運が悪く、何も見つからなそうだ…",
+        "resultText": "水底から古い魔石を発見した。",
+        "statChanges": {"luck": 5},
+        "itemDrops": [ { "itemId": 1, "probability": 0.7, "minRankId": 1 }, { "itemId": 13, "probability": 0.05, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "気味が悪いので離れる",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "触らぬ神に祟りなし。その場を後にした。",
+        "statChanges": {"responsibility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "サボり魔族の発見",
+    "text": "物陰でサボっている下っ端魔族を見つけた。",
+    "minRankId": 1,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "厳しく叱り飛ばす",
+        "reqCondition": [{"stat": "charisma", "value": 10}],
+        "disabledReason": "ナメられていて、言うことを聞かなそうだ…",
+        "resultText": "一喝すると、下っ端は慌てて仕事に戻った。少しカリスマが上がった。",
+        "statChanges": {"charisma": 5, "leadership": 5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.3, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "弱みを握ってゆする",
+        "reqCondition": [{"stat": "cruelty", "value": 10}],
+        "disabledReason": "そこまで悪賢くなれない…",
+        "resultText": "上官に言わない対価として、持ち物を奪い取った。",
+        "statChanges": {"cruelty": 10, "luck": 5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 1 }, { "itemId": 6, "probability": 0.2, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "一緒にサボる",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "仲良く横になって休んだ。責任感は消え失せたが、不思議な連帯感が生まれた。",
+        "statChanges": {"hp": 10, "responsibility": -10, "charisma": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "魔界ネズミの大量発生",
+    "text": "倉庫に食料を食い荒らす魔界ネズミが大量発生している！",
+    "minRankId": 1,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "素早く捕まえる",
+        "reqCondition": [{"stat": "agility", "value": 15}],
+        "disabledReason": "動きが鈍く、追いつけない…",
+        "resultText": "神速の動きで次々とネズミを捕獲した。良い運動になった。",
+        "statChanges": {"agility": 10, "physDef": 5},
+        "itemDrops": [ { "itemId": 4, "probability": 0.7, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "毒餌を仕掛ける",
+        "reqCondition": [{"stat": "magAtk", "value": 10}],
+        "disabledReason": "魔法による毒の生成ができない…",
+        "resultText": "魔法で生成した毒餌をばらまき、一網打尽にした。",
+        "statChanges": {"magAtk": 5, "cruelty": 5},
+        "itemDrops": [ { "itemId": 2, "probability": 0.4, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "放置する",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "自分の食料ではないので無視した。後で上官に怒られた。",
+        "statChanges": {"responsibility": -10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "崩れかけた遺跡",
+    "text": "怪しげな遺跡の入り口を見つけた。中からかすかに魔力とカビの臭いがする。",
+    "minRankId": 1,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "慎重に探索する",
+        "reqCondition": [{"stat": "luck", "value": 15}],
+        "disabledReason": "罠にかかる未来しか見えない…",
+        "resultText": "運良く罠を避け、奥で古びたアイテムを見つけた！",
+        "statChanges": {"luck": 5, "magDef": 5},
+        "itemDrops": [ { "itemId": 5, "probability": 0.5, "minRankId": 1 }, { "itemId": 13, "probability": 0.1, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "罠ごと破壊して進む",
+        "reqCondition": [{"stat": "physAtk", "value": 20}],
+        "disabledReason": "壁を壊すほどの力がない…",
+        "resultText": "壁や罠をすべて粉砕しながら進んだ！少し怪我をしたが気分は良い。",
+        "statChanges": {"physAtk": 10, "hp": -10},
+        "itemDrops": [ { "itemId": 2, "probability": 0.5, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "引き返す",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "命あっての物種だ。安全第一で立ち去った。",
+        "statChanges": {"responsibility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "迷子のゴブリン",
+    "text": "道に迷ったらしい小さなゴブリンが泣いている。",
     "minRankId": 1,
     "weight": 60,
     "choices": [
       {
         "choiceId": 1,
-        "text": "闇の力を吸収する",
-        "reqCondition": [{"stat": "magDef", "value": 15}],
-        "disabledReason": "闇の波動に耐えられるだけの魔法防御がない…",
-        "resultText": "強大な魔力を強引に奪い取った。全身の細胞が活性化していく！",
-        "statChanges": {"magAtk": 20, "mp": 20, "control": 10}
+        "text": "道案内してやる",
+        "reqCondition": [{"stat": "responsibility", "value": 10}],
+        "disabledReason": "面倒くさくて関わりたくない…",
+        "resultText": "親の元へ届けてやった。感謝の品を受け取った。",
+        "statChanges": {"responsibility": 10, "charisma": 5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 1 } ]
       },
       {
         "choiceId": 2,
-        "text": "魔法陣を解析する",
-        "reqCondition": [{"stat": "magAtk", "value": 15}],
-        "disabledReason": "高度な魔導知識（魔法力）が足りない…",
-        "resultText": "古代の術式を解読した。効率的な魔力の運用法を学び、知恵がついた。",
-        "statChanges": {"magDef": 15, "physDef": 5}
+        "text": "身ぐるみ剥がす",
+        "reqCondition": [{"stat": "cruelty", "value": 15}],
+        "disabledReason": "流石に可哀想に思えてしまう…",
+        "resultText": "泣き叫ぶゴブリンから持ち物を奪い取った。完全な悪の所業だ。",
+        "statChanges": {"cruelty": 15, "charisma": -10},
+        "itemDrops": [ { "itemId": 12, "probability": 0.5, "minRankId": 1 }, { "itemId": 6, "probability": 0.3, "minRankId": 1 } ]
       },
       {
         "choiceId": 3,
-        "text": "供え物を捧げて祈る",
-        "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "丁寧に祈りを捧げた。魔王の加護か、運気が上がったような気がする。",
-        "statChanges": {"luck": 15, "responsibility": 5}
+        "text": "配下にする",
+        "reqCondition": [{"stat": "leadership", "value": 10}],
+        "disabledReason": "威厳がなく、逃げられそうだ…",
+        "resultText": "「俺についてこい」と言うと、ゴブリンは忠誠を誓った。",
+        "statChanges": {"leadership": 10, "control": 5},
+        "itemDrops": [ { "itemId": 1, "probability": 0.2, "minRankId": 1 } ]
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "title": "オークの襲撃",
+    "text": "血の気の多いオーク兵が突然殴りかかってきた！",
+    "minRankId": 2,
+    "weight": 100,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "真っ向勝負で倒す",
+        "reqCondition": [{"stat": "physAtk", "value": 30}, {"stat": "physDef", "value": 20}],
+        "disabledReason": "オークの剛腕を受け止める力がない…",
+        "resultText": "激しい肉弾戦の末、オークをねじ伏せた。周囲の魔族が歓声を上げている。",
+        "statChanges": {"physAtk": 10, "physDef": 5, "charisma": 10},
+        "itemDrops": [ { "itemId": 18, "probability": 0.5, "minRankId": 2 }, { "itemId": 9, "probability": 0.3, "minRankId": 2 } ]
       },
       {
-        "choiceId": 4,
-        "text": "恐ろしくて逃げ出す",
+        "choiceId": 2,
+        "text": "魔法で無力化する",
+        "reqCondition": [{"stat": "magAtk", "value": 30}],
+        "disabledReason": "オークの皮膚を貫く魔法力がない…",
+        "resultText": "突進してくるオークの足元を魔法で吹き飛ばし、あっけなく勝利した。",
+        "statChanges": {"magAtk": 10, "control": 5},
+        "itemDrops": [ { "itemId": 18, "probability": 0.3, "minRankId": 2 }, { "itemId": 1, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "配下を囮にして逃げる",
+        "reqCondition": [{"stat": "control", "value": 20}],
+        "disabledReason": "犠牲になってくれる配下がいない…",
+        "resultText": "配下がボコボコにされている隙に逃げ延びた。統率者としては最悪だ。",
+        "statChanges": {"cruelty": 10, "leadership": -20, "hp": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "title": "武器庫の整理",
+    "text": "下級魔族の仕事として、埃まみれの武器庫の整理を任された。",
+    "minRankId": 2,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "使える武器をくすねる",
+        "reqCondition": [{"stat": "luck", "value": 20}],
+        "disabledReason": "監視の目が厳しく、持ち出せそうにない…",
+        "resultText": "紛れ込んでいた使えそうな装備を自分のものにした！",
+        "statChanges": {"luck": -5, "physAtk": 5},
+        "itemDrops": [ { "itemId": 9, "probability": 0.6, "minRankId": 2 }, { "itemId": 23, "probability": 0.1, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "効率よく指示を出して終わらせる",
+        "reqCondition": [{"stat": "leadership", "value": 25}],
+        "disabledReason": "指揮能力が足りず、誰も動いてくれない…",
+        "resultText": "的確な指示で他の魔族を動かし、あっという間に終わらせた！",
+        "statChanges": {"leadership": 10, "responsibility": 5},
+        "itemDrops": [ { "itemId": 15, "probability": 0.4, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "黙々と一人で片付ける",
         "reqCondition": [],
         "disabledReason": "",
-        "resultText": "一目散に逃げた。命は助かったが、足腰が鍛えられたようだ。",
-        "statChanges": {"agility": 10, "charisma": -5}
+        "resultText": "文句を言わず真面目に働いた。体力がついた。",
+        "statChanges": {"hp": 15, "physDef": 5},
+        "itemDrops": [ { "itemId": 2, "probability": 0.3, "minRankId": 2 } ]
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "title": "魔導書の解読",
+    "text": "カビの生えた古代の魔導書を見つけた。強力な呪いがかけられているようだ。",
+    "minRankId": 2,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "魔力で呪いを打ち破る",
+        "reqCondition": [{"stat": "magAtk", "value": 35}],
+        "disabledReason": "呪いを跳ね返すほどの魔力がない…",
+        "resultText": "圧倒的な魔力で呪いを解除し、新たな魔法の知識を得た！",
+        "statChanges": {"magAtk": 15, "magDef": 5},
+        "itemDrops": [ { "itemId": 19, "probability": 0.3, "minRankId": 2 }, { "itemId": 5, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "慎重に少しずつ解読する",
+        "reqCondition": [{"stat": "responsibility", "value": 20}],
+        "disabledReason": "根気が足りず、すぐに投げ出してしまいそうだ…",
+        "resultText": "時間をかけて安全に知識を吸収した。魔法への耐性がついた。",
+        "statChanges": {"magDef": 15, "mp": 10},
+        "itemDrops": [ { "itemId": 7, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "高値で売れそうなので持ち帰る",
+        "reqCondition": [{"stat": "luck", "value": 15}],
+        "disabledReason": "持ち歩くと呪われそうで怖い…",
+        "resultText": "読めないが、金になりそうなので鞄に突っ込んだ。",
+        "statChanges": {"luck": 5},
+        "itemDrops": [ { "itemId": 13, "probability": 0.1, "minRankId": 2 } ]
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "title": "反乱分子の鎮圧",
+    "text": "下級魔族の一部が待遇に不満を持ち、暴動を起こそうとしている。",
+    "minRankId": 2,
+    "weight": 90,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "暴力で徹底的に鎮圧する",
+        "reqCondition": [{"stat": "physAtk", "value": 40}],
+        "disabledReason": "多勢に無勢。返り討ちに遭いそうだ…",
+        "resultText": "見せしめに首謀者を叩き潰した。恐怖による支配が強まった。",
+        "statChanges": {"cruelty": 15, "control": 10},
+        "itemDrops": [ { "itemId": 10, "probability": 0.6, "minRankId": 2 }, { "itemId": 15, "probability": 0.3, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "言葉巧みに扇動し、自分の配下にする",
+        "reqCondition": [{"stat": "charisma", "value": 30}],
+        "disabledReason": "演説で彼らの心を動かすほどのカリスマがない…",
+        "resultText": "見事な演説で彼らの不満を別へ向けさせ、自らの軍勢に組み込んだ！",
+        "statChanges": {"charisma": 15, "leadership": 15},
+        "itemDrops": [ { "itemId": 11, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "見て見ぬふりをする",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "関わると面倒だ。暴動の被害は他の部署が受けた。",
+        "statChanges": {"responsibility": -15},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "title": "闇商人の取引",
+    "text": "人間界の品を密輸している闇商人に遭遇した。珍しいものを持っている。",
+    "minRankId": 2,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "適正価格で買い取る",
+        "reqCondition": [{"stat": "luck", "value": 25}],
+        "disabledReason": "金（運）が足りない…",
+        "resultText": "レアなポーションを手に入れた！",
+        "statChanges": {"luck": -10, "charisma": 5},
+        "itemDrops": [ { "itemId": 16, "probability": 0.4, "minRankId": 2 }, { "itemId": 13, "probability": 0.2, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "脅してタダで頂く",
+        "reqCondition": [{"stat": "control", "value": 30}],
+        "disabledReason": "闇商人の背後にいる用心棒が怖くて凄めない…",
+        "resultText": "凄みを聞かせて商品を没収した。悪名が高まった。",
+        "statChanges": {"cruelty": 10, "luck": 5},
+        "itemDrops": [ { "itemId": 22, "probability": 0.2, "minRankId": 2 }, { "itemId": 6, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "通報する",
+        "reqCondition": [{"stat": "responsibility", "value": 20}],
+        "disabledReason": "悪事を見逃すのが魔族の常だ…",
+        "resultText": "上官に報告し、商人は捕縛された。真面目な働きが評価された。",
+        "statChanges": {"responsibility": 15, "leadership": 5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.5, "minRankId": 2 } ]
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "title": "人間の斥候",
+    "text": "魔界の入り口付近で、人間界から来たと思われる斥候（スパイ）を発見した。",
+    "minRankId": 2,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "捕らえて尋問する",
+        "reqCondition": [{"stat": "physAtk", "value": 25}, {"stat": "agility", "value": 20}],
+        "disabledReason": "相手の動きが素早く、捕まえられそうにない…",
+        "resultText": "逃げる斥候を捕縛し、人間界の情報を吐き出させた。",
+        "statChanges": {"control": 10, "leadership": 5},
+        "itemDrops": [ { "itemId": 15, "probability": 0.6, "minRankId": 2 }, { "itemId": 9, "probability": 0.2, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "遠距離魔法で始末する",
+        "reqCondition": [{"stat": "magAtk", "value": 30}],
+        "disabledReason": "遠くまで届く強力な魔法が撃てない…",
+        "resultText": "気付かれる前に魔法で狙撃し、灰に変えた。無慈悲な行いだ。",
+        "statChanges": {"magAtk": 5, "cruelty": 10},
+        "itemDrops": [ { "itemId": 19, "probability": 0.2, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "泳がせて後をつける",
+        "reqCondition": [{"stat": "luck", "value": 20}],
+        "disabledReason": "尾行が下手で、すぐにバレてしまいそうだ…",
+        "resultText": "斥候の隠れ家を突き止め、有益な物資を根こそぎ奪った！",
+        "statChanges": {"luck": 10, "agility": 5},
+        "itemDrops": [ { "itemId": 16, "probability": 0.3, "minRankId": 2 }, { "itemId": 11, "probability": 0.5, "minRankId": 2 } ]
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "title": "巡回中のサボり",
+    "text": "夜間の城壁見回りを命じられたが、誰も見ていないようだ。",
+    "minRankId": 2,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "真面目に巡回を続ける",
+        "reqCondition": [{"stat": "responsibility", "value": 25}],
+        "disabledReason": "眠気に勝てず、真面目に歩く気になれない…",
+        "resultText": "一晩中歩き回り、不審な侵入者を未然に防いだ。上官からの評価が上がった。",
+        "statChanges": {"responsibility": 15, "hp": -5},
+        "itemDrops": [ { "itemId": 15, "probability": 0.4, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "見晴らしの良い場所で寝る",
+        "reqCondition": [{"stat": "luck", "value": 15}],
+        "disabledReason": "見つかって大目玉を食らう未来が見える…",
+        "resultText": "朝までぐっすり寝たが、運良く誰にもバレなかった。体力が全回復した気分だ。",
+        "statChanges": {"hp": 20, "responsibility": -10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "兵糧庫に忍び込んで酒を飲む",
+        "reqCondition": [{"stat": "agility", "value": 25}],
+        "disabledReason": "鍵を開ける技術も俊敏さもない…",
+        "resultText": "美味い酒と食料を堪能した！魔族たるもの、少しの悪事はスパイスだ。",
+        "statChanges": {"agility": 5, "cruelty": 5, "hp": 10},
+        "itemDrops": [ { "itemId": 17, "probability": 0.2, "minRankId": 2 }, { "itemId": 6, "probability": 0.5, "minRankId": 2 } ]
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "title": "魔王城の警備",
+    "text": "魔王城の正門警備を任された。怪しい輩が通ろうとしている。",
+    "minRankId": 2,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "威圧して追い返す",
+        "reqCondition": [{"stat": "charisma", "value": 30}],
+        "disabledReason": "迫力が足りず、相手にナメられている…",
+        "resultText": "一言凄むだけで、怪しい輩は逃げ出していった。門番の鑑だ。",
+        "statChanges": {"charisma": 10, "leadership": 5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.3, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "賄賂を受け取って通す",
+        "reqCondition": [{"stat": "control", "value": 20}],
+        "disabledReason": "小心者すぎて、悪事に手を染められない…",
+        "resultText": "金貨を握らされ、見逃した。懐は温かくなったが、警備はザルだ。",
+        "statChanges": {"luck": 15, "responsibility": -20},
+        "itemDrops": [ { "itemId": 13, "probability": 0.1, "minRankId": 2 }, { "itemId": 11, "probability": 0.6, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "問答無用で斬り捨てる",
+        "reqCondition": [{"stat": "physAtk", "value": 35}],
+        "disabledReason": "一撃で仕留めるほどの腕力がない…",
+        "resultText": "不審者をその場で処刑した。残虐な門番として恐れられるようになった。",
+        "statChanges": {"cruelty": 15, "physAtk": 5},
+        "itemDrops": [ { "itemId": 22, "probability": 0.1, "minRankId": 2 }, { "itemId": 2, "probability": 0.5, "minRankId": 2 } ]
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "title": "血生臭い闘技場",
+    "text": "魔族同士が殺し合う地下闘技場を見つけた。飛び入り参加ができそうだ。",
+    "minRankId": 2,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "力でねじ伏せる",
+        "reqCondition": [{"stat": "physAtk", "value": 40}, {"stat": "hp", "value": 30}],
+        "disabledReason": "猛者どもの攻撃に耐える体力と力がない…",
+        "resultText": "血みどろの激戦を制し、闘技場の覇者となった！",
+        "statChanges": {"physAtk": 15, "hp": -15, "charisma": 10},
+        "itemDrops": [ { "itemId": 18, "probability": 0.4, "minRankId": 2 }, { "itemId": 23, "probability": 0.2, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "魔法で場外から攻撃する",
+        "reqCondition": [{"stat": "magAtk", "value": 40}],
+        "disabledReason": "気付かれずに強力な魔法を放つ技術がない…",
+        "resultText": "客席から魔法を放ち、闘技場を大混乱に陥れた。卑劣だが最高に気分が良い。",
+        "statChanges": {"cruelty": 15, "magAtk": 10},
+        "itemDrops": [ { "itemId": 19, "probability": 0.3, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "賭けに参加する",
+        "reqCondition": [{"stat": "luck", "value": 30}],
+        "disabledReason": "ギャンブルの才能がなく、すってんてんになりそうだ…",
+        "resultText": "大穴を見事に当て、大量のアイテムを手に入れた！",
+        "statChanges": {"luck": 15},
+        "itemDrops": [ { "itemId": 13, "probability": 0.2, "minRankId": 2 }, { "itemId": 16, "probability": 0.4, "minRankId": 2 } ]
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "title": "上官からの無茶振り",
+    "text": "上級魔族から「明日の朝までにこの山のような書類を処理しろ」と命じられた。",
+    "minRankId": 2,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "徹夜で完璧に仕上げる",
+        "reqCondition": [{"stat": "responsibility", "value": 35}],
+        "disabledReason": "集中力が足りず、途中で寝てしまいそうだ…",
+        "resultText": "死に物狂いで仕上げた。疲労困憊だが、上官からの信頼は絶大になった。",
+        "statChanges": {"responsibility": 20, "hp": -20},
+        "itemDrops": [ { "itemId": 17, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "配下に全部押し付ける",
+        "reqCondition": [{"stat": "control", "value": 30}],
+        "disabledReason": "押し付けられるほど服従している配下がいない…",
+        "resultText": "脅しと暴力で配下を徹夜させ、自分は寝た。見事な支配力だ。",
+        "statChanges": {"control": 15, "cruelty": 5, "leadership": -5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "書類を燃やす",
+        "reqCondition": [{"stat": "magAtk", "value": 25}, {"stat": "cruelty", "value": 20}],
+        "disabledReason": "後で殺されるのが怖くて火をつけられない…",
+        "resultText": "魔法で跡形もなく焼き尽くした。証拠隠滅は完璧だ（後でバレて殴られた）。",
+        "statChanges": {"cruelty": 15, "magAtk": 5, "physDef": -5},
+        "itemDrops": [ { "itemId": 1, "probability": 0.5, "minRankId": 2 } ]
       }
     ]
   }
