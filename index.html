@@ -282,6 +282,14 @@
             </div>
         </div>
 
+        <div id="event-screen" class="screen">
+            <div class="event-box" style="flex:1;">
+                <h3 id="event-title">イベント</h3>
+                <p id="event-text" style="line-height:1.5;"></p>
+                <div id="choices-area" style="display:flex; flex-direction:column; gap:10px; margin-top:20px;"></div>
+            </div>
+        </div>
+
         <div id="result-screen" class="screen">
             <div class="event-box" style="flex:1;">
                 <h3 id="result-title">結果</h3>
@@ -419,7 +427,6 @@ async function init() {
                 gameState.stats = Object.assign({ hp: 0, mp: 0, physAtk: 0, magAtk: 0, magDef: 0, physDef: 0, agility: 0, luck: 0 }, parsed.stats || {});
                 gameState.innerTraits = Object.assign({ cruelty: 0, leadership: 0, charisma: 0, control: 0, responsibility: 0 }, parsed.innerTraits || {});
             } catch(e) {
-                // ★セーブデータが破損している場合の自動修復機能
                 console.warn("セーブデータの破損を検知したため、リセットしました。:", e);
                 localStorage.removeItem('devil_lord_save');
             }
