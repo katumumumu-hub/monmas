@@ -198,7 +198,7 @@
         .battle-ui { display: flex; flex-direction: column; height: 100%; gap: 10px; }
         .battle-enemy-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border-radius: 8px; padding: 10px; border: 1px solid var(--border-color); position: relative;}
         .enemy-name { font-size: 1.2rem; font-weight: bold; color: #ff5555; margin-bottom: 5px; text-shadow: 0 0 5px #ff0000; }
-        .enemy-image { max-width: 120px; max-height: 120px; object-fit: contain; margin-bottom: 10px; }
+        .enemy-image { max-width: 120px; max-height: 120px; object-fit: contain; margin-bottom: 10px; transition: opacity 0.3s; }
         
         .hp-container { width: 100%; background: #222; border-radius: 10px; border: 1px solid #555; height: 18px; overflow: hidden; margin-bottom: 5px; position: relative; box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);}
         .hp-bar { height: 100%; background: linear-gradient(90deg, #228b22, #32cd32); width: 100%; transition: width 0.3s ease; }
@@ -208,6 +208,34 @@
         .battle-player-area { padding: 10px; background: rgba(30, 15, 45, 0.8); border-radius: 8px; border: 1px solid var(--border-color);}
         
         .battle-log-area { flex: 1; background: #000; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; overflow-y: auto; font-size: 0.85rem; line-height: 1.5; color: #d1c1e5; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);}
+
+        /* ★追加：バトル用のアニメーション */
+        @keyframes shake {
+            0% { transform: translate(3px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(0px, 0px) rotate(0deg); }
+        }
+        .anim-shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        
+        @keyframes flashRed {
+            0% { background-color: rgba(255, 0, 0, 0.6); }
+            100% { background-color: transparent; }
+        }
+        .anim-flash { animation: flashRed 0.4s ease-out; }
+        
+        @keyframes fadeOutDown {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(30px); }
+        }
+        .anim-defeat { animation: fadeOutDown 1s forwards; }
     </style>
 </head>
 <body>
@@ -253,7 +281,7 @@
         </div>
 
         <div id="battle-screen" class="screen">
-            <div class="battle-ui">
+            <div class="battle-ui" id="battle-ui-area">
                 <div class="battle-enemy-area">
                     <div class="enemy-name" id="battle-enemy-name">未知のモンスター</div>
                     <img class="enemy-image" id="battle-enemy-img" src="" alt="敵画像">
@@ -333,7 +361,6 @@
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 let audioCtx;
 
-// ★スリープ関数（バトルループでの待機用）
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 function initAudio() {
@@ -378,8 +405,13 @@ function playSE(type) {
             playTone(880, 'square', 0.2, 0.03, 0); playTone(1108.73, 'square', 0.2, 0.03, 0.1); playTone(1318.51, 'square', 0.2, 0.03, 0.2); playTone(1760, 'square', 0.6, 0.03, 0.3); break;
         case 'rankup':     
             playTone(392.00, 'triangle', 0.2, 0.08, 0); playTone(392.00, 'triangle', 0.2, 0.08, 0.15); playTone(392.00, 'triangle', 0.2, 0.08, 0.30); playTone(523.25, 'triangle', 0.6, 0.08, 0.45); break;
-        case 'hit': // 攻撃時の簡易SE追加
-            playTone(150, 'square', 0.1, 0.1, 0); break;
+        // ★追加：バトルのSE
+        case 'hit':
+            playTone(180, 'square', 0.1, 0.1, 0); break;
+        case 'hit_heavy':
+            playTone(100, 'sawtooth', 0.2, 0.15, 0); break;
+        case 'defeat':
+            playTone(150, 'sawtooth', 0.2, 0.1, 0); playTone(100, 'sawtooth', 0.3, 0.1, 0.1); playTone(50, 'sawtooth', 0.6, 0.1, 0.3); break;
     }
 }
 
@@ -420,6 +452,19 @@ async function init() {
         events = await fetchJson('events.json');
         items = await fetchJson('items.json');
         monsters = await fetchJson('monsters.json');
+
+        const SKILL_DIFFICULTY_MULTIPLIER = 1.8;
+        
+        skills.forEach(skill => {
+            if (skill.requirements) {
+                let reqs = Array.isArray(skill.requirements) ? skill.requirements : [skill.requirements];
+                reqs.forEach(req => {
+                    if (req && req.value) {
+                        req.value = Math.ceil(req.value * SKILL_DIFFICULTY_MULTIPLIER);
+                    }
+                });
+            }
+        });
 
         const saved = localStorage.getItem('devil_lord_save');
         if (saved) {
@@ -482,17 +527,12 @@ function renderLevelGrid() {
             btn.innerText = '???';
         }
         
-        // ★修正：モック関数から本番のstartBattle関数へ変更
         btn.onclick = () => startBattle(i);
         list.appendChild(btn);
     }
 }
 
-// ==========================================
-// ★ 特訓（オートバトル）の本番ロジック
-// ==========================================
 async function startBattle(levelId) {
-    // 1. 最大HPが0の場合は特訓不可（ご要望の制限）
     if(gameState.stats.hp <= 0) {
         playSE('error');
         return alert("最大HPが0のため特訓できません。\nイベントをこなすかアイテムを使用してHPを上げてください！");
@@ -510,25 +550,30 @@ async function startBattle(levelId) {
     }
 
     try {
-        // UI構築とステータス準備
         const enemyName = monster.name || `未知のモンスター (Lv.${levelId})`;
         const enemyMaxHp = monster.stats ? (monster.stats.hp || 1) : 1;
         let enemyHp = enemyMaxHp;
         
         const playerMaxHp = gameState.stats.hp;
-        let playerHp = playerMaxHp; // 毎回最大HPで開始
+        let playerHp = playerMaxHp; 
+        
+        // 前回の戦闘アニメーションをリセット
+        const imgEl = document.getElementById('battle-enemy-img');
+        const uiAreaEl = document.getElementById('battle-ui-area');
+        imgEl.classList.remove('anim-shake', 'anim-defeat');
+        imgEl.style.opacity = '1';
+        imgEl.style.transform = 'none';
         
         document.getElementById('battle-enemy-name').innerText = enemyName;
         document.getElementById('battle-enemy-hp-text').innerText = `HP: ${enemyHp}/${enemyMaxHp}`;
         document.getElementById('battle-player-hp-text').innerText = `HP: ${playerHp}/${playerMaxHp}`;
         document.getElementById('battle-enemy-hp-bar').style.width = '100%';
         document.getElementById('battle-player-hp-bar').style.width = '100%';
-        document.getElementById('battle-enemy-img').src = monster.imagePath || '';
+        imgEl.src = monster.imagePath || '';
 
         const logArea = document.getElementById('battle-log');
         logArea.innerHTML = `<span style="color:#ff5555; font-size: 1.1rem; font-weight:bold;">${enemyName} が現れた！</span><br><br>`;
 
-        // クリスタル消費
         playSE('click');
         const currentRank = ranks.find(r => r.id === gameState.currentRankId);
         if (gameState.crystals >= currentRank.maxCrystals) gameState.lastPlayTime = Date.now();
@@ -537,47 +582,38 @@ async function startBattle(levelId) {
         renderCrystalUI(currentRank);
         updateTimer();
 
-        // バトル画面への遷移（ボタンは一旦隠す）
         showScreen('battle-screen');
         const endBtn = document.getElementById('temp-end-battle-btn');
         endBtn.style.display = 'none';
 
         await sleep(1000);
         
-        // ★ バトルループ（王道ターン制）
         let turn = 1;
         while(playerHp > 0 && enemyHp > 0) {
             logArea.innerHTML += `<span style="color:#a894c2;">--- ターン ${turn} ---</span><br>`;
             
-            // 俊敏性（agility）で先攻・後攻を決定
             let pAgi = gameState.stats.agility || 0;
             let eAgi = monster.stats.agility || 0;
             let isPlayerFirst = pAgi >= eAgi;
-            if (pAgi === eAgi) isPlayerFirst = Math.random() > 0.5; // 同値ならランダム
+            if (pAgi === eAgi) isPlayerFirst = Math.random() > 0.5;
 
-            // 攻撃処理の内部関数
             const executeAttack = async (attacker) => {
-                if(playerHp <= 0 || enemyHp <= 0) return; // どちらかが倒れていたら終了
+                if(playerHp <= 0 || enemyHp <= 0) return; 
                 
                 let isPlayer = attacker === 'player';
                 let atkName = isPlayer ? "自分" : enemyName;
                 let defName = isPlayer ? enemyName : "自分";
                 
-                // 攻撃力と魔法力の高い方を自動で選択して攻撃
                 let pAtk = isPlayer ? Math.max(gameState.stats.physAtk, gameState.stats.magAtk) : Math.max(monster.stats.physAtk, monster.stats.magAtk);
                 let isMag = isPlayer ? gameState.stats.magAtk > gameState.stats.physAtk : monster.stats.magAtk > monster.stats.physAtk;
                 
-                // 防御側は、相手の攻撃の種類（物理or魔法）に合わせて防御力を参照
                 let def = isPlayer ? (isMag ? monster.stats.magDef : monster.stats.physDef) : (isMag ? gameState.stats.magDef : gameState.stats.physDef);
                 
-                // 王道のダメージ計算式： (攻撃力 - 防御力/2) をベースに最低1ダメージ保証
                 let damage = Math.max(1, Math.floor(pAtk - (def / 2)));
                 
-                // 運によるクリティカルヒットの判定 (運1につき1%の確率)
                 let luck = isPlayer ? gameState.stats.luck : monster.stats.luck;
                 let isCrit = Math.random() < (luck * 0.01);
                 
-                // 【弱点システムの判定】敵の弱点スキルを自分が持っている場合、ダメージ1.5倍
                 if (isPlayer && monster.weaknessSkills && Array.isArray(monster.weaknessSkills)) {
                     let hasWeakness = gameState.acquiredSkills.some(sid => monster.weaknessSkills.includes(sid));
                     if(hasWeakness) {
@@ -586,19 +622,29 @@ async function startBattle(levelId) {
                     }
                 }
 
-                // ダメージの乱数ブレ（85% 〜 115%）
                 damage = Math.floor(damage * (0.85 + Math.random() * 0.3));
 
-                // クリティカルならさらに1.5倍
                 if (isCrit) {
                     damage = Math.floor(damage * 1.5);
                     logArea.innerHTML += `<span style="color:#ff3333; font-weight:bold;">痛恨の一撃！</span> `;
                 }
 
-                playSE('hit');
+                // ★追加：アニメーションと効果音の再生
+                if (isPlayer) {
+                    playSE('hit');
+                    // 一旦クラスを外してリフロー（再計算）させることで、同じアニメーションを連続再生可能にする
+                    imgEl.classList.remove('anim-shake');
+                    void imgEl.offsetWidth; 
+                    imgEl.classList.add('anim-shake');
+                } else {
+                    playSE('hit_heavy'); // 敵から食らった時は少し重い音
+                    uiAreaEl.classList.remove('anim-flash');
+                    void uiAreaEl.offsetWidth;
+                    uiAreaEl.classList.add('anim-flash');
+                }
+
                 logArea.innerHTML += `${atkName}の攻撃！ ${defName}に <b>${damage}</b> のダメージ！<br>`;
                 
-                // HPの減算とUIバーの更新
                 if (isPlayer) {
                     enemyHp -= damage;
                     document.getElementById('battle-enemy-hp-text').innerText = `HP: ${Math.max(0, enemyHp)}/${enemyMaxHp}`;
@@ -609,11 +655,17 @@ async function startBattle(levelId) {
                     document.getElementById('battle-player-hp-bar').style.width = Math.max(0, (playerHp / playerMaxHp) * 100) + '%';
                 }
                 
-                logArea.scrollTop = logArea.scrollHeight; // 自動スクロール
-                await sleep(800); // ログを読むための間
+                logArea.scrollTop = logArea.scrollHeight; 
+                
+                // ★追加：もし敵のHPが0になったら消滅アニメと音を出す
+                if (enemyHp <= 0 && isPlayer) {
+                    playSE('defeat');
+                    imgEl.classList.add('anim-defeat');
+                }
+                
+                await sleep(800); 
             };
 
-            // 行動順に沿って攻撃を実行
             await executeAttack(isPlayerFirst ? 'player' : 'enemy');
             await executeAttack(isPlayerFirst ? 'enemy' : 'player');
             
@@ -621,12 +673,10 @@ async function startBattle(levelId) {
             turn++;
         }
 
-        // ★ 勝敗判定
         let isWin = playerHp > 0;
         logArea.innerHTML += isWin ? `<span style="color:#00ffaa; font-weight:bold; font-size:1.1rem;">${enemyName} を打ち倒した！</span><br>` : `<span style="color:#ff5555; font-weight:bold; font-size:1.1rem;">${enemyName} に敗北した…</span><br>`;
         logArea.scrollTop = logArea.scrollHeight;
 
-        // 結果ボタンの表示
         endBtn.style.display = 'block';
         endBtn.onclick = () => endBattle(levelId, monster, isWin);
 
@@ -637,9 +687,6 @@ async function startBattle(levelId) {
     }
 }
 
-// ==========================================
-// ★ 特訓終了・報酬処理ロジック
-// ==========================================
 function endBattle(levelId, monster, isWin) {
     if (isWin) playSE('finish'); else playSE('click');
     
@@ -650,7 +697,6 @@ function endBattle(levelId, monster, isWin) {
     let itemLog = '';
     
     if (isWin) {
-        // 初回クリア報酬処理
         if (!gameState.clearedLevels.includes(levelId)) {
             gameState.clearedLevels.push(levelId);
             if (monster.firstClearReward) {
@@ -662,7 +708,6 @@ function endBattle(levelId, monster, isWin) {
             }
         }
         
-        // 勝利ステータス報酬
         if (monster.winStatsReward) {
             for(let k in monster.winStatsReward) {
                 if (gameState.stats[k] !== undefined) gameState.stats[k] += monster.winStatsReward[k];
@@ -671,7 +716,6 @@ function endBattle(levelId, monster, isWin) {
             }
         }
         
-        // ボーナス確率（レアドロップ的なステータス上昇）
         if (monster.bonusProbability && Math.random() < monster.bonusProbability && monster.bonusStatsReward) {
             for(let k in monster.bonusStatsReward) {
                 if (gameState.stats[k] !== undefined) gameState.stats[k] += monster.bonusStatsReward[k];
@@ -680,7 +724,6 @@ function endBattle(levelId, monster, isWin) {
             }
         }
     } else {
-        // 敗北ステータス報酬（負けても少し成長する）
         if (monster.loseStatsReward) {
             for(let k in monster.loseStatsReward) {
                 if (gameState.stats[k] !== undefined) gameState.stats[k] += monster.loseStatsReward[k];
@@ -694,7 +737,6 @@ function endBattle(levelId, monster, isWin) {
     document.getElementById('skill-log').innerHTML = ""; 
     document.getElementById('item-log').innerHTML = itemLog;
     
-    // 戦闘による成長で新しいスキルを習得したかの確認
     let oldSkillCount = gameState.acquiredSkills.length;
     updateAll(); 
 
