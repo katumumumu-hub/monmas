@@ -604,45 +604,66 @@ function renderLevelGrid() {
     
     const startBtn = document.getElementById('start-battle-btn');
     if(startBtn) startBtn.disabled = true;
+
+    // 開放されている最大レベルの計算（10の倍数を基準）
+    let maxUnlocked = 10;
+    if (gameState.clearedLevels) {
+        for (let k = 10; k <= 100; k += 10) {
+            if (gameState.clearedLevels.includes(k)) {
+                maxUnlocked = k + 10;
+            }
+        }
+    }
     
     for (let i = 1; i <= 100; i++) {
         const btn = document.createElement('button');
         btn.className = 'level-btn';
-        btn.innerText = `Lv.${i}`;
         
-        if (gameState.clearedLevels && gameState.clearedLevels.includes(i)) {
-            btn.classList.add('cleared');
-        }
-        
-        const monsterExists = monsters.find(m => m.level === i);
-        if (!monsterExists && i > 10) {
+        if (i > maxUnlocked) {
+            // 未開放レベル
             btn.disabled = true;
-            btn.innerText = '???';
-        }
-        
-        btn.onmouseenter = () => {
-            if(btn.dataset.selected !== "true") {
-                updateMonsterPreview(i);
+            btn.innerText = '未開放';
+            btn.style.fontSize = '0.75rem';
+        } else {
+            // 開放済みレベル
+            btn.innerText = `Lv.${i}`;
+            
+            if (gameState.clearedLevels && gameState.clearedLevels.includes(i)) {
+                btn.classList.add('cleared');
             }
-        };
-        
-        btn.onclick = (e) => {
-            updateMonsterPreview(i);
-            // 他のボタンの選択状態をリセット
-            document.querySelectorAll('.level-btn').forEach(b => {
-                b.dataset.selected = "false";
-                b.style.boxShadow = "none";
-                b.style.borderColor = b.classList.contains('cleared') ? "#33cc66" : "var(--border-color)";
-            });
             
-            // 選択したボタンのハイライト
-            btn.dataset.selected = "true";
-            btn.style.boxShadow = "0 0 8px var(--accent-gold)";
-            btn.style.borderColor = "var(--accent-gold)";
+            const monsterExists = monsters.find(m => m.level === i);
+            if (!monsterExists && i > 10) {
+                btn.disabled = true;
+                btn.innerText = '???';
+            }
             
-            currentSelectedLevel = i;
-            if(startBtn) startBtn.disabled = false; // 戦闘開始ボタンを有効化
-        };
+            btn.onmouseenter = () => {
+                if(btn.dataset.selected !== "true" && !btn.disabled) {
+                    updateMonsterPreview(i);
+                }
+            };
+            
+            btn.onclick = (e) => {
+                if(btn.disabled) return;
+                
+                updateMonsterPreview(i);
+                // 他のボタンの選択状態をリセット
+                document.querySelectorAll('.level-btn').forEach(b => {
+                    b.dataset.selected = "false";
+                    b.style.boxShadow = "none";
+                    b.style.borderColor = b.classList.contains('cleared') ? "#33cc66" : "var(--border-color)";
+                });
+                
+                // 選択したボタンのハイライト
+                btn.dataset.selected = "true";
+                btn.style.boxShadow = "0 0 8px var(--accent-gold)";
+                btn.style.borderColor = "var(--accent-gold)";
+                
+                currentSelectedLevel = i;
+                if(startBtn) startBtn.disabled = false; // 戦闘開始ボタンを有効化
+            };
+        }
 
         list.appendChild(btn);
     }
