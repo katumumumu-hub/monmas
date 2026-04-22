@@ -58,7 +58,8 @@
 
         #crystal-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 5px; }
         .crystal-icon { 
-            width: 16px; height: 16px; 
+            width: 16px;
+            height: 16px; 
             background: var(--crystal-color); 
             border-radius: 50%; 
             box-shadow: 0 0 12px var(--crystal-color); 
@@ -80,7 +81,7 @@
         .active { display: flex; }
 
         .rank-image-box {
-            flex: 1 1 0; 
+            flex: 1 1 0;
             min-height: 0; 
             background: #000;
             display: flex;
@@ -104,7 +105,7 @@
 
         .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
         .status-item { 
-            background: rgba(30, 15, 45, 0.7); 
+            background: rgba(30, 15, 45, 0.7);
             padding: 8px; 
             border-radius: 4px; 
             border: 1px solid rgba(92, 58, 130, 0.5);
@@ -131,7 +132,7 @@
         button:active { transform: scale(0.98); }
         
         button:disabled, button.disabled-btn { 
-            background: var(--disabled-color); 
+            background: var(--disabled-color);
             border-color: #222; 
             opacity: 0.5; 
             cursor: not-allowed; 
@@ -156,7 +157,7 @@
             border-top: 1px solid var(--border-color); 
         }
         footer button { 
-            flex: 1; 
+            flex: 1;
             background: transparent; 
             border: none;
             border-right: 1px solid var(--border-color); 
@@ -190,15 +191,61 @@
         .rarity-F { color: #555555; }
         .item-use-btn { background: #4a2b6e; padding: 6px 12px; font-size: 0.8rem; width: auto; border-radius: 4px; border: 1px solid #7c4bb3; margin-top: 8px;}
 
-        .level-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; overflow-y: auto; padding: 5px 0; }
+        /* 特訓画面のレイアウト修正 */
+        #training-screen { display: none; flex-direction: column; }
+        .level-grid { 
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 6px; 
+            overflow-y: auto; 
+            padding: 5px 0;
+            flex: 1;
+        }
         .level-btn { background: #2a1540; border: 1px solid var(--border-color); color: var(--text-color); padding: 12px 5px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; cursor: pointer; text-align: center; }
         .level-btn.cleared { background: #1a3320; border-color: #33cc66; color: #aaffaa; }
         .level-btn:disabled { background: #111; color: #555; border-color: #333; cursor: not-allowed; }
 
+        /* 特訓プレビュー用スタイル */
+        #monster-preview-container {
+            flex-shrink: 0;
+            height: 140px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        #monster-preview-img { max-height: 100px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 0 10px rgba(209, 0, 255, 0.3)); }
+        #monster-preview-info { font-size: 0.85rem; font-weight: bold; color: var(--accent-gold); margin-top: 5px; }
+
+        /* 戦闘画面のレイアウト修正 */
         .battle-ui { display: flex; flex-direction: column; height: 100%; gap: 10px; }
-        .battle-enemy-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border-radius: 8px; padding: 10px; border: 1px solid var(--border-color); position: relative;}
+        .battle-enemy-area { 
+            flex: 2; /* 敵表示を大きく */
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            background: rgba(0,0,0,0.5); 
+            border-radius: 8px; 
+            padding: 10px; 
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
         .enemy-name { font-size: 1.2rem; font-weight: bold; color: #ff5555; margin-bottom: 5px; text-shadow: 0 0 5px #ff0000; }
-        .enemy-image { max-width: 120px; max-height: 120px; object-fit: contain; margin-bottom: 10px; transition: opacity 0.3s; }
+        .enemy-image { 
+            max-width: 180px; /* 画像サイズ拡大 */
+            max-height: 180px; 
+            object-fit: contain; 
+            margin-bottom: 10px; 
+            transition: opacity 0.3s; 
+        }
         
         .hp-container { width: 100%; background: #222; border-radius: 10px; border: 1px solid #555; height: 18px; overflow: hidden; margin-bottom: 5px; position: relative; box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);}
         .hp-bar { height: 100%; background: linear-gradient(90deg, #228b22, #32cd32); width: 100%; transition: width 0.3s ease; }
@@ -207,9 +254,19 @@
 
         .battle-player-area { padding: 10px; background: rgba(30, 15, 45, 0.8); border-radius: 8px; border: 1px solid var(--border-color);}
         
-        .battle-log-area { flex: 1; background: #000; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; overflow-y: auto; font-size: 0.85rem; line-height: 1.5; color: #d1c1e5; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);}
+        .battle-log-area { 
+            flex: 0.6; /* ログを小さく */
+            background: #000; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            padding: 10px; 
+            overflow-y: auto; 
+            font-size: 0.85rem; 
+            line-height: 1.5; 
+            color: #d1c1e5;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
 
-        /* ★追加：バトル用のアニメーション */
         @keyframes shake {
             0% { transform: translate(3px, 1px) rotate(0deg); }
             10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -252,6 +309,7 @@
     </header>
 
     <main>
+    
         <div id="home-screen" class="screen active">
             <div class="rank-image-box" onclick="playRankVideo()">
                 <video id="rank-video" muted playsinline preload="metadata" src=""></video>
@@ -276,7 +334,10 @@
 
         <div id="training-screen" class="screen">
             <h3>特訓レベル選択</h3>
-            <p style="font-size: 0.8rem; margin-top: 0; color: #aaa;">勝利するとステータスやアイテムを獲得できます。</p>
+            <div id="monster-preview-container">
+                <img id="monster-preview-img" src="" style="display:none;">
+                <div id="monster-preview-info">レベルを選択してください</div>
+            </div>
             <div id="level-list" class="level-grid"></div>
         </div>
 
@@ -392,26 +453,34 @@ function playSE(type) {
     initAudio();
     switch(type) {
         case 'click':      
-            playTone(800, 'sine', 0.1, 0.05, 0); break;
+            playTone(800, 'sine', 0.1, 0.05, 0);
+            break;
         case 'error':      
-            playTone(150, 'sawtooth', 0.3, 0.05, 0); playTone(140, 'sawtooth', 0.4, 0.05, 0.15); break;
+            playTone(150, 'sawtooth', 0.3, 0.05, 0);
+            playTone(140, 'sawtooth', 0.4, 0.05, 0.15); break;
         case 'finish':     
-            playTone(523.25, 'sine', 0.3, 0.05, 0); playTone(659.25, 'sine', 0.3, 0.05, 0.1); playTone(783.99, 'sine', 0.4, 0.05, 0.2); break;
+            playTone(523.25, 'sine', 0.3, 0.05, 0);
+            playTone(659.25, 'sine', 0.3, 0.05, 0.1); playTone(783.99, 'sine', 0.4, 0.05, 0.2); break;
         case 'item':
-            playTone(1046.50, 'sine', 0.1, 0.05, 0); playTone(1318.51, 'sine', 0.2, 0.05, 0.1); break;
+            playTone(1046.50, 'sine', 0.1, 0.05, 0);
+            playTone(1318.51, 'sine', 0.2, 0.05, 0.1); break;
         case 'use_item':
-            playTone(600, 'sine', 0.4, 0.05, 0); playTone(800, 'triangle', 0.3, 0.03, 0.1); break;
+            playTone(600, 'sine', 0.4, 0.05, 0);
+            playTone(800, 'triangle', 0.3, 0.03, 0.1); break;
         case 'skill':      
-            playTone(880, 'square', 0.2, 0.03, 0); playTone(1108.73, 'square', 0.2, 0.03, 0.1); playTone(1318.51, 'square', 0.2, 0.03, 0.2); playTone(1760, 'square', 0.6, 0.03, 0.3); break;
+            playTone(880, 'square', 0.2, 0.03, 0);
+            playTone(1108.73, 'square', 0.2, 0.03, 0.1); playTone(1318.51, 'square', 0.2, 0.03, 0.2); playTone(1760, 'square', 0.6, 0.03, 0.3); break;
         case 'rankup':     
-            playTone(392.00, 'triangle', 0.2, 0.08, 0); playTone(392.00, 'triangle', 0.2, 0.08, 0.15); playTone(392.00, 'triangle', 0.2, 0.08, 0.30); playTone(523.25, 'triangle', 0.6, 0.08, 0.45); break;
-        // ★追加：バトルのSE
+            playTone(392.00, 'triangle', 0.2, 0.08, 0);
+            playTone(392.00, 'triangle', 0.2, 0.08, 0.15); playTone(392.00, 'triangle', 0.2, 0.08, 0.30); playTone(523.25, 'triangle', 0.6, 0.08, 0.45); break;
         case 'hit':
-            playTone(180, 'square', 0.1, 0.1, 0); break;
+            playTone(180, 'square', 0.1, 0.1, 0);
+            break;
         case 'hit_heavy':
             playTone(100, 'sawtooth', 0.2, 0.15, 0); break;
         case 'defeat':
-            playTone(150, 'sawtooth', 0.2, 0.1, 0); playTone(100, 'sawtooth', 0.3, 0.1, 0.1); playTone(50, 'sawtooth', 0.6, 0.1, 0.3); break;
+            playTone(150, 'sawtooth', 0.2, 0.1, 0);
+            playTone(100, 'sawtooth', 0.3, 0.1, 0.1); playTone(50, 'sawtooth', 0.6, 0.1, 0.3); break;
     }
 }
 
@@ -420,9 +489,7 @@ let skills = [];
 let events = [];
 let items = [];
 let monsters = [];
-
 const LABELS = {hp:'HP', mp:'MP', physAtk:'物理攻撃', magAtk:'魔法力', magDef:'魔法防御', physDef:'物理防御', agility:'俊敏性', luck:'運', cruelty:'凶悪性', leadership:'統率力', charisma:'カリスマ', control:'支配欲', responsibility:'責任感', crystals:'魔力石'};
-
 let gameState = {
     lastPlayTime: Date.now(),
     crystals: 3,
@@ -454,13 +521,12 @@ async function init() {
         monsters = await fetchJson('monsters.json');
 
         const SKILL_DIFFICULTY_MULTIPLIER = 1.8;
-        
         skills.forEach(skill => {
             if (skill.requirements) {
                 let reqs = Array.isArray(skill.requirements) ? skill.requirements : [skill.requirements];
                 reqs.forEach(req => {
                     if (req && req.value) {
-                        req.value = Math.ceil(req.value * SKILL_DIFFICULTY_MULTIPLIER);
+                         req.value = Math.ceil(req.value * SKILL_DIFFICULTY_MULTIPLIER);
                     }
                 });
             }
@@ -509,6 +575,21 @@ function openTrainingScreen() {
     renderLevelGrid();
 }
 
+/* プレビュー更新用のヘルパー関数 */
+function updateMonsterPreview(lv) {
+    const m = monsters.find(mon => mon.level === lv);
+    const img = document.getElementById('monster-preview-img');
+    const info = document.getElementById('monster-preview-info');
+    if (m) {
+        img.src = m.imagePath;
+        img.style.display = 'block';
+        info.innerText = `${m.name} (Lv.${lv})`;
+    } else {
+        img.style.display = 'none';
+        info.innerText = lv > 10 ? `Lv.${lv} 未知の領域` : `Lv.${lv} モンスターデータなし`;
+    }
+}
+
 function renderLevelGrid() {
     const list = document.getElementById('level-list');
     list.innerHTML = '';
@@ -522,12 +603,27 @@ function renderLevelGrid() {
             btn.classList.add('cleared');
         }
         
-        if (!monsters.find(m => m.level === i) && i > 10) {
+        const monsterExists = monsters.find(m => m.level === i);
+        if (!monsterExists && i > 10) {
             btn.disabled = true;
             btn.innerText = '???';
         }
         
-        btn.onclick = () => startBattle(i);
+        // ホバー時にプレビューを更新
+        btn.onmouseenter = () => updateMonsterPreview(i);
+        // タッチデバイス用にクリックでも更新
+        btn.onclick = (e) => {
+            updateMonsterPreview(i);
+            // 既にプレビューされていれば戦闘開始（ダブルタップ風）
+            if (btn.dataset.selected === "true") {
+                startBattle(i);
+            } else {
+                // 他のボタンの選択解除
+                document.querySelectorAll('.level-btn').forEach(b => b.dataset.selected = "false");
+                btn.dataset.selected = "true";
+            }
+        };
+
         list.appendChild(btn);
     }
 }
@@ -546,7 +642,7 @@ async function startBattle(levelId) {
     const monster = monsters.find(m => m.level === levelId);
     if (!monster) {
         playSE('error');
-        return alert(`レベル${levelId}のモンスターデータが読み込めていません。\nmonsters.json を確認してください。`);
+        return alert(`レベル${levelId}のモンスターデータが読み込めていません。`);
     }
 
     try {
@@ -557,7 +653,6 @@ async function startBattle(levelId) {
         const playerMaxHp = gameState.stats.hp;
         let playerHp = playerMaxHp; 
         
-        // 前回の戦闘アニメーションをリセット
         const imgEl = document.getElementById('battle-enemy-img');
         const uiAreaEl = document.getElementById('battle-ui-area');
         imgEl.classList.remove('anim-shake', 'anim-defeat');
@@ -585,32 +680,27 @@ async function startBattle(levelId) {
         showScreen('battle-screen');
         const endBtn = document.getElementById('temp-end-battle-btn');
         endBtn.style.display = 'none';
-
         await sleep(1000);
         
         let turn = 1;
         while(playerHp > 0 && enemyHp > 0) {
             logArea.innerHTML += `<span style="color:#a894c2;">--- ターン ${turn} ---</span><br>`;
-            
             let pAgi = gameState.stats.agility || 0;
             let eAgi = monster.stats.agility || 0;
             let isPlayerFirst = pAgi >= eAgi;
             if (pAgi === eAgi) isPlayerFirst = Math.random() > 0.5;
 
             const executeAttack = async (attacker) => {
-                if(playerHp <= 0 || enemyHp <= 0) return; 
-                
+                if(playerHp <= 0 || enemyHp <= 0) return;
                 let isPlayer = attacker === 'player';
                 let atkName = isPlayer ? "自分" : enemyName;
                 let defName = isPlayer ? enemyName : "自分";
                 
                 let pAtk = isPlayer ? Math.max(gameState.stats.physAtk, gameState.stats.magAtk) : Math.max(monster.stats.physAtk, monster.stats.magAtk);
                 let isMag = isPlayer ? gameState.stats.magAtk > gameState.stats.physAtk : monster.stats.magAtk > monster.stats.physAtk;
-                
                 let def = isPlayer ? (isMag ? monster.stats.magDef : monster.stats.physDef) : (isMag ? gameState.stats.magDef : gameState.stats.physDef);
                 
                 let damage = Math.max(1, Math.floor(pAtk - (def / 2)));
-                
                 let luck = isPlayer ? gameState.stats.luck : monster.stats.luck;
                 let isCrit = Math.random() < (luck * 0.01);
                 
@@ -623,28 +713,24 @@ async function startBattle(levelId) {
                 }
 
                 damage = Math.floor(damage * (0.85 + Math.random() * 0.3));
-
                 if (isCrit) {
                     damage = Math.floor(damage * 1.5);
                     logArea.innerHTML += `<span style="color:#ff3333; font-weight:bold;">痛恨の一撃！</span> `;
                 }
 
-                // ★追加：アニメーションと効果音の再生
                 if (isPlayer) {
                     playSE('hit');
-                    // 一旦クラスを外してリフロー（再計算）させることで、同じアニメーションを連続再生可能にする
                     imgEl.classList.remove('anim-shake');
                     void imgEl.offsetWidth; 
                     imgEl.classList.add('anim-shake');
                 } else {
-                    playSE('hit_heavy'); // 敵から食らった時は少し重い音
+                    playSE('hit_heavy');
                     uiAreaEl.classList.remove('anim-flash');
                     void uiAreaEl.offsetWidth;
                     uiAreaEl.classList.add('anim-flash');
                 }
 
                 logArea.innerHTML += `${atkName}の攻撃！ ${defName}に <b>${damage}</b> のダメージ！<br>`;
-                
                 if (isPlayer) {
                     enemyHp -= damage;
                     document.getElementById('battle-enemy-hp-text').innerText = `HP: ${Math.max(0, enemyHp)}/${enemyMaxHp}`;
@@ -655,15 +741,13 @@ async function startBattle(levelId) {
                     document.getElementById('battle-player-hp-bar').style.width = Math.max(0, (playerHp / playerMaxHp) * 100) + '%';
                 }
                 
-                logArea.scrollTop = logArea.scrollHeight; 
-                
-                // ★追加：もし敵のHPが0になったら消滅アニメと音を出す
+                logArea.scrollTop = logArea.scrollHeight;
                 if (enemyHp <= 0 && isPlayer) {
                     playSE('defeat');
                     imgEl.classList.add('anim-defeat');
                 }
                 
-                await sleep(800); 
+                await sleep(800);
             };
 
             await executeAttack(isPlayerFirst ? 'player' : 'enemy');
@@ -738,8 +822,7 @@ function endBattle(levelId, monster, isWin) {
     document.getElementById('item-log').innerHTML = itemLog;
     
     let oldSkillCount = gameState.acquiredSkills.length;
-    updateAll(); 
-
+    updateAll();
     if (gameState.acquiredSkills.length > oldSkillCount) {
         const newSkills = gameState.acquiredSkills.slice(oldSkillCount);
         newSkills.forEach(id => {
@@ -790,23 +873,14 @@ function checkAndRenderSkills() {
     const list = document.getElementById('acquired-skills-list');
     list.innerHTML = '';
     let isNewSkillAcquired = false;
-
     skills.forEach(skill => {
         let meetsReq = true;
-        
-        let reqs = [];
-        if (Array.isArray(skill.requirements)) {
-            reqs = skill.requirements;
-        } else if (skill.requirements && typeof skill.requirements === 'object') {
-            reqs = [skill.requirements];
-        }
-
+        let reqs = Array.isArray(skill.requirements) ? skill.requirements : (skill.requirements ? [skill.requirements] : []);
         for (let req of reqs) {
             if (!req || !req.stat) continue;
             const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : (gameState.innerTraits[req.stat] || 0);
             if (currentVal < (req.value || 0)) { meetsReq = false; break; }
         }
-        
         if (meetsReq && !gameState.acquiredSkills.includes(skill.id)) {
             gameState.acquiredSkills.push(skill.id);
             isNewSkillAcquired = true;
@@ -818,7 +892,6 @@ function checkAndRenderSkills() {
             }
         }
     });
-
     if (isNewSkillAcquired) { checkAndRenderSkills(); return; }
 
     if (gameState.acquiredSkills.length === 0) {
@@ -830,10 +903,7 @@ function checkAndRenderSkills() {
         const skill = skills.find(s => s.id === skillId);
         if (skill) {
             const btn = document.createElement('button');
-            btn.style.textAlign = 'left';
-            btn.style.padding = '12px';
-            btn.style.background = 'rgba(40,20,60,0.8)';
-            btn.style.marginBottom = '5px';
+            btn.style.textAlign = 'left'; btn.style.padding = '12px'; btn.style.background = 'rgba(40,20,60,0.8)'; btn.style.marginBottom = '5px';
             btn.innerText = `♦ ${skill.name}`;
             btn.onclick = () => {
                 playSE('click');
@@ -851,7 +921,6 @@ function checkAndRenderSkills() {
 function updateAll() {
     if (ranks.length === 0) return;
     checkAndRenderSkills();
-
     const s = gameState.stats;
     const i = gameState.innerTraits;
     const subs = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
@@ -859,25 +928,19 @@ function updateAll() {
     
     let currentRank = ranks.find(r => r.id === gameState.currentRankId);
     let nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
-    
     if (nextRank && cp >= nextRank.reqCombatPower) {
         gameState.currentRankId++;
         currentRank = ranks.find(r => r.id === gameState.currentRankId);
         nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
-        
         playSE('rankup');
         setTimeout(() => { alert(`昇格：${currentRank.name}`); }, 100);
-        
         if (gameState.crystals < currentRank.maxCrystals) gameState.crystals = currentRank.maxCrystals;
     }
 
     document.getElementById('rank-name').innerText = currentRank.name;
     const video = document.getElementById('rank-video');
     const newSrc = currentRank.imagePath + "#t=0.001";
-    if (video.src !== new URL(newSrc, document.baseURI).href) {
-        video.src = newSrc;
-        video.muted = true; 
-    }
+    if (video.src !== new URL(newSrc, document.baseURI).href) { video.src = newSrc; video.muted = true; }
     
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     if (nextRank) {
@@ -922,60 +985,36 @@ function updateTimer() {
 
 function startEvent() {
     if(gameState.crystals <= 0) { playSE('error'); return alert("魔力が足りません"); }
-    
     const currentEvents = events.filter(e => e && e.minRankId <= gameState.currentRankId);
-    if (!currentEvents || currentEvents.length === 0) {
-        playSE('error'); 
-        return alert("イベントデータが見つかりません。\nevents.jsonが正しく配置されているか確認してください。");
-    }
-
+    if (!currentEvents || currentEvents.length === 0) { playSE('error'); return alert("イベントデータが見つかりません。"); }
     const ev = currentEvents[Math.floor(Math.random() * currentEvents.length)];
-    
     try {
         const area = document.getElementById('choices-area');
         area.innerHTML = '';
-        
         document.getElementById('event-title').innerText = ev.title || "名称不明のイベント";
         document.getElementById('event-text').innerText = ev.text || "";
-        
-        let choices = [];
-        if (Array.isArray(ev.choices)) choices = ev.choices;
-        else if (ev.choices && typeof ev.choices === 'object') choices = [ev.choices];
-
+        let choices = Array.isArray(ev.choices) ? ev.choices : (ev.choices ? [ev.choices] : []);
         if (choices.length === 0) throw new Error("選択肢(choices)のデータがありません。");
-
         choices.forEach(c => {
             const b = document.createElement('button');
-            b.style.textAlign = 'left'; 
-            b.innerHTML = c.text || "選択肢";
-            
+            b.style.textAlign = 'left'; b.innerHTML = c.text || "選択肢";
             let disabled = false;
-
-            let conditions = [];
-            if (Array.isArray(c.reqCondition)) conditions = c.reqCondition;
-            else if (c.reqCondition && typeof c.reqCondition === 'object') conditions = [c.reqCondition];
-
+            let conditions = Array.isArray(c.reqCondition) ? c.reqCondition : (c.reqCondition ? [c.reqCondition] : []);
             for (let req of conditions) {
                 if (!req || !req.stat) continue;
                 const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : (gameState.innerTraits[req.stat] || 0);
                 if (currentVal < (req.value || 0)) disabled = true;
             }
-            
             if (disabled) {
-                b.classList.add('disabled-btn');
-                b.innerHTML += `<span class="reason-text">${c.disabledReason || ""}</span>`;
+                b.classList.add('disabled-btn'); b.innerHTML += `<span class="reason-text">${c.disabledReason || ""}</span>`;
                 b.onclick = () => { playSE('error'); };
             } else {
                 b.onclick = () => {
                     let oldRank = gameState.currentRankId;
                     let oldSkillCount = gameState.acquiredSkills.length;
-
                     document.getElementById('result-title').innerText = "イベント結果";
                     document.getElementById('result-text').innerText = c.resultText || "";
-                    document.getElementById('change-log').innerHTML = '';
-                    document.getElementById('skill-log').innerHTML = ''; 
-                    document.getElementById('item-log').innerHTML = ''; 
-                    
+                    document.getElementById('change-log').innerHTML = ''; document.getElementById('skill-log').innerHTML = ''; document.getElementById('item-log').innerHTML = ''; 
                     if (c.statChanges) {
                         for(let k in c.statChanges) {
                             if (gameState.stats[k] !== undefined) gameState.stats[k] += c.statChanges[k];
@@ -984,13 +1023,8 @@ function startEvent() {
                             document.getElementById('change-log').innerHTML += `${LABELS[k]}: ${sign}${c.statChanges[k]}<br>`;
                         }
                     }
-
                     let droppedItemNames = [];
-
-                    let drops = [];
-                    if (Array.isArray(c.itemDrops)) drops = c.itemDrops;
-                    else if (c.itemDrops && typeof c.itemDrops === 'object') drops = [c.itemDrops];
-
+                    let drops = Array.isArray(c.itemDrops) ? c.itemDrops : (c.itemDrops ? [c.itemDrops] : []);
                     drops.forEach(drop => {
                         if (!drop || !drop.itemId) return;
                         if (gameState.currentRankId >= (drop.minRankId || 1)) {
@@ -1001,18 +1035,12 @@ function startEvent() {
                             }
                         }
                     });
-
                     const prevSkillCount = gameState.acquiredSkills.length;
                     updateAll(); 
-                    
                     let rankedUp = (gameState.currentRankId > oldRank);
                     let skilledUp = (gameState.acquiredSkills.length > oldSkillCount);
                     let itemDropped = droppedItemNames.length > 0;
-
-                    if (!rankedUp) { 
-                        if (skilledUp) { playSE('skill'); } else if (itemDropped) { playSE('item'); } else { playSE('finish'); }
-                    }
-                    
+                    if (!rankedUp) { if (skilledUp) { playSE('skill'); } else if (itemDropped) { playSE('item'); } else { playSE('finish'); } }
                     if (skilledUp) {
                         const newSkills = gameState.acquiredSkills.slice(prevSkillCount);
                         newSkills.forEach(id => {
@@ -1020,30 +1048,19 @@ function startEvent() {
                             if (s) document.getElementById('skill-log').innerHTML += `<br>★ スキル【${s.name}】を習得！`;
                         });
                     }
-
                     if (itemDropped) { document.getElementById('item-log').innerHTML = `<br>🎁 ドロップ: ${droppedItemNames.join('、')} を獲得！`; }
-
                     showScreen('result-screen');
                 };
             }
             area.appendChild(b);
         });
-
-        playSE('click'); 
+        playSE('click');
         const currentRank = ranks.find(r => r.id === gameState.currentRankId);
         if (gameState.crystals >= currentRank.maxCrystals) gameState.lastPlayTime = Date.now();
-        
-        gameState.crystals--;
-        save(); 
-        renderCrystalUI(currentRank); 
-        updateTimer();
-        
-        showScreen('event-screen');
-
+        gameState.crystals--; save(); renderCrystalUI(currentRank); updateTimer(); showScreen('event-screen');
     } catch (e) {
-        console.error("イベント展開エラー:", e);
-        playSE('error');
-        alert("イベントのデータに不備があるため中断しました。\n(クリスタルは消費されていません)\n\nエラー内容: " + e.message);
+        console.error("イベント展開エラー:", e); playSE('error');
+        alert("イベントのデータに不備があるため中断しました。\nエラー内容: " + e.message);
     }
 }
 
@@ -1052,21 +1069,17 @@ function renderStats() {
     labels.forEach(l => {
         const target = document.getElementById(l.id);
         target.innerHTML = '';
-        for(let k in l.data) {
-            target.innerHTML += `<div class="status-item"><div class="status-label">${LABELS[k]}</div><div class="status-value">${l.data[k]}</div></div>`;
-        }
+        for(let k in l.data) { target.innerHTML += `<div class="status-item"><div class="status-label">${LABELS[k]}</div><div class="status-value">${l.data[k]}</div></div>`; }
     });
 }
 
 function renderItems() {
     const list = document.getElementById('inventory-list');
     list.innerHTML = '';
-    
     if (!gameState.items || Object.keys(gameState.items).length === 0) {
         list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>';
         return;
     }
-    
     let hasItem = false;
     for (let itemId in gameState.items) {
         const count = gameState.items[itemId];
@@ -1090,7 +1103,6 @@ function renderItems() {
             }
         }
     }
-    
     if (!hasItem) { list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>'; }
 }
 
@@ -1098,23 +1110,13 @@ function useItem(itemId) {
     if (!gameState.items[itemId] || gameState.items[itemId] <= 0) return;
     const itemData = items.find(i => i.id == itemId);
     if (!itemData || !itemData.effects) return;
-
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
-
     for (let k in itemData.effects) {
-        if (k === 'crystals') {
-            gameState.crystals = Math.min(currentRank.maxCrystals, gameState.crystals + itemData.effects[k]);
-        } else if (gameState.stats[k] !== undefined) {
-            gameState.stats[k] += itemData.effects[k];
-        } else if (gameState.innerTraits[k] !== undefined) {
-            gameState.innerTraits[k] += itemData.effects[k];
-        }
+        if (k === 'crystals') { gameState.crystals = Math.min(currentRank.maxCrystals, gameState.crystals + itemData.effects[k]); } 
+        else if (gameState.stats[k] !== undefined) { gameState.stats[k] += itemData.effects[k]; } 
+        else if (gameState.innerTraits[k] !== undefined) { gameState.innerTraits[k] += itemData.effects[k]; }
     }
-
-    gameState.items[itemId]--;
-    playSE('use_item');
-    alert(`${itemData.name} を使用した！\n力が湧き上がってくるのを感じる…！`);
-    save(); updateAll(); 
+    gameState.items[itemId]--; playSE('use_item'); alert(`${itemData.name} を使用した！`); save(); updateAll(); 
 }
 
 function save() { localStorage.setItem('devil_lord_save', JSON.stringify(gameState)); }
