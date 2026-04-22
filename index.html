@@ -888,6 +888,11 @@ function playRankVideo() {
 }
 
 function devMaxCrystals() {
+    const pass = prompt("暗証番号を入力してください");
+    if (pass !== "1206") {
+        alert("暗証番号が違います。");
+        return;
+    }
     if (ranks.length === 0) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     gameState.crystals = currentRank.maxCrystals;
@@ -896,6 +901,11 @@ function devMaxCrystals() {
 }
 
 function devResetSave() {
+    const pass = prompt("暗証番号を入力してください");
+    if (pass !== "1206") {
+        alert("暗証番号が違います。");
+        return;
+    }
     if (confirm("データをリセットしますか？")) {
         localStorage.removeItem('devil_lord_save');
         location.reload();
