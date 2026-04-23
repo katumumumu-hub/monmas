@@ -4,999 +4,2161 @@
     "iconId": "fire_01",
     "name": "火炎",
     "description": "手のひらから灼熱の炎を放つ基本的な魔法。周囲の空気を焼き尽くす。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★",
+    "mpCost": 2,
     "element": "火",
-    "bonus": { "magAtk": 8 },
-    "requirements": [ { "stat": "magAtk", "value": 8 }, { "stat": "charisma", "value": 20 } ]
+    "bonus": {
+      "magAtk": 8
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 8
+      },
+      {
+        "stat": "charisma",
+        "value": 20
+      }
+    ]
   },
   {
     "id": 2,
     "iconId": "phys_01",
     "name": "強打",
     "description": "魔力を拳に込めて力任せに殴りつける。単純だが破壊力は高い。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★",
+    "mpCost": 2,
     "element": "無",
-    "bonus": { "physAtk": 5 },
-    "requirements": [ { "stat": "physAtk", "value": 5 } ]
+    "bonus": {
+      "physAtk": 5
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 5
+      }
+    ]
   },
   {
     "id": 3,
     "iconId": "dark_01",
     "name": "威圧",
     "description": "魔族としての格の違いを見せつけ、格下を萎縮させるオーラを放つ。",
-    "category": "変化",
+    "category": "戦闘",
+    "rarity": "★",
+    "mpCost": 2,
     "element": "闇",
-    "bonus": { "charisma": 5, "leadership": 5 },
-    "requirements": [ { "stat": "cruelty", "value": 10 } ]
+    "bonus": {
+      "charisma": 5,
+      "leadership": 5
+    },
+    "requirements": [
+      {
+        "stat": "cruelty",
+        "value": 10
+      }
+    ]
   },
   {
     "id": 4,
     "iconId": "poison_01",
-    "name": "毒の爪",
-    "description": "爪に微量の毒を帯びさせて切り裂く。卑劣だが確実なダメージを与える。",
-    "category": "攻撃",
-    "element": "毒",
-    "bonus": { "physAtk": 3, "cruelty": 2 },
-    "requirements": [ { "stat": "physAtk", "value": 10 }, { "stat": "cruelty", "value": 5 } ]
+    "name": "闇の爪",
+    "description": "爪に暗黒の魔力を帯びさせて切り裂く。卑劣だが確実なダメージを与える。",
+    "category": "戦闘",
+    "rarity": "★",
+    "mpCost": 2,
+    "element": "闇",
+    "bonus": {
+      "physAtk": 3,
+      "magAtk": 2
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 5
+      },
+      {
+        "stat": "cruelty",
+        "value": 10
+      }
+    ]
   },
   {
     "id": 5,
-    "iconId": "buff_01",
-    "name": "影潜み",
-    "description": "暗がりに溶け込み、気配を消す。危機を回避する能力が高まる。",
-    "category": "変化",
-    "element": "闇",
-    "bonus": { "agility": 3, "luck": 2 },
-    "requirements": [ { "stat": "agility", "value": 10 }, { "stat": "luck", "value": 5 } ]
+    "iconId": "speed_01",
+    "name": "瞬動",
+    "description": "魔力で脚力を強化し、一瞬で間合いを詰める（または離脱する）。",
+    "category": "戦闘",
+    "rarity": "★",
+    "mpCost": 2,
+    "element": "無",
+    "bonus": {
+      "agility": 10
+    },
+    "requirements": [
+      {
+        "stat": "agility",
+        "value": 10
+      }
+    ]
   },
   {
     "id": 6,
-    "iconId": "dark_02",
-    "name": "悪態",
-    "description": "相手を激しく罵倒し、精神的な隙を作る下劣な技。",
-    "category": "変化",
-    "element": "無",
-    "bonus": { "control": 2, "cruelty": 3 },
-    "requirements": [ { "stat": "cruelty", "value": 15 } ]
+    "iconId": "heal_01",
+    "name": "自己治癒",
+    "description": "魔力を消費して自身の傷を塞ぐ。戦闘中の応急処置として使える。",
+    "category": "戦闘",
+    "rarity": "★",
+    "mpCost": 2,
+    "element": "光",
+    "bonus": {
+      "hp": 20
+    },
+    "requirements": [
+      {
+        "stat": "hp",
+        "value": 20
+      },
+      {
+        "stat": "responsibility",
+        "value": 10
+      }
+    ]
   },
   {
     "id": 7,
     "iconId": "magic_01",
-    "name": "魔力抽出",
-    "description": "空気中から微小な魔力を集める。継続的な魔法行使の基礎となる。",
-    "category": "回復",
+    "name": "魔力感知",
+    "description": "周囲の微弱な魔力の流れを読み取る。隠れた敵や罠を見つけやすくなる。",
+    "category": "非戦闘",
+    "rarity": "★",
     "element": "無",
-    "bonus": { "mp": 10 },
-    "requirements": [ { "stat": "magAtk", "value": 15 } ]
+    "bonus": {
+      "magDef": 5,
+      "luck": 5
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 5
+      },
+      {
+        "stat": "magDef",
+        "value": 5
+      }
+    ]
   },
   {
     "id": 8,
     "iconId": "earth_01",
-    "name": "泥の盾",
-    "description": "地面の泥を魔力で固め、即席の盾を作り出す。",
-    "category": "防御",
-    "element": "土",
-    "bonus": { "physDef": 5 },
-    "requirements": [ { "stat": "physDef", "value": 10 } ]
+    "name": "魔力の盾",
+    "description": "魔力を物理的な硬度まで高め、即席の盾を作り出す。",
+    "category": "戦闘",
+    "rarity": "★",
+    "mpCost": 2,
+    "element": "無",
+    "bonus": {
+      "physDef": 8
+    },
+    "requirements": [
+      {
+        "stat": "physDef",
+        "value": 10
+      }
+    ]
   },
   {
     "id": 9,
-    "iconId": "speed_01",
-    "name": "逃げ足",
-    "description": "不利な状況から一目散に逃げ出す術。生存確率がぐんと上がる。",
-    "category": "パッシブ",
-    "element": "無",
-    "bonus": { "agility": 5, "luck": 3 },
-    "requirements": [ { "stat": "agility", "value": 15 }, { "stat": "luck", "value": 10 } ]
+    "iconId": "thunder_01",
+    "name": "帯電",
+    "description": "体に静電気のような魔力をまとわせ、接触した相手を僅かに痺れさせる。",
+    "category": "非戦闘",
+    "rarity": "★",
+    "element": "雷",
+    "bonus": {
+      "agility": 5,
+      "magAtk": 2
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 10
+      }
+    ]
   },
   {
     "id": 10,
     "iconId": "blood_01",
-    "name": "吸血",
-    "description": "傷口から相手の生命力をすする。残酷な手段だが生き残るためには必要だ。",
-    "category": "回復",
-    "element": "血",
-    "bonus": { "hp": 10 },
-    "requirements": [ { "stat": "physAtk", "value": 15 }, { "stat": "cruelty", "value": 10 } ]
+    "name": "魂喰らい",
+    "description": "対象の生命力を直接吸い取る闇の魔法。残酷な手段だが生き残るためには必要だ。",
+    "category": "戦闘",
+    "rarity": "★",
+    "mpCost": 2,
+    "element": "闇",
+    "bonus": {
+      "hp": 10,
+      "physAtk": 2
+    },
+    "requirements": [
+      {
+        "stat": "cruelty",
+        "value": 15
+      }
+    ]
   },
   {
     "id": 11,
-    "iconId": "dark_03",
-    "name": "悪魔の囁き",
-    "description": "甘い言葉で相手の心を惑わし、意のままに操る第一歩。",
-    "category": "変化",
-    "element": "闇",
-    "bonus": { "charisma": 5, "control": 2 },
-    "requirements": [ { "stat": "charisma", "value": 15 }, { "stat": "control", "value": 10 } ]
+    "iconId": "fire_02",
+    "name": "爆炎球",
+    "description": "圧縮した炎の球を放ち、着弾と同時に爆発させる。複数の敵を巻き込める。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
+    "element": "火",
+    "bonus": {
+      "magAtk": 15
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 20
+      }
+    ]
   },
   {
     "id": 12,
-    "iconId": "phys_02",
-    "name": "狂戦士化",
-    "description": "理性を捨てて暴れ狂う。防御力は下がるが破壊力は劇的に増す。",
-    "category": "変化",
-    "element": "無",
-    "bonus": { "physAtk": 10, "physDef": -5 },
-    "requirements": [ { "stat": "physAtk", "value": 20 }, { "stat": "cruelty", "value": 15 } ]
+    "iconId": "dark_02",
+    "name": "影縛り",
+    "description": "敵の影に自身の魔力を打ち込み、動きを一時的に封じる。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
+    "element": "闇",
+    "bonus": {
+      "control": 10
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 15
+      },
+      {
+        "stat": "control",
+        "value": 15
+      }
+    ]
   },
   {
     "id": 13,
     "iconId": "ice_01",
-    "name": "氷柱",
-    "description": "鋭い氷の柱を生成して射出する。刺さると非常に冷たい。",
-    "category": "攻撃",
-    "element": "氷",
-    "bonus": { "magAtk": 5 },
-    "requirements": [ { "stat": "magAtk", "value": 20 } ]
+    "name": "水弾",
+    "description": "高水圧の水を生成して射出する。当たると非常に痛い。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
+    "element": "水",
+    "bonus": {
+      "magAtk": 10,
+      "physAtk": 5
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 18
+      }
+    ]
   },
   {
     "id": 14,
-    "iconId": "thunder_01",
-    "name": "落雷",
-    "description": "小さな雷雲を呼び出し、敵の頭上に雷を落とす。",
-    "category": "攻撃",
-    "element": "雷",
-    "bonus": { "magAtk": 8 },
-    "requirements": [ { "stat": "magAtk", "value": 25 } ]
+    "iconId": "phys_02",
+    "name": "兜割り",
+    "description": "敵の装甲や防御魔法の隙を突き、防御力を無視した鋭い一撃を見舞う。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
+    "element": "無",
+    "bonus": {
+      "physAtk": 15
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 20
+      },
+      {
+        "stat": "agility",
+        "value": 10
+      }
+    ]
   },
   {
     "id": 15,
-    "iconId": "buff_02",
-    "name": "幸運の風",
+    "iconId": "wind_01",
+    "name": "導きの光",
     "description": "不思議と都合の良いことが起きやすくなる、受動的な恩恵。",
-    "category": "パッシブ",
-    "element": "風",
-    "bonus": { "luck": 5, "agility": 2 },
-    "requirements": [ { "stat": "luck", "value": 20 } ]
+    "category": "非戦闘",
+    "rarity": "★★",
+    "element": "光",
+    "bonus": {
+      "luck": 10,
+      "agility": 5
+    },
+    "requirements": [
+      {
+        "stat": "luck",
+        "value": 15
+      }
+    ]
   },
   {
     "id": 16,
-    "iconId": "holy_01",
-    "name": "統率の号令",
-    "description": "よく響く声で配下に指示を出す。部隊全体の動きが良くなる。",
-    "category": "変化",
+    "iconId": "def_01",
+    "name": "鉄壁の構え",
+    "description": "急所を守る防御態勢を取り、物理ダメージを大きく軽減する。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
     "element": "無",
-    "bonus": { "leadership": 5 },
-    "requirements": [ { "stat": "leadership", "value": 15 }, { "stat": "charisma", "value": 10 } ]
+    "bonus": {
+      "physDef": 15
+    },
+    "requirements": [
+      {
+        "stat": "physDef",
+        "value": 20
+      }
+    ]
   },
   {
     "id": 17,
-    "iconId": "def_01",
-    "name": "鉄の皮膚",
-    "description": "魔力で自身の皮膚を硬化させ、並の刃物を通さなくする。",
-    "category": "パッシブ",
+    "iconId": "holy_01",
+    "name": "鼓舞",
+    "description": "配下の魔物たちに活を入れ、一時的に部隊全体の戦闘力を底上げする。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
     "element": "無",
-    "bonus": { "physDef": 8 },
-    "requirements": [ { "stat": "physDef", "value": 20 } ]
+    "bonus": {
+      "leadership": 10,
+      "charisma": 5
+    },
+    "requirements": [
+      {
+        "stat": "leadership",
+        "value": 20
+      }
+    ]
   },
   {
     "id": 18,
-    "iconId": "def_02",
-    "name": "魔力障壁",
-    "description": "見えない魔力の壁を展開し、魔法攻撃の威力を減衰させる。",
-    "category": "防御",
+    "iconId": "magic_02",
+    "name": "魔力転換",
+    "description": "自身の体力を少し削り、それを魔法力（MP）へと変換する。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
     "element": "無",
-    "bonus": { "magDef": 8 },
-    "requirements": [ { "stat": "magDef", "value": 20 } ]
+    "bonus": {
+      "mp": 20
+    },
+    "requirements": [
+      {
+        "stat": "hp",
+        "value": 30
+      },
+      {
+        "stat": "responsibility",
+        "value": 15
+      }
+    ]
   },
   {
     "id": 19,
-    "iconId": "phys_03",
-    "name": "鞭打ち",
-    "description": "痛みを伴う一撃で相手を服従させる。支配欲を満たす攻撃。",
-    "category": "攻撃",
+    "iconId": "speed_02",
+    "name": "神速の反射",
+    "description": "敵の攻撃に対し、考えるよりも先に体が反応して回避行動をとる。",
+    "category": "非戦闘",
+    "rarity": "★★",
     "element": "無",
-    "bonus": { "control": 5, "physAtk": 2 },
-    "requirements": [ { "stat": "control", "value": 20 }, { "stat": "physAtk", "value": 15 } ]
+    "bonus": {
+      "agility": 15,
+      "luck": 5
+    },
+    "requirements": [
+      {
+        "stat": "agility",
+        "value": 25
+      }
+    ]
   },
   {
     "id": 20,
-    "iconId": "dark_04",
-    "name": "責任転嫁",
-    "description": "失敗を巧みに他人のせいにして、自分だけ都合よく切り抜ける術。",
-    "category": "変化",
-    "element": "無",
-    "bonus": { "luck": 8, "responsibility": -10 },
-    "requirements": [ { "stat": "luck", "value": 25 }, { "stat": "cruelty", "value": 20 } ]
+    "iconId": "dark_03",
+    "name": "精神汚染",
+    "description": "敵の脳内に直接悪夢を見せ、戦意を少しずつ削ぐ。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
+    "element": "闇",
+    "bonus": {
+      "magAtk": 10,
+      "cruelty": 10
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 20
+      },
+      {
+        "stat": "cruelty",
+        "value": 20
+      }
+    ]
   },
   {
     "id": 21,
-    "iconId": "heal_01",
-    "name": "闇の癒し",
-    "description": "魔力を生命力に変換し、傷を塞ぐ。少し痛みを伴うが効果は高い。",
-    "category": "回復",
-    "element": "闇",
-    "bonus": { "hp": 20 },
-    "requirements": [ { "stat": "magAtk", "value": 20 }, { "stat": "mp", "value": 10 } ]
+    "iconId": "phys_03",
+    "name": "薙ぎ払い",
+    "description": "武器や巨大な爪で前方を一掃し、複数の敵にまとめてダメージを与える。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
+    "element": "無",
+    "bonus": {
+      "physAtk": 20
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 30
+      }
+    ]
   },
   {
     "id": 22,
     "iconId": "poison_02",
-    "name": "毒の息",
-    "description": "肺から有毒なガスを吐き出す。周囲の広範囲を汚染する。",
-    "category": "攻撃",
-    "element": "毒",
-    "bonus": { "magAtk": 5, "cruelty": 3 },
-    "requirements": [ { "stat": "magAtk", "value": 15 }, { "stat": "cruelty", "value": 20 } ]
+    "name": "闇のブレス",
+    "description": "肺から暗黒のガスを吐き出す。周囲の広範囲を汚染する。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
+    "element": "闇",
+    "bonus": {
+      "magAtk": 15,
+      "cruelty": 5
+    },
+    "requirements": [
+      {
+        "stat": "hp",
+        "value": 40
+      },
+      {
+        "stat": "cruelty",
+        "value": 25
+      }
+    ]
   },
   {
     "id": 23,
-    "iconId": "phys_04",
-    "name": "剛腕",
-    "description": "重い武器も軽々と振るうことができる筋力。圧倒的な暴力を体現する。",
-    "category": "パッシブ",
-    "element": "無",
-    "bonus": { "physAtk": 10 },
-    "requirements": [ { "stat": "physAtk", "value": 30 } ]
+    "iconId": "dark_04",
+    "name": "洗脳",
+    "description": "意志の弱い魔物や人間を言葉と魔力で操り、配下へ引き入れる。",
+    "category": "戦闘",
+    "rarity": "★★",
+    "mpCost": 5,
+    "element": "闇",
+    "bonus": {
+      "control": 15,
+      "charisma": 5
+    },
+    "requirements": [
+      {
+        "stat": "control",
+        "value": 30
+      }
+    ]
   },
   {
     "id": 24,
-    "iconId": "buff_03",
-    "name": "精神統一",
-    "description": "心を静め、魔力の乱れを整える。真面目な魔族だけがたどり着ける境地。",
-    "category": "変化",
+    "iconId": "holy_02",
+    "name": "偽りのカリスマ",
+    "description": "己を本来より強大に見せる幻惑のオーラ。交渉や威圧で非常に有利になる。",
+    "category": "非戦闘",
+    "rarity": "★★",
     "element": "無",
-    "bonus": { "magAtk": 5, "magDef": 5 },
-    "requirements": [ { "stat": "mp", "value": 20 }, { "stat": "responsibility", "value": 15 } ]
+    "bonus": {
+      "charisma": 20
+    },
+    "requirements": [
+      {
+        "stat": "charisma",
+        "value": 25
+      },
+      {
+        "stat": "control",
+        "value": 15
+      }
+    ]
   },
   {
     "id": 25,
-    "iconId": "speed_02",
-    "name": "悪魔の翼",
-    "description": "背中の翼を自在に操り、短時間の滑空や高速移動を可能にする。",
-    "category": "パッシブ",
-    "element": "風",
-    "bonus": { "agility": 10 },
-    "requirements": [ { "stat": "agility", "value": 30 } ]
+    "iconId": "wind_02",
+    "name": "空中浮遊",
+    "description": "魔力によって重力を無視し、短時間の滑空や高速移動を可能にする。",
+    "category": "非戦闘",
+    "rarity": "★★",
+    "element": "無",
+    "bonus": {
+      "agility": 20
+    },
+    "requirements": [
+      {
+        "stat": "agility",
+        "value": 30
+      },
+      {
+        "stat": "mp",
+        "value": 10
+      }
+    ]
   },
   {
     "id": 26,
-    "iconId": "dark_05",
-    "name": "恐怖の眼差し",
-    "description": "目を合わせた者をすくみ上がらせる。支配を確実にするための圧力。",
-    "category": "変化",
-    "element": "闇",
-    "bonus": { "control": 8 },
-    "requirements": [ { "stat": "cruelty", "value": 30 }, { "stat": "charisma", "value": 20 } ]
+    "iconId": "phys_04",
+    "name": "暗殺術",
+    "description": "音もなく背後に忍び寄り、急所を確実にえぐる恐るべき技術。",
+    "category": "戦闘",
+    "rarity": "★★★",
+    "mpCost": 10,
+    "element": "無",
+    "bonus": {
+      "physAtk": 25,
+      "agility": 10
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 40
+      },
+      {
+        "stat": "agility",
+        "value": 40
+      }
+    ]
   },
   {
     "id": 27,
-    "iconId": "fire_02",
-    "name": "爆炎",
-    "description": "圧縮した炎を放ち、着弾と同時に爆発させる。中級の破壊魔法。",
-    "category": "攻撃",
-    "element": "火",
-    "bonus": { "magAtk": 12 },
-    "requirements": [ { "stat": "magAtk", "value": 40 } ]
+    "iconId": "dark_05",
+    "name": "魔力吸収",
+    "description": "敵の放った魔法を自身の魔力として吸収し、無力化する防御技。",
+    "category": "戦闘",
+    "rarity": "★★★",
+    "mpCost": 10,
+    "element": "闇",
+    "bonus": {
+      "magDef": 20,
+      "mp": 10
+    },
+    "requirements": [
+      {
+        "stat": "magDef",
+        "value": 40
+      },
+      {
+        "stat": "control",
+        "value": 20
+      }
+    ]
   },
   {
     "id": 28,
     "iconId": "earth_02",
-    "name": "大地の怒り",
-    "description": "地面に魔力を込めた一撃を放ち、局地的な地震を起こす。",
-    "category": "攻撃",
-    "element": "土",
-    "bonus": { "physAtk": 5, "magAtk": 5 },
-    "requirements": [ { "stat": "magAtk", "value": 35 }, { "stat": "physAtk", "value": 20 } ]
+    "name": "落雷の怒り",
+    "description": "魔力を込めた一撃で空気を震わせ、落雷を呼び起こす。",
+    "category": "戦闘",
+    "rarity": "★★★",
+    "mpCost": 10,
+    "element": "雷",
+    "bonus": {
+      "magAtk": 20,
+      "physAtk": 10
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 30
+      },
+      {
+        "stat": "physAtk",
+        "value": 30
+      }
+    ]
   },
   {
     "id": 29,
     "iconId": "ice_02",
-    "name": "氷の鎧",
-    "description": "極低温の冷気で全身を包み、物理と魔法の双方を軽減する。",
-    "category": "防御",
-    "element": "氷",
-    "bonus": { "magDef": 10 },
-    "requirements": [ { "stat": "magDef", "value": 30 }, { "stat": "physDef", "value": 10 } ]
+    "name": "水の衣",
+    "description": "流水で全身を包み、物理と魔法の双方を軽減する。",
+    "category": "戦闘",
+    "rarity": "★★★",
+    "mpCost": 10,
+    "element": "水",
+    "bonus": {
+      "physDef": 15,
+      "magDef": 15
+    },
+    "requirements": [
+      {
+        "stat": "magDef",
+        "value": 35
+      }
+    ]
   },
   {
     "id": 30,
-    "iconId": "thunder_02",
-    "name": "電光石火",
-    "description": "雷の速度で敵の死角に回り込む。運が良ければ完全に攻撃を回避できる。",
-    "category": "パッシブ",
-    "element": "雷",
-    "bonus": { "agility": 15 },
-    "requirements": [ { "stat": "agility", "value": 40 }, { "stat": "luck", "value": 30 } ]
+    "iconId": "speed_03",
+    "name": "縮地",
+    "description": "空間を削り取るかのような歩法。認識できない速度で間合いをゼロにする。",
+    "category": "非戦闘",
+    "rarity": "★★★",
+    "element": "無",
+    "bonus": {
+      "agility": 25
+    },
+    "requirements": [
+      {
+        "stat": "agility",
+        "value": 50
+      }
+    ]
   },
   {
     "id": 31,
-    "iconId": "blood_02",
-    "name": "吸魂",
-    "description": "相手の魔力だけでなく、魂の欠片ごと啜り上げるえげつない技。",
-    "category": "攻撃",
-    "element": "闇",
-    "bonus": { "mp": 20, "magAtk": 5 },
-    "requirements": [ { "stat": "magAtk", "value": 40 }, { "stat": "cruelty", "value": 35 } ]
+    "iconId": "phys_05",
+    "name": "反逆の狼煙",
+    "description": "自身の体力が低い時ほど、物理攻撃力が爆発的に上昇する起死回生の技。",
+    "category": "非戦闘",
+    "rarity": "★★★",
+    "element": "無",
+    "bonus": {
+      "physAtk": 20,
+      "responsibility": 10
+    },
+    "requirements": [
+      {
+        "stat": "responsibility",
+        "value": 40
+      }
+    ]
   },
   {
     "id": 32,
-    "iconId": "buff_04",
-    "name": "魅了",
-    "description": "抗いがたい魅力で相手を虜にし、戦意を喪失させる。",
-    "category": "変化",
+    "iconId": "def_02",
+    "name": "痛覚遮断",
+    "description": "脳の痛覚を魔力で強制的に遮断し、限界を超えて戦い続ける。",
+    "category": "非戦闘",
+    "rarity": "★★★",
     "element": "無",
-    "bonus": { "control": 10 },
-    "requirements": [ { "stat": "charisma", "value": 40 }, { "stat": "luck", "value": 20 } ]
+    "bonus": {
+      "hp": 30,
+      "physDef": 10
+    },
+    "requirements": [
+      {
+        "stat": "hp",
+        "value": 50
+      },
+      {
+        "stat": "cruelty",
+        "value": 30
+      }
+    ]
   },
   {
     "id": 33,
-    "iconId": "holy_02",
-    "name": "指揮官の威厳",
-    "description": "立っているだけで配下を鼓舞し、軍勢の士気を高めるパッシブスキル。",
-    "category": "パッシブ",
+    "iconId": "holy_03",
+    "name": "暴君の支配",
+    "description": "恐怖によって配下を支配し、限界以上の力を引き出させる。",
+    "category": "非戦闘",
+    "rarity": "★★★",
     "element": "無",
-    "bonus": { "leadership": 10, "charisma": 5 },
-    "requirements": [ { "stat": "leadership", "value": 40 }, { "stat": "responsibility", "value": 30 } ]
+    "bonus": {
+      "control": 25,
+      "leadership": 10
+    },
+    "requirements": [
+      {
+        "stat": "control",
+        "value": 40
+      },
+      {
+        "stat": "cruelty",
+        "value": 20
+      }
+    ]
   },
   {
     "id": 34,
-    "iconId": "def_03",
-    "name": "鋼鉄の肉体",
-    "description": "度重なる戦いで鍛え上げられた強靭な肉体。圧倒的なタフネスを得る。",
-    "category": "パッシブ",
+    "iconId": "magic_03",
+    "name": "魔導書の知識",
+    "description": "古代の魔法知識を解読し、自身の魔法の威力を底上げする。",
+    "category": "非戦闘",
+    "rarity": "★★★",
     "element": "無",
-    "bonus": { "physDef": 15 },
-    "requirements": [ { "stat": "physDef", "value": 40 }, { "stat": "hp", "value": 50 } ]
+    "bonus": {
+      "magAtk": 25
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 50
+      }
+    ]
   },
   {
     "id": 35,
-    "iconId": "magic_02",
-    "name": "魔導結界",
-    "description": "高度な魔力操作により、常時発動型の防御結界を身に纏う。",
-    "category": "パッシブ",
+    "iconId": "buff_01",
+    "name": "第六感",
+    "description": "直感が研ぎ澄まされ、危機を未然に察知したり好機を逃さないようになる。",
+    "category": "非戦闘",
+    "rarity": "★★★",
     "element": "無",
-    "bonus": { "magDef": 15 },
-    "requirements": [ { "stat": "magDef", "value": 40 }, { "stat": "mp", "value": 50 } ]
+    "bonus": {
+      "luck": 20
+    },
+    "requirements": [
+      {
+        "stat": "luck",
+        "value": 40
+      }
+    ]
   },
   {
     "id": 36,
-    "iconId": "phys_05",
-    "name": "豪星撃",
-    "description": "俊敏な動きから繰り出される、星を砕くほどの重い一撃。",
-    "category": "攻撃",
+    "iconId": "buff_02",
+    "name": "狂戦士化",
+    "description": "理性を捨てて闘争本能を剥き出しにし、防御を捨てて攻撃に特化する。",
+    "category": "戦闘",
+    "rarity": "★★★",
+    "mpCost": 10,
     "element": "無",
-    "bonus": { "physAtk": 15 },
-    "requirements": [ { "stat": "physAtk", "value": 50 }, { "stat": "agility", "value": 20 } ]
+    "bonus": {
+      "physAtk": 30,
+      "physDef": -10,
+      "magDef": -10
+    },
+    "requirements": [
+      {
+        "stat": "cruelty",
+        "value": 40
+      }
+    ]
   },
   {
     "id": 37,
-    "iconId": "thunder_03",
-    "name": "漆黒の雷",
-    "description": "闇の魔力を帯びた黒い稲妻。対象を焼き焦がし、麻痺させる。",
-    "category": "攻撃",
-    "element": "闇",
-    "bonus": { "magAtk": 15 },
-    "requirements": [ { "stat": "magAtk", "value": 50 }, { "stat": "cruelty", "value": 40 } ]
+    "iconId": "buff_03",
+    "name": "魔力覚醒",
+    "description": "隠された魔力の回路を開き、魔法力と魔法防御を同時に引き上げる。",
+    "category": "非戦闘",
+    "rarity": "★★★",
+    "element": "無",
+    "bonus": {
+      "magAtk": 15,
+      "magDef": 15
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 40
+      },
+      {
+        "stat": "magDef",
+        "value": 40
+      }
+    ]
   },
   {
     "id": 38,
-    "iconId": "dark_06",
-    "name": "支配者の証",
-    "description": "中級魔族として、他者を平伏させる絶対的な圧力を手に入れる。",
-    "category": "変化",
-    "element": "無",
-    "bonus": { "control": 15 },
-    "requirements": [ { "stat": "control", "value": 50 }, { "stat": "charisma", "value": 30 } ]
+    "iconId": "thunder_02",
+    "name": "雷撃の槍",
+    "description": "圧縮した雷を槍の形にして投擲する。貫通力が高く敵を痺れさせる。",
+    "category": "戦闘",
+    "rarity": "★★★",
+    "mpCost": 10,
+    "element": "雷",
+    "bonus": {
+      "magAtk": 25
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 50
+      }
+    ]
   },
   {
     "id": 39,
-    "iconId": "dark_07",
-    "name": "悪魔の取引",
-    "description": "少しの代償を払って、圧倒的に有利な状況（運）を引き寄せる狡猾な技。",
-    "category": "変化",
-    "element": "闇",
-    "bonus": { "luck": 15, "cruelty": 5 },
-    "requirements": [ { "stat": "luck", "value": 40 }, { "stat": "responsibility", "value": 20 } ]
+    "iconId": "wind_03",
+    "name": "真空刃",
+    "description": "腕を振るって空気を切り裂き、目に見えない風の刃を飛ばす。",
+    "category": "戦闘",
+    "rarity": "★★★",
+    "mpCost": 10,
+    "element": "無",
+    "bonus": {
+      "physAtk": 15,
+      "agility": 15
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 35
+      },
+      {
+        "stat": "agility",
+        "value": 35
+      }
+    ]
   },
   {
     "id": 40,
-    "iconId": "blood_03",
-    "name": "血の盟約",
-    "description": "配下と命を共有し、自身の耐久力を大幅に底上げする非道な契約。",
-    "category": "パッシブ",
-    "element": "血",
-    "bonus": { "leadership": 10, "hp": 20 },
-    "requirements": [ { "stat": "hp", "value": 80 }, { "stat": "leadership", "value": 30 } ]
+    "iconId": "blood_02",
+    "name": "闇の盟約",
+    "description": "配下の魂を縛り、自身の耐久力を大幅に底上げする非道な契約。",
+    "category": "戦闘",
+    "rarity": "★★★",
+    "mpCost": 10,
+    "element": "闇",
+    "bonus": {
+      "hp": 40,
+      "physDef": 20
+    },
+    "requirements": [
+      {
+        "stat": "control",
+        "value": 50
+      },
+      {
+        "stat": "cruelty",
+        "value": 40
+      }
+    ]
   },
   {
     "id": 41,
     "iconId": "fire_03",
-    "name": "業火",
-    "description": "地獄の底から召喚した消えることのない炎で、敵を灰にする。",
-    "category": "攻撃",
+    "name": "業火の嵐",
+    "description": "周囲一帯を焼け野原にする大規模な炎の魔法。敵味方問わず焼き尽くす。",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
     "element": "火",
-    "bonus": { "magAtk": 20 },
-    "requirements": [ { "stat": "magAtk", "value": 60 } ]
+    "bonus": {
+      "magAtk": 30,
+      "cruelty": 10
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 60
+      },
+      {
+        "stat": "cruelty",
+        "value": 50
+      }
+    ]
   },
   {
     "id": 42,
-    "iconId": "phys_06",
-    "name": "破壊衝動",
-    "description": "内なる暴力性を完全に解放し、目に映るもの全てを壊す。",
-    "category": "変化",
-    "element": "無",
-    "bonus": { "physAtk": 20 },
-    "requirements": [ { "stat": "physAtk", "value": 60 }, { "stat": "cruelty", "value": 50 } ]
+    "iconId": "ice_03",
+    "name": "絶対障壁",
+    "description": "魔力で作り出した分厚い氷の壁。あらゆる物理攻撃を完全に遮断する。",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
+    "element": "水",
+    "bonus": {
+      "physDef": 35
+    },
+    "requirements": [
+      {
+        "stat": "magDef",
+        "value": 60
+      },
+      {
+        "stat": "physDef",
+        "value": 40
+      }
+    ]
   },
   {
     "id": 43,
-    "iconId": "dark_08",
-    "name": "暴君の覇気",
-    "description": "君臨する者としての圧倒的なカリスマ。ただそこに居るだけで畏怖される。",
-    "category": "パッシブ",
-    "element": "無",
-    "bonus": { "charisma": 15 },
-    "requirements": [ { "stat": "charisma", "value": 50 }, { "stat": "control", "value": 40 }, { "stat": "cruelty", "value": 30 } ]
+    "iconId": "dark_04",
+    "name": "死の宣告",
+    "description": "対象に死の呪いを刻み込み、一定時間後に絶大な闇属性ダメージを与える。",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
+    "element": "闇",
+    "bonus": {
+      "magAtk": 20,
+      "luck": 10
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 70
+      },
+      {
+        "stat": "control",
+        "value": 40
+      }
+    ]
   },
   {
     "id": 44,
-    "iconId": "def_04",
-    "name": "絶対防壁",
-    "description": "物理・魔法の両方を遮断する強固なシールドを展開する。",
-    "category": "防御",
+    "iconId": "phys_06",
+    "name": "王者の風格",
+    "description": "ただそこに立つだけで周囲を圧倒するカリスマ性。配下の士気が最高潮に達する。",
+    "category": "非戦闘",
+    "rarity": "★★★★",
     "element": "無",
-    "bonus": { "physDef": 10, "magDef": 10 },
-    "requirements": [ { "stat": "physDef", "value": 50 }, { "stat": "magDef", "value": 50 } ]
+    "bonus": {
+      "charisma": 30,
+      "leadership": 20
+    },
+    "requirements": [
+      {
+        "stat": "charisma",
+        "value": 60
+      }
+    ]
   },
   {
     "id": 45,
-    "iconId": "speed_03",
-    "name": "神速",
-    "description": "目で追えないほどの超スピードで動き回り、戦場を支配する。",
-    "category": "パッシブ",
+    "iconId": "speed_04",
+    "name": "無音殺法",
+    "description": "完全に気配を絶ち、敵が認識する前に致命傷を与える究極の暗殺術。",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
     "element": "無",
-    "bonus": { "agility": 20 },
-    "requirements": [ { "stat": "agility", "value": 60 }, { "stat": "luck", "value": 40 } ]
+    "bonus": {
+      "physAtk": 30,
+      "agility": 20
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 60
+      },
+      {
+        "stat": "agility",
+        "value": 60
+      }
+    ]
   },
   {
     "id": 46,
     "iconId": "buff_05",
     "name": "奇跡の悪運",
     "description": "どんな絶体絶命のピンチでも、なぜか生き残ってしまう悪運の極致。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★",
     "element": "無",
-    "bonus": { "luck": 25 },
-    "requirements": [ { "stat": "luck", "value": 60 } ]
+    "bonus": {
+      "luck": 25
+    },
+    "requirements": [
+      {
+        "stat": "luck",
+        "value": 60
+      }
+    ]
   },
   {
     "id": 47,
     "iconId": "blood_04",
     "name": "魂の略奪",
     "description": "敵の魔力を根こそぎ奪い、自身のものへと変換する上級魔法。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
     "element": "闇",
-    "bonus": { "mp": 30, "magAtk": 5 },
-    "requirements": [ { "stat": "magAtk", "value": 70 }, { "stat": "control", "value": 50 } ]
+    "bonus": {
+      "mp": 30,
+      "magAtk": 5
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 70
+      },
+      {
+        "stat": "control",
+        "value": 50
+      }
+    ]
   },
   {
     "id": 48,
     "iconId": "holy_03",
     "name": "将軍の采配",
     "description": "軍勢の特性を完全に把握し、最適な布陣を敷く。部隊の戦闘力が底上げされる。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★",
     "element": "無",
-    "bonus": { "leadership": 20 },
-    "requirements": [ { "stat": "leadership", "value": 60 }, { "stat": "responsibility", "value": 50 } ]
+    "bonus": {
+      "leadership": 20
+    },
+    "requirements": [
+      {
+        "stat": "leadership",
+        "value": 60
+      },
+      {
+        "stat": "responsibility",
+        "value": 50
+      }
+    ]
   },
   {
     "id": 49,
-    "iconId": "magic_03",
-    "name": "魔界の儀式",
-    "description": "大量の魔力と少しの運を贄にして、超常的な魔法を引き起こす。",
-    "category": "変化",
-    "element": "闇",
-    "bonus": { "magAtk": 25 },
-    "requirements": [ { "stat": "magAtk", "value": 50 }, { "stat": "mp", "value": 100 }, { "stat": "luck", "value": 30 } ]
+    "iconId": "magic_04",
+    "name": "魔界の叡智",
+    "description": "魔界の真理に触れ、魔法の消費を抑えつつ威力を高める極意。",
+    "category": "非戦闘",
+    "rarity": "★★★★",
+    "element": "無",
+    "bonus": {
+      "magAtk": 20,
+      "mp": 20
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 80
+      }
+    ]
   },
   {
     "id": 50,
-    "iconId": "buff_06",
-    "name": "中級魔族の誇り",
-    "description": "一定の地位を築いた者だけが持つ矜持。基礎的な能力が総合的に上昇する。",
-    "category": "パッシブ",
+    "iconId": "phys_07",
+    "name": "不屈の闘志",
+    "description": "何度倒されても立ち上がる、底知れぬ責任感と執念。",
+    "category": "非戦闘",
+    "rarity": "★★★★",
     "element": "無",
-    "bonus": { "physAtk": 10, "magAtk": 10, "hp": 50 },
-    "requirements": [ { "stat": "physAtk", "value": 50 }, { "stat": "magAtk", "value": 50 }, { "stat": "charisma", "value": 50 } ]
+    "bonus": {
+      "hp": 50,
+      "responsibility": 20
+    },
+    "requirements": [
+      {
+        "stat": "responsibility",
+        "value": 60
+      },
+      {
+        "stat": "hp",
+        "value": 80
+      }
+    ]
   },
   {
     "id": 51,
     "iconId": "fire_03",
     "name": "獄炎の壁",
     "description": "触れる者すべてを灰にする地獄の炎で壁を作り出す。",
-    "category": "防御",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
     "element": "火",
-    "bonus": { "magDef": 25, "magAtk": 10 },
-    "requirements": [ { "stat": "magAtk", "value": 80 }, { "stat": "control", "value": 40 } ]
+    "bonus": {
+      "magDef": 25,
+      "magAtk": 10
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 80
+      },
+      {
+        "stat": "control",
+        "value": 40
+      }
+    ]
   },
   {
     "id": 52,
     "iconId": "dark_06",
     "name": "魂の重圧",
     "description": "周囲の空間を魔力で歪め、敵の動きを極端に鈍らせる。",
-    "category": "変化",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
     "element": "闇",
-    "bonus": { "physDef": 20, "control": 15 },
-    "requirements": [ { "stat": "magAtk", "value": 70 }, { "stat": "cruelty", "value": 50 } ]
+    "bonus": {
+      "physDef": 20,
+      "control": 15
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 70
+      },
+      {
+        "stat": "cruelty",
+        "value": 50
+      }
+    ]
   },
   {
     "id": 53,
     "iconId": "phys_06",
     "name": "岩砕の剛腕",
     "description": "魔力で強化された圧倒的な筋力。岩山をも砕く一撃を放つ。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
     "element": "無",
-    "bonus": { "physAtk": 30 },
-    "requirements": [ { "stat": "physAtk", "value": 90 } ]
+    "bonus": {
+      "physAtk": 30
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 90
+      }
+    ]
   },
   {
     "id": 54,
     "iconId": "speed_04",
     "name": "残像移動",
     "description": "残像を残すほどの超高速移動。敵の攻撃を完全に置き去りにする。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★",
     "element": "無",
-    "bonus": { "agility": 35 },
-    "requirements": [ { "stat": "agility", "value": 85 } ]
+    "bonus": {
+      "agility": 35
+    },
+    "requirements": [
+      {
+        "stat": "agility",
+        "value": 85
+      }
+    ]
   },
   {
     "id": 55,
     "iconId": "heal_02",
     "name": "魔族の自己再生",
     "description": "深い傷であっても瞬時に肉体を再生させる上位の治癒能力。",
-    "category": "回復",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
     "element": "闇",
-    "bonus": { "hp": 40, "physDef": 10 },
-    "requirements": [ { "stat": "hp", "value": 100 }, { "stat": "mp", "value": 50 } ]
+    "bonus": {
+      "hp": 40,
+      "physDef": 10
+    },
+    "requirements": [
+      {
+        "stat": "hp",
+        "value": 100
+      },
+      {
+        "stat": "mp",
+        "value": 50
+      }
+    ]
   },
   {
     "id": 56,
     "iconId": "holy_04",
     "name": "百人将の威厳",
     "description": "数多くの配下を従えるに足るカリスマ。言葉一つで軍を動かす。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★",
     "element": "無",
-    "bonus": { "leadership": 30, "charisma": 20 },
-    "requirements": [ { "stat": "leadership", "value": 80 }, { "stat": "responsibility", "value": 60 } ]
+    "bonus": {
+      "leadership": 30,
+      "charisma": 20
+    },
+    "requirements": [
+      {
+        "stat": "leadership",
+        "value": 80
+      },
+      {
+        "stat": "responsibility",
+        "value": 60
+      }
+    ]
   },
   {
     "id": 57,
     "iconId": "poison_03",
-    "name": "猛毒の沼",
-    "description": "周囲の地面を溶けるような猛毒の沼へと変える。",
-    "category": "攻撃",
-    "element": "毒",
-    "bonus": { "magAtk": 20, "cruelty": 15 },
-    "requirements": [ { "stat": "magAtk", "value": 100 }, { "stat": "cruelty", "value": 70 } ]
+    "name": "腐食の沼",
+    "description": "周囲の地面をすべてを溶かす強酸の沼へと変える。",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
+    "element": "水",
+    "bonus": {
+      "magAtk": 20,
+      "cruelty": 15
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 100
+      },
+      {
+        "stat": "cruelty",
+        "value": 70
+      }
+    ]
   },
   {
     "id": 58,
     "iconId": "ice_02",
-    "name": "絶対零度",
-    "description": "大気中の水分を一瞬で凍結させ、敵を氷漬けにする上位魔法。",
-    "category": "攻撃",
-    "element": "氷",
-    "bonus": { "magAtk": 35 },
-    "requirements": [ { "stat": "magAtk", "value": 120 } ]
+    "name": "大瀑布",
+    "description": "大気中の水分を一瞬で集め、敵を押し流す上位魔法。",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
+    "element": "水",
+    "bonus": {
+      "magAtk": 35
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 120
+      }
+    ]
   },
   {
     "id": 59,
     "iconId": "thunder_02",
     "name": "雷獣の咆哮",
     "description": "魔力で雷の獣を形作り、敵陣へと放つ。広範囲を麻痺させる。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★★★★",
+    "mpCost": 20,
     "element": "雷",
-    "bonus": { "magAtk": 25, "agility": 15 },
-    "requirements": [ { "stat": "magAtk", "value": 110 }, { "stat": "control", "value": 80 } ]
+    "bonus": {
+      "magAtk": 25,
+      "agility": 15
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 110
+      },
+      {
+        "stat": "control",
+        "value": 80
+      }
+    ]
   },
   {
     "id": 60,
     "iconId": "buff_04",
     "name": "悪魔の第六感",
     "description": "危険を本能的に察知する能力。運だけでなく生存本能が研ぎ澄まされる。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★",
     "element": "無",
-    "bonus": { "luck": 40 },
-    "requirements": [ { "stat": "luck", "value": 100 } ]
+    "bonus": {
+      "luck": 40
+    },
+    "requirements": [
+      {
+        "stat": "luck",
+        "value": 100
+      }
+    ]
   },
   {
     "id": 61,
     "iconId": "phys_07",
     "name": "空間断裂",
     "description": "極限まで高めた腕力と速度で、空間そのものを引き裂く一撃。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★★★★★",
+    "mpCost": 50,
     "element": "無",
-    "bonus": { "physAtk": 50, "magAtk": 10 },
-    "requirements": [ { "stat": "physAtk", "value": 150 }, { "stat": "agility", "value": 100 } ]
+    "bonus": {
+      "physAtk": 50,
+      "magAtk": 10
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 150
+      },
+      {
+        "stat": "agility",
+        "value": 100
+      }
+    ]
   },
   {
     "id": 62,
     "iconId": "def_03",
     "name": "金剛不壊",
     "description": "いかなる物理攻撃も跳ね返す、金剛石のように硬い肉体を得る。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★",
     "element": "無",
-    "bonus": { "physDef": 60 },
-    "requirements": [ { "stat": "physDef", "value": 150 }, { "stat": "hp", "value": 200 } ]
+    "bonus": {
+      "physDef": 60
+    },
+    "requirements": [
+      {
+        "stat": "physDef",
+        "value": 150
+      },
+      {
+        "stat": "hp",
+        "value": 200
+      }
+    ]
   },
   {
     "id": 63,
     "iconId": "magic_03",
     "name": "魔導の真髄",
     "description": "魔法の根源を理解し、少ない魔力で絶大な威力を引き出す。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★",
     "element": "無",
-    "bonus": { "mp": 80, "magDef": 30 },
-    "requirements": [ { "stat": "mp", "value": 150 }, { "stat": "responsibility", "value": 100 } ]
+    "bonus": {
+      "mp": 80,
+      "magDef": 30
+    },
+    "requirements": [
+      {
+        "stat": "mp",
+        "value": 150
+      },
+      {
+        "stat": "responsibility",
+        "value": 100
+      }
+    ]
   },
   {
     "id": 64,
     "iconId": "blood_02",
-    "name": "血の狂宴",
-    "description": "流れた血を媒介に自身の能力を極限まで高める狂気の術。",
-    "category": "変化",
-    "element": "血",
-    "bonus": { "physAtk": 40, "hp": 40, "cruelty": 30 },
-    "requirements": [ { "stat": "cruelty", "value": 120 }, { "stat": "hp", "value": 150 } ]
+    "name": "狂気の闇",
+    "description": "負の感情を媒介に自身の能力を極限まで高める狂気の術。",
+    "category": "戦闘",
+    "rarity": "★★★★★",
+    "mpCost": 50,
+    "element": "闇",
+    "bonus": {
+      "physAtk": 40,
+      "hp": 40,
+      "cruelty": 30
+    },
+    "requirements": [
+      {
+        "stat": "cruelty",
+        "value": 120
+      },
+      {
+        "stat": "hp",
+        "value": 150
+      }
+    ]
   },
   {
     "id": 65,
     "iconId": "dark_07",
     "name": "傀儡の糸",
     "description": "見えない魔力の糸で対象を縛り、完全に意のままに操る。",
-    "category": "変化",
+    "category": "戦闘",
+    "rarity": "★★★★★",
+    "mpCost": 50,
     "element": "闇",
-    "bonus": { "control": 50 },
-    "requirements": [ { "stat": "control", "value": 150 }, { "stat": "magAtk", "value": 120 } ]
+    "bonus": {
+      "control": 50
+    },
+    "requirements": [
+      {
+        "stat": "control",
+        "value": 150
+      },
+      {
+        "stat": "magAtk",
+        "value": 120
+      }
+    ]
   },
   {
     "id": 66,
     "iconId": "earth_02",
-    "name": "大地の怒り",
-    "description": "地脈に干渉し、局地的な大地震を引き起こす絶大なる魔法。",
-    "category": "攻撃",
-    "element": "土",
-    "bonus": { "magAtk": 60 },
-    "requirements": [ { "stat": "magAtk", "value": 180 }, { "stat": "mp", "value": 120 } ]
+    "name": "空間崩壊",
+    "description": "空間そのものに干渉し、局地的な崩壊を引き起こす絶大なる魔法。",
+    "category": "戦闘",
+    "rarity": "★★★★★",
+    "mpCost": 50,
+    "element": "無",
+    "bonus": {
+      "magAtk": 60
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 180
+      },
+      {
+        "stat": "mp",
+        "value": 120
+      }
+    ]
   },
   {
     "id": 67,
     "iconId": "holy_05",
     "name": "千人将の器",
     "description": "千の軍勢を率いてなお余りある統率力。配下の士気は決して下がらない。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★",
     "element": "無",
-    "bonus": { "leadership": 60, "responsibility": 30 },
-    "requirements": [ { "stat": "leadership", "value": 180 }, { "stat": "charisma", "value": 100 } ]
+    "bonus": {
+      "leadership": 60,
+      "responsibility": 30
+    },
+    "requirements": [
+      {
+        "stat": "leadership",
+        "value": 180
+      },
+      {
+        "stat": "charisma",
+        "value": 100
+      }
+    ]
   },
   {
     "id": 68,
     "iconId": "speed_05",
     "name": "次元歩法",
     "description": "空間を跳躍するように移動する。もはや物理的な障壁は意味を成さない。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★",
     "element": "無",
-    "bonus": { "agility": 70 },
-    "requirements": [ { "stat": "agility", "value": 200 }, { "stat": "mp", "value": 100 } ]
+    "bonus": {
+      "agility": 70
+    },
+    "requirements": [
+      {
+        "stat": "agility",
+        "value": 200
+      },
+      {
+        "stat": "mp",
+        "value": 100
+      }
+    ]
   },
   {
     "id": 69,
     "iconId": "fire_04",
     "name": "煉獄の劫火",
     "description": "魂さえも焼き尽くす、魔界の深淵から呼び出した究極の炎。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★★★★★",
+    "mpCost": 50,
     "element": "火",
-    "bonus": { "magAtk": 70, "cruelty": 20 },
-    "requirements": [ { "stat": "magAtk", "value": 220 }, { "stat": "cruelty", "value": 150 } ]
+    "bonus": {
+      "magAtk": 70,
+      "cruelty": 20
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 220
+      },
+      {
+        "stat": "cruelty",
+        "value": 150
+      }
+    ]
   },
   {
     "id": 70,
     "iconId": "buff_05",
     "name": "覇王の星回り",
     "description": "世界そのものが自身の味方をしているかのような、異常な強運。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★",
     "element": "無",
-    "bonus": { "luck": 80 },
-    "requirements": [ { "stat": "luck", "value": 200 }, { "stat": "charisma", "value": 150 } ]
+    "bonus": {
+      "luck": 80
+    },
+    "requirements": [
+      {
+        "stat": "luck",
+        "value": 200
+      },
+      {
+        "stat": "charisma",
+        "value": 150
+      }
+    ]
   },
   {
     "id": 71,
     "iconId": "phys_08",
     "name": "星砕の鉄槌",
     "description": "振り下ろした拳から生じる衝撃波が、大地を粉砕し敵を塵に返す。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★★★★★★",
+    "mpCost": 100,
     "element": "無",
-    "bonus": { "physAtk": 90, "hp": 30 },
-    "requirements": [ { "stat": "physAtk", "value": 300 } ]
+    "bonus": {
+      "physAtk": 90,
+      "hp": 30
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 300
+      }
+    ]
   },
   {
     "id": 72,
     "iconId": "def_04",
     "name": "不落の魔城",
     "description": "自身の周囲に難攻不落の魔力城壁を展開する。一切の攻撃を遮断する。",
-    "category": "防御",
+    "category": "戦闘",
+    "rarity": "★★★★★★",
+    "mpCost": 100,
     "element": "無",
-    "bonus": { "magDef": 100, "physDef": 80 },
-    "requirements": [ { "stat": "magDef", "value": 300 }, { "stat": "physDef", "value": 250 } ]
+    "bonus": {
+      "magDef": 100,
+      "physDef": 80
+    },
+    "requirements": [
+      {
+        "stat": "magDef",
+        "value": 300
+      },
+      {
+        "stat": "physDef",
+        "value": 250
+      }
+    ]
   },
   {
     "id": 73,
     "iconId": "dark_08",
     "name": "深淵の恐怖",
     "description": "敵の精神に直接干渉し、最も恐れる幻影を永続的に見せ続ける。",
-    "category": "変化",
+    "category": "戦闘",
+    "rarity": "★★★★★★",
+    "mpCost": 100,
     "element": "闇",
-    "bonus": { "control": 80, "cruelty": 50 },
-    "requirements": [ { "stat": "control", "value": 250 }, { "stat": "cruelty", "value": 250 } ]
+    "bonus": {
+      "control": 80,
+      "cruelty": 50
+    },
+    "requirements": [
+      {
+        "stat": "control",
+        "value": 250
+      },
+      {
+        "stat": "cruelty",
+        "value": 250
+      }
+    ]
   },
   {
     "id": 74,
     "iconId": "ice_03",
-    "name": "氷河期",
-    "description": "一帯の気温を強制的に下げ、すべてを凍てつかせる大魔法。",
-    "category": "攻撃",
-    "element": "氷",
-    "bonus": { "magAtk": 100 },
-    "requirements": [ { "stat": "magAtk", "value": 320 }, { "stat": "mp", "value": 200 } ]
+    "name": "大海嘯",
+    "description": "一帯を水底に沈め、すべてを溺れさせる大魔法。",
+    "category": "戦闘",
+    "rarity": "★★★★★★",
+    "mpCost": 100,
+    "element": "水",
+    "bonus": {
+      "magAtk": 100
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 320
+      },
+      {
+        "stat": "mp",
+        "value": 200
+      }
+    ]
   },
   {
     "id": 75,
     "iconId": "holy_06",
     "name": "魔将の号令",
     "description": "魔族の軍団を率いる将としての絶対的な号令。全軍の能力が飛躍する。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★",
     "element": "無",
-    "bonus": { "leadership": 120, "charisma": 80 },
-    "requirements": [ { "stat": "leadership", "value": 350 } ]
+    "bonus": {
+      "leadership": 120,
+      "charisma": 80
+    },
+    "requirements": [
+      {
+        "stat": "leadership",
+        "value": 350
+      }
+    ]
   },
   {
     "id": 76,
     "iconId": "heal_03",
-    "name": "不死者の血統",
+    "name": "不死者の呪い",
     "description": "どれほど傷ついても死を拒絶する、呪いにも似た強靭な生命力。",
-    "category": "パッシブ",
-    "element": "血",
-    "bonus": { "hp": 150, "physDef": 40 },
-    "requirements": [ { "stat": "hp", "value": 400 }, { "stat": "responsibility", "value": 200 } ]
+    "category": "非戦闘",
+    "rarity": "★★★★★★",
+    "element": "闇",
+    "bonus": {
+      "hp": 150,
+      "physDef": 40
+    },
+    "requirements": [
+      {
+        "stat": "hp",
+        "value": 400
+      },
+      {
+        "stat": "responsibility",
+        "value": 200
+      }
+    ]
   },
   {
     "id": 77,
     "iconId": "thunder_03",
     "name": "神鳴の裁き",
     "description": "天を割り、対象に必殺の落雷を見舞う。回避不能の神速魔法。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★★★★★★",
+    "mpCost": 100,
     "element": "雷",
-    "bonus": { "magAtk": 120, "agility": 30 },
-    "requirements": [ { "stat": "magAtk", "value": 380 }, { "stat": "agility", "value": 250 } ]
+    "bonus": {
+      "magAtk": 120,
+      "agility": 30
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 380
+      },
+      {
+        "stat": "agility",
+        "value": 250
+      }
+    ]
   },
   {
     "id": 78,
     "iconId": "poison_04",
-    "name": "死の瘴気",
-    "description": "吸い込むだけで絶命する濃密な瘴気を撒き散らす。",
-    "category": "変化",
-    "element": "毒",
-    "bonus": { "cruelty": 100, "magAtk": 50 },
-    "requirements": [ { "stat": "cruelty", "value": 300 }, { "stat": "magAtk", "value": 300 } ]
+    "name": "死の暗黒",
+    "description": "触れるだけで絶命する濃密な暗黒を撒き散らす。",
+    "category": "戦闘",
+    "rarity": "★★★★★★",
+    "mpCost": 100,
+    "element": "闇",
+    "bonus": {
+      "cruelty": 100,
+      "magAtk": 50
+    },
+    "requirements": [
+      {
+        "stat": "cruelty",
+        "value": 300
+      },
+      {
+        "stat": "magAtk",
+        "value": 300
+      }
+    ]
   },
   {
     "id": 79,
     "iconId": "speed_06",
     "name": "時空超越",
     "description": "極限の速度はついに時間を置き去りにする。敵が動く前に全てが終わる。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★",
     "element": "無",
-    "bonus": { "agility": 150 },
-    "requirements": [ { "stat": "agility", "value": 450 } ]
+    "bonus": {
+      "agility": 150
+    },
+    "requirements": [
+      {
+        "stat": "agility",
+        "value": 450
+      }
+    ]
   },
   {
     "id": 80,
     "iconId": "magic_04",
     "name": "無限の魔力庫",
     "description": "自身の内側に広大な魔力の宇宙を構築する。魔力が尽きることはない。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★",
     "element": "無",
-    "bonus": { "mp": 200 },
-    "requirements": [ { "stat": "mp", "value": 400 }, { "stat": "magAtk", "value": 350 } ]
+    "bonus": {
+      "mp": 200
+    },
+    "requirements": [
+      {
+        "stat": "mp",
+        "value": 400
+      },
+      {
+        "stat": "magAtk",
+        "value": 350
+      }
+    ]
   },
   {
     "id": 81,
     "iconId": "phys_09",
     "name": "森羅万象砕き",
     "description": "物理法則を無視した破壊力。あらゆる概念すらも物理で粉砕する。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★★★★★★",
+    "mpCost": 100,
     "element": "無",
-    "bonus": { "physAtk": 180 },
-    "requirements": [ { "stat": "physAtk", "value": 600 } ]
+    "bonus": {
+      "physAtk": 180
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 600
+      }
+    ]
   },
   {
     "id": 82,
     "iconId": "def_05",
     "name": "神盾アイギス",
     "description": "神話に謳われる盾を魔力で再現。星の崩壊すら防ぎ切る。",
-    "category": "防御",
+    "category": "戦闘",
+    "rarity": "★★★★★★",
+    "mpCost": 100,
     "element": "無",
-    "bonus": { "physDef": 200, "hp": 100 },
-    "requirements": [ { "stat": "physDef", "value": 550 }, { "stat": "hp", "value": 500 } ]
+    "bonus": {
+      "physDef": 200,
+      "hp": 100
+    },
+    "requirements": [
+      {
+        "stat": "physDef",
+        "value": 550
+      },
+      {
+        "stat": "hp",
+        "value": 500
+      }
+    ]
   },
   {
     "id": 83,
     "iconId": "dark_09",
     "name": "絶対王政",
     "description": "自身の領域内にいる者すべての生殺与奪の権利を完全に掌握する。",
-    "category": "変化",
+    "category": "戦闘",
+    "rarity": "★★★★★★",
+    "mpCost": 100,
     "element": "闇",
-    "bonus": { "control": 200 },
-    "requirements": [ { "stat": "control", "value": 600 }, { "stat": "leadership", "value": 400 } ]
+    "bonus": {
+      "control": 200
+    },
+    "requirements": [
+      {
+        "stat": "control",
+        "value": 600
+      },
+      {
+        "stat": "leadership",
+        "value": 400
+      }
+    ]
   },
   {
     "id": 84,
     "iconId": "fire_05",
     "name": "終焉の超新星",
     "description": "星の死（超新星爆発）を疑似的に引き起こす、極大殲滅魔法。",
-    "category": "攻撃",
+    "category": "戦闘",
+    "rarity": "★★★★★★",
+    "mpCost": 100,
     "element": "火",
-    "bonus": { "magAtk": 220 },
-    "requirements": [ { "stat": "magAtk", "value": 650 }, { "stat": "mp", "value": 500 } ]
+    "bonus": {
+      "magAtk": 220
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 650
+      },
+      {
+        "stat": "mp",
+        "value": 500
+      }
+    ]
   },
   {
     "id": 85,
     "iconId": "holy_07",
     "name": "万人将の覇気",
     "description": "万の軍勢の頂点に立つ者の覇気。その存在だけで敵軍は戦意を喪失する。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★",
     "element": "無",
-    "bonus": { "leadership": 250, "charisma": 150 },
-    "requirements": [ { "stat": "leadership", "value": 700 } ]
+    "bonus": {
+      "leadership": 250,
+      "charisma": 150
+    },
+    "requirements": [
+      {
+        "stat": "leadership",
+        "value": 700
+      }
+    ]
   },
   {
     "id": 86,
     "iconId": "buff_06",
     "name": "運命の簒奪",
     "description": "世界が定めた運命すらも捻じ曲げ、自身に有利な事象のみを引き起こす。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★★",
     "element": "無",
-    "bonus": { "luck": 300 },
-    "requirements": [ { "stat": "luck", "value": 750 } ]
+    "bonus": {
+      "luck": 300
+    },
+    "requirements": [
+      {
+        "stat": "luck",
+        "value": 750
+      }
+    ]
   },
   {
     "id": 87,
     "iconId": "magic_05",
     "name": "真理の瞳",
     "description": "森羅万象の理を見通し、すべての魔法攻撃を無効化・反射する。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★★",
     "element": "無",
-    "bonus": { "magDef": 250, "magAtk": 50 },
-    "requirements": [ { "stat": "magDef", "value": 700 }, { "stat": "responsibility", "value": 400 } ]
+    "bonus": {
+      "magDef": 250,
+      "magAtk": 50
+    },
+    "requirements": [
+      {
+        "stat": "magDef",
+        "value": 700
+      },
+      {
+        "stat": "responsibility",
+        "value": 400
+      }
+    ]
   },
   {
     "id": 88,
     "iconId": "blood_03",
-    "name": "血の粛清",
-    "description": "対象の体内の血液を強制的に操作し、内側から破壊する残虐の極み。",
-    "category": "攻撃",
-    "element": "血",
-    "bonus": { "cruelty": 200, "physAtk": 50 },
-    "requirements": [ { "stat": "cruelty", "value": 650 }, { "stat": "control", "value": 500 } ]
+    "name": "体液の支配",
+    "description": "対象の体内の水分を強制的に操作し、内側から破壊する残虐の極み。",
+    "category": "戦闘",
+    "rarity": "★★★★★★★",
+    "mpCost": 200,
+    "element": "水",
+    "bonus": {
+      "cruelty": 200,
+      "physAtk": 50
+    },
+    "requirements": [
+      {
+        "stat": "cruelty",
+        "value": 650
+      },
+      {
+        "stat": "control",
+        "value": 500
+      }
+    ]
   },
   {
     "id": 89,
     "iconId": "speed_07",
     "name": "光速の支配者",
     "description": "光の速度を超越した領域。誰一人としてその姿を捉えることはできない。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★★",
     "element": "光",
-    "bonus": { "agility": 350 },
-    "requirements": [ { "stat": "agility", "value": 800 } ]
+    "bonus": {
+      "agility": 350
+    },
+    "requirements": [
+      {
+        "stat": "agility",
+        "value": 800
+      }
+    ]
   },
   {
     "id": 90,
     "iconId": "earth_03",
-    "name": "創世と崩壊",
-    "description": "大地そのものを創り変え、そして崩壊させる神の如き魔法。",
-    "category": "攻撃",
-    "element": "土",
-    "bonus": { "magAtk": 250, "physAtk": 100 },
-    "requirements": [ { "stat": "magAtk", "value": 850 } ]
+    "name": "光の創生",
+    "description": "光の力で万物を創り変え、そして崩壊させる神の如き魔法。",
+    "category": "戦闘",
+    "rarity": "★★★★★★★",
+    "mpCost": 200,
+    "element": "光",
+    "bonus": {
+      "magAtk": 250,
+      "physAtk": 100
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 850
+      }
+    ]
   },
   {
     "id": 91,
     "iconId": "phys_10",
     "name": "男爵の武威",
     "description": "悪魔男爵たる者の武威。一挙手一投足が天災に匹敵する。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★★",
     "element": "無",
-    "bonus": { "physAtk": 400, "hp": 200 },
-    "requirements": [ { "stat": "physAtk", "value": 1500 } ]
+    "bonus": {
+      "physAtk": 400,
+      "hp": 200
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 1500
+      }
+    ]
   },
   {
     "id": 92,
     "iconId": "magic_06",
     "name": "男爵の魔威",
     "description": "悪魔男爵たる者の魔威。その魔力は小国を容易く滅ぼす。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★★",
     "element": "無",
-    "bonus": { "magAtk": 400, "mp": 200 },
-    "requirements": [ { "stat": "magAtk", "value": 1500 } ]
+    "bonus": {
+      "magAtk": 400,
+      "mp": 200
+    },
+    "requirements": [
+      {
+        "stat": "magAtk",
+        "value": 1500
+      }
+    ]
   },
   {
     "id": 93,
     "iconId": "def_06",
     "name": "絶対不可侵領域",
     "description": "いかなる者の侵入も許さない、法則を書き換えた絶対防御。",
-    "category": "防御",
+    "category": "戦闘",
+    "rarity": "★★★★★★★",
+    "mpCost": 200,
     "element": "無",
-    "bonus": { "physDef": 500, "magDef": 500 },
-    "requirements": [ { "stat": "physDef", "value": 1200 }, { "stat": "magDef", "value": 1200 } ]
+    "bonus": {
+      "physDef": 500,
+      "magDef": 500
+    },
+    "requirements": [
+      {
+        "stat": "physDef",
+        "value": 1200
+      },
+      {
+        "stat": "magDef",
+        "value": 1200
+      }
+    ]
   },
   {
     "id": 94,
     "iconId": "holy_08",
     "name": "魔界の貴族",
     "description": "上位悪魔としての圧倒的な存在感。下位の者は姿を見ただけで服従する。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★★",
     "element": "無",
-    "bonus": { "charisma": 400, "leadership": 400 },
-    "requirements": [ { "stat": "charisma", "value": 1500 } ]
+    "bonus": {
+      "charisma": 400,
+      "leadership": 400
+    },
+    "requirements": [
+      {
+        "stat": "charisma",
+        "value": 1500
+      }
+    ]
   },
   {
     "id": 95,
     "iconId": "dark_10",
     "name": "万物支配の理",
     "description": "視界に入るすべての事象、生命のルールを己の意のままに書き換える。",
-    "category": "変化",
+    "category": "戦闘",
+    "rarity": "★★★★★★★",
+    "mpCost": 200,
     "element": "闇",
-    "bonus": { "control": 500 },
-    "requirements": [ { "stat": "control", "value": 1800 } ]
+    "bonus": {
+      "control": 500
+    },
+    "requirements": [
+      {
+        "stat": "control",
+        "value": 1800
+      }
+    ]
   },
   {
     "id": 96,
     "iconId": "poison_05",
     "name": "絶望の淵",
-    "description": "世界そのものに毒を流し込み、万物を徐々に死に至らしめる。",
-    "category": "攻撃",
-    "element": "毒",
-    "bonus": { "cruelty": 500, "magAtk": 300 },
-    "requirements": [ { "stat": "cruelty", "value": 1800 } ]
+    "description": "世界そのものに闇を流し込み、万物を徐々に死に至らしめる。",
+    "category": "戦闘",
+    "rarity": "★★★★★★★",
+    "mpCost": 200,
+    "element": "闇",
+    "bonus": {
+      "cruelty": 500,
+      "magAtk": 300
+    },
+    "requirements": [
+      {
+        "stat": "cruelty",
+        "value": 1800
+      }
+    ]
   },
   {
     "id": 97,
     "iconId": "speed_08",
     "name": "神の不在証明",
     "description": "あらゆる因果律から逃れ、どんな攻撃も「当たらなかった」ことに出きる。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★★",
     "element": "無",
-    "bonus": { "agility": 600, "luck": 300 },
-    "requirements": [ { "stat": "agility", "value": 1500 }, { "stat": "luck", "value": 1000 } ]
+    "bonus": {
+      "agility": 600,
+      "luck": 300
+    },
+    "requirements": [
+      {
+        "stat": "agility",
+        "value": 1500
+      },
+      {
+        "stat": "luck",
+        "value": 1000
+      }
+    ]
   },
   {
     "id": 98,
     "iconId": "heal_04",
-    "name": "生命の反逆",
-    "description": "死の概念を克服し、破壊された肉体と魂を強制的に再構築する。",
-    "category": "回復",
-    "element": "血",
-    "bonus": { "hp": 800, "responsibility": 200 },
-    "requirements": [ { "stat": "hp", "value": 2000 }, { "stat": "responsibility", "value": 1000 } ]
+    "name": "生命の奇跡",
+    "description": "死の概念を光で浄化し、破壊された肉体と魂を強制的に再構築する。",
+    "category": "戦闘",
+    "rarity": "★★★★★★★",
+    "mpCost": 200,
+    "element": "光",
+    "bonus": {
+      "hp": 800,
+      "responsibility": 200
+    },
+    "requirements": [
+      {
+        "stat": "hp",
+        "value": 2000
+      },
+      {
+        "stat": "responsibility",
+        "value": 1000
+      }
+    ]
   },
   {
     "id": 99,
     "iconId": "buff_07",
     "name": "森羅万象の愛",
     "description": "もはや運という概念を超え、世界そのものから愛され庇護される。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★★",
     "element": "無",
-    "bonus": { "luck": 800 },
-    "requirements": [ { "stat": "luck", "value": 2000 } ]
+    "bonus": {
+      "luck": 800
+    },
+    "requirements": [
+      {
+        "stat": "luck",
+        "value": 2000
+      }
+    ]
   },
   {
     "id": 100,
     "iconId": "dark_11",
     "name": "男爵の権能",
     "description": "悪魔男爵の証。あらゆるステータスと内面性が劇的に昇華される。",
-    "category": "パッシブ",
+    "category": "非戦闘",
+    "rarity": "★★★★★★★",
     "element": "無",
-    "bonus": { "physAtk": 150, "magAtk": 150, "leadership": 200, "charisma": 200, "control": 200 },
-    "requirements": [ { "stat": "physAtk", "value": 2000 }, { "stat": "magAtk", "value": 2000 }, { "stat": "leadership", "value": 2000 } ]
+    "bonus": {
+      "physAtk": 150,
+      "magAtk": 150,
+      "leadership": 200,
+      "charisma": 200,
+      "control": 200
+    },
+    "requirements": [
+      {
+        "stat": "physAtk",
+        "value": 2000
+      },
+      {
+        "stat": "magAtk",
+        "value": 2000
+      },
+      {
+        "stat": "leadership",
+        "value": 2000
+      }
+    ]
   }
 ]
