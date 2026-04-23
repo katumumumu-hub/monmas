@@ -367,5 +367,365 @@
         "itemDrops": []
       }
     ]
+  },
+  {
+    "id": 11,
+    "title": "迷宮の落とし穴",
+    "text": "魔王城の古い区画を歩いていると、突然足元の床が崩れ落ちた！",
+    "minRankId": 1,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "俊敏性で飛び退く",
+        "reqCondition": [{"stat": "agility", "value": 15}],
+        "disabledReason": "俊敏性が足りず、体が反応しきれない…",
+        "resultText": "間一髪で罠を回避し、仕掛けられていた宝箱をかすめ取った。",
+        "statChanges": {"agility": 5, "luck": 2},
+        "itemDrops": [ { "itemId": 1, "probability": 0.6, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "落ちながら壁を殴り壊す",
+        "reqCondition": [{"stat": "physAtk", "value": 20}],
+        "disabledReason": "壁を砕くほどの腕力がない…",
+        "resultText": "力任せに壁を粉砕し、強引に落下を止めた。少し痛手を負った。",
+        "statChanges": {"physAtk": 5, "hp": -5},
+        "itemDrops": [ { "itemId": 2, "probability": 0.5, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "諦めて底まで落ちる",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "泥だらけになって底に落ちたが、そこで奇妙な草を見つけた。",
+        "statChanges": {"hp": -10},
+        "itemDrops": [ { "itemId": 3, "probability": 1.0, "minRankId": 1 } ]
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "title": "人間の冒険者パーティ",
+    "text": "人間の駆け出し冒険者パーティが魔界に迷い込んできた。どう料理してやろうか？",
+    "minRankId": 2,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "正面から殲滅する",
+        "reqCondition": [{"stat": "physAtk", "value": 30}],
+        "disabledReason": "まともにやり合えば負けてしまいそうだ…",
+        "resultText": "圧倒的な武力で冒険者たちを散らし、戦利品を奪った。",
+        "statChanges": {"physAtk": 10, "cruelty": 10, "hp": -5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.6, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "幻覚で同士討ちさせる",
+        "reqCondition": [{"stat": "magAtk", "value": 25}, {"stat": "control", "value": 15}],
+        "disabledReason": "精巧な幻覚を見せるだけの魔力と支配力がない…",
+        "resultText": "恐怖の幻覚を見せて同士討ちさせた。魔族らしい陰湿な勝利だ。",
+        "statChanges": {"magAtk": 10, "control": 10, "cruelty": 5},
+        "itemDrops": [ { "itemId": 13, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "面倒なので隠れてやり過ごす",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "岩陰に隠れて通り過ぎるのを待った。安全だが魔族のプライドが傷ついた。",
+        "statChanges": {"agility": 5, "charisma": -5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "title": "魔界の闇市",
+    "text": "怪しげな品物が並ぶ闇市にやってきた。露店の店主が胡散臭い笑みを浮かべている。",
+    "minRankId": 1,
+    "weight": 90,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "店主を脅してタダで奪う",
+        "reqCondition": [{"stat": "cruelty", "value": 15}, {"stat": "charisma", "value": 15}],
+        "disabledReason": "凄みが足りず、店主を恐れさせられない…",
+        "resultText": "強烈な殺気を放つと、店主は震え上がって商品を差し出した。",
+        "statChanges": {"cruelty": 5, "luck": -2},
+        "itemDrops": [ { "itemId": 9, "probability": 0.5, "minRankId": 1 }, { "itemId": 4, "probability": 0.5, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "運任せで謎の福袋を買う",
+        "reqCondition": [{"stat": "luck", "value": 15}],
+        "disabledReason": "嫌な予感がする。今回はやめておこう…",
+        "resultText": "適当に選んだ袋の中から、そこそこ良いものが出てきた！",
+        "statChanges": {"luck": 5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "何も買わずに見るだけにする",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "商品を眺めるだけで立ち去った。相場を少し学んだ。",
+        "statChanges": {"magDef": 2},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "title": "反抗的な下級魔物",
+    "text": "配下のゴブリンたちが労働環境に不満を持ち、ストライキを起こしそうだ。",
+    "minRankId": 2,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "圧倒的な力で服従させる",
+        "reqCondition": [{"stat": "leadership", "value": 20}, {"stat": "physAtk", "value": 20}],
+        "disabledReason": "実力が足りず、反乱を鎮圧できそうにない…",
+        "resultText": "逆らう者を数名見せしめにし、恐怖で完全に支配した。",
+        "statChanges": {"leadership": 15, "control": 10, "cruelty": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "責任感をもって説得する",
+        "reqCondition": [{"stat": "responsibility", "value": 20}],
+        "disabledReason": "説得力のある言葉をかける自信がない…",
+        "resultText": "熱心に説教すると、魔物たちは心を打たれて再び働き始めた。",
+        "statChanges": {"responsibility": 15, "charisma": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "面倒なので見捨てる",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "勝手にしろと放置した。魔物たちはどこかへ去り、人望を失った。",
+        "statChanges": {"charisma": -5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "title": "血の泉",
+    "text": "洞窟の奥で、毒々しい赤色をした「血の泉」を発見した。",
+    "minRankId": 1,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "泉の水をがぶ飲みする",
+        "reqCondition": [{"stat": "hp", "value": 20}],
+        "disabledReason": "体力が低く、毒素に耐えきれず死にそうだ…",
+        "resultText": "猛烈な腹痛の後に、身体の奥底から強烈な活力が湧き上がった！",
+        "statChanges": {"hp": 30, "physAtk": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "魔法で成分を抽出する",
+        "reqCondition": [{"stat": "magAtk", "value": 15}],
+        "disabledReason": "精密な魔力操作ができず、抽出に失敗しそうだ…",
+        "resultText": "泉の魔力を安全に抽出し、自身の魔力へ変換した。",
+        "statChanges": {"magAtk": 10, "mp": 10},
+        "itemDrops": [ { "itemId": 1, "probability": 0.5, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "不気味なので立ち去る",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "直感に従い、泉には触れずに立ち去った。危険を回避した。",
+        "statChanges": {"luck": 2},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "title": "魔王軍の過酷な訓練",
+    "text": "上位魔族による地獄のような合同訓練が始まった。どう振る舞う？",
+    "minRankId": 2,
+    "weight": 90,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "最前線でしごかれる",
+        "reqCondition": [{"stat": "physDef", "value": 20}, {"stat": "hp", "value": 40}],
+        "disabledReason": "防御力と体力がなく、途中で倒れてしまいそうだ…",
+        "resultText": "傷だらけになりながらも耐え抜き、強靭な肉体を手に入れた。",
+        "statChanges": {"physDef": 15, "hp": -15, "physAtk": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "指揮官の補佐に回る",
+        "reqCondition": [{"stat": "leadership", "value": 25}, {"stat": "responsibility", "value": 15}],
+        "disabledReason": "部隊を動かす頭脳と責任感が足りない…",
+        "resultText": "裏方に回り部隊の統率を見事に支援した。評価が大きく上がった。",
+        "statChanges": {"leadership": 10, "responsibility": 10, "charisma": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "こっそりサボる",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "誰にもバレずに物陰で昼寝をした。体力は温存できたが成長はない。",
+        "statChanges": {"agility": 5, "hp": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "title": "魔界獣の暴走",
+    "text": "巨大な魔界獣が鎖を引きちぎり、居住区画へ向かって暴走を始めた！",
+    "minRankId": 3,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "強力な魔法で縛り上げる",
+        "reqCondition": [{"stat": "magAtk", "value": 40}, {"stat": "control", "value": 30}],
+        "disabledReason": "魔界獣を抑え込むほどの強大な魔力がない…",
+        "resultText": "魔法の鎖を生成して完全に沈静化させた。見事な手際だ。",
+        "statChanges": {"control": 15, "magAtk": 10, "leadership": 5},
+        "itemDrops": [ { "itemId": 13, "probability": 0.8, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "正面から力でねじ伏せる",
+        "reqCondition": [{"stat": "physAtk", "value": 50}],
+        "disabledReason": "あの巨体を殴り飛ばす物理的な力がない…",
+        "resultText": "剛腕で獣を殴り飛ばし、気絶させた。周囲の魔族が熱狂している。",
+        "statChanges": {"physAtk": 15, "cruelty": 5, "hp": -10},
+        "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "被害が出ないよう誘導する",
+        "reqCondition": [{"stat": "agility", "value": 30}, {"stat": "responsibility", "value": 20}],
+        "disabledReason": "逃げ足が遅く、獣の標的にされそうだ…",
+        "resultText": "身軽な動きで獣を挑発し、被害の出ない荒野へ誘導して事なきを得た。",
+        "statChanges": {"agility": 10, "responsibility": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "title": "悪魔の契約",
+    "text": "狡猾な高位悪魔が「魂を少し削れば力をやろう」と契約を持ちかけてきた。",
+    "minRankId": 1,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "寿命を差し出し力を得る",
+        "reqCondition": [{"stat": "hp", "value": 30}, {"stat": "mp", "value": 30}],
+        "disabledReason": "基礎となる生命力が足りず、契約で死んでしまう…",
+        "resultText": "生命力を代償に、強大な魔力を手に入れた。",
+        "statChanges": {"hp": -20, "mp": -20, "magAtk": 20, "magDef": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "逆に契約の穴を突く",
+        "reqCondition": [{"stat": "control", "value": 20}, {"stat": "luck", "value": 20}],
+        "disabledReason": "悪魔を騙すほどの頭脳と運を持ち合わせていない…",
+        "resultText": "契約書の裏の裏をかき、悪魔を騙し討ちにして力を一方的に奪い取った！",
+        "statChanges": {"control": 15, "luck": 5, "magAtk": 10},
+        "itemDrops": [ { "itemId": 17, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "きっぱりと拒否する",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "甘い誘惑には乗らなかった。自身の意志の強さを再確認した。",
+        "statChanges": {"responsibility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "title": "怪しい儀式の跡",
+    "text": "薄暗い森の奥で、生贄の血で描かれた未完成の魔法陣を見つけた。",
+    "minRankId": 2,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "儀式を完成させる",
+        "reqCondition": [{"stat": "magAtk", "value": 30}, {"stat": "cruelty", "value": 20}],
+        "disabledReason": "魔力も残虐性も足りず、儀式を引き継げない…",
+        "resultText": "自らの魔力を注ぎ込み儀式を完成させると、邪悪な恩恵を受けた。",
+        "statChanges": {"magAtk": 15, "cruelty": 15, "mp": -5},
+        "itemDrops": [ { "itemId": 13, "probability": 0.7, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "祭壇を破壊する",
+        "reqCondition": [{"stat": "physAtk", "value": 30}, {"stat": "responsibility", "value": 20}],
+        "disabledReason": "呪いが怖くて祭壇に攻撃できない…",
+        "resultText": "力任せに祭壇を粉砕した。後日、危険を未然に防いだとして評価された。",
+        "statChanges": {"responsibility": 15, "physAtk": 5},
+        "itemDrops": [ { "itemId": 2, "probability": 1.0, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "放置して立ち去る",
+        "reqCondition": [],
+        "disabledReason": "",
+        "resultText": "君子危うきに近寄らず。何も見なかったことにして去った。",
+        "statChanges": {"luck": 2},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "title": "ライバル魔族との決闘",
+    "text": "昇格を争うライバルの魔族から、一騎打ちの決闘を申し込まれた。",
+    "minRankId": 3,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "正々堂々と打ち倒す",
+        "reqCondition": [{"stat": "physAtk", "value": 40}, {"stat": "physDef", "value": 40}],
+        "disabledReason": "正面からの殴り合いでは勝機が見えない…",
+        "resultText": "激しい肉弾戦の末に勝利を収めた。周囲の魔族から称賛の声があがる。",
+        "statChanges": {"physAtk": 10, "charisma": 20, "hp": -15},
+        "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "卑劣な罠と毒で沈める",
+        "reqCondition": [{"stat": "control", "value": 30}, {"stat": "cruelty", "value": 30}],
+        "disabledReason": "罠を仕掛ける隙も冷酷さも持ち合わせていない…",
+        "resultText": "決闘前から罠を張り巡らせ、相手を完封した。悪魔らしい勝利だ。",
+        "statChanges": {"cruelty": 20, "luck": 5, "control": 10},
+        "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "言葉巧みに辞退させる",
+        "reqCondition": [{"stat": "charisma", "value": 30}],
+        "disabledReason": "相手を納得させるほどのカリスマ性がない…",
+        "resultText": "「争うのは我々の利益にならない」と丸め込み、戦わずに優位に立った。",
+        "statChanges": {"charisma": 10, "control": 5},
+        "itemDrops": []
+      }
+    ]
   }
 ]
