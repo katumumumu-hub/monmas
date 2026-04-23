@@ -148,6 +148,7 @@
             border: 1px solid var(--accent-gold);
             margin-top: 10px;
             display: none;
+            flex-shrink: 0; /* 詳細パネルを下部に固定し、縮まないようにする */
         }
 
         footer { 
@@ -175,9 +176,11 @@
         .btn-max { background: #ffaa00; color: #000; }
         .btn-reset { background: #cc3333; color: #fff; }
 
-        #event-screen, #result-screen, #status-screen, #skill-screen, #item-screen { overflow-y: auto; }
+        /* スキル画面のスクロールを外す（リストのみスクロールさせるため） */
+        #event-screen, #result-screen, #status-screen, #item-screen { overflow-y: auto; }
+        
         .event-box { background: var(--panel-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; }
-        h3 { color: var(--accent-gold); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
+        h3 { color: var(--accent-gold); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; flex-shrink: 0; }
         
         .item-row { background: rgba(30,15,50,0.8); padding: 12px; border-radius: 6px; margin-bottom: 10px; border: 1px solid #4a2b6e; }
         .item-rarity { font-size: 0.75rem; padding: 2px 6px; border-radius: 3px; margin-right: 6px; font-weight: bold; border: 1px solid currentColor;}
@@ -191,6 +194,29 @@
         .rarity-F { color: #555555; }
         .item-use-btn { background: #4a2b6e; padding: 6px 12px; font-size: 0.8rem; width: auto; border-radius: 4px; border: 1px solid #7c4bb3; margin-top: 8px;}
 
+        /* スキルタブ用スタイル */
+        .skill-tab-container {
+            display: flex; 
+            gap: 5px; 
+            margin-bottom: 10px; 
+            flex-shrink: 0;
+        }
+        .skill-tab {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.9rem;
+            background: rgba(30, 15, 45, 0.7);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .skill-tab.active {
+            background: var(--btn-bg);
+            border-color: var(--accent-gold);
+            font-weight: bold;
+        }
+
         /* 特訓画面のレイアウト修正 */
         .level-grid { 
             display: grid;
@@ -199,7 +225,6 @@
             overflow-y: auto; 
             padding: 5px 0;
             flex: 1;
-            /* スクロール幅を少し狭く調整 */
             width: 90%; 
             margin: 0 auto;
         }
@@ -242,8 +267,8 @@
         }
         .enemy-name { font-size: 1.2rem; font-weight: bold; color: #ff5555; margin-bottom: 5px; text-shadow: 0 0 5px #ff0000; }
         .enemy-image { 
-            max-width: 260px; /* さらに画像を拡大 */
-            max-height: 260px; /* さらに画像を拡大 */
+            max-width: 260px;
+            max-height: 260px;
             width: 100%;
             object-fit: contain; 
             margin-bottom: 10px; 
@@ -402,10 +427,16 @@
 
         <div id="skill-screen" class="screen">
             <h3>取得済みスキル</h3>
-            <div id="acquired-skills-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+            <div class="skill-tab-container">
+                <button id="tab-combat" class="skill-tab active" onclick="switchSkillTab('combat')">戦闘</button>
+                <button id="tab-noncombat" class="skill-tab" onclick="switchSkillTab('noncombat')">非戦闘</button>
+            </div>
+            <div id="acquired-skills-list" style="display:flex; flex-direction:column; gap:8px; flex:1; overflow-y:auto; padding-bottom:5px;"></div>
+            
             <div id="skill-detail-panel">
                 <div id="detail-skill-name" style="font-weight:bold; font-size:1.1rem; color:var(--accent-gold); border-bottom:1px solid var(--border-color); padding-bottom:5px;"></div>
                 <div id="detail-skill-bonus" style="color:var(--crystal-color); font-size:0.85rem; font-weight:bold; margin: 8px 0;"></div>
+                <div id="detail-skill-mp" style="color:#00aaff; font-size:0.85rem; font-weight:bold; margin-bottom: 8px; display:none;"></div>
                 <div id="detail-skill-desc" style="font-size:0.85rem; line-height:1.4;"></div>
             </div>
         </div>
@@ -506,7 +537,8 @@ let gameState = {
     items: {},
     clearedLevels: []
 };
-let currentSelectedLevel = null; // 選択中の特訓レベルを保持
+let currentSelectedLevel = null; 
+let currentSkillTab = 'combat'; // 現在選択されているスキルタブ
 
 async function init() {
     try {
@@ -582,7 +614,6 @@ function openTrainingScreen() {
     renderLevelGrid();
 }
 
-/* プレビュー更新用のヘルパー関数 */
 function updateMonsterPreview(lv) {
     const m = monsters.find(mon => mon.level === lv);
     const img = document.getElementById('monster-preview-img');
@@ -605,7 +636,6 @@ function renderLevelGrid() {
     const startBtn = document.getElementById('start-battle-btn');
     if(startBtn) startBtn.disabled = true;
 
-    // 開放されている最大レベルの計算（10の倍数を基準）
     let maxUnlocked = 10;
     if (gameState.clearedLevels) {
         for (let k = 10; k <= 100; k += 10) {
@@ -620,12 +650,10 @@ function renderLevelGrid() {
         btn.className = 'level-btn';
         
         if (i > maxUnlocked) {
-            // 未開放レベル
             btn.disabled = true;
             btn.innerText = '未開放';
             btn.style.fontSize = '0.75rem';
         } else {
-            // 開放済みレベル
             btn.innerText = `Lv.${i}`;
             
             if (gameState.clearedLevels && gameState.clearedLevels.includes(i)) {
@@ -648,20 +676,18 @@ function renderLevelGrid() {
                 if(btn.disabled) return;
                 
                 updateMonsterPreview(i);
-                // 他のボタンの選択状態をリセット
                 document.querySelectorAll('.level-btn').forEach(b => {
                     b.dataset.selected = "false";
                     b.style.boxShadow = "none";
                     b.style.borderColor = b.classList.contains('cleared') ? "#33cc66" : "var(--border-color)";
                 });
                 
-                // 選択したボタンのハイライト
                 btn.dataset.selected = "true";
                 btn.style.boxShadow = "0 0 8px var(--accent-gold)";
                 btn.style.borderColor = "var(--accent-gold)";
                 
                 currentSelectedLevel = i;
-                if(startBtn) startBtn.disabled = false; // 戦闘開始ボタンを有効化
+                if(startBtn) startBtn.disabled = false; 
             };
         }
 
@@ -926,9 +952,16 @@ function recoverCrystals() {
     }
 }
 
+function switchSkillTab(tab) {
+    playSE('click');
+    currentSkillTab = tab;
+    document.getElementById('tab-combat').classList.toggle('active', tab === 'combat');
+    document.getElementById('tab-noncombat').classList.toggle('active', tab === 'noncombat');
+    document.getElementById('skill-detail-panel').style.display = 'none'; // タブ切り替え時は詳細を隠す
+    checkAndRenderSkills();
+}
+
 function checkAndRenderSkills() {
-    const list = document.getElementById('acquired-skills-list');
-    list.innerHTML = '';
     let isNewSkillAcquired = false;
     skills.forEach(skill => {
         let meetsReq = true;
@@ -951,23 +984,44 @@ function checkAndRenderSkills() {
     });
     if (isNewSkillAcquired) { checkAndRenderSkills(); return; }
 
-    if (gameState.acquiredSkills.length === 0) {
-        list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">まだスキルを習得していません。</div>';
+    const list = document.getElementById('acquired-skills-list');
+    list.innerHTML = '';
+    
+    // タブによるフィルタリング
+    const filteredSkills = gameState.acquiredSkills.filter(skillId => {
+        const skill = skills.find(s => s.id === skillId);
+        if (!skill) return false;
+        if (currentSkillTab === 'combat' && skill.category === '戦闘') return true;
+        if (currentSkillTab === 'noncombat' && skill.category === '非戦闘') return true;
+        return false;
+    });
+
+    if (filteredSkills.length === 0) {
+        list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">まだ該当するスキルを習得していません。</div>';
         return;
     }
 
-    gameState.acquiredSkills.forEach(skillId => {
+    filteredSkills.forEach(skillId => {
         const skill = skills.find(s => s.id === skillId);
         if (skill) {
             const btn = document.createElement('button');
             btn.style.textAlign = 'left'; btn.style.padding = '12px'; btn.style.background = 'rgba(40,20,60,0.8)'; btn.style.marginBottom = '5px';
-            btn.innerText = `♦ ${skill.name}`;
+            btn.innerHTML = `<span style="color:var(--crystal-color); margin-right:5px;">${skill.rarity || ''}</span>${skill.name}`;
             btn.onclick = () => {
                 playSE('click');
                 document.getElementById('skill-detail-panel').style.display = 'block';
-                document.getElementById('detail-skill-name').innerText = skill.name;
+                document.getElementById('detail-skill-name').innerHTML = `<span style="color:var(--crystal-color); margin-right:5px;">${skill.rarity || ''}</span>${skill.name}`;
+                
                 const bonusText = Object.entries(skill.bonus || {}).map(([k, v]) => `${LABELS[k]} +${v}`).join(' / ');
                 document.getElementById('detail-skill-bonus').innerText = bonusText ? `【効果】 ${bonusText}` : '';
+                
+                const mpText = skill.mpCost ? `消費MP: ${skill.mpCost}` : '';
+                const mpEl = document.getElementById('detail-skill-mp');
+                if (mpEl) {
+                    mpEl.innerText = mpText;
+                    mpEl.style.display = mpText ? 'block' : 'none';
+                }
+                
                 document.getElementById('detail-skill-desc').innerText = skill.description;
             };
             list.appendChild(btn);
