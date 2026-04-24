@@ -1438,11 +1438,26 @@ function useItem(itemId) {
     if (!itemData || !itemData.effects) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     for (let k in itemData.effects) {
-        if (k === 'crystals') { gameState.crystals = Math.min(currentRank.maxCrystals, gameState.crystals + itemData.effects[k]);
+        if (k === 'crystals') { 
+            gameState.crystals = Math.min(currentRank.maxCrystals, gameState.crystals + itemData.effects[k]);
         } 
-        else if (gameState.stats[k] !== undefined) { gameState.stats[k] += itemData.effects[k];
+        else if (k === 'magAtk') {
+            const elemList = ['fireAtk', 'waterAtk', 'thunderAtk', 'darkAtk', 'lightAtk', 'nonElemAtk'];
+            let amount = itemData.effects[k];
+            let sign = Math.sign(amount);
+            let absAmount = Math.abs(amount);
+            for(let i=0; i<absAmount; i++) {
+                const randElem = elemList[Math.floor(Math.random() * elemList.length)];
+                if (gameState.stats[randElem] !== undefined) {
+                    gameState.stats[randElem] += sign;
+                }
+            }
+        }
+        else if (gameState.stats[k] !== undefined) { 
+            gameState.stats[k] += itemData.effects[k];
         } 
-        else if (gameState.innerTraits[k] !== undefined) { gameState.innerTraits[k] += itemData.effects[k];
+        else if (gameState.innerTraits[k] !== undefined) { 
+            gameState.innerTraits[k] += itemData.effects[k];
         }
     }
     gameState.items[itemId]--; playSE('use_item'); alert(`${itemData.name} を使用した！`); save(); updateAll(); 
