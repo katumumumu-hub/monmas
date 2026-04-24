@@ -66,8 +66,7 @@
             transform: rotate(45deg);
             transition: all 0.3s;
         }
-        .crystal-empty { background: #1a0a25; box-shadow: inset 0 0 5px #000;
-            transform: rotate(45deg) scale(0.8); opacity: 0.5; }
+        .crystal-empty { background: #1a0a25; box-shadow: inset 0 0 5px #000; transform: rotate(45deg) scale(0.8); opacity: 0.5; }
         #crystal-timer { font-size: 0.8rem; color: #a894c2; }
 
         main {
@@ -172,12 +171,13 @@
         footer button:last-child { border-right: none; }
         footer button:disabled { background: #1a082e; color: #555; opacity: 1; }
 
-        .dev-tools { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px; }
+        .dev-tools { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
         .dev-btn { padding: 4px 8px; font-size: 0.7rem; width: auto; border-radius: 4px; border:none; cursor: pointer; }
         .btn-max { background: #ffaa00; color: #000; }
         .btn-reset { background: #cc3333; color: #fff; }
+        .btn-ref { background: #44aaff; color: #fff; }
 
-        #event-screen, #result-screen, #status-screen, #item-screen { overflow-y: auto; }
+        #event-screen, #result-screen, #status-screen, #item-screen, #event-ref-screen { overflow-y: auto; }
         
         .event-box { background: var(--panel-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; }
         h3 { color: var(--accent-gold); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; flex-shrink: 0; }
@@ -222,14 +222,16 @@
         .level-btn:disabled { background: #111; color: #555; border-color: #333; cursor: not-allowed; }
 
         #monster-preview-container {
-            flex-shrink: 0; height: 140px; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5px; position: relative; overflow: hidden;
+            flex-shrink: 0;
+            height: 140px; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5px; position: relative; overflow: hidden;
         }
         #monster-preview-img { max-height: 100px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 0 10px rgba(209, 0, 255, 0.3)); }
         #monster-preview-info { font-size: 0.85rem; font-weight: bold; color: var(--accent-gold); margin-top: 5px; }
 
         .battle-ui { display: flex; flex-direction: column; height: 100%; gap: 10px; }
         .battle-enemy-area { 
-            flex: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border-radius: 8px; padding: 10px; border: 1px solid var(--border-color); position: relative;
+            flex: 2;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border-radius: 8px; padding: 10px; border: 1px solid var(--border-color); position: relative;
         }
         .enemy-name { font-size: 1.2rem; font-weight: bold; color: #ff5555; margin-bottom: 5px; text-shadow: 0 0 5px #ff0000; }
         .enemy-image { max-width: 260px; max-height: 260px; width: 100%; object-fit: contain; margin-bottom: 10px; transition: opacity 0.3s; }
@@ -249,7 +251,9 @@
         .battle-player-area { padding: 10px; background: rgba(30, 15, 45, 0.8); border-radius: 8px; border: 1px solid var(--border-color);}
         
         .battle-log-area { 
-            flex: 0.6; background: #000; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; overflow-y: auto; font-size: 0.85rem; line-height: 1.5; color: #d1c1e5; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            flex: 0.6;
+            background: #000; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; overflow-y: auto; font-size: 0.85rem; line-height: 1.5; color: #d1c1e5;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
         }
 
         @keyframes shake {
@@ -287,6 +291,7 @@
         <div class="dev-tools">
             <button class="dev-btn btn-max" onclick="playSE('click'); devMaxCrystals()">[開発] クリスタルMAX</button>
             <button class="dev-btn btn-reset" onclick="playSE('click'); devResetSave()">[開発] セーブ初期化</button>
+            <button class="dev-btn btn-ref" onclick="playSE('click'); showEventRefScreen()">[開発] イベント参照</button>
         </div>
         <div id="rank-name">読み込み中...</div>
         <div id="crystal-container"></div>
@@ -294,6 +299,7 @@
     </header>
 
     <main>
+    
         <div id="home-screen" class="screen active">
             <div class="rank-image-box" onclick="playRankVideo()">
                 <video id="rank-video" muted playsinline preload="metadata" src=""></video>
@@ -412,6 +418,15 @@
             <h3>所持アイテム</h3>
             <div id="inventory-list"></div>
         </div>
+
+        <div id="event-ref-screen" class="screen">
+            <h3 style="flex-shrink:0;">イベント一覧 (開発用)</h3>
+            <div id="event-ref-list" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:5px; margin-bottom:10px;"></div>
+            <div id="event-ref-detail" style="flex-shrink:0; height:45%; background:rgba(20,10,30,0.9); border:1px solid var(--accent-gold); border-radius:8px; padding:10px; overflow-y:auto;">
+                <div style="color:#aaa; text-align:center; margin-top:20px;">上のリストからイベントを選択してください</div>
+            </div>
+        </div>
+
     </main>
 
     <footer>
@@ -457,25 +472,33 @@ function playSE(type) {
     initAudio();
     switch(type) {
         case 'click':      
-            playTone(800, 'sine', 0.1, 0.05, 0); break;
+            playTone(800, 'sine', 0.1, 0.05, 0);
+            break;
         case 'error':      
-            playTone(150, 'sawtooth', 0.3, 0.05, 0); playTone(140, 'sawtooth', 0.4, 0.05, 0.15); break;
+            playTone(150, 'sawtooth', 0.3, 0.05, 0);
+            playTone(140, 'sawtooth', 0.4, 0.05, 0.15); break;
         case 'finish':     
-            playTone(523.25, 'sine', 0.3, 0.05, 0); playTone(659.25, 'sine', 0.3, 0.05, 0.1); playTone(783.99, 'sine', 0.4, 0.05, 0.2); break;
+            playTone(523.25, 'sine', 0.3, 0.05, 0);
+            playTone(659.25, 'sine', 0.3, 0.05, 0.1); playTone(783.99, 'sine', 0.4, 0.05, 0.2); break;
         case 'item':
-            playTone(1046.50, 'sine', 0.1, 0.05, 0); playTone(1318.51, 'sine', 0.2, 0.05, 0.1); break;
+            playTone(1046.50, 'sine', 0.1, 0.05, 0);
+            playTone(1318.51, 'sine', 0.2, 0.05, 0.1); break;
         case 'use_item':
-            playTone(600, 'sine', 0.4, 0.05, 0); playTone(800, 'triangle', 0.3, 0.03, 0.1); break;
+            playTone(600, 'sine', 0.4, 0.05, 0);
+            playTone(800, 'triangle', 0.3, 0.03, 0.1); break;
         case 'skill':      
-            playTone(880, 'square', 0.2, 0.03, 0); playTone(1108.73, 'square', 0.2, 0.03, 0.1); playTone(1318.51, 'square', 0.2, 0.03, 0.2); playTone(1760, 'square', 0.6, 0.03, 0.3); break;
+            playTone(880, 'square', 0.2, 0.03, 0);
+            playTone(1108.73, 'square', 0.2, 0.03, 0.1); playTone(1318.51, 'square', 0.2, 0.03, 0.2); playTone(1760, 'square', 0.6, 0.03, 0.3); break;
         case 'rankup':     
-            playTone(392.00, 'triangle', 0.2, 0.08, 0); playTone(392.00, 'triangle', 0.2, 0.08, 0.15); playTone(392.00, 'triangle', 0.2, 0.08, 0.30); playTone(523.25, 'triangle', 0.6, 0.08, 0.45); break;
+            playTone(392.00, 'triangle', 0.2, 0.08, 0);
+            playTone(392.00, 'triangle', 0.2, 0.08, 0.15); playTone(392.00, 'triangle', 0.2, 0.08, 0.30); playTone(523.25, 'triangle', 0.6, 0.08, 0.45); break;
         case 'hit':
             playTone(180, 'square', 0.1, 0.1, 0); break;
         case 'hit_heavy':
             playTone(100, 'sawtooth', 0.2, 0.15, 0); break;
         case 'defeat':
-            playTone(150, 'sawtooth', 0.2, 0.1, 0); playTone(100, 'sawtooth', 0.3, 0.1, 0.1); playTone(50, 'sawtooth', 0.6, 0.1, 0.3); break;
+            playTone(150, 'sawtooth', 0.2, 0.1, 0);
+            playTone(100, 'sawtooth', 0.3, 0.1, 0.1); playTone(50, 'sawtooth', 0.6, 0.1, 0.3); break;
     }
 }
 
@@ -690,7 +713,6 @@ async function startBattle(levelId) {
         const pStats = gameState.stats;
         const pInner = gameState.innerTraits;
         const pSubs = Math.max(0, (pStats.physAtk + pStats.magAtk + pStats.magDef + pStats.physDef + pStats.agility + pStats.luck) + pInner.leadership + pInner.charisma - pInner.cruelty);
-
         let battlePlayer = {
             name: "自分",
             isPlayer: true,
@@ -743,7 +765,6 @@ async function startBattle(levelId) {
             document.getElementById('battle-player-hp-bar').style.width = Math.max(0, (battlePlayer.hp / battlePlayer.maxHp) * 100) + '%';
             document.getElementById('battle-player-mp-text').innerText = `MP: ${Math.max(0, battlePlayer.mp)}/${battlePlayer.maxMp}`;
             document.getElementById('battle-player-mp-bar').style.width = Math.max(0, (battlePlayer.mp / battlePlayer.maxMp) * 100) + '%';
-
             const renderBuffs = (entity, elemId) => {
                 const el = document.getElementById(elemId);
                 el.innerHTML = '';
@@ -775,7 +796,6 @@ async function startBattle(levelId) {
         
         const executeTurn = async (attacker, defender) => {
             if(attacker.hp <= 0 || defender.hp <= 0) return;
-
             let isStunned = attacker.buffs.some(b => b.type === 'stun');
             if (isStunned) {
                 logArea.innerHTML += `${attacker.name}はスタンして動けない！<br>`;
@@ -805,15 +825,12 @@ async function startBattle(levelId) {
                 
                 let alignBonus = 1.0;
                 if (!attacker.isPlayer && attacker.element === selectedSkill.element && attacker.element !== '無') alignBonus = 1.5;
-
                 let ce = selectedSkill.combatEffect || { type: 'damage', target: 'enemy', statUsed: 'physAtk', multiplier: 1.0 };
                 let target = ce.target === 'self' ? attacker : defender;
-
                 if (ce.type === 'damage') {
                     let atkStat = attacker.getStat(ce.statUsed || 'physAtk');
                     let isMag = ['magAtk', 'fireAtk', 'waterAtk', 'thunderAtk', 'darkAtk', 'lightAtk', 'nonElemAtk'].includes(ce.statUsed);
                     let defStat = target.getStat(isMag ? 'magDef' : 'physDef');
-                    
                     let damage = Math.max(1, Math.floor(atkStat * ce.multiplier - defStat / 2));
                     
                     let elemMult = getElementMultiplier(selectedSkill.element, target.element);
@@ -823,7 +840,6 @@ async function startBattle(levelId) {
                     let isCrit = Math.random() < (luck * 0.01);
                     damage = Math.floor(damage * (0.85 + Math.random() * 0.3));
                     if (isCrit) damage = Math.floor(damage * 1.5);
-
                     if (attacker.isPlayer && monster.weaknessSkills && monster.weaknessSkills.includes(selectedSkill.id)) {
                         damage = Math.floor(damage * 1.5);
                         logArea.innerHTML += `<span style="color:#ffdf00;">弱点を突いた！</span> `;
@@ -836,7 +852,6 @@ async function startBattle(levelId) {
 
                     target.hp -= damage;
                     logArea.innerHTML += `${target.name}に <b>${damage}</b> のダメージ！<br>`;
-                    
                     if (attacker.isPlayer) {
                         playSE('hit');
                         imgEl.classList.remove('anim-shake');
@@ -876,14 +891,11 @@ async function startBattle(levelId) {
                 let damage = Math.max(1, Math.floor(pAtk - (def / 2)));
                 let luck = attacker.getStat('luck');
                 let isCrit = Math.random() < (luck * 0.01);
-                
                 damage = Math.floor(damage * (0.85 + Math.random() * 0.3));
                 if (isCrit) damage = Math.floor(damage * 1.5);
-
                 if (isCrit) logArea.innerHTML += `<span style="color:#ff3333; font-weight:bold;">痛恨の一撃！</span> `;
                 defender.hp -= damage;
                 logArea.innerHTML += `${atkName}の通常攻撃！ ${defName}に <b>${damage}</b> のダメージ！<br>`;
-                
                 if (attacker.isPlayer) {
                     playSE('hit');
                     imgEl.classList.remove('anim-shake');
@@ -911,7 +923,6 @@ async function startBattle(levelId) {
         let turn = 1;
         while(battlePlayer.hp > 0 && battleEnemy.hp > 0) {
             logArea.innerHTML += `<span style="color:#a894c2;">--- ターン ${turn} ---</span><br>`;
-            
             let pAgi = battlePlayer.getStat('agility');
             let eAgi = battleEnemy.getStat('agility');
             let isPlayerFirst = pAgi >= eAgi;
@@ -936,10 +947,8 @@ async function startBattle(levelId) {
         logArea.innerHTML += isWin ?
             `<span style="color:#00ffaa; font-weight:bold; font-size:1.1rem;">${enemyName} を打ち倒した！</span><br>` : `<span style="color:#ff5555; font-weight:bold; font-size:1.1rem;">${enemyName} に敗北した…</span><br>`;
         logArea.scrollTop = logArea.scrollHeight;
-
         endBtn.style.display = 'block';
         endBtn.onclick = () => endBattle(levelId, monster, isWin);
-
     } catch (e) {
         console.error("バトル展開エラー:", e);
         playSE('error');
@@ -1040,6 +1049,65 @@ function devResetSave() {
         localStorage.removeItem('devil_lord_save');
         location.reload();
     }
+}
+
+// 開発用イベント参照画面の表示
+function showEventRefScreen() {
+    showScreen('event-ref-screen');
+    const listArea = document.getElementById('event-ref-list');
+    listArea.innerHTML = '';
+    document.getElementById('event-ref-detail').innerHTML = '<div style="color:#aaa; text-align:center; margin-top:20px;">上のリストからイベントを選択してください</div>';
+
+    events.forEach(ev => {
+        const btn = document.createElement('button');
+        btn.style.textAlign = 'left';
+        btn.style.padding = '8px';
+        btn.style.background = 'rgba(40,20,60,0.8)';
+        btn.style.fontSize = '0.85rem';
+        btn.innerHTML = `<span style="color:var(--crystal-color);">[Rank ${ev.minRankId || 1}]</span> ID:${ev.id} ${ev.title}`;
+        btn.onclick = () => {
+            playSE('click');
+            renderEventRefDetail(ev);
+        };
+        listArea.appendChild(btn);
+    });
+}
+
+function renderEventRefDetail(ev) {
+    const detailArea = document.getElementById('event-ref-detail');
+    let html = `<div style="font-weight:bold; color:var(--accent-gold); margin-bottom:5px; border-bottom:1px solid var(--border-color); padding-bottom:5px;">ID:${ev.id} ${ev.title}</div>`;
+    html += `<div style="font-size:0.8rem; margin-bottom:10px;">${ev.text}</div>`;
+
+    let choices = Array.isArray(ev.choices) ? ev.choices : (ev.choices ? [ev.choices] : []);
+    choices.forEach((c, idx) => {
+        let conditions = Array.isArray(c.reqCondition) ? c.reqCondition : (c.reqCondition ? [c.reqCondition] : []);
+        let successRate = 100;
+        let reqTextParts = [];
+
+        for (let req of conditions) {
+            if (!req || !req.stat) continue;
+            const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : (gameState.innerTraits[req.stat] || 0);
+            const targetVal = req.value || 0;
+            reqTextParts.push(`${LABELS[req.stat]||req.stat}:${currentVal}/${targetVal}`);
+            if (targetVal > 0) {
+                let rate = Math.floor((currentVal / targetVal) * 100);
+                if (rate > 100) rate = 100;
+                if (rate < successRate) successRate = rate;
+            }
+        }
+        
+        let reqStr = reqTextParts.length > 0 ? `<div style="font-size:0.75rem; color:#aaa;">要求: ${reqTextParts.join(', ')}</div>` : '<div style="font-size:0.75rem; color:#aaa;">要求: なし</div>';
+        let rateColor = successRate >= 100 ? '#00ffaa' : (successRate >= 50 ? '#ffaa00' : '#ff5555');
+
+        html += `
+        <div style="background:rgba(0,0,0,0.5); padding:8px; border-radius:4px; border:1px solid #4a2b6e; margin-bottom:8px;">
+            <div style="font-size:0.85rem; font-weight:bold; margin-bottom:3px;">選択肢${idx+1}: ${c.text}</div>
+            ${reqStr}
+            <div style="font-size:0.9rem; font-weight:bold; color:${rateColor}; margin-top:3px;">成功率: ${successRate}%</div>
+        </div>`;
+    });
+
+    detailArea.innerHTML = html;
 }
 
 function recoverCrystals() {
@@ -1203,7 +1271,7 @@ function updateAll() {
     const video = document.getElementById('rank-video');
     const newSrc = currentRank.imagePath + "#t=0.001";
     if (video.src !== new URL(newSrc, document.baseURI).href) { video.src = newSrc;
-    video.muted = true; }
+        video.muted = true; }
     
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     if (nextRank) {
@@ -1270,22 +1338,24 @@ function startEvent() {
                 const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : (gameState.innerTraits[req.stat] || 0);
                 const targetVal = req.value || 0;
               
-                if (targetVal > 0) {
+                 if (targetVal > 0) {
                     let rate = Math.floor((currentVal / targetVal) * 100);
                     if (rate > 100) rate = 100;
                     if (rate < successRate) successRate = rate;
+  
                 }
             }
             
             b.innerHTML = (c.text || "選択肢") + ` <span style="font-size:0.8rem; color:#aaa;">(成功率: ${successRate}%)</span>`;
             
             b.onclick = () => {
+            
                 let oldRank = gameState.currentRankId;
                 let oldSkillCount = gameState.acquiredSkills.length;
                 document.getElementById('result-title').innerText = "イベント結果";
-                document.getElementById('change-log').innerHTML = ''; document.getElementById('skill-log').innerHTML = ''; document.getElementById('item-log').innerHTML = '';
+                document.getElementById('change-log').innerHTML = '';
+                document.getElementById('skill-log').innerHTML = ''; document.getElementById('item-log').innerHTML = '';
                 const isSuccess = Math.random() * 100 < successRate;
-                
                 if (isSuccess) {
                     document.getElementById('result-text').innerText = c.successText || c.resultText || "成功しました。";
                     
@@ -1305,6 +1375,7 @@ function startEvent() {
                                     }
                                 }
                                 for (let e in dist) {
+                        
                                     const signStr = dist[e] > 0 ? "+" : "";
                                     document.getElementById('change-log').innerHTML += `${LABELS[e] || e}: ${signStr}${dist[e]}<br>`;
                                 }
@@ -1323,8 +1394,10 @@ function startEvent() {
                         if (!drop || !drop.itemId) return;
                         if (gameState.currentRankId >= (drop.minRankId || 1)) {
                             if (Math.random() < (drop.probability !== undefined ? drop.probability : 1)) {
+  
                                 gameState.items[drop.itemId] = (gameState.items[drop.itemId] || 0) + 1;
                                 const itemData = items.find(i => i.id === drop.itemId);
+                         
                                 if (itemData) droppedItemNames.push(itemData.name);
                             }
                         }
@@ -1337,9 +1410,12 @@ function startEvent() {
                     let itemDropped = droppedItemNames.length > 0;
                     
                     if (!rankedUp) { 
-                        if (skilledUp) { playSE('skill'); } 
-                        else if (itemDropped) { playSE('item'); } 
-                        else { playSE('finish'); } 
+                        if (skilledUp) { playSE('skill');
+                        } 
+                        else if (itemDropped) { playSE('item');
+                        } 
+                        else { playSE('finish');
+                        } 
                     }
                     
                     if (skilledUp) {
@@ -1356,7 +1432,8 @@ function startEvent() {
                     document.getElementById('result-text').innerText = c.failText || "失敗しました…";
                     updateAll();
                     let rankedUp = (gameState.currentRankId > oldRank);
-                    if (!rankedUp) { playSE('error'); }
+                    if (!rankedUp) { playSE('error');
+                    }
                 }
                 
                 showScreen('result-screen');
@@ -1402,18 +1479,22 @@ function renderItems() {
                     <div class="item-row">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <div style="font-weight:bold; font-size:1.05rem; color:var(--text-color);">
+                   
                                 <span class="item-rarity rarity-${itemData.rarity}">${itemData.rarity}</span>${itemData.name}
                             </div>
                             <div style="color:var(--accent-gold); font-weight:bold;">所持: ${count}</div>
                         </div>
+  
                         <div style="font-size:0.8rem; color:#aaa; margin-top:6px; line-height:1.4;">${itemData.description}</div>
                         <div style="font-size:0.8rem; color:var(--crystal-color); font-weight:bold; margin-top:4px;">【効果】 ${effectsText}</div>
                         <button class="item-use-btn" onclick="useItem(${itemData.id})">使う</button>
+                   
                     </div>`;
             }
         }
     }
-    if (!hasItem) { list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>'; }
+    if (!hasItem) { list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>';
+    }
 }
 
 function useItem(itemId) {
