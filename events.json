@@ -10,35 +10,26 @@
         "choiceId": 1,
         "text": "力で分からせる",
         "reqCondition": [{"stat": "physAtk", "value": 5}],
-        "disabledReason": "物理攻撃力が足りず、返り討ちに合いそうだ…",
-        "resultText": "圧倒的な力で歩兵を黙らせた。周囲の端くれどもが畏怖の視線を送っている。",
+        "successText": "圧倒的な力で歩兵を黙らせた。周囲の端くれどもが畏怖の視線を送っている。",
+        "failText": "物理攻撃力が足りず、返り討ちにあってしまった…",
         "statChanges": {"physAtk": 5, "cruelty": 10, "charisma": 5},
         "itemDrops": [ { "itemId": 2, "probability": 0.4, "minRankId": 1 }, { "itemId": 9, "probability": 0.1, "minRankId": 2 } ]
       },
       {
         "choiceId": 2,
         "text": "魔法で驚かせる",
-        "reqCondition": [{"stat": "magAtk", "value": 5}],
-        "disabledReason": "魔法力が足りず、火花すら出ない…",
-        "resultText": "不気味な魔力を見せつけると、歩兵は逃げ出していった。",
-        "statChanges": {"magAtk": 5, "control": 10},
+        "reqCondition": [{"stat": "nonElemAtk", "value": 5}],
+        "successText": "不気味な魔力を見せつけると、歩兵は逃げ出していった。",
+        "failText": "魔法力が足りず、火花すら出なかった…",
+        "statChanges": {"nonElemAtk": 5, "control": 10},
         "itemDrops": [ { "itemId": 1, "probability": 0.5, "minRankId": 1 }, { "itemId": 13, "probability": 0.05, "minRankId": 2 } ]
       },
       {
         "choiceId": 3,
-        "text": "賄賂を渡して見逃してもらう",
-        "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "手持ちのアイテムを握らせて穏便に済ませた。少し悔しいが賢い選択だ。",
-        "statChanges": {"charisma": -2, "luck": 5},
-        "itemDrops": []
-      },
-      {
-        "choiceId": 4,
         "text": "騒ぎに乗じて酒を盗む",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "混乱に乗じて歩兵の腰から高級酒をかすめ取った。してやったりの気分だ。",
+        "successText": "混乱に乗じて歩兵の腰から高級酒をかすめ取った。してやったりの気分だ。",
+        "failText": "",
         "statChanges": {"control": 10, "cruelty": 5, "luck": 5},
         "itemDrops": [ { "itemId": 6, "probability": 0.5, "minRankId": 1 } ]
       }
@@ -53,30 +44,30 @@
     "choices": [
       {
         "choiceId": 1,
-        "text": "真面目に清掃する",
-        "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "隅々まで磨き上げた。上官からの信頼が少し上がったようだ。",
-        "statChanges": {"responsibility": 15, "leadership": 5},
-        "itemDrops": [ { "itemId": 5, "probability": 0.4, "minRankId": 1 }, { "itemId": 11, "probability": 0.2, "minRankId": 1 } ]
-      },
-      {
-        "choiceId": 2,
         "text": "光るものをくすねる",
         "reqCondition": [{"stat": "luck", "value": 10}],
-        "disabledReason": "運が悪く、監視の目があって手が出せない…",
-        "resultText": "監視の隙を突いて古びた魔導具を手に入れた！",
-        "statChanges": {"magAtk": 10, "cruelty": 5, "luck": -2},
+        "successText": "監視の隙を突いて古びた魔導具を手に入れた！",
+        "failText": "運が悪く、見つかってしまい没収された…",
+        "statChanges": {"nonElemAtk": 10, "cruelty": 5, "luck": -2},
         "itemDrops": [ { "itemId": 1, "probability": 0.8, "minRankId": 1 }, { "itemId": 13, "probability": 0.1, "minRankId": 2 } ]
       },
       {
-        "choiceId": 3,
+        "choiceId": 2,
         "text": "適当にサボる",
-        "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "物陰で昼寝をした。少し怒られたが、体力が回復した。",
+        "reqCondition": [{"stat": "agility", "value": 10}],
+        "successText": "上手く隠れて昼寝をした。体力が回復した。",
+        "failText": "見つかってしまい、こっぴどく怒られた…",
         "statChanges": {"hp": 15, "responsibility": -2},
         "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "真面目に清掃する",
+        "reqCondition": [],
+        "successText": "隅々まで磨き上げた。上官からの信頼が少し上がったようだ。",
+        "failText": "",
+        "statChanges": {"responsibility": 15, "leadership": 5},
+        "itemDrops": [ { "itemId": 5, "probability": 0.4, "minRankId": 1 }, { "itemId": 11, "probability": 0.2, "minRankId": 1 } ]
       }
     ]
   },
@@ -91,8 +82,8 @@
         "choiceId": 1,
         "text": "乱入して暴れまわる",
         "reqCondition": [{"stat": "physAtk", "value": 10}],
-        "disabledReason": "攻撃力が足りず、瞬殺されそうだ…",
-        "resultText": "闘技場に乱入し、見事に勝利を収めた！観客が熱狂している。",
+        "successText": "闘技場に乱入し、見事に勝利を収めた！観客が熱狂している。",
+        "failText": "攻撃力が足りず、瞬殺されてしまった…",
         "statChanges": {"physAtk": 5, "charisma": 10},
         "itemDrops": [ { "itemId": 14, "probability": 0.5, "minRankId": 1 } ]
       },
@@ -100,8 +91,8 @@
         "choiceId": 2,
         "text": "賭けに参加する",
         "reqCondition": [{"stat": "luck", "value": 10}],
-        "disabledReason": "運がなく、全財産を失いそうだ…",
-        "resultText": "見事に大穴を当ててアイテムを手に入れた！",
+        "successText": "見事に大穴を当ててアイテムを手に入れた！",
+        "failText": "運がなく、全財産を失ってしまった…",
         "statChanges": {"luck": 5},
         "itemDrops": [ { "itemId": 1, "probability": 0.5, "minRankId": 1 }, { "itemId": 11, "probability": 0.3, "minRankId": 2 } ]
       },
@@ -109,8 +100,8 @@
         "choiceId": 3,
         "text": "大人しく観戦だけする",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "血なまぐさい戦いを遠くから安全に眺めていた。戦いの知識が少し増えた。",
+        "successText": "血なまぐさい戦いを遠くから安全に眺めていた。戦いの知識が少し増えた。",
+        "failText": "",
         "statChanges": {"physDef": 2},
         "itemDrops": []
       }
@@ -127,8 +118,8 @@
         "choiceId": 1,
         "text": "取引に応じる",
         "reqCondition": [{"stat": "luck", "value": 15}],
-        "disabledReason": "騙されそうで手を出せない…",
-        "resultText": "運良く価値のある品を手に入れた！商人は舌打ちして去っていった。",
+        "successText": "運良く価値のある品を手に入れた！商人は舌打ちして去っていった。",
+        "failText": "まんまと騙され、ガラクタを押し付けられた…",
         "statChanges": {"luck": 5, "charisma": 5},
         "itemDrops": [ { "itemId": 11, "probability": 0.6, "minRankId": 1 }, { "itemId": 13, "probability": 0.1, "minRankId": 2 } ]
       },
@@ -136,8 +127,8 @@
         "choiceId": 2,
         "text": "力ずくで奪う",
         "reqCondition": [{"stat": "physAtk", "value": 15}, {"stat": "cruelty", "value": 10}],
-        "disabledReason": "相手の方が強そうで手を出せない…",
-        "resultText": "商人を脅して荷物を奪い取った。魔族らしい邪悪な行いだ。",
+        "successText": "商人を脅して荷物を奪い取った。魔族らしい邪悪な行いだ。",
+        "failText": "相手の方が強く、返り討ちにあってしまった…",
         "statChanges": {"cruelty": 10, "luck": -2},
         "itemDrops": [ { "itemId": 6, "probability": 0.5, "minRankId": 1 }, { "itemId": 9, "probability": 0.3, "minRankId": 1 } ]
       },
@@ -145,8 +136,8 @@
         "choiceId": 3,
         "text": "無視して立ち去る",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "関わらないのが一番だ。商人は他のカモを探しに去った。",
+        "successText": "関わらないのが一番だ。商人は他のカモを探しに去った。",
+        "failText": "",
         "statChanges": {"responsibility": 2, "luck": 2},
         "itemDrops": []
       }
@@ -163,26 +154,26 @@
         "choiceId": 1,
         "text": "物理で叩き潰す",
         "reqCondition": [{"stat": "physAtk", "value": 10}],
-        "disabledReason": "攻撃力が足りず、取り込まれてしまいそうだ…",
-        "resultText": "スライムを片っ端から粉砕した！べたつく液体と共に核が転がった。",
+        "successText": "スライムを片っ端から粉砕した！べたつく液体と共に核が転がった。",
+        "failText": "攻撃力が足りず、スライムに取り込まれそうになった…",
         "statChanges": {"physAtk": 5, "hp": -2},
         "itemDrops": [ { "itemId": 14, "probability": 0.5, "minRankId": 1 }, { "itemId": 6, "probability": 0.3, "minRankId": 1 } ]
       },
       {
         "choiceId": 2,
         "text": "魔法で焼き払う",
-        "reqCondition": [{"stat": "magAtk", "value": 10}],
-        "disabledReason": "広範囲を焼くほどの魔法力がない…",
-        "resultText": "一撃でスライムを蒸発させた。効率の良い戦い方だ。",
-        "statChanges": {"magAtk": 5, "mp": -2},
+        "reqCondition": [{"stat": "fireAtk", "value": 10}],
+        "successText": "一撃でスライムを蒸発させた。効率の良い戦い方だ。",
+        "failText": "広範囲を焼くほどの魔法力がなく、逃げるしかなかった…",
+        "statChanges": {"fireAtk": 5, "mp": -2},
         "itemDrops": [ { "itemId": 14, "probability": 0.3, "minRankId": 1 }, { "itemId": 1, "probability": 0.4, "minRankId": 1 } ]
       },
       {
         "choiceId": 3,
         "text": "全力で逃げる",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "無様に逃げ出した。少し情けないが命は無傷だ。",
+        "successText": "無様に逃げ出した。少し情けないが命は無傷だ。",
+        "failText": "",
         "statChanges": {"agility": 2, "charisma": -1},
         "itemDrops": []
       }
@@ -199,8 +190,8 @@
         "choiceId": 1,
         "text": "親の元まで案内してやる",
         "reqCondition": [{"stat": "responsibility", "value": 10}],
-        "disabledReason": "面倒くさくて構っていられない…",
-        "resultText": "親の悪魔から大層感謝された。配下としてついてきたいと言っている。",
+        "successText": "親の悪魔から大層感謝された。配下としてついてきたいと言っている。",
+        "failText": "面倒になって途中で放り出してしまった…",
         "statChanges": {"responsibility": 5, "leadership": 10, "charisma": 5},
         "itemDrops": [ { "itemId": 4, "probability": 0.5, "minRankId": 1 } ]
       },
@@ -208,8 +199,8 @@
         "choiceId": 2,
         "text": "脅して持ち物を奪う",
         "reqCondition": [{"stat": "cruelty", "value": 15}],
-        "disabledReason": "さすがに可哀想で手が出せない…",
-        "resultText": "泣き叫ぶ悪魔からキャンディ（魔法の石）を奪い取った。気分が良い。",
+        "successText": "泣き叫ぶ悪魔からキャンディ（魔法の石）を奪い取った。気分が良い。",
+        "failText": "さすがに可哀想になり、手を出せなかった…",
         "statChanges": {"cruelty": 10, "luck": -5},
         "itemDrops": [ { "itemId": 1, "probability": 1.0, "minRankId": 1 } ]
       },
@@ -217,8 +208,8 @@
         "choiceId": 3,
         "text": "関わらずに無視する",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "他人の世話を焼く義理はない。見なかったことにして通り過ぎた。",
+        "successText": "他人の世話を焼く義理はない。見なかったことにして通り過ぎた。",
+        "failText": "",
         "statChanges": {"agility": 2},
         "itemDrops": []
       }
@@ -234,18 +225,18 @@
       {
         "choiceId": 1,
         "text": "禁忌の魔導書を解読する",
-        "reqCondition": [{"stat": "magDef", "value": 15}, {"stat": "magAtk", "value": 10}],
-        "disabledReason": "魔力耐性が足りず、精神が崩壊しそうだ…",
-        "resultText": "強烈な呪いを跳ね除け、古代の魔法知識を吸収した！",
-        "statChanges": {"magAtk": 15, "mp": 10, "luck": -5},
+        "reqCondition": [{"stat": "magDef", "value": 15}, {"stat": "darkAtk", "value": 10}],
+        "successText": "強烈な呪いを跳ね除け、古代の魔法知識を吸収した！",
+        "failText": "魔力耐性が足りず、精神が削られてしまった…",
+        "statChanges": {"darkAtk": 15, "mp": 10, "luck": -5},
         "itemDrops": [ { "itemId": 13, "probability": 0.4, "minRankId": 2 } ]
       },
       {
         "choiceId": 2,
         "text": "戦術書を読み漁る",
         "reqCondition": [{"stat": "leadership", "value": 15}],
-        "disabledReason": "内容が難しすぎて頭に入ってこない…",
-        "resultText": "かつての魔王軍の戦術を学んだ。部隊を動かすコツが掴めた気がする。",
+        "successText": "かつての魔王軍の戦術を学んだ。部隊を動かすコツが掴めた気がする。",
+        "failText": "内容が難しすぎて頭に入ってこなかった…",
         "statChanges": {"leadership": 15, "control": 5},
         "itemDrops": []
       },
@@ -253,8 +244,8 @@
         "choiceId": 3,
         "text": "罠を警戒して引き返す",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "君子危うきに近寄らず。安全第一で図書館を後にした。",
+        "successText": "君子危うきに近寄らず。安全第一で図書館を後にした。",
+        "failText": "",
         "statChanges": {"luck": 5, "responsibility": 5},
         "itemDrops": []
       }
@@ -271,8 +262,8 @@
         "choiceId": 1,
         "text": "村を力で蹂躙する",
         "reqCondition": [{"stat": "physAtk", "value": 25}, {"stat": "cruelty", "value": 20}],
-        "disabledReason": "攻撃力と残虐性が足りず、躊躇してしまう…",
-        "resultText": "村を焼き払い、物資を略奪した。人間の絶望は魔族の至高の喜びだ。",
+        "successText": "村を焼き払い、物資を略奪した。人間の絶望は魔族の至高の喜びだ。",
+        "failText": "躊躇してしまい、反撃を受けて逃げ帰った…",
         "statChanges": {"physAtk": 10, "cruelty": 15, "charisma": -10},
         "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 2 }, { "itemId": 6, "probability": 0.5, "minRankId": 1 } ]
       },
@@ -280,8 +271,8 @@
         "choiceId": 2,
         "text": "村人を言葉で洗脳する",
         "reqCondition": [{"stat": "control", "value": 25}],
-        "disabledReason": "支配力が足りず、誰も信じてくれない…",
-        "resultText": "巧みな言葉で村人を操り、魔王軍の狂信者に仕立て上げた。",
+        "successText": "巧みな言葉で村人を操り、魔王軍の狂信者に仕立て上げた。",
+        "failText": "支配力が足りず、誰も信じてくれなかった…",
         "statChanges": {"control": 15, "charisma": 10, "leadership": 10},
         "itemDrops": [ { "itemId": 12, "probability": 0.5, "minRankId": 2 } ]
       },
@@ -289,8 +280,8 @@
         "choiceId": 3,
         "text": "適当に報告を捏造する",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "「特に異常なし」と適当な報告書をでっち上げた。楽な仕事だ。",
+        "successText": "「特に異常なし」と適当な報告書をでっち上げた。楽な仕事だ。",
+        "failText": "",
         "statChanges": {"responsibility": -10, "luck": 10},
         "itemDrops": []
       }
@@ -307,8 +298,8 @@
         "choiceId": 1,
         "text": "豪快に酒を飲み干す",
         "reqCondition": [{"stat": "hp", "value": 50}],
-        "disabledReason": "体力が足りず、急性アルコール中毒になりそうだ…",
-        "resultText": "樽の酒を一気飲みし、周囲の魔族たちから大喝采を浴びた！",
+        "successText": "樽の酒を一気飲みし、周囲の魔族たちから大喝采を浴びた！",
+        "failText": "途中で倒れてしまい、恥をかいた…",
         "statChanges": {"charisma": 15, "physAtk": 5, "hp": -10},
         "itemDrops": [ { "itemId": 9, "probability": 0.5, "minRankId": 2 } ]
       },
@@ -316,8 +307,8 @@
         "choiceId": 2,
         "text": "上官に媚びを売る",
         "reqCondition": [{"stat": "charisma", "value": 20}],
-        "disabledReason": "カリスマ性がなく、相手にされそうにない…",
-        "resultText": "タイミング良く酒を注ぎ、上官の機嫌を完璧に取った。出世が近づいた。",
+        "successText": "タイミング良く酒を注ぎ、上官の機嫌を完璧に取った。出世が近づいた。",
+        "failText": "カリスマ性がなく、見向きもされなかった…",
         "statChanges": {"luck": 10, "responsibility": 5},
         "itemDrops": [ { "itemId": 17, "probability": 0.3, "minRankId": 2 } ]
       },
@@ -325,8 +316,8 @@
         "choiceId": 3,
         "text": "隅で大人しくしている",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "騒ぎには混ざらず、料理だけを静かに楽しんだ。",
+        "successText": "騒ぎには混ざらず、料理だけを静かに楽しんだ。",
+        "failText": "",
         "statChanges": {"hp": 15, "mp": 10},
         "itemDrops": []
       }
@@ -343,8 +334,8 @@
         "choiceId": 1,
         "text": "徹夜で完璧に仕上げる",
         "reqCondition": [{"stat": "responsibility", "value": 35}],
-        "disabledReason": "集中力が足りず、途中で寝てしまいそうだ…",
-        "resultText": "死に物狂いで仕上げた。少し疲れたが、上官からの信頼は絶大になった。",
+        "successText": "死に物狂いで仕上げた。少し疲れたが、上官からの信頼は絶大になった。",
+        "failText": "途中で寝てしまい、大目玉を食らった…",
         "statChanges": {"responsibility": 20, "hp": -5},
         "itemDrops": [ { "itemId": 17, "probability": 0.5, "minRankId": 2 } ]
       },
@@ -352,17 +343,17 @@
         "choiceId": 2,
         "text": "配下に全部押し付ける",
         "reqCondition": [{"stat": "control", "value": 20}],
-        "disabledReason": "支配力が足りず、誰も言うことを聞いてくれない…",
-        "resultText": "配下に丸投げして自分は寝た。配下は疲弊したが任務は完了した。",
+        "successText": "配下に丸投げして自分は寝た。配下は疲弊したが任務は完了した。",
+        "failText": "誰も言うことを聞いてくれず、自分でやる羽目になった…",
         "statChanges": {"control": 15, "leadership": -5},
         "itemDrops": []
       },
       {
         "choiceId": 3,
         "text": "書類を燃やす",
-        "reqCondition": [{"stat": "cruelty", "value": 30}],
-        "disabledReason": "後が怖くてとてもそんなことはできない…",
-        "resultText": "「燃えてなくなりました」と報告した。上官は呆れて何も言わなかった。",
+        "reqCondition": [],
+        "successText": "「燃えてなくなりました」と報告した。上官は呆れて何も言わなかった。",
+        "failText": "",
         "statChanges": {"cruelty": 15, "responsibility": -15, "charisma": 5},
         "itemDrops": []
       }
@@ -379,8 +370,8 @@
         "choiceId": 1,
         "text": "俊敏性で飛び退く",
         "reqCondition": [{"stat": "agility", "value": 15}],
-        "disabledReason": "俊敏性が足りず、体が反応しきれない…",
-        "resultText": "間一髪で罠を回避し、仕掛けられていた宝箱をかすめ取った。",
+        "successText": "間一髪で罠を回避し、仕掛けられていた宝箱をかすめ取った。",
+        "failText": "俊敏性が足りず、見事に落下してしまった…",
         "statChanges": {"agility": 5, "luck": 2},
         "itemDrops": [ { "itemId": 1, "probability": 0.6, "minRankId": 1 } ]
       },
@@ -388,8 +379,8 @@
         "choiceId": 2,
         "text": "落ちながら壁を殴り壊す",
         "reqCondition": [{"stat": "physAtk", "value": 20}],
-        "disabledReason": "壁を砕くほどの腕力がない…",
-        "resultText": "力任せに壁を粉砕し、強引に落下を止めた。少し痛手を負った。",
+        "successText": "力任せに壁を粉砕し、強引に落下を止めた。少し痛手を負った。",
+        "failText": "壁を砕けず、そのまま底まで落ちた…",
         "statChanges": {"physAtk": 5, "hp": -5},
         "itemDrops": [ { "itemId": 2, "probability": 0.5, "minRankId": 1 } ]
       },
@@ -397,8 +388,8 @@
         "choiceId": 3,
         "text": "諦めて底まで落ちる",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "泥だらけになって底に落ちたが、そこで奇妙な草を見つけた。",
+        "successText": "泥だらけになって底に落ちたが、そこで奇妙な草を見つけた。",
+        "failText": "",
         "statChanges": {"hp": -10},
         "itemDrops": [ { "itemId": 3, "probability": 1.0, "minRankId": 1 } ]
       }
@@ -415,26 +406,26 @@
         "choiceId": 1,
         "text": "正面から殲滅する",
         "reqCondition": [{"stat": "physAtk", "value": 30}],
-        "disabledReason": "まともにやり合えば負けてしまいそうだ…",
-        "resultText": "圧倒的な武力で冒険者たちを散らし、戦利品を奪った。",
+        "successText": "圧倒的な武力で冒険者たちを散らし、戦利品を奪った。",
+        "failText": "返り討ちにあい、手痛いダメージを受けた…",
         "statChanges": {"physAtk": 10, "cruelty": 10, "hp": -5},
         "itemDrops": [ { "itemId": 11, "probability": 0.6, "minRankId": 2 } ]
       },
       {
         "choiceId": 2,
         "text": "幻覚で同士討ちさせる",
-        "reqCondition": [{"stat": "magAtk", "value": 25}, {"stat": "control", "value": 15}],
-        "disabledReason": "精巧な幻覚を見せるだけの魔力と支配力がない…",
-        "resultText": "恐怖の幻覚を見せて同士討ちさせた。魔族らしい陰湿な勝利だ。",
-        "statChanges": {"magAtk": 10, "control": 10, "cruelty": 5},
+        "reqCondition": [{"stat": "darkAtk", "value": 25}, {"stat": "control", "value": 15}],
+        "successText": "恐怖の幻覚を見せて同士討ちさせた。魔族らしい陰湿な勝利だ。",
+        "failText": "精巧な幻覚を見せられず、逃げられてしまった…",
+        "statChanges": {"darkAtk": 10, "control": 10, "cruelty": 5},
         "itemDrops": [ { "itemId": 13, "probability": 0.5, "minRankId": 2 } ]
       },
       {
         "choiceId": 3,
         "text": "面倒なので隠れてやり過ごす",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "岩陰に隠れて通り過ぎるのを待った。安全だが魔族のプライドが傷ついた。",
+        "successText": "岩陰に隠れて通り過ぎるのを待った。安全だが魔族のプライドが傷ついた。",
+        "failText": "",
         "statChanges": {"agility": 5, "charisma": -5},
         "itemDrops": []
       }
@@ -451,8 +442,8 @@
         "choiceId": 1,
         "text": "店主を脅してタダで奪う",
         "reqCondition": [{"stat": "cruelty", "value": 15}, {"stat": "charisma", "value": 15}],
-        "disabledReason": "凄みが足りず、店主を恐れさせられない…",
-        "resultText": "強烈な殺気を放つと、店主は震え上がって商品を差し出した。",
+        "successText": "強烈な殺気を放つと、店主は震え上がって商品を差し出した。",
+        "failText": "凄みが足りず、鼻で笑われてしまった…",
         "statChanges": {"cruelty": 5, "luck": -2},
         "itemDrops": [ { "itemId": 9, "probability": 0.5, "minRankId": 1 }, { "itemId": 4, "probability": 0.5, "minRankId": 1 } ]
       },
@@ -460,8 +451,8 @@
         "choiceId": 2,
         "text": "運任せで謎の福袋を買う",
         "reqCondition": [{"stat": "luck", "value": 15}],
-        "disabledReason": "嫌な予感がする。今回はやめておこう…",
-        "resultText": "適当に選んだ袋の中から、そこそこ良いものが出てきた！",
+        "successText": "適当に選んだ袋の中から、そこそこ良いものが出てきた！",
+        "failText": "ガラクタばかり掴まされた…",
         "statChanges": {"luck": 5},
         "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 1 } ]
       },
@@ -469,8 +460,8 @@
         "choiceId": 3,
         "text": "何も買わずに見るだけにする",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "商品を眺めるだけで立ち去った。相場を少し学んだ。",
+        "successText": "商品を眺めるだけで立ち去った。相場を少し学んだ。",
+        "failText": "",
         "statChanges": {"magDef": 2},
         "itemDrops": []
       }
@@ -487,8 +478,8 @@
         "choiceId": 1,
         "text": "圧倒的な力で服従させる",
         "reqCondition": [{"stat": "leadership", "value": 20}, {"stat": "physAtk", "value": 20}],
-        "disabledReason": "実力が足りず、反乱を鎮圧できそうにない…",
-        "resultText": "逆らう者を数名見せしめにし、恐怖で完全に支配した。",
+        "successText": "逆らう者を数名見せしめにし、恐怖で完全に支配した。",
+        "failText": "鎮圧に失敗し、逃げられてしまった…",
         "statChanges": {"leadership": 15, "control": 10, "cruelty": 10},
         "itemDrops": []
       },
@@ -496,8 +487,8 @@
         "choiceId": 2,
         "text": "責任感をもって説得する",
         "reqCondition": [{"stat": "responsibility", "value": 20}],
-        "disabledReason": "説得力のある言葉をかける自信がない…",
-        "resultText": "熱心に説教すると、魔物たちは心を打たれて再び働き始めた。",
+        "successText": "熱心に説教すると、魔物たちは心を打たれて再び働き始めた。",
+        "failText": "言葉が響かず、ストライキを止めることはできなかった…",
         "statChanges": {"responsibility": 15, "charisma": 5},
         "itemDrops": []
       },
@@ -505,8 +496,8 @@
         "choiceId": 3,
         "text": "面倒なので見捨てる",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "勝手にしろと放置した。魔物たちはどこかへ去り、人望を失った。",
+        "successText": "勝手にしろと放置した。魔物たちはどこかへ去り、人望を失った。",
+        "failText": "",
         "statChanges": {"charisma": -5},
         "itemDrops": []
       }
@@ -523,26 +514,26 @@
         "choiceId": 1,
         "text": "泉の水をがぶ飲みする",
         "reqCondition": [{"stat": "hp", "value": 20}],
-        "disabledReason": "体力が低く、毒素に耐えきれず死にそうだ…",
-        "resultText": "猛烈な腹痛の後に、身体の奥底から強烈な活力が湧き上がった！",
+        "successText": "猛烈な腹痛の後に、身体の奥底から強烈な活力が湧き上がった！",
+        "failText": "毒素に当てられ、倒れ込んでしまった…",
         "statChanges": {"hp": 30, "physAtk": 5},
         "itemDrops": []
       },
       {
         "choiceId": 2,
         "text": "魔法で成分を抽出する",
-        "reqCondition": [{"stat": "magAtk", "value": 15}],
-        "disabledReason": "精密な魔力操作ができず、抽出に失敗しそうだ…",
-        "resultText": "泉の魔力を安全に抽出し、自身の魔力へ変換した。",
-        "statChanges": {"magAtk": 10, "mp": 10},
+        "reqCondition": [{"stat": "nonElemAtk", "value": 15}],
+        "successText": "泉の魔力を安全に抽出し、自身の魔力へ変換した。",
+        "failText": "抽出に失敗し、魔力が暴発してしまった…",
+        "statChanges": {"nonElemAtk": 10, "mp": 10},
         "itemDrops": [ { "itemId": 1, "probability": 0.5, "minRankId": 1 } ]
       },
       {
         "choiceId": 3,
         "text": "不気味なので立ち去る",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "直感に従い、泉には触れずに立ち去った。危険を回避した。",
+        "successText": "直感に従い、泉には触れずに立ち去った。危険を回避した。",
+        "failText": "",
         "statChanges": {"luck": 2},
         "itemDrops": []
       }
@@ -559,8 +550,8 @@
         "choiceId": 1,
         "text": "最前線でしごかれる",
         "reqCondition": [{"stat": "physDef", "value": 20}, {"stat": "hp", "value": 40}],
-        "disabledReason": "防御力と体力がなく、途中で倒れてしまいそうだ…",
-        "resultText": "傷だらけになりながらも耐え抜き、強靭な肉体を手に入れた。",
+        "successText": "傷だらけになりながらも耐え抜き、強靭な肉体を手に入れた。",
+        "failText": "途中で倒れてしまい、這いつくばる羽目になった…",
         "statChanges": {"physDef": 15, "hp": -15, "physAtk": 5},
         "itemDrops": []
       },
@@ -568,8 +559,8 @@
         "choiceId": 2,
         "text": "指揮官の補佐に回る",
         "reqCondition": [{"stat": "leadership", "value": 25}, {"stat": "responsibility", "value": 15}],
-        "disabledReason": "部隊を動かす頭脳と責任感が足りない…",
-        "resultText": "裏方に回り部隊の統率を見事に支援した。評価が大きく上がった。",
+        "successText": "裏方に回り部隊の統率を見事に支援した。評価が大きく上がった。",
+        "failText": "指揮能力が足りず、足手まといになってしまった…",
         "statChanges": {"leadership": 10, "responsibility": 10, "charisma": 5},
         "itemDrops": []
       },
@@ -577,8 +568,8 @@
         "choiceId": 3,
         "text": "こっそりサボる",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "誰にもバレずに物陰で昼寝をした。体力は温存できたが成長はない。",
+        "successText": "誰にもバレずに物陰で昼寝をした。体力は温存できたが成長はない。",
+        "failText": "",
         "statChanges": {"agility": 5, "hp": 10},
         "itemDrops": []
       }
@@ -594,27 +585,27 @@
       {
         "choiceId": 1,
         "text": "強力な魔法で縛り上げる",
-        "reqCondition": [{"stat": "magAtk", "value": 40}, {"stat": "control", "value": 30}],
-        "disabledReason": "魔界獣を抑え込むほどの強大な魔力がない…",
-        "resultText": "魔法の鎖を生成して完全に沈静化させた。見事な手際だ。",
-        "statChanges": {"control": 15, "magAtk": 10, "leadership": 5},
+        "reqCondition": [{"stat": "nonElemAtk", "value": 40}, {"stat": "control", "value": 30}],
+        "successText": "魔法の鎖を生成して完全に沈静化させた。見事な手際だ。",
+        "failText": "魔界獣を抑え込むほどの強大な魔力がなく、弾き飛ばされた…",
+        "statChanges": {"control": 15, "nonElemAtk": 10, "leadership": 5},
         "itemDrops": [ { "itemId": 13, "probability": 0.8, "minRankId": 3 } ]
       },
       {
         "choiceId": 2,
         "text": "正面から力でねじ伏せる",
         "reqCondition": [{"stat": "physAtk", "value": 50}],
-        "disabledReason": "あの巨体を殴り飛ばす物理的な力がない…",
-        "resultText": "剛腕で獣を殴り飛ばし、気絶させた。周囲の魔族が熱狂している。",
+        "successText": "剛腕で獣を殴り飛ばし、気絶させた。周囲の魔族が熱狂している。",
+        "failText": "あの巨体を殴り飛ばす物理的な力はなく、踏み潰されそうになった…",
         "statChanges": {"physAtk": 15, "cruelty": 5, "hp": -10},
         "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 3 } ]
       },
       {
         "choiceId": 3,
         "text": "被害が出ないよう誘導する",
-        "reqCondition": [{"stat": "agility", "value": 30}, {"stat": "responsibility", "value": 20}],
-        "disabledReason": "逃げ足が遅く、獣の標的にされそうだ…",
-        "resultText": "身軽な動きで獣を挑発し、被害の出ない荒野へ誘導して事なきを得た。",
+        "reqCondition": [],
+        "successText": "身軽な動きで獣を挑発し、被害の出ない荒野へ誘導して事なきを得た。",
+        "failText": "",
         "statChanges": {"agility": 10, "responsibility": 10},
         "itemDrops": []
       }
@@ -631,26 +622,26 @@
         "choiceId": 1,
         "text": "寿命を差し出し力を得る",
         "reqCondition": [{"stat": "hp", "value": 30}, {"stat": "mp", "value": 30}],
-        "disabledReason": "基礎となる生命力が足りず、契約で死んでしまう…",
-        "resultText": "生命力を代償に、強大な魔力を手に入れた。",
-        "statChanges": {"hp": -20, "mp": -20, "magAtk": 20, "magDef": 15},
+        "successText": "生命力を代償に、強大な魔力を手に入れた。",
+        "failText": "契約の途中で力尽きそうになり、中断した…",
+        "statChanges": {"hp": -20, "mp": -20, "darkAtk": 20, "magDef": 15},
         "itemDrops": []
       },
       {
         "choiceId": 2,
         "text": "逆に契約の穴を突く",
         "reqCondition": [{"stat": "control", "value": 20}, {"stat": "luck", "value": 20}],
-        "disabledReason": "悪魔を騙すほどの頭脳と運を持ち合わせていない…",
-        "resultText": "契約書の裏の裏をかき、悪魔を騙し討ちにして力を一方的に奪い取った！",
-        "statChanges": {"control": 15, "luck": 5, "magAtk": 10},
+        "successText": "契約書の裏の裏をかき、悪魔を騙し討ちにして力を一方的に奪い取った！",
+        "failText": "逆に騙されそうになり、慌てて逃げ出した…",
+        "statChanges": {"control": 15, "luck": 5, "darkAtk": 10},
         "itemDrops": [ { "itemId": 17, "probability": 0.5, "minRankId": 2 } ]
       },
       {
         "choiceId": 3,
         "text": "きっぱりと拒否する",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "甘い誘惑には乗らなかった。自身の意志の強さを再確認した。",
+        "successText": "甘い誘惑には乗らなかった。自身の意志の強さを再確認した。",
+        "failText": "",
         "statChanges": {"responsibility": 5},
         "itemDrops": []
       }
@@ -666,18 +657,18 @@
       {
         "choiceId": 1,
         "text": "儀式を完成させる",
-        "reqCondition": [{"stat": "magAtk", "value": 30}, {"stat": "cruelty", "value": 20}],
-        "disabledReason": "魔力も残虐性も足りず、儀式を引き継げない…",
-        "resultText": "自らの魔力を注ぎ込み儀式を完成させると、邪悪な恩恵を受けた。",
-        "statChanges": {"magAtk": 15, "cruelty": 15, "mp": -5},
+        "reqCondition": [{"stat": "darkAtk", "value": 30}, {"stat": "cruelty", "value": 20}],
+        "successText": "自らの魔力を注ぎ込み儀式を完成させると、邪悪な恩恵を受けた。",
+        "failText": "儀式を引き継げず、跳ね返ってきた呪いを受けた…",
+        "statChanges": {"darkAtk": 15, "cruelty": 15, "mp": -5},
         "itemDrops": [ { "itemId": 13, "probability": 0.7, "minRankId": 2 } ]
       },
       {
         "choiceId": 2,
         "text": "祭壇を破壊する",
         "reqCondition": [{"stat": "physAtk", "value": 30}, {"stat": "responsibility", "value": 20}],
-        "disabledReason": "呪いが怖くて祭壇に攻撃できない…",
-        "resultText": "力任せに祭壇を粉砕した。後日、危険を未然に防いだとして評価された。",
+        "successText": "力任せに祭壇を粉砕した。後日、危険を未然に防いだとして評価された。",
+        "failText": "硬すぎて壊せず、諦めて立ち去った…",
         "statChanges": {"responsibility": 15, "physAtk": 5},
         "itemDrops": [ { "itemId": 2, "probability": 1.0, "minRankId": 2 } ]
       },
@@ -685,8 +676,8 @@
         "choiceId": 3,
         "text": "放置して立ち去る",
         "reqCondition": [],
-        "disabledReason": "",
-        "resultText": "君子危うきに近寄らず。何も見なかったことにして去った。",
+        "successText": "君子危うきに近寄らず。何も見なかったことにして去った。",
+        "failText": "",
         "statChanges": {"luck": 2},
         "itemDrops": []
       }
@@ -703,8 +694,8 @@
         "choiceId": 1,
         "text": "正々堂々と打ち倒す",
         "reqCondition": [{"stat": "physAtk", "value": 40}, {"stat": "physDef", "value": 40}],
-        "disabledReason": "正面からの殴り合いでは勝機が見えない…",
-        "resultText": "激しい肉弾戦の末に勝利を収めた。周囲の魔族から称賛の声があがる。",
+        "successText": "激しい肉弾戦の末に勝利を収めた。周囲の魔族から称賛の声があがる。",
+        "failText": "力及ばず、見事に打ち負かされてしまった…",
         "statChanges": {"physAtk": 10, "charisma": 20, "hp": -15},
         "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 3 } ]
       },
@@ -712,17 +703,17 @@
         "choiceId": 2,
         "text": "卑劣な罠と毒で沈める",
         "reqCondition": [{"stat": "control", "value": 30}, {"stat": "cruelty", "value": 30}],
-        "disabledReason": "罠を仕掛ける隙も冷酷さも持ち合わせていない…",
-        "resultText": "決闘前から罠を張り巡らせ、相手を完封した。悪魔らしい勝利だ。",
+        "successText": "決闘前から罠を張り巡らせ、相手を完封した。悪魔らしい勝利だ。",
+        "failText": "罠が見破られ、逆に窮地に陥ってしまった…",
         "statChanges": {"cruelty": 20, "luck": 5, "control": 10},
         "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 3 } ]
       },
       {
         "choiceId": 3,
         "text": "言葉巧みに辞退させる",
-        "reqCondition": [{"stat": "charisma", "value": 30}],
-        "disabledReason": "相手を納得させるほどのカリスマ性がない…",
-        "resultText": "「争うのは我々の利益にならない」と丸め込み、戦わずに優位に立った。",
+        "reqCondition": [],
+        "successText": "「争うのは我々の利益にならない」と丸め込み、戦わずに優位に立った。",
+        "failText": "",
         "statChanges": {"charisma": 10, "control": 5},
         "itemDrops": []
       }
