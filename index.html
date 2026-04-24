@@ -1265,6 +1265,8 @@ function updateAll() {
         playSE('rankup');
         setTimeout(() => { alert(`昇格：${currentRank.name}`); }, 100);
         if (gameState.crystals < currentRank.maxCrystals) gameState.crystals = currentRank.maxCrystals;
+        
+        gameState.stats.hp += 1000;
     }
 
     document.getElementById('rank-name').innerText = currentRank.name;
