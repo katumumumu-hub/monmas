@@ -68,7 +68,7 @@
             transition: all 0.3s;
         }
         .crystal-empty { background: #1a0a25; box-shadow: inset 0 0 5px #000;
-        transform: rotate(45deg) scale(0.8); opacity: 0.5; }
+            transform: rotate(45deg) scale(0.8); opacity: 0.5; }
         #crystal-timer { font-size: 0.8rem; color: #a894c2;
         }
 
@@ -81,7 +81,7 @@
         }
 
         .screen { display: none;
-        flex: 1; flex-direction: column; height: 100%; overflow: hidden;}
+            flex: 1; flex-direction: column; height: 100%; overflow: hidden;}
         .screen.active { display: flex;
         }
 
@@ -189,7 +189,7 @@
         .dev-tools { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px;
         }
         .dev-btn { padding: 4px 8px; font-size: 0.7rem; width: auto; border-radius: 4px; border:none;
-        cursor: pointer; }
+            cursor: pointer; }
         .btn-max { background: #ffaa00; color: #000;
         }
         .btn-reset { background: #cc3333; color: #fff;
@@ -200,18 +200,18 @@
         }
         
         .event-box { background: var(--panel-color);
-        padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px;
+            padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px;
         }
         h3 { color: var(--accent-gold); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;
-        flex-shrink: 0; }
+            flex-shrink: 0; }
         
         .item-row { background: rgba(30,15,50,0.8);
-        padding: 12px; border-radius: 6px; margin-bottom: 10px; border: 1px solid #4a2b6e;
+            padding: 12px; border-radius: 6px; margin-bottom: 10px; border: 1px solid #4a2b6e;
         }
         .item-rarity { font-size: 0.75rem; padding: 2px 6px; border-radius: 3px; margin-right: 6px;
-        font-weight: bold; border: 1px solid currentColor;}
+            font-weight: bold; border: 1px solid currentColor;}
         .rarity-SS { color: #ff3333;
-        text-shadow: 0 0 5px #ff0000; }
+            text-shadow: 0 0 5px #ff0000; }
         .rarity-S { color: #ffdf00;
         }
         .rarity-A { color: #d100ff;
@@ -227,7 +227,7 @@
         .rarity-F { color: #555555;
         }
         .item-use-btn { background: #4a2b6e; padding: 6px 12px; font-size: 0.8rem; width: auto;
-        border-radius: 4px; border: 1px solid #7c4bb3; margin-top: 8px;}
+            border-radius: 4px; border: 1px solid #7c4bb3; margin-top: 8px;}
 
         /* スキルタブ用スタイル */
         .skill-tab-container {
@@ -264,8 +264,8 @@
             margin: 0 auto;
         }
         .level-btn { background: #2a1540; border: 1px solid var(--border-color); color: var(--text-color);
-        padding: 12px 5px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; cursor: pointer; text-align: center;
-        transition: all 0.2s;}
+            padding: 12px 5px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; cursor: pointer; text-align: center;
+            transition: all 0.2s;}
         .level-btn.cleared { background: #1a3320; border-color: #33cc66; color: #aaffaa;
         }
         .level-btn:disabled { background: #111; color: #555; border-color: #333; cursor: not-allowed;
@@ -288,13 +288,13 @@
             overflow: hidden;
         }
         #monster-preview-img { max-height: 100px; max-width: 100%; object-fit: contain;
-        filter: drop-shadow(0 0 10px rgba(209, 0, 255, 0.3)); }
+            filter: drop-shadow(0 0 10px rgba(209, 0, 255, 0.3)); }
         #monster-preview-info { font-size: 0.85rem;
-        font-weight: bold; color: var(--accent-gold); margin-top: 5px; }
+            font-weight: bold; color: var(--accent-gold); margin-top: 5px; }
 
         /* 戦闘画面のレイアウト修正 */
         .battle-ui { display: flex;
-        flex-direction: column; height: 100%; gap: 10px; }
+            flex-direction: column; height: 100%; gap: 10px; }
         .battle-enemy-area { 
             flex: 2;
             display: flex; 
@@ -308,7 +308,7 @@
             position: relative;
         }
         .enemy-name { font-size: 1.2rem; font-weight: bold; color: #ff5555; margin-bottom: 5px;
-        text-shadow: 0 0 5px #ff0000; }
+            text-shadow: 0 0 5px #ff0000; }
         .enemy-image { 
             max-width: 260px;
             max-height: 260px;
@@ -319,18 +319,18 @@
         }
         
         .hp-container { width: 100%;
-        background: #222; border-radius: 10px; border: 1px solid #555; height: 18px; overflow: hidden; margin-bottom: 5px; position: relative;
-        box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);}
+            background: #222; border-radius: 10px; border: 1px solid #555; height: 18px; overflow: hidden; margin-bottom: 5px; position: relative;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);}
         .hp-bar { height: 100%;
-        background: linear-gradient(90deg, #228b22, #32cd32); width: 100%; transition: width 0.3s ease;
+            background: linear-gradient(90deg, #228b22, #32cd32); width: 100%; transition: width 0.3s ease;
         }
         .hp-bar.enemy { background: linear-gradient(90deg, #8b0000, #ff4500);
         }
         .hp-text { position: absolute; top: 0; left: 0; width: 100%; text-align: center;
-        font-size: 0.75rem; line-height: 18px; font-weight: bold; color: #fff; text-shadow: 1px 1px 2px #000;}
+            font-size: 0.75rem; line-height: 18px; font-weight: bold; color: #fff; text-shadow: 1px 1px 2px #000;}
 
         .battle-player-area { padding: 10px;
-        background: rgba(30, 15, 45, 0.8); border-radius: 8px; border: 1px solid var(--border-color);}
+            background: rgba(30, 15, 45, 0.8); border-radius: 8px; border: 1px solid var(--border-color);}
         
         .battle-log-area { 
             flex: 0.6;
@@ -383,7 +383,7 @@
         
         @keyframes fadeOutDown {
             0% { opacity: 1;
-            transform: translateY(0); }
+                transform: translateY(0); }
             100% { opacity: 0; transform: translateY(30px);
             }
         }
@@ -412,19 +412,23 @@
             </div>
             
             <div class="home-bottom-area">
-                <div class="status-grid">
+                <div 
+                    class="status-grid">
                     <div class="status-item"><div class="status-label">戦闘力</div><div class="status-value" id="display-combat-power">0</div></div>
                     <div class="status-item">
                         <div class="status-label" id="display-next-req">戦闘力---で</div>
                         <div class="status-value" id="display-next-name" style="font-size: 0.9rem;">---に昇格</div>
+ 
                     </div>
                 </div>
-                <div class="status-item" style="margin-bottom:10px; flex-direction:row; justify-content:space-between; align-items:center;">
+                <div class="status-item" style="margin-bottom:10px;
+                    flex-direction:row; justify-content:space-between; align-items:center;">
                     <div class="status-label" style="margin:0;">配下総数</div>
                     <div class="status-value" id="display-subordinates">0名</div>
                 </div>
                 <button onclick="startEvent()" style="margin-bottom: 8px;">イベント発生 (消費: 1)</button>
-                <button onclick="openTrainingScreen()" style="background: linear-gradient(180deg, #732323 0%, #2e0808 100%);">特訓で鍛える (消費: 1)</button>
+                <button 
+                    onclick="openTrainingScreen()" style="background: linear-gradient(180deg, #732323 0%, #2e0808 100%);">特訓で鍛える (消費: 1)</button>
             </div>
         </div>
 
@@ -433,10 +437,14 @@
             <div id="monster-preview-container">
                 <img id="monster-preview-img" src="" style="display:none;">
                 <div id="monster-preview-info">レベルを選択してください</div>
+ 
             </div>
             <div id="level-list" class="level-grid"></div>
-            <div style="text-align: center; padding: 10px 0; flex-shrink: 0;">
-                <button id="start-battle-btn" disabled onclick="initiateSelectedBattle()" style="width: 80%; background: linear-gradient(180deg, #732323 0%, #2e0808 100%); box-shadow: 0 0 10px rgba(255,0,0,0.3); font-size: 1.1rem; padding: 12px;">戦闘開始</button>
+            <div style="text-align: center;
+                padding: 10px 0; flex-shrink: 0;">
+                <button id="start-battle-btn" disabled onclick="initiateSelectedBattle()" style="width: 80%;
+                    background: linear-gradient(180deg, #732323 0%, #2e0808 100%); box-shadow: 0 0 10px rgba(255,0,0,0.3); font-size: 1.1rem;
+                    padding: 12px;">戦闘開始</button>
             </div>
         </div>
 
@@ -444,26 +452,32 @@
             <div class="battle-ui" id="battle-ui-area">
                 <div class="battle-enemy-area">
                     <div class="enemy-name" id="battle-enemy-name">未知のモンスター</div>
+                
                     <img class="enemy-image" id="battle-enemy-img" src="" alt="敵画像">
                     <div style="width: 90%;">
                         <div class="hp-container">
                             <div class="hp-bar enemy" id="battle-enemy-hp-bar" style="width: 100%;"></div>
+            
                             <div class="hp-text" id="battle-enemy-hp-text">HP: ???/???</div>
                         </div>
                     </div>
                 </div>
                 
+     
                 <div class="battle-player-area">
-                    <div style="font-weight: bold; color: var(--accent-gold); margin-bottom: 5px;">自分（魔族）</div>
+                    <div style="font-weight: bold;
+                        color: var(--accent-gold); margin-bottom: 5px;">自分（魔族）</div>
                     <div class="hp-container">
                         <div class="hp-bar" id="battle-player-hp-bar" style="width: 100%;"></div>
                         <div class="hp-text" id="battle-player-hp-text">HP: 100/100</div>
                     </div>
+ 
                 </div>
                 
                 <div class="battle-log-area" id="battle-log"></div>
 
-                <button id="temp-end-battle-btn" style="padding: 10px; font-size: 0.9rem; display: none;">[結果を見る]</button>
+                <button id="temp-end-battle-btn" style="padding: 10px;
+                    font-size: 0.9rem; display: none;">[結果を見る]</button>
             </div>
         </div>
 
@@ -471,7 +485,8 @@
             <div class="event-box" style="flex:1;">
                 <h3 id="event-title">イベント</h3>
                 <p id="event-text" style="line-height:1.5;"></p>
-                <div id="choices-area" style="display:flex; flex-direction:column; gap:10px; margin-top:20px;"></div>
+                <div id="choices-area" 
+                    style="display:flex; flex-direction:column; gap:10px; margin-top:20px;"></div>
             </div>
         </div>
 
@@ -479,11 +494,15 @@
             <div class="event-box" style="flex:1;">
                 <h3 id="result-title">結果</h3>
                 <p id="result-text" style="line-height:1.5;"></p>
-                <div id="change-log" style="color:var(--crystal-color); margin-top: 15px; font-size: 0.9rem; font-weight:bold;"></div>
-                <div id="skill-log" style="color:#ffdf00; margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
-                <div id="item-log" style="color:#00ffaa; margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
+                <div id="change-log" 
+                    style="color:var(--crystal-color); margin-top: 15px; font-size: 0.9rem; font-weight:bold;"></div>
+                <div id="skill-log" style="color:#ffdf00;
+                    margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
+                <div id="item-log" style="color:#00ffaa;
+                    margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
             </div>
-            <button onclick="playSE('click'); showScreen('home-screen')">ホームへ</button>
+            <button onclick="playSE('click');
+                showScreen('home-screen')">ホームへ</button>
         </div>
 
         <div id="status-screen" class="screen">
@@ -494,23 +513,33 @@
         </div>
 
         <div id="skill-screen" class="screen">
+          
             <h3>取得済みスキル</h3>
             <div class="skill-tab-container">
                 <button id="tab-combat" class="skill-tab active" onclick="switchSkillTab('combat')">戦闘</button>
                 <button id="tab-noncombat" class="skill-tab" onclick="switchSkillTab('noncombat')">非戦闘</button>
             </div>
-            <div id="acquired-skills-list" style="display:flex; flex-direction:column; gap:8px; flex:1; overflow-y:auto; padding-bottom:5px;"></div>
+            <div id="acquired-skills-list" style="display:flex;
+                flex-direction:column; gap:8px; flex:1; overflow-y:auto; padding-bottom:5px;"></div>
             
             <div id="skill-detail-panel">
-                <div id="detail-skill-name" style="font-weight:bold; font-size:1.1rem; color:var(--accent-gold); border-bottom:1px solid var(--border-color); padding-bottom:5px;"></div>
-                <div style="display:flex; justify-content:flex-start; gap: 15px; margin-top: 8px;">
-                    <div id="detail-skill-element" style="color:#ff7777; font-size:0.85rem; font-weight:bold; display:none;"></div>
-                    <div id="detail-skill-mp" style="color:#00aaff; font-size:0.85rem; font-weight:bold; display:none;"></div>
-                    <div id="detail-skill-power" style="color:#ffaa00; font-size:0.85rem; font-weight:bold; display:none;"></div>
+                <div id="detail-skill-name" style="font-weight:bold;
+                    font-size:1.1rem; color:var(--accent-gold); border-bottom:1px solid var(--border-color); padding-bottom:5px;"></div>
+                <div style="display:flex;
+                    justify-content:flex-start; gap: 15px; margin-top: 8px;">
+                    <div id="detail-skill-element" style="color:#ff7777;
+                        font-size:0.85rem; font-weight:bold; display:none;"></div>
+                    <div id="detail-skill-mp" style="color:#00aaff;
+                        font-size:0.85rem; font-weight:bold; display:none;"></div>
+                    <div id="detail-skill-power" style="color:#ffaa00;
+                        font-size:0.85rem; font-weight:bold; display:none;"></div>
                 </div>
-                <div id="detail-skill-bonus" style="color:var(--crystal-color); font-size:0.85rem; font-weight:bold; margin: 8px 0;"></div>
-                <div id="detail-skill-req" style="color:#ffdf00; font-size:0.8rem; margin-bottom: 8px;"></div>
-                <div id="detail-skill-desc" style="font-size:0.85rem; line-height:1.4;"></div>
+                <div id="detail-skill-bonus" style="color:var(--crystal-color);
+                    font-size:0.85rem; font-weight:bold; margin: 8px 0;"></div>
+                <div id="detail-skill-req" style="color:#ffdf00;
+                    font-size:0.8rem; margin-bottom: 8px;"></div>
+                <div id="detail-skill-desc" style="font-size:0.85rem;
+                    line-height:1.4;"></div>
             </div>
         </div>
 
@@ -521,10 +550,13 @@
     </main>
 
     <footer>
-        <button onclick="playSE('click'); showScreen('home-screen')">ホーム</button>
+        <button onclick="playSE('click');
+            showScreen('home-screen')">ホーム</button>
         <button onclick="playSE('click'); showScreen('item-screen')">アイテム</button>
-        <button onclick="playSE('click'); showScreen('skill-screen')">スキル</button>
-        <button onclick="playSE('click'); showScreen('status-screen')">ステータス</button>
+        <button onclick="playSE('click');
+            showScreen('skill-screen')">スキル</button>
+        <button onclick="playSE('click');
+            showScreen('status-screen')">ステータス</button>
     </footer>
 </div>
 
@@ -547,6 +579,7 @@ function playTone(freq, type, duration, vol=0.1, delay=0) {
     
     osc.type = type;
     osc.frequency.setValueAtTime(freq, startTime);
+    
     
     gain.gain.setValueAtTime(0, startTime);
     gain.gain.linearRampToValueAtTime(vol, startTime + 0.02);
@@ -600,7 +633,6 @@ let events = [];
 let items = [];
 let monsters = [];
 const LABELS = {hp:'HP', mp:'MP', physAtk:'物理攻撃', magAtk:'魔法力', fireAtk:'火属性', waterAtk:'水属性', thunderAtk:'雷属性', darkAtk:'闇属性', lightAtk:'光属性', nonElemAtk:'無属性', magDef:'魔法防御', physDef:'物理防御', agility:'俊敏性', luck:'運', cruelty:'凶悪性', leadership:'統率力', charisma:'カリスマ', control:'支配欲', responsibility:'責任感', crystals:'魔力石'};
-
 let gameState = {
     lastPlayTime: Date.now(),
     crystals: 3,
@@ -611,7 +643,6 @@ let gameState = {
     items: {},
     clearedLevels: []
 };
-
 let currentSelectedLevel = null; 
 let currentSkillTab = 'combat'; // 現在選択されているスキルタブ
 
@@ -640,12 +671,12 @@ async function init() {
                 let reqs = Array.isArray(skill.requirements) ? skill.requirements : [skill.requirements];
                 reqs.forEach(req => {
                     if (req && req.value) {
+                   
                         req.value = Math.ceil(req.value * SKILL_DIFFICULTY_MULTIPLIER);
                     }
                 });
             }
         });
-
         const saved = localStorage.getItem('devil_lord_save');
         if (saved) {
             try {
@@ -934,7 +965,8 @@ function endBattle(levelId, monster, isWin) {
                 monster.firstClearReward.forEach(reward => {
                     gameState.items[reward.itemId] = (gameState.items[reward.itemId] || 0) + reward.amount;
                     const it = items.find(i => i.id === reward.itemId);
-                    if (it) itemLog += `<br>🎁 初回クリア報酬: ${it.name} x${reward.amount} を獲得！`;
+                    if (it) itemLog += `<br>🎁 初回クリア報酬: ${it.name} 
+x${reward.amount} を獲得！`;
                 });
             }
         }
@@ -1043,25 +1075,29 @@ function checkAndRenderSkills() {
         for (let req of reqs) {
             if (!req || !req.stat) continue;
             const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : (gameState.innerTraits[req.stat] || 0);
-            if (currentVal < (req.value || 0)) { meetsReq = false; break; }
+            if (currentVal < (req.value 
+|| 0)) { meetsReq = false; break; }
         }
         if (meetsReq && !gameState.acquiredSkills.includes(skill.id)) {
             gameState.acquiredSkills.push(skill.id);
             isNewSkillAcquired = true;
             if (skill.bonus) {
                 for (let k in skill.bonus) {
+            
                     if (gameState.stats[k] !== undefined) gameState.stats[k] += skill.bonus[k];
                     else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += skill.bonus[k];
                 }
-                gameState.stats.magAtk = (gameState.stats.fireAtk || 0) + (gameState.stats.waterAtk || 0) + (gameState.stats.thunderAtk || 0) + (gameState.stats.darkAtk || 0) + (gameState.stats.lightAtk || 0) + (gameState.stats.nonElemAtk || 0);
+                gameState.stats.magAtk = (gameState.stats.fireAtk ||
+0) + (gameState.stats.waterAtk || 0) + (gameState.stats.thunderAtk || 0) + (gameState.stats.darkAtk || 0) + (gameState.stats.lightAtk || 0) + (gameState.stats.nonElemAtk || 0);
             }
         }
     });
-    if (isNewSkillAcquired) { checkAndRenderSkills(); return; }
+    if (isNewSkillAcquired) { checkAndRenderSkills(); return;
+    }
 
     const list = document.getElementById('acquired-skills-list');
     list.innerHTML = '';
-    // タブによるフィルタリング
+// タブによるフィルタリング
     const filteredSkills = gameState.acquiredSkills.filter(skillId => {
         const skill = skills.find(s => s.id === skillId);
         if (!skill) return false;
@@ -1086,6 +1122,7 @@ function checkAndRenderSkills() {
                 document.getElementById('skill-detail-panel').style.display = 'block';
                 document.getElementById('detail-skill-name').innerHTML = `<span style="color:var(--crystal-color); margin-right:5px;">${skill.rarity || ''}</span>${skill.name}`;
                 
+            
                 const elementEl = document.getElementById('detail-skill-element');
                 if (skill.element) {
                     elementEl.innerText = `属性: ${skill.element}`;
@@ -1107,7 +1144,6 @@ function checkAndRenderSkills() {
                     let effectText = '';
                     const ce = skill.combatEffect;
                     const targetStr = ce.target === 'enemy' ? '敵' : (ce.target === 'self' ? '自身' : '対象');
-                    
                     switch(ce.type) {
                         case 'damage':
                             effectText = `${targetStr}にダメージ (基本威力: ${skill.power || 0})`;
@@ -1116,10 +1152,12 @@ function checkAndRenderSkills() {
                             effectText = `${targetStr}のHPを回復 (基本回復力: ${skill.power || 0})`;
                             break;
                         case 'buff':
-                            effectText = `${targetStr}の${LABELS[ce.buffStat] || ce.buffStat}を${ce.buffAmount}上昇 (${ce.turns}ターン)`;
+                            effectText = `${targetStr}の${LABELS[ce.buffStat] ||
+ce.buffStat}を${ce.buffAmount}上昇 (${ce.turns}ターン)`;
                             break;
                         case 'debuff':
-                            effectText = `${targetStr}の${LABELS[ce.buffStat] || ce.buffStat}を${Math.abs(ce.buffAmount)}減少 (${ce.turns}ターン)`;
+                            effectText = `${targetStr}の${LABELS[ce.buffStat] ||
+ce.buffStat}を${Math.abs(ce.buffAmount)}減少 (${ce.turns}ターン)`;
                             break;
                         case 'stun':
                             effectText = `${targetStr}をスタン状態にする (${ce.turns}ターン)`;
@@ -1144,7 +1182,6 @@ function checkAndRenderSkills() {
                     reqText = '【習得条件】 ' + skill.requirements.map(req => `${LABELS[req.stat] || req.stat} ${req.value}以上`).join(', ');
                 }
                 document.getElementById('detail-skill-req').innerText = reqText;
-
                 document.getElementById('detail-skill-desc').innerText = skill.description;
             };
             list.appendChild(btn);
@@ -1154,9 +1191,7 @@ function checkAndRenderSkills() {
 
 function updateAll() {
     if (ranks.length === 0) return;
-    
     gameState.stats.magAtk = (gameState.stats.fireAtk || 0) + (gameState.stats.waterAtk || 0) + (gameState.stats.thunderAtk || 0) + (gameState.stats.darkAtk || 0) + (gameState.stats.lightAtk || 0) + (gameState.stats.nonElemAtk || 0);
-
     checkAndRenderSkills();
     const s = gameState.stats;
     const i = gameState.innerTraits;
@@ -1178,7 +1213,7 @@ function updateAll() {
     const video = document.getElementById('rank-video');
     const newSrc = currentRank.imagePath + "#t=0.001";
     if (video.src !== new URL(newSrc, document.baseURI).href) { video.src = newSrc;
-    video.muted = true; }
+        video.muted = true; }
     
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     if (nextRank) {
@@ -1222,71 +1257,102 @@ function updateTimer() {
 }
 
 function startEvent() {
-    if(gameState.crystals <= 0) { playSE('error'); return alert("魔力が足りません");
-    }
+    if(gameState.crystals <= 0) { playSE('error'); return alert("魔力が足りません"); }
     const currentEvents = events.filter(e => e && e.minRankId <= gameState.currentRankId);
     if (!currentEvents || currentEvents.length === 0) { playSE('error'); return alert("イベントデータが見つかりません。"); }
     const ev = currentEvents[Math.floor(Math.random() * currentEvents.length)];
     try {
         const area = document.getElementById('choices-area');
         area.innerHTML = '';
-        document.getElementById('event-title').innerText = ev.title ||
-        "名称不明のイベント";
+        document.getElementById('event-title').innerText = ev.title || "名称不明のイベント";
         document.getElementById('event-text').innerText = ev.text || "";
         let choices = Array.isArray(ev.choices) ? ev.choices : (ev.choices ? [ev.choices] : []);
         if (choices.length === 0) throw new Error("選択肢(choices)のデータがありません。");
         choices.forEach(c => {
             const b = document.createElement('button');
-            b.style.textAlign = 'left'; b.innerHTML = c.text || "選択肢";
-            let disabled = false;
+            b.style.textAlign = 'left'; 
+            
             let conditions = Array.isArray(c.reqCondition) ? c.reqCondition : (c.reqCondition ? [c.reqCondition] : []);
+            let successRate = 100;
+            
             for (let req of conditions) {
-  
                 if (!req || !req.stat) continue;
                 const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : (gameState.innerTraits[req.stat] || 0);
-                if (currentVal < (req.value || 0)) disabled = true;
+                const targetVal = req.value || 0;
+                if (targetVal > 0) {
+                    let rate = Math.floor((currentVal / targetVal) * 100);
+                    if (rate > 100) rate = 100;
+                    if (rate < successRate) successRate = rate;
+                }
             }
-            if (disabled) {
-     
-                b.classList.add('disabled-btn'); b.innerHTML += `<span class="reason-text">${c.disabledReason || ""}</span>`;
-                b.onclick = () => { playSE('error'); };
-            } else {
-                b.onclick = () => {
-                    let oldRank = gameState.currentRankId;
-    
-                    let oldSkillCount = gameState.acquiredSkills.length;
-                    document.getElementById('result-title').innerText = "イベント結果";
-                    document.getElementById('result-text').innerText = c.resultText || "";
-                    document.getElementById('change-log').innerHTML = ''; document.getElementById('skill-log').innerHTML = ''; document.getElementById('item-log').innerHTML = '';
+            
+            b.innerHTML = (c.text || "選択肢") + ` <span style="font-size:0.8rem; color:#aaa;">(成功率: ${successRate}%)</span>`;
+            
+            b.onclick = () => {
+                let oldRank = gameState.currentRankId;
+                let oldSkillCount = gameState.acquiredSkills.length;
+                document.getElementById('result-title').innerText = "イベント結果";
+                document.getElementById('change-log').innerHTML = ''; document.getElementById('skill-log').innerHTML = ''; document.getElementById('item-log').innerHTML = '';
+                
+                const isSuccess = Math.random() * 100 < successRate;
+                
+                if (isSuccess) {
+                    document.getElementById('result-text').innerText = c.successText || c.resultText || "成功しました。";
+                    
                     if (c.statChanges) {
                         for(let k in c.statChanges) {
-                            if (gameState.stats[k] !== undefined) gameState.stats[k] += c.statChanges[k];
-                            else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += c.statChanges[k];
-                            const sign = c.statChanges[k] > 0 ? "+" : "";
-                            document.getElementById('change-log').innerHTML += `${LABELS[k]}: ${sign}${c.statChanges[k]}<br>`;
+                            if (k === 'magAtk') {
+                                const elemList = ['fireAtk', 'waterAtk', 'thunderAtk', 'darkAtk', 'lightAtk', 'nonElemAtk'];
+                                let amount = c.statChanges[k];
+                                let sign = Math.sign(amount);
+                                let absAmount = Math.abs(amount);
+                                let dist = {};
+                                for(let i=0; i<absAmount; i++) {
+                                    const randElem = elemList[Math.floor(Math.random() * elemList.length)];
+                                    if (gameState.stats[randElem] !== undefined) {
+                                        gameState.stats[randElem] += sign;
+                                        dist[randElem] = (dist[randElem] || 0) + sign;
+                                    }
+                                }
+                                for (let e in dist) {
+                                    const signStr = dist[e] > 0 ? "+" : "";
+                                    document.getElementById('change-log').innerHTML += `${LABELS[e] || e}: ${signStr}${dist[e]}<br>`;
+                                }
+                            } else {
+                                if (gameState.stats[k] !== undefined) gameState.stats[k] += c.statChanges[k];
+                                else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += c.statChanges[k];
+                                const sign = c.statChanges[k] > 0 ? "+" : "";
+                                document.getElementById('change-log').innerHTML += `${LABELS[k] || k}: ${sign}${c.statChanges[k]}<br>`;
+                            }
                         }
                     }
+                    
                     let droppedItemNames = [];
                     let drops = Array.isArray(c.itemDrops) ? c.itemDrops : (c.itemDrops ? [c.itemDrops] : []);
                     drops.forEach(drop => {
                         if (!drop || !drop.itemId) return;
                         if (gameState.currentRankId >= (drop.minRankId || 1)) {
                             if (Math.random() < (drop.probability !== undefined ? drop.probability : 1)) {
-  
                                 gameState.items[drop.itemId] = (gameState.items[drop.itemId] || 0) + 1;
                                 const itemData = items.find(i => i.id === drop.itemId);
-                         
                                 if (itemData) droppedItemNames.push(itemData.name);
                             }
                         }
                     });
+                    
                     const prevSkillCount = gameState.acquiredSkills.length;
                     updateAll(); 
+                    
                     let rankedUp = (gameState.currentRankId > oldRank);
                     let skilledUp = (gameState.acquiredSkills.length > oldSkillCount);
                     let itemDropped = droppedItemNames.length > 0;
-                    if (!rankedUp) { if (skilledUp) { playSE('skill'); } else if (itemDropped) { playSE('item');
-                    } else { playSE('finish'); } }
+                    
+                    if (!rankedUp) { 
+                        if (skilledUp) { playSE('skill'); } 
+                        else if (itemDropped) { playSE('item'); } 
+                        else { playSE('finish'); } 
+                    }
+                    
                     if (skilledUp) {
                         const newSkills = gameState.acquiredSkills.slice(prevSkillCount);
                         newSkills.forEach(id => {
@@ -1294,11 +1360,18 @@ function startEvent() {
                             if (s) document.getElementById('skill-log').innerHTML += `<br>★ スキル【${s.name}】を習得！`;
                         });
                     }
-                    if (itemDropped) { document.getElementById('item-log').innerHTML = `<br>🎁 ドロップ: ${droppedItemNames.join('、')} を獲得！`;
+                    if (itemDropped) { 
+                        document.getElementById('item-log').innerHTML = `<br>🎁 ドロップ: ${droppedItemNames.join('、')} を獲得！`;
                     }
-                    showScreen('result-screen');
-                };
-            }
+                } else {
+                    document.getElementById('result-text').innerText = c.failText || "失敗しました…";
+                    updateAll();
+                    let rankedUp = (gameState.currentRankId > oldRank);
+                    if (!rankedUp) { playSE('error'); }
+                }
+                
+                showScreen('result-screen');
+            };
             area.appendChild(b);
         });
         playSE('click');
@@ -1343,11 +1416,13 @@ function renderItems() {
                                 <span class="item-rarity rarity-${itemData.rarity}">${itemData.rarity}</span>${itemData.name}
                             </div>
                             <div style="color:var(--accent-gold); font-weight:bold;">所持: ${count}</div>
+       
                         </div>
   
                         <div style="font-size:0.8rem; color:#aaa; margin-top:6px; line-height:1.4;">${itemData.description}</div>
                         <div style="font-size:0.8rem; color:var(--crystal-color); font-weight:bold; margin-top:4px;">【効果】 ${effectsText}</div>
-                        <button class="item-use-btn" onclick="useItem(${itemData.id})">使う</button>
+                        
+<button class="item-use-btn" onclick="useItem(${itemData.id})">使う</button>
                    
                     </div>`;
             }
