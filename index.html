@@ -116,6 +116,21 @@
         .status-label { font-size: 0.7rem; color: #bcaed4; margin-bottom: 2px; }
         .status-value { font-size: 1rem; font-weight: bold; color: var(--accent-gold); }
 
+        /* 育成ゲーム風ステータス用の追加CSS */
+        .status-section-title {
+            font-size: 0.9rem; font-weight: bold; color: var(--accent-gold);
+            border-left: 4px solid var(--crystal-color);
+            padding-left: 8px; margin-bottom: 8px;
+            background: linear-gradient(90deg, rgba(92, 58, 130, 0.4), transparent);
+        }
+        .status-bar-container {
+            width: 100%; background: #1a0a25; height: 6px; border-radius: 3px; margin-top: 4px;
+            overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+        }
+        .status-bar-fill {
+            height: 100%; background: linear-gradient(90deg, #d100ff, #00ffaa);
+        }
+
         button {
             background: var(--btn-bg);
             color: var(--text-color);
@@ -387,10 +402,17 @@
         </div>
 
         <div id="status-screen" class="screen">
-            <h3>ステータス</h3>
-            <div class="status-grid" id="stat-list"></div>
-            <h3 style="margin-top: 15px;">内面性</h3>
-            <div class="status-grid" id="inner-list"></div>
+            <h3 style="text-align: center; font-size: 1.2rem; color: #fff; background: linear-gradient(90deg, transparent, #4b2373, transparent); padding: 5px 0; border: none;">総合ステータス</h3>
+            <div id="status-basic-area" style="display: flex; gap: 10px; margin-bottom: 15px;"></div>
+            
+            <div class="status-section-title">▶ 基礎能力</div>
+            <div class="status-grid" id="stat-main-list"></div>
+            
+            <div class="status-section-title" style="margin-top: 10px;">▶ 属性魔力</div>
+            <div class="status-grid" id="stat-elem-list"></div>
+            
+            <div class="status-section-title" style="margin-top: 10px;">▶ 魔族の性（内面性）</div>
+            <div class="status-grid" id="stat-inner-list"></div>
         </div>
 
         <div id="skill-screen" class="screen">
@@ -1453,13 +1475,67 @@ function startEvent() {
     }
 }
 
+// 育成ゲーム風にUIを更新するための修正版
 function renderStats() {
-    const labels = [ {id: 'stat-list', data: gameState.stats}, {id: 'inner-list', data: gameState.innerTraits} ];
-    labels.forEach(l => {
-        const target = document.getElementById(l.id);
+    const s = gameState.stats;
+    const i = gameState.innerTraits;
+    
+    // HPとMPの特別枠描画
+    const basicArea = document.getElementById('status-basic-area');
+    basicArea.innerHTML = `
+        <div style="flex: 1; background: rgba(30,15,45,0.8); border: 1px solid #7c4bb3; border-radius: 8px; padding: 10px; text-align: center;">
+            <div style="font-size: 0.8rem; color: #bcaed4;">HP</div>
+            <div style="font-size: 1.4rem; font-weight: bold; color: #32cd32; text-shadow: 0 0 5px rgba(50,205,50,0.5);">${s.hp}</div>
+        </div>
+        <div style="flex: 1; background: rgba(30,15,45,0.8); border: 1px solid #7c4bb3; border-radius: 8px; padding: 10px; text-align: center;">
+            <div style="font-size: 0.8rem; color: #bcaed4;">MP</div>
+            <div style="font-size: 1.4rem; font-weight: bold; color: #1e90ff; text-shadow: 0 0 5px rgba(30,144,255,0.5);">${s.mp}</div>
+        </div>
+    `;
+
+    // パラメータを分類
+    const mainKeys = ['physAtk', 'magAtk', 'physDef', 'magDef', 'agility', 'luck'];
+    const elemKeys = ['fireAtk', 'waterAtk', 'thunderAtk', 'darkAtk', 'lightAtk', 'nonElemAtk'];
+    const innerKeys = ['cruelty', 'leadership', 'charisma', 'control', 'responsibility'];
+
+    // 個別のリスト描画用の関数
+    const renderList = (keys, dataObj, targetId, colorType) => {
+        const target = document.getElementById(targetId);
         target.innerHTML = '';
-        for(let k in l.data) { target.innerHTML += `<div class="status-item"><div class="status-label">${LABELS[k]}</div><div class="status-value">${l.data[k]}</div></div>`; }
-    });
+        keys.forEach(k => {
+            const val = dataObj[k] || 0;
+            // 数値から適当なゲージ幅を算出（MAX想定500とするが超えても100%にする）
+            const fillPct = Math.min(100, Math.max(0, (val / 500) * 100));
+            
+            let barColor = "linear-gradient(90deg, #5c3a82, #d100ff)";
+            if (colorType === 'elem') {
+                if (k==='fireAtk') barColor = "linear-gradient(90deg, #8b0000, #ff4500)";
+                if (k==='waterAtk') barColor = "linear-gradient(90deg, #00008b, #1e90ff)";
+                if (k==='thunderAtk') barColor = "linear-gradient(90deg, #b8860b, #ffd700)";
+                if (k==='darkAtk') barColor = "linear-gradient(90deg, #2b00ff, #8a2be2)";
+                if (k==='lightAtk') barColor = "linear-gradient(90deg, #daa520, #ffffe0)";
+                if (k==='nonElemAtk') barColor = "linear-gradient(90deg, #555, #aaa)";
+            } else if (colorType === 'inner') {
+                barColor = "linear-gradient(90deg, #006400, #32cd32)";
+            }
+
+            target.innerHTML += `
+                <div class="status-item">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <span class="status-label">${LABELS[k]}</span>
+                        <span class="status-value">${val}</span>
+                    </div>
+                    <div class="status-bar-container">
+                        <div class="status-bar-fill" style="width: ${fillPct}%; background: ${barColor};"></div>
+                    </div>
+                </div>
+            `;
+        });
+    };
+
+    renderList(mainKeys, s, 'stat-main-list', 'main');
+    renderList(elemKeys, s, 'stat-elem-list', 'elem');
+    renderList(innerKeys, i, 'stat-inner-list', 'inner');
 }
 
 function renderItems() {
