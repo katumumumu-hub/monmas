@@ -1438,5 +1438,1445 @@
         "itemDrops": []
       }
     ]
+  },
+  {
+    "id": 41,
+    "title": "天使の斥候",
+    "text": "天界から偵察に来た下級天使の斥候部隊と遭遇した。奴らはまだこちらに気づいていない。",
+    "minRankId": 2,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "奇襲して全滅させる",
+        "reqCondition": [{"stat": "agility", "value": 35}, {"stat": "darkAtk", "value": 30}],
+        "successText": "闇に紛れて音もなく天使たちを仕留めた。見事な奇襲だ。",
+        "failText": "動きが遅く、奇襲に失敗して反撃を受けた…",
+        "statChanges": {"agility": 10, "darkAtk": 10, "cruelty": 5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "生け捕りにして尋問する",
+        "reqCondition": [{"stat": "control", "value": 35}],
+        "successText": "天使を洗脳状態で捕縛し、天界の有益な情報を引き出した。",
+        "failText": "精神の抵抗が強く、逃げられてしまった…",
+        "statChanges": {"control": 15, "charisma": 5, "leadership": 5},
+        "itemDrops": [ { "itemId": 13, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "やり過ごして上官に報告する",
+        "reqCondition": [],
+        "successText": "無用な戦闘は避け、冷静に斥候の存在を報告した。堅実な判断だ。",
+        "failText": "",
+        "statChanges": {"responsibility": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "title": "魔界竜の卵",
+    "text": "火山の火口付近で、脈打つ巨大な魔界竜の卵を発見した。",
+    "minRankId": 3,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "孵化させて使魔にする",
+        "reqCondition": [{"stat": "fireAtk", "value": 40}, {"stat": "control", "value": 35}],
+        "successText": "己の炎で卵を孵し、生まれたての小竜を支配下に置いた！",
+        "failText": "魔力が暴走し、卵から発せられた熱線で大火傷を負った…",
+        "statChanges": {"fireAtk": 15, "control": 15, "hp": -10},
+        "itemDrops": [ { "itemId": 14, "probability": 0.5, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "卵を叩き割って喰らう",
+        "reqCondition": [{"stat": "physAtk", "value": 45}],
+        "successText": "硬い殻を叩き割り、中身を啜った。凄まじい生命力が宿った！",
+        "failText": "殻が硬すぎて割れず、親竜が帰ってくる前に逃げた…",
+        "statChanges": {"hp": 30, "physAtk": 10, "cruelty": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "危険なので立ち去る",
+        "reqCondition": [],
+        "successText": "親竜に鉢合わせる前に、静かにその場を離れた。",
+        "failText": "",
+        "statChanges": {"luck": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "title": "古代兵器の起動",
+    "text": "遺跡の調査中、朽ち果てたはずの巨大な魔導兵器が突然起動し始めた！",
+    "minRankId": 3,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "物理的に破壊する",
+        "reqCondition": [{"stat": "physAtk", "value": 50}, {"stat": "physDef", "value": 40}],
+        "successText": "強引に装甲を引き剥がし、動力炉を粉砕した！",
+        "failText": "圧倒的な装甲を貫けず、ビームで吹き飛ばされた…",
+        "statChanges": {"physAtk": 15, "physDef": 10, "hp": -15},
+        "itemDrops": [ { "itemId": 11, "probability": 1.0, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "制御系をハッキングする",
+        "reqCondition": [{"stat": "nonElemAtk", "value": 45}, {"stat": "magDef", "value": 30}],
+        "successText": "兵器の魔力回路に干渉し、強制停止させることに成功した。",
+        "failText": "魔力回路の逆流に遭い、精神にダメージを受けた…",
+        "statChanges": {"nonElemAtk": 20, "mp": -10},
+        "itemDrops": [ { "itemId": 13, "probability": 0.8, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "全力で逃亡する",
+        "reqCondition": [],
+        "successText": "遺跡から一目散に逃げ出した。命からがら生還した。",
+        "failText": "",
+        "statChanges": {"agility": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "title": "異端審問官の強襲",
+    "text": "人間界の精鋭である異端審問官の部隊が、魔族狩りのために罠を仕掛けてきた。",
+    "minRankId": 3,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "罠ごと正面から蹴散らす",
+        "reqCondition": [{"stat": "physAtk", "value": 45}, {"stat": "cruelty", "value": 30}],
+        "successText": "罠ごと異端審問官たちを鏖殺した。圧倒的な恐怖を植え付けた。",
+        "failText": "罠に嵌まり、聖なる武器で手痛いダメージを受けた…",
+        "statChanges": {"physAtk": 10, "cruelty": 15, "hp": -15},
+        "itemDrops": [ { "itemId": 14, "probability": 0.8, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "逆に罠に嵌める",
+        "reqCondition": [{"stat": "control", "value": 40}, {"stat": "agility", "value": 35}],
+        "successText": "相手の狙いを見抜き、逆に包囲網を敷いて一網打尽にした。",
+        "failText": "読み違えてしまい、窮地に陥った…",
+        "statChanges": {"control": 15, "leadership": 10, "agility": 5},
+        "itemDrops": [ { "itemId": 17, "probability": 0.5, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "部下を犠牲にして逃げる",
+        "reqCondition": [],
+        "successText": "配下を囮にして自分だけは安全に逃げ延びた。冷酷だが効果的だ。",
+        "failText": "",
+        "statChanges": {"cruelty": 10, "leadership": -15, "charisma": -10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "title": "呪われた金貨",
+    "text": "大量の金貨が詰まった宝箱を見つけたが、強烈な呪いのオーラを放っている。",
+    "minRankId": 2,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "呪いを跳ね返して金貨を得る",
+        "reqCondition": [{"stat": "magDef", "value": 40}, {"stat": "luck", "value": 30}],
+        "successText": "強靭な魔力耐性で呪いを無効化し、莫大な富を手に入れた！",
+        "failText": "呪いに耐えきれず、全身に激痛が走った…",
+        "statChanges": {"magDef": 15, "luck": 10, "hp": -15},
+        "itemDrops": [ { "itemId": 11, "probability": 1.0, "minRankId": 2 }, { "itemId": 11, "probability": 1.0, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "闇魔法の触媒にする",
+        "reqCondition": [{"stat": "darkAtk", "value": 35}],
+        "successText": "金貨の呪いを抽出し、自身の闇魔法の威力を大幅に高めた。",
+        "failText": "抽出に失敗し、金貨は砂になって消えた…",
+        "statChanges": {"darkAtk": 20, "mp": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "不気味なので放置する",
+        "reqCondition": [],
+        "successText": "欲をかかずにその場を離れた。",
+        "failText": "",
+        "statChanges": {"responsibility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "title": "魔王軍の派閥争い",
+    "text": "上位魔将同士の激しい派閥争いに巻き込まれ、どちらにつくか選択を迫られた。",
+    "minRankId": 3,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "武闘派の将軍につく",
+        "reqCondition": [{"stat": "physAtk", "value": 45}, {"stat": "hp", "value": 50}],
+        "successText": "前線で武功を上げ、武闘派将軍からの信頼と褒美を勝ち取った。",
+        "failText": "前線で重傷を負い、使い捨てにされた…",
+        "statChanges": {"physAtk": 15, "hp": 10, "charisma": 10},
+        "itemDrops": [ { "itemId": 14, "probability": 0.8, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "謀略派の将軍につく",
+        "reqCondition": [{"stat": "control", "value": 45}, {"stat": "charisma", "value": 35}],
+        "successText": "巧みな工作活動で敵対派閥を出し抜き、参謀としての地位を確立した。",
+        "failText": "謀略が見破られ、逆に窮地に立たされた…",
+        "statChanges": {"control": 15, "leadership": 15, "cruelty": 10},
+        "itemDrops": [ { "itemId": 12, "probability": 0.8, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "中立を保ち日和見する",
+        "reqCondition": [],
+        "successText": "適当に理由をつけてどちらにも加担せず、嵐が過ぎるのを待った。",
+        "failText": "",
+        "statChanges": {"agility": 10, "luck": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "title": "冥界の番犬との遭遇",
+    "text": "魔界の最下層で、冥界への門を守る巨大な番犬が唸り声を上げている。",
+    "minRankId": 4,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "力でねじ伏せて門を通る",
+        "reqCondition": [{"stat": "physAtk", "value": 60}, {"stat": "physDef", "value": 50}],
+        "successText": "凄まじい死闘の末に番犬を気絶させ、冥界の宝を手に入れた！",
+        "failText": "番犬の牙に引き裂かれ、這々の体で逃げ帰った…",
+        "statChanges": {"physAtk": 20, "hp": -25, "charisma": 15},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "闇の波動で威圧する",
+        "reqCondition": [{"stat": "darkAtk", "value": 60}, {"stat": "control", "value": 50}],
+        "successText": "己の圧倒的な闇の力を見せつけると、番犬は道を譲った。",
+        "failText": "威圧しきれず、激しく吠え立てられた…",
+        "statChanges": {"darkAtk": 20, "control": 15, "mp": -10},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "命が惜しいので引き返す",
+        "reqCondition": [],
+        "successText": "恐ろしいプレッシャーに冷や汗を流し、引き返した。",
+        "failText": "",
+        "statChanges": {"luck": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "title": "毒の沼地の浄化任務",
+    "text": "魔王城の拡張のため、猛毒の沼地を無害化する任務を押し付けられた。",
+    "minRankId": 3,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "炎魔法で沼ごと蒸発させる",
+        "reqCondition": [{"stat": "fireAtk", "value": 50}],
+        "successText": "すさまじい火炎で沼の水分と毒素を完全に焼き払った！",
+        "failText": "火力が足りず、有毒ガスを発生させてしまった…",
+        "statChanges": {"fireAtk": 15, "hp": -10, "responsibility": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "下級魔物に作業を強要する",
+        "reqCondition": [{"stat": "leadership", "value": 40}, {"stat": "cruelty", "value": 35}],
+        "successText": "配下を容赦なく酷使し、犠牲を出しながらも沼を埋め立てさせた。",
+        "failText": "魔物たちが反乱を起こし、作業がストップした…",
+        "statChanges": {"leadership": 15, "cruelty": 15, "charisma": -5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "適当に土を被せて報告する",
+        "reqCondition": [],
+        "successText": "表面だけ土を被せて「完了しました」と嘘をついた。",
+        "failText": "",
+        "statChanges": {"responsibility": -15, "luck": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "title": "狂える魔術師",
+    "text": "禁忌に触れて正気を失った上位魔術師が、城内で無差別に魔法を放っている！",
+    "minRankId": 3,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "魔法戦で打ち倒す",
+        "reqCondition": [{"stat": "nonElemAtk", "value": 55}, {"stat": "magDef", "value": 45}],
+        "successText": "激しい魔力の衝突の末、圧倒的な魔力で狂人を消し炭にした。",
+        "failText": "相手の魔法の方が強大で、重傷を負ってしまった…",
+        "statChanges": {"nonElemAtk": 15, "magDef": 15, "mp": -20},
+        "itemDrops": [ { "itemId": 13, "probability": 0.8, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "隙を突いて物理で気絶させる",
+        "reqCondition": [{"stat": "agility", "value": 45}, {"stat": "physAtk", "value": 40}],
+        "successText": "魔法の死角に素早く回り込み、強烈な一撃で沈黙させた。",
+        "failText": "近づく前に魔法の直撃を受けて吹き飛ばされた…",
+        "statChanges": {"agility": 15, "physAtk": 10, "hp": -10},
+        "itemDrops": [ { "itemId": 11, "probability": 0.5, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "巻き込まれないよう遠巻きに見る",
+        "reqCondition": [],
+        "successText": "他の衛兵が鎮圧するのを安全な場所から見守った。",
+        "failText": "",
+        "statChanges": {"luck": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "title": "英雄の亡霊",
+    "text": "かつて魔王に敗れた人間の英雄の亡霊が、怨念と共に彷徨っている。",
+    "minRankId": 3,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "完全な絶望を与えて消滅させる",
+        "reqCondition": [{"stat": "darkAtk", "value": 55}, {"stat": "cruelty", "value": 40}],
+        "successText": "精神を破壊する闇の魔法で、英雄の亡霊を二度と蘇らぬよう消し去った。",
+        "failText": "亡霊の執念に押し負け、聖なる光で浄化されかけた…",
+        "statChanges": {"darkAtk": 20, "cruelty": 15, "mp": -15},
+        "itemDrops": [ { "itemId": 12, "probability": 0.8, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "武で打ち破り屈服させる",
+        "reqCondition": [{"stat": "physAtk", "value": 50}, {"stat": "charisma", "value": 40}],
+        "successText": "圧倒的な武威を見せつけ、亡霊を己の配下として服従させた！",
+        "failText": "英雄の剣技は健在で、逆に斬り伏せられた…",
+        "statChanges": {"physAtk": 15, "charisma": 15, "leadership": 10},
+        "itemDrops": [ { "itemId": 14, "probability": 0.5, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "無視して通り過ぎる",
+        "reqCondition": [],
+        "successText": "死者の無念など知ったことではない。足早にその場を去った。",
+        "failText": "",
+        "statChanges": {"agility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "title": "上位悪魔の晩餐会",
+    "text": "名立たる上位悪魔たちが集う晩餐会に招待された。一歩間違えれば命はない。",
+    "minRankId": 4,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "威風堂々と振る舞う",
+        "reqCondition": [{"stat": "charisma", "value": 60}, {"stat": "leadership", "value": 50}],
+        "successText": "堂々たる態度で上位悪魔たちと渡り合い、強者としての格を見せつけた。",
+        "failText": "プレッシャーに負けて萎縮し、嘲笑の的になった…",
+        "statChanges": {"charisma": 25, "leadership": 15, "luck": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "毒の盛られた料理を平然と食べる",
+        "reqCondition": [{"stat": "hp", "value": 70}, {"stat": "magDef", "value": 50}],
+        "successText": "猛毒入りの料理を美味そうに平らげ、周囲を戦慄させた。",
+        "failText": "毒に耐えきれず、その場で血を吐いて倒れた…",
+        "statChanges": {"hp": -20, "magDef": 20, "physDef": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "目立たないように壁際にいる",
+        "reqCondition": [],
+        "successText": "誰の目にも留まらず、ただ美味しい料理だけを食べて帰った。",
+        "failText": "",
+        "statChanges": {"luck": 5, "hp": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "title": "天界の門への奇襲",
+    "text": "魔王軍の一部隊として、天界の防衛線への小規模な奇襲作戦に参加した。",
+    "minRankId": 4,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "先陣を切って門を破壊する",
+        "reqCondition": [{"stat": "physAtk", "value": 65}, {"stat": "hp", "value": 60}],
+        "successText": "天使たちの矢を浴びながらも、圧倒的な膂力で門を粉砕し武功を挙げた！",
+        "failText": "集中砲火を浴びて倒れ、撤退を余儀なくされた…",
+        "statChanges": {"physAtk": 20, "charisma": 20, "hp": -30},
+        "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "闇魔法で防衛網を無力化する",
+        "reqCondition": [{"stat": "darkAtk", "value": 60}, {"stat": "control", "value": 55}],
+        "successText": "広範囲の闇で天使の視界を奪い、部隊の無傷の突入を支援した。",
+        "failText": "聖なる光の結界に阻まれ、魔法が霧散した…",
+        "statChanges": {"darkAtk": 20, "leadership": 15, "mp": -20},
+        "itemDrops": [ { "itemId": 13, "probability": 0.8, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "後方で適当に叫んでいるだけにする",
+        "reqCondition": [],
+        "successText": "戦っているフリをして声だけを出していた。無傷で済んだ。",
+        "failText": "",
+        "statChanges": {"responsibility": -10, "luck": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "title": "魂のオークション",
+    "text": "裏社会で開催されている、極上の魂が出品されるオークション会場に潜入した。",
+    "minRankId": 4,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "財力とカリスマで競り落とす",
+        "reqCondition": [{"stat": "charisma", "value": 65}, {"stat": "luck", "value": 50}],
+        "successText": "周囲を圧倒する威圧感で入札を諦めさせ、安値で極上の魂を手に入れた。",
+        "failText": "他の大悪魔に競り負け、恥をかいた…",
+        "statChanges": {"charisma": 15, "luck": 10},
+        "itemDrops": [ { "itemId": 12, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "会場を強襲してすべて奪う",
+        "reqCondition": [{"stat": "physAtk", "value": 70}, {"stat": "cruelty", "value": 60}],
+        "successText": "護衛を皆殺しにし、出品物と参加者の金品をすべて強奪した。真の悪意だ。",
+        "failText": "強力な警備網に阻まれ、命からがら逃げ出した…",
+        "statChanges": {"physAtk": 15, "cruelty": 25, "hp": -20},
+        "itemDrops": [ { "itemId": 17, "probability": 0.8, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "手を出さずに見学する",
+        "reqCondition": [],
+        "successText": "裏社会の相場を学び、静かに会場を後にした。",
+        "failText": "",
+        "statChanges": {"magDef": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "title": "空間の歪み",
+    "text": "城の廊下を歩いていると、突如として異次元に繋がる空間の歪みが生じた。",
+    "minRankId": 4,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "魔力で歪みを縫い合わせる",
+        "reqCondition": [{"stat": "nonElemAtk", "value": 60}, {"stat": "control", "value": 60}],
+        "successText": "高度な時空魔法を操り、空間の裂け目を完全に修復した。見事な腕前だ。",
+        "failText": "制御に失敗し、次元の狭間に吸い込まれかけた…",
+        "statChanges": {"nonElemAtk": 20, "control": 20, "mp": -20},
+        "itemDrops": [ { "itemId": 13, "probability": 0.5, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "歪みの中に飛び込んでみる",
+        "reqCondition": [{"stat": "luck", "value": 60}, {"stat": "agility", "value": 50}],
+        "successText": "異次元を突破し、未知のアーティファクトを手に入れて帰還した！",
+        "failText": "異次元の乱気流に巻き込まれ、あちこち負傷して吐き出された…",
+        "statChanges": {"luck": 15, "agility": 15, "hp": -15},
+        "itemDrops": [ { "itemId": 17, "probability": 0.8, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "見なかったことにして引き返す",
+        "reqCondition": [],
+        "successText": "危険なものには近づかない。別のルートで目的地へ向かった。",
+        "failText": "",
+        "statChanges": {"responsibility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "title": "反逆の魔将軍",
+    "text": "狂気に囚われた魔将軍が軍の一部を引き連れて反旗を翻した。鎮圧部隊に選ばれた。",
+    "minRankId": 4,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "魔将軍と一騎打ちをする",
+        "reqCondition": [{"stat": "physAtk", "value": 75}, {"stat": "hp", "value": 80}],
+        "successText": "天を揺るがす激闘の末、魔将軍の首を刎ねた！軍における名声は最高潮に達した。",
+        "failText": "将軍の圧倒的な力に押し潰され、瀕死の重傷を負った…",
+        "statChanges": {"physAtk": 25, "hp": -40, "charisma": 30, "leadership": 20},
+        "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "反乱軍の指揮系統を麻痺させる",
+        "reqCondition": [{"stat": "control", "value": 65}, {"stat": "leadership", "value": 60}],
+        "successText": "裏工作と精神操作で反乱軍の連携を崩し、最小限の被害で鎮圧に成功した。",
+        "failText": "作戦が見破られ、逆に包囲されてしまった…",
+        "statChanges": {"control": 20, "leadership": 25, "responsibility": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "陣地の奥に隠れてやり過ごす",
+        "reqCondition": [],
+        "successText": "激しい戦火から身を隠し、戦いが終わるのを待った。",
+        "failText": "",
+        "statChanges": {"agility": 10, "charisma": -10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "title": "聖剣の破壊",
+    "text": "捕らえた勇者が持っていた「伝説の聖剣」を破壊する役目を任された。",
+    "minRankId": 4,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "闇の業火で熔かす",
+        "reqCondition": [{"stat": "darkAtk", "value": 70}, {"stat": "fireAtk", "value": 60}],
+        "successText": "聖なる加護を漆黒の炎で焼き尽くし、ただの鉄屑に変えてやった。",
+        "failText": "聖なる光に跳ね返され、深刻な火傷を負った…",
+        "statChanges": {"darkAtk": 20, "fireAtk": 15, "mp": -15},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "凄まじい膂力で叩き折る",
+        "reqCondition": [{"stat": "physAtk", "value": 80}],
+        "successText": "伝説の武具を腕力だけでへし折り、周囲の魔族を恐れさせた！",
+        "failText": "剣が硬すぎて折れず、逆に衝撃で腕を痛めた…",
+        "statChanges": {"physAtk": 20, "cruelty": 15, "charisma": 15},
+        "itemDrops": [ { "itemId": 11, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "破壊したふりをして隠し持つ",
+        "reqCondition": [],
+        "successText": "いつか使えるかもしれない。適当な剣を壊して偽装し、聖剣を隠し持った。",
+        "failText": "",
+        "statChanges": {"luck": 15, "responsibility": -20},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "title": "竜の谷での試練",
+    "text": "更なる高みを目指し、強大な竜族が棲む谷へ足を踏み入れた。",
+    "minRankId": 4,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "古竜に戦いを挑む",
+        "reqCondition": [{"stat": "physAtk", "value": 75}, {"stat": "physDef", "value": 70}, {"stat": "hp", "value": 80}],
+        "successText": "三日三晩の死闘の末、古竜をねじ伏せてその力を認めさせた！",
+        "failText": "ブレスの一撃で消し炭にされかけ、逃げ帰った…",
+        "statChanges": {"physAtk": 20, "physDef": 20, "hp": -30},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "竜の宝物庫から秘宝を盗み出す",
+        "reqCondition": [{"stat": "agility", "value": 75}, {"stat": "luck", "value": 60}],
+        "successText": "竜が眠っている隙を突き、山のような財宝の中から最高級のアーティファクトを盗み出した！",
+        "failText": "足音で竜が目覚めてしまい、尻尾で遠くまで吹き飛ばされた…",
+        "statChanges": {"agility": 20, "luck": 15, "hp": -20},
+        "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "景色だけ見て帰る",
+        "reqCondition": [],
+        "successText": "竜の谷の雄大な景色に感動し、無事に帰還した。",
+        "failText": "",
+        "statChanges": {"magDef": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "title": "虚無からの使者",
+    "text": "すべてを無に帰す「虚無の空間」から、名状しがたい使者が現れた。",
+    "minRankId": 5,
+    "weight": 40,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "己の存在をかけて対話する",
+        "reqCondition": [{"stat": "control", "value": 80}, {"stat": "charisma", "value": 75}],
+        "successText": "精神が崩壊するほどの負荷に耐え、虚無の使者と契約を結ぶことに成功した。",
+        "failText": "精神が虚無に飲み込まれかけ、自我を失いそうになった…",
+        "statChanges": {"control": 25, "magDef": 20, "mp": -30},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "無属性魔法の極致で撃退する",
+        "reqCondition": [{"stat": "nonElemAtk", "value": 85}, {"stat": "mp", "value": 80}],
+        "successText": "虚無に対抗しうる純粋な魔力の塊を叩きつけ、使者を次元の彼方へ追いやった！",
+        "failText": "魔力が吸収されてしまい、手も足も出なかった…",
+        "statChanges": {"nonElemAtk": 25, "mp": -40},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "全力で背を向けて逃げる",
+        "reqCondition": [],
+        "successText": "振り返らずに逃走した。あれは関わってはいけない存在だ。",
+        "failText": "",
+        "statChanges": {"agility": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "title": "記憶を喰らう魔物",
+    "text": "城の地下深くで、他者の記憶と経験を喰らう不定形の魔物に襲われた。",
+    "minRankId": 4,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "己の悪意を流し込んで破裂させる",
+        "reqCondition": [{"stat": "cruelty", "value": 70}, {"stat": "darkAtk", "value": 65}],
+        "successText": "濃密すぎる殺意と悪意を喰らわせ、魔物の許容量を超えさせて自滅させた。",
+        "failText": "逆に大切な戦いの記憶をいくつか奪われてしまった…",
+        "statChanges": {"cruelty": 20, "darkAtk": 15, "physAtk": -5},
+        "itemDrops": [ { "itemId": 12, "probability": 0.8, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "俊敏な動きで核を穿つ",
+        "reqCondition": [{"stat": "agility", "value": 70}, {"stat": "physAtk", "value": 60}],
+        "successText": "触手を掻き潜り、魔物の中心にある核を正確に破壊した。",
+        "failText": "触手に捕まり、体力を大きく削られた…",
+        "statChanges": {"agility": 15, "physAtk": 15, "hp": -15},
+        "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "不要な記憶を囮にして逃げる",
+        "reqCondition": [],
+        "successText": "どうでもいい思い出を投げ与え、それに夢中になっている隙に逃げた。",
+        "failText": "",
+        "statChanges": {"responsibility": -5, "luck": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "title": "巨大ゴーレムの暴走",
+    "text": "軍事工場で建造中だった山のように巨大な魔鋼鉄ゴーレムが暴走を始めた！",
+    "minRankId": 5,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "正面から殴り合って止める",
+        "reqCondition": [{"stat": "physAtk", "value": 90}, {"stat": "physDef", "value": 80}, {"stat": "hp", "value": 100}],
+        "successText": "巨大な鋼の拳を正面から受け止め、渾身のカウンターでゴーレムを粉砕した！",
+        "failText": "鋼の質量に押し潰され、全身の骨が軋んだ…",
+        "statChanges": {"physAtk": 25, "physDef": 20, "hp": -40, "charisma": 20},
+        "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "内部に侵入して制御を奪う",
+        "reqCondition": [{"stat": "agility", "value": 80}, {"stat": "control", "value": 75}],
+        "successText": "装甲の隙間から内部へ侵入し、魔力炉の制御を完全に奪い取った。",
+        "failText": "内部の防衛システムに引っかかり、電撃を浴びた…",
+        "statChanges": {"agility": 20, "control": 20, "leadership": 10},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "他の魔族に任せて避難する",
+        "reqCondition": [],
+        "successText": "「誰か止めてくれー！」と叫びながら安全地帯へ逃げ込んだ。",
+        "failText": "",
+        "statChanges": {"agility": 10, "responsibility": -10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "title": "大天使の降臨",
+    "text": "戦場に圧倒的な光の柱が立ち、六枚の羽を持つ大天使が降臨した。",
+    "minRankId": 5,
+    "weight": 40,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "極大の闇魔法で光を呑み込む",
+        "reqCondition": [{"stat": "darkAtk", "value": 90}, {"stat": "magDef", "value": 80}],
+        "successText": "天界の光を漆黒の闇で喰らい尽くし、大天使を深淵へ引き摺り下ろした！",
+        "failText": "浄化の光に灼かれ、魔力が消え失せそうになった…",
+        "statChanges": {"darkAtk": 30, "magDef": 20, "mp": -40, "cruelty": 15},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "軍団を指揮して波状攻撃を仕掛ける",
+        "reqCondition": [{"stat": "leadership", "value": 85}, {"stat": "responsibility", "value": 70}],
+        "successText": "的確な指示と絶え間ない波状攻撃で大天使を疲弊させ、見事に撤退に追い込んだ。",
+        "failText": "部隊が光の威圧に恐れをなして逃げ出し、作戦が瓦解した…",
+        "statChanges": {"leadership": 25, "responsibility": 20, "charisma": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "死んだふりをしてやり過ごす",
+        "reqCondition": [],
+        "successText": "泥まみれになって死体の山に紛れた。大天使は気付かずに飛び去った。",
+        "failText": "",
+        "statChanges": {"luck": 15, "charisma": -20},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "title": "深淵からの呼び声",
+    "text": "魔界の底なし穴から、名も無き邪神の誘う声が頭の中に響き渡る。",
+    "minRankId": 4,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "声をはね除け己の意志を保つ",
+        "reqCondition": [{"stat": "responsibility", "value": 70}, {"stat": "control", "value": 70}],
+        "successText": "強靭な精神力で邪神の干渉を断ち切り、精神の壁をより強固なものにした。",
+        "failText": "声に飲み込まれかけ、激しい頭痛に襲われた…",
+        "statChanges": {"responsibility": 20, "control": 15, "magDef": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "声に応え、禁忌の知識を引き出す",
+        "reqCondition": [{"stat": "luck", "value": 75}, {"stat": "cruelty", "value": 60}],
+        "successText": "狂気と引き換えに、常識外れの魔法の知識を脳に焼き付けた。",
+        "failText": "発狂しそうになり、慌てて穴から離れた…",
+        "statChanges": {"magDef": 25, "darkAtk": 20, "hp": -20},
+        "itemDrops": [ { "itemId": 12, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "耳を塞いで歌を歌う",
+        "reqCondition": [],
+        "successText": "大声で魔界の軍歌を歌い、不気味な声をかき消した。",
+        "failText": "",
+        "statChanges": {"charisma": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "title": "天界の兵器工場破壊工作",
+    "text": "天界の浮遊島にある兵器工場に単独で潜入する極秘任務を受けた。",
+    "minRankId": 5,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "隠密行動で中枢を爆破する",
+        "reqCondition": [{"stat": "agility", "value": 85}, {"stat": "control", "value": 80}],
+        "successText": "誰一人殺さずに中枢へ到達し、完璧な工作で工場を空の彼方へ散らした。",
+        "failText": "警報装置に引っかかり、天使の群れから命からがら逃げ出した…",
+        "statChanges": {"agility": 25, "control": 20, "luck": 10},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "正面突破で全てを破壊する",
+        "reqCondition": [{"stat": "physAtk", "value": 85}, {"stat": "fireAtk", "value": 75}],
+        "successText": "警備兵もろとも施設を炎と暴力で蹂躙し、灰燼に帰した。恐るべき破壊力だ。",
+        "failText": "防衛兵器の直撃を受け、作戦を放棄した…",
+        "statChanges": {"physAtk": 20, "fireAtk": 20, "cruelty": 15},
+        "itemDrops": [ { "itemId": 14, "probability": 0.8, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "危険すぎるので行く前に諦める",
+        "reqCondition": [],
+        "successText": "「腹が痛い」と言って任務を辞退した。評価は最悪だ。",
+        "failText": "",
+        "statChanges": {"responsibility": -20, "charisma": -10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "title": "魔界の王選抜",
+    "text": "次期魔王候補を決める過酷な試練の場に立つ権利を与えられた。",
+    "minRankId": 5,
+    "weight": 30,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "絶対的なカリスマで他者を服従させる",
+        "reqCondition": [{"stat": "charisma", "value": 90}, {"stat": "leadership", "value": 85}],
+        "successText": "試練の場で圧倒的な覇気を放ち、他の候補者たちを跪かせた！王の器だ。",
+        "failText": "覇気が通じず、他の候補者に圧倒されてしまった…",
+        "statChanges": {"charisma": 30, "leadership": 25, "responsibility": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "力こそすべて、全員を薙ぎ払う",
+        "reqCondition": [{"stat": "physAtk", "value": 95}, {"stat": "cruelty", "value": 80}],
+        "successText": "立ち塞がるすべての候補者を血祭りに上げ、最強の座を実力で証明した。",
+        "failText": "複数の候補者から袋叩きにされ、敗退した…",
+        "statChanges": {"physAtk": 25, "cruelty": 20, "hp": -30},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "辞退して野に下る",
+        "reqCondition": [],
+        "successText": "王の座に興味はない。権力闘争から降り、自由な魔族としての生き方を選んだ。",
+        "failText": "",
+        "statChanges": {"agility": 15, "responsibility": -10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "title": "時を超える魔導書",
+    "text": "触れた者の時間を操作する神話級の魔導書が目の前にある。",
+    "minRankId": 5,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "過去の傷を癒やす",
+        "reqCondition": [{"stat": "magDef", "value": 75}, {"stat": "control", "value": 80}],
+        "successText": "自らの肉体の時間を巻き戻し、過去に負ったあらゆる古傷と疲労を完全に消し去った！",
+        "failText": "時間の奔流に呑まれかけ、逆に老け込んでしまった…",
+        "statChanges": {"hp": 50, "magDef": 20, "control": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "未来の叡智を覗き見る",
+        "reqCondition": [{"stat": "nonElemAtk", "value": 80}, {"stat": "luck", "value": 80}],
+        "successText": "一瞬だけ未来の記憶と接続し、究極の魔法理論を会得した。",
+        "failText": "情報量が多すぎて脳がショートし、気絶した…",
+        "statChanges": {"nonElemAtk": 25, "luck": 20, "mp": -20},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "本を閉じて封印する",
+        "reqCondition": [],
+        "successText": "人智を超える力は不要だ。魔導書を厳重に封じ込めた。",
+        "failText": "",
+        "statChanges": {"responsibility": 15},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "title": "裏切り者の処刑",
+    "text": "長年連れ添った有能な副官が、人間に内通していたことが発覚した。処罰を下さねばならない。",
+    "minRankId": 4,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "自らの手で冷酷に処刑する",
+        "reqCondition": [{"stat": "cruelty", "value": 75}, {"stat": "physAtk", "value": 65}],
+        "successText": "一切の感情を交えず、全軍の前で見せしめとして副官の首を落とした。軍の規律は保たれた。",
+        "failText": "一瞬の躊躇いが隙を生み、逃亡を許してしまった…",
+        "statChanges": {"cruelty": 20, "leadership": 15, "charisma": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "記憶を改竄し、二重スパイにする",
+        "reqCondition": [{"stat": "control", "value": 80}],
+        "successText": "高度な精神支配で副官の記憶を書き換え、人間側に偽情報を流す完璧な駒に仕立て上げた。",
+        "failText": "記憶の改竄に失敗し、副官は廃人となってしまった…",
+        "statChanges": {"control": 20, "leadership": 10},
+        "itemDrops": [ { "itemId": 12, "probability": 0.8, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "密かに追放する",
+        "reqCondition": [],
+        "successText": "かつての情けで、二度と姿を見せないことを条件に見逃した。甘い判断かもしれない。",
+        "failText": "",
+        "statChanges": {"responsibility": -10, "cruelty": -10, "luck": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "title": "天空の城の墜落",
+    "text": "人間界の最終兵器「天空の城」が魔界へ向けて侵攻を開始した。",
+    "minRankId": 5,
+    "weight": 40,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "超火力の魔法で撃ち落とす",
+        "reqCondition": [{"stat": "fireAtk", "value": 90}, {"stat": "darkAtk", "value": 85}],
+        "successText": "魔力を限界まで練り上げた絶望の閃光が、巨大な城を真っ二つに割り、地獄へ墜落させた！",
+        "failText": "城の防御結界を破れず、反撃の主砲を喰らった…",
+        "statChanges": {"fireAtk": 25, "darkAtk": 25, "mp": -50},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "城の動力部へ単騎突入する",
+        "reqCondition": [{"stat": "agility", "value": 90}, {"stat": "physAtk", "value": 85}],
+        "successText": "対空砲火をすべて躱して城に乗り込み、巨大な浮遊機関を物理的に粉砕して墜落させた！",
+        "failText": "迎撃部隊に阻まれ、城への着地に失敗した…",
+        "statChanges": {"agility": 25, "physAtk": 20, "hp": -30},
+        "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "地下深くに避難する",
+        "reqCondition": [],
+        "successText": "絶対に勝てないと悟り、地の底へ逃げ込んだ。魔王軍は大被害を受けた。",
+        "failText": "",
+        "statChanges": {"responsibility": -20, "charisma": -20},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "title": "呪詛の暴走",
+    "text": "配下の呪術師たちの儀式が失敗し、広大な範囲に致死の呪詛が広が結びつつある。",
+    "minRankId": 4,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "無属性魔法で空間ごと浄化する",
+        "reqCondition": [{"stat": "nonElemAtk", "value": 75}, {"stat": "control", "value": 70}],
+        "successText": "純粋な魔力波を展開し、呪詛を完全に打ち消して被害を防いだ。",
+        "failText": "呪詛の濃度に魔力が押し負け、毒気を吸い込んだ…",
+        "statChanges": {"nonElemAtk": 20, "leadership": 15, "mp": -15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "呪詛を自らの体に吸収する",
+        "reqCondition": [{"stat": "magDef", "value": 85}, {"stat": "hp", "value": 80}],
+        "successText": "致死の呪詛をすべて引き受けたが、強靭な肉体と耐性でそれを力に変えた！",
+        "failText": "吸収しきれず、激しい吐血を伴って倒れた…",
+        "statChanges": {"magDef": 25, "darkAtk": 20, "hp": -30},
+        "itemDrops": [ { "itemId": 12, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "配下を見捨てて逃げる",
+        "reqCondition": [],
+        "successText": "自分だけは呪詛の範囲外へ脱出した。配下は全滅した。",
+        "failText": "",
+        "statChanges": {"cruelty": 10, "leadership": -20},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "title": "伝説の武具職人",
+    "text": "人間界から魔界へ堕ちた伝説のドワーフ職人が「最高の素材があれば武器を打つ」と言っている。",
+    "minRankId": 4,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "危険な魔境で素材を狩ってくる",
+        "reqCondition": [{"stat": "physAtk", "value": 75}, {"stat": "luck", "value": 70}],
+        "successText": "魔境の主を単独で討ち取り、極上の素材を持ち帰った。凄まじい武器が完成した！",
+        "failText": "魔境の主に返り討ちにされ、手ぶらで逃げ帰った…",
+        "statChanges": {"physAtk": 15, "luck": 15, "hp": -20},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "職人を脅してあり合わせで作らせる",
+        "reqCondition": [{"stat": "cruelty", "value": 80}, {"stat": "charisma", "value": 60}],
+        "successText": "圧倒的な恐怖を与え、その辺のクズ鉄から魔剣を打たせた。",
+        "failText": "職人の反骨心に火をつけてしまい、呪いの武器を渡された…",
+        "statChanges": {"cruelty": 20, "physDef": 10},
+        "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 4 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "興味がないと立ち去る",
+        "reqCondition": [],
+        "successText": "自分の腕と魔法だけで十分だ。職人を無視して立ち去った。",
+        "failText": "",
+        "statChanges": {"agility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "title": "魔界の神聖な儀式",
+    "text": "数百年に一度、強大な魔力を天に捧げる魔界の神聖な大儀式が執り行われる。",
+    "minRankId": 5,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "儀式の中心で全魔力を捧げる",
+        "reqCondition": [{"stat": "mp", "value": 100}, {"stat": "magDef", "value": 80}],
+        "successText": "己の全魔力を捧げ切り、儀式を大成功に導いた。神々しき魔族の証を得た。",
+        "failText": "魔力が足りず、儀式を失敗させてしまった…",
+        "statChanges": {"mp": -50, "magDef": 30, "charisma": 25, "leadership": 20},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "儀式の魔力を横取りする",
+        "reqCondition": [{"stat": "control", "value": 90}, {"stat": "darkAtk", "value": 85}],
+        "successText": "集められた膨大な魔力の一部を密かに自分のものにし、絶大な力を得た！",
+        "failText": "横取りがバレて、長老たちから雷を落とされた…",
+        "statChanges": {"control": 20, "darkAtk": 25, "luck": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "遠くから眺めるだけ",
+        "reqCondition": [],
+        "successText": "壮大な儀式を安全な場所から見守り、少しだけ魔力のおこぼれをもらった。",
+        "failText": "",
+        "statChanges": {"mp": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "title": "勇者一行の強襲",
+    "text": "ついに、人間界の希望である「勇者一行」が魔王城の奥深くまで攻め込んできた！",
+    "minRankId": 5,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "魔将として正面から迎え撃つ",
+        "reqCondition": [{"stat": "physAtk", "value": 90}, {"stat": "physDef", "value": 90}, {"stat": "hp", "value": 100}],
+        "successText": "勇者たちの猛攻を一人で受け止め、叩き潰した！伝説となる戦いだ。",
+        "failText": "勇者の一撃が急所を貫き、敗北の苦汁を舐めた…",
+        "statChanges": {"physAtk": 25, "physDef": 25, "hp": -50, "charisma": 30},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "狡猾な罠と魔法で分断する",
+        "reqCondition": [{"stat": "control", "value": 85}, {"stat": "darkAtk", "value": 80}],
+        "successText": "勇者と仲間たちを空間魔法で分断し、各個撃破して絶望を与えた。",
+        "failText": "仲間の絆の力で罠を突破されてしまった…",
+        "statChanges": {"control": 20, "darkAtk": 20, "cruelty": 20},
+        "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "魔王を見捨てて逃亡する",
+        "reqCondition": [],
+        "successText": "魔王の敗北を確信し、全財産を持って魔界の果てへ逃げ延びた。",
+        "failText": "",
+        "statChanges": {"agility": 20, "responsibility": -30, "luck": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "title": "星の墜落",
+    "text": "超高位の天使が放った戦略魔法により、巨大な隕石が陣地に向けて落下してくる！",
+    "minRankId": 5,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "物理の極致で隕石を砕く",
+        "reqCondition": [{"stat": "physAtk", "value": 100}, {"stat": "hp", "value": 100}],
+        "successText": "天空へ跳躍し、渾身の一撃で隕石を粉々に砕き散らした！部隊は歓喜に沸いた。",
+        "failText": "砕ききれず、隕石の下敷きになってしまった…",
+        "statChanges": {"physAtk": 30, "charisma": 30, "hp": -50},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "防護結界の要となる",
+        "reqCondition": [{"stat": "magDef", "value": 95}, {"stat": "leadership", "value": 80}],
+        "successText": "全軍の魔力を統率し、絶対に破られない巨大な結界を展開して防ぎ切った！",
+        "failText": "結界が耐えきれず崩壊し、部隊は壊滅した…",
+        "statChanges": {"magDef": 30, "leadership": 25, "mp": -30},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "自分だけ転移魔法で逃げる",
+        "reqCondition": [],
+        "successText": "部下を見捨てて自分だけはるか遠くへ転移した。",
+        "failText": "",
+        "statChanges": {"responsibility": -25},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "title": "深海魔獣の目覚め",
+    "text": "魔界の深海から、数万年の眠りについていた巨大な水棲魔獣が目覚め、陸地へ進行してきた。",
+    "minRankId": 5,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "大海嘯ごと炎で蒸発させる",
+        "reqCondition": [{"stat": "fireAtk", "value": 100}, {"stat": "mp", "value": 90}],
+        "successText": "海を干上がらせるほどの極大魔法を放ち、魔獣を骨まで焼き尽くした！",
+        "failText": "津波の勢いが勝り、魔法を掻き消されて流された…",
+        "statChanges": {"fireAtk": 30, "mp": -40},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "精神に介入し深い眠りに戻す",
+        "reqCondition": [{"stat": "control", "value": 95}, {"stat": "magDef", "value": 80}],
+        "successText": "太古の魔獣の意識に直接干渉し、穏やかな眠りの暗示をかけて深海へ帰した。",
+        "failText": "強大な野生の意識に反発され、精神がショートした…",
+        "statChanges": {"control": 25, "magDef": 20, "charisma": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "内陸へ避難する",
+        "reqCondition": [],
+        "successText": "沿岸部の領土を放棄し、内陸へ退避した。",
+        "failText": "",
+        "statChanges": {"agility": 10, "responsibility": -10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "title": "封印されし魔神の器",
+    "text": "太古の魔神の魂が封じられた「器」を発見した。触れれば莫大な力を得られるかもしれない。",
+    "minRankId": 5,
+    "weight": 40,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "器を取り込み、魔神の力を奪う",
+        "reqCondition": [{"stat": "hp", "value": 110}, {"stat": "darkAtk", "value": 90}],
+        "successText": "魔神の魂を強引に捻じ伏せ、己の力として完全に吸収した！神に等しき力だ。",
+        "failText": "肉体が魔神の力に耐えきれず、爆発四散しそうになった…",
+        "statChanges": {"darkAtk": 35, "physAtk": 20, "hp": -50},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "慎重に少しずつ力を抽出する",
+        "reqCondition": [{"stat": "control", "value": 90}, {"stat": "responsibility", "value": 80}],
+        "successText": "暴走のリスクを抑え、安全かつ確実に魔神の力を引き出して自らを強化した。",
+        "failText": "抽出作業中に封印が暴発し、手酷いダメージを受けた…",
+        "statChanges": {"control": 25, "magDef": 20},
+        "itemDrops": [ { "itemId": 12, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "危険すぎるので破壊する",
+        "reqCondition": [],
+        "successText": "こんなものがあれば世界が滅ぶ。器を粉々に砕いて事なきを得た。",
+        "failText": "",
+        "statChanges": {"responsibility": 20},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "title": "魔王からの特命",
+    "text": "現魔王から直々に呼び出され、「人間界の王都を一夜で地図から消せ」と命じられた。",
+    "minRankId": 5,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "極大魔法で王都を蒸発させる",
+        "reqCondition": [{"stat": "nonElemAtk", "value": 100}, {"stat": "mp", "value": 100}],
+        "successText": "遥か上空から都市を覆う魔法陣を展開し、一瞬にして王都を更地へと変えた。",
+        "failText": "王都の結界に魔法が防がれ、魔力が枯渇した…",
+        "statChanges": {"nonElemAtk": 30, "cruelty": 25, "mp": -60},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "単騎で王城へ乗り込み王を討つ",
+        "reqCondition": [{"stat": "agility", "value": 95}, {"stat": "physAtk", "value": 90}],
+        "successText": "夜の闇に紛れて王城へ侵入し、誰にも気付かれずに人間の王の首を獲った。",
+        "failText": "近衛騎士団に見つかり、重傷を負って撤退した…",
+        "statChanges": {"agility": 25, "physAtk": 20, "cruelty": 15},
+        "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "不可能だと断る",
+        "reqCondition": [],
+        "successText": "「無茶を言うな」と断った。魔王は不機嫌になったが、死ぬよりマシだ。",
+        "failText": "",
+        "statChanges": {"responsibility": -20, "charisma": -10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "title": "精霊王の怒り",
+    "text": "魔界の拡張により住処を追われた四大精霊の王が、怒り狂って攻め込んできた。",
+    "minRankId": 5,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "すべてを焼き尽くす炎で対抗する",
+        "reqCondition": [{"stat": "fireAtk", "value": 100}, {"stat": "magDef", "value": 90}],
+        "successText": "精霊王の猛攻を上回る圧倒的な火力で、精霊たちを完全に屈服させた！",
+        "failText": "精霊王の力に飲み込まれ、深刻な属性ダメージを受けた…",
+        "statChanges": {"fireAtk": 30, "magDef": 20, "hp": -30},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "対話で停戦協定を結ぶ",
+        "reqCondition": [{"stat": "charisma", "value": 95}, {"stat": "leadership", "value": 85}],
+        "successText": "王としての威厳と巧みな交渉術で、精霊王の怒りを静め、不可侵条約を結んだ。",
+        "failText": "交渉が決裂し、激しい報復を受けた…",
+        "statChanges": {"charisma": 25, "leadership": 20, "responsibility": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "他の領地に誘導する",
+        "reqCondition": [],
+        "successText": "「あっちの領地の方が自然豊かですよ」と嘘をつき、別の将軍の領地に押し付けた。",
+        "failText": "",
+        "statChanges": {"control": 10, "luck": 10, "responsibility": -15},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "title": "冥王の試練",
+    "text": "死を司る冥王から、己の限界を証明するための過酷な試練を与えられた。",
+    "minRankId": 5,
+    "weight": 40,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "千の死霊軍団を単機で殲滅する",
+        "reqCondition": [{"stat": "physAtk", "value": 95}, {"stat": "hp", "value": 110}, {"stat": "physDef", "value": 90}],
+        "successText": "血で血を洗う戦いの末、千の軍勢を一人で壊滅させ、冥王の賞賛を浴びた！",
+        "failText": "死霊の波に押し潰され、命の危機に瀕した…",
+        "statChanges": {"physAtk": 25, "hp": -40, "physDef": 20},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "死の瘴気を完全に無効化する",
+        "reqCondition": [{"stat": "magDef", "value": 100}, {"stat": "control", "value": 90}],
+        "successText": "致死の瘴気を放たれる中、完璧な魔力制御で無傷のまま試練を達成した。",
+        "failText": "瘴気に耐えきれず、倒れてしまった…",
+        "statChanges": {"magDef": 30, "control": 20, "mp": -30},
+        "itemDrops": [ { "itemId": 12, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "恐れをなして逃げる",
+        "reqCondition": [],
+        "successText": "冥王の試練など御免だ。一目散に逃亡し、ひっそりと生き延びた。",
+        "failText": "",
+        "statChanges": {"agility": 10, "charisma": -20},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "title": "運命の交差点",
+    "text": "時の番人から「過去のたった一つの失敗をやり直す機会」を与えられた。",
+    "minRankId": 5,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "最も激しかった敗北を勝利へ変える",
+        "reqCondition": [{"stat": "luck", "value": 95}, {"stat": "physAtk", "value": 90}],
+        "successText": "奇跡的な運と力で過去の絶望を覆し、運命を強制的に改変した！",
+        "failText": "過去を変えるほどの運がなく、弾き返された…",
+        "statChanges": {"luck": 25, "physAtk": 20, "hp": 20},
+        "itemDrops": [ { "itemId": 14, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "失った大切なものを救う",
+        "reqCondition": [{"stat": "responsibility", "value": 90}, {"stat": "control", "value": 85}],
+        "successText": "因果律を緻密に操作し、失うはずだった大切な配下と信頼を取り戻した。",
+        "failText": "因果の修復に失敗し、何も変わらなかった…",
+        "statChanges": {"responsibility": 25, "leadership": 20},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "今の自分に満足しているので断る",
+        "reqCondition": [],
+        "successText": "過去の失敗があってこその今の自分だ。番人の誘いを笑顔で断った。",
+        "failText": "",
+        "statChanges": {"charisma": 20, "magDef": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "title": "神との対峙",
+    "text": "圧倒的な威圧感と共に、天界を統べる「神」の幻影が眼前に顕現した。",
+    "minRankId": 5,
+    "weight": 30,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "絶対の悪として神に牙を剥く",
+        "reqCondition": [{"stat": "darkAtk", "value": 110}, {"stat": "cruelty", "value": 100}, {"stat": "mp", "value": 110}],
+        "successText": "全ての神聖を冒涜する究極の闇魔法を放ち、神の幻影を打ち砕いた！魔界の伝説となった。",
+        "failText": "神の威光の前に魔法は通用せず、魂に深い傷を負った…",
+        "statChanges": {"darkAtk": 40, "cruelty": 20, "charisma": 30, "mp": -60},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "神の意志に反逆する弁舌を振るう",
+        "reqCondition": [{"stat": "charisma", "value": 100}, {"stat": "control", "value": 90}],
+        "successText": "魔族としての自由と矜持を堂々と語り、神の幻影さえも感嘆させて退かせた。",
+        "failText": "言葉は届かず、神の怒りに触れた…",
+        "statChanges": {"charisma": 35, "leadership": 25, "control": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "平伏して嵐が過ぎるのを待つ",
+        "reqCondition": [],
+        "successText": "圧倒的な存在に抗うのは愚かだ。ひたすら頭を下げてやり過ごした。",
+        "failText": "",
+        "statChanges": {"luck": 10, "charisma": -30},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "title": "魔界統一の狼煙",
+    "text": "ついに時が来た。現在の魔王を討ち果たし、真の覇王となるための最終決戦だ！",
+    "minRankId": 5,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "王の首を物理で叩き落とす",
+        "reqCondition": [{"stat": "physAtk", "value": 120}, {"stat": "hp", "value": 120}, {"stat": "physDef", "value": 100}],
+        "successText": "天地を割るような大激闘の末、ついに現魔王を打ち倒した！新魔王の誕生だ！",
+        "failText": "現魔王の壁はあまりにも厚く、完膚なきまでに敗れ去った…",
+        "statChanges": {"physAtk": 30, "hp": -80, "charisma": 50, "leadership": 30},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "究極の魔法戦で王座を奪う",
+        "reqCondition": [{"stat": "nonElemAtk", "value": 110}, {"stat": "darkAtk", "value": 100}, {"stat": "magDef", "value": 100}],
+        "successText": "全てを灰にする魔法の応酬を制し、玉座を己の魔力で染め上げた。新時代の幕開けだ！",
+        "failText": "魔王の魔法に為す術なく敗れ、地の底へ堕とされた…",
+        "statChanges": {"nonElemAtk": 30, "darkAtk": 20, "mp": -80, "charisma": 50},
+        "itemDrops": [ { "itemId": 13, "probability": 1.0, "minRankId": 5 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "恐れをなして決戦から逃亡する",
+        "reqCondition": [],
+        "successText": "最後の最後で逃げ出してしまった。歴史に名を残すことはなかったが、命は繋がった。",
+        "failText": "",
+        "statChanges": {"agility": 20, "charisma": -50, "leadership": -50},
+        "itemDrops": []
+      }
+    ]
   }
 ]
