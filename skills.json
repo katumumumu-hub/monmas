@@ -7,20 +7,27 @@
     "category": "戦闘",
     "rarity": "★",
     "mpCost": 2,
+    "power": 10,
     "element": "火",
     "bonus": {
-      "magAtk": 8
+      "fireAtk": 8
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "fireAtk",
         "value": 8
       },
       {
         "stat": "charisma",
         "value": 20
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "fireAtk",
+      "multiplier": 1.0
+    }
   },
   {
     "id": 2,
@@ -30,6 +37,7 @@
     "category": "戦闘",
     "rarity": "★",
     "mpCost": 2,
+    "power": 10,
     "element": "無",
     "bonus": {
       "physAtk": 5
@@ -39,7 +47,13 @@
         "stat": "physAtk",
         "value": 5
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 1.0
+    }
   },
   {
     "id": 3,
@@ -49,6 +63,7 @@
     "category": "戦闘",
     "rarity": "★",
     "mpCost": 2,
+    "power": 10,
     "element": "闇",
     "bonus": {
       "charisma": 5,
@@ -59,7 +74,13 @@
         "stat": "cruelty",
         "value": 10
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 1.0
+    }
   },
   {
     "id": 4,
@@ -69,10 +90,11 @@
     "category": "戦闘",
     "rarity": "★",
     "mpCost": 2,
+    "power": 10,
     "element": "闇",
     "bonus": {
       "physAtk": 3,
-      "magAtk": 2
+      "darkAtk": 2
     },
     "requirements": [
       {
@@ -83,7 +105,13 @@
         "stat": "cruelty",
         "value": 10
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 1.0
+    }
   },
   {
     "id": 5,
@@ -93,6 +121,7 @@
     "category": "戦闘",
     "rarity": "★",
     "mpCost": 2,
+    "power": 10,
     "element": "無",
     "bonus": {
       "agility": 10
@@ -102,7 +131,13 @@
         "stat": "agility",
         "value": 10
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 1.0
+    }
   },
   {
     "id": 6,
@@ -112,6 +147,7 @@
     "category": "戦闘",
     "rarity": "★",
     "mpCost": 2,
+    "power": 10,
     "element": "光",
     "bonus": {
       "hp": 20
@@ -125,7 +161,13 @@
         "stat": "responsibility",
         "value": 10
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "heal",
+      "target": "self",
+      "statUsed": "magAtk",
+      "multiplier": 1.0
+    }
   },
   {
     "id": 7,
@@ -141,7 +183,7 @@
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "nonElemAtk",
         "value": 5
       },
       {
@@ -158,6 +200,7 @@
     "category": "戦闘",
     "rarity": "★",
     "mpCost": 2,
+    "power": 10,
     "element": "無",
     "bonus": {
       "physDef": 8
@@ -167,7 +210,16 @@
         "stat": "physDef",
         "value": 10
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "buff",
+      "target": "self",
+      "statUsed": "physDef",
+      "multiplier": 1.0,
+      "buffStat": "physDef",
+      "buffAmount": 10,
+      "turns": 3
+    }
   },
   {
     "id": 9,
@@ -179,11 +231,11 @@
     "element": "雷",
     "bonus": {
       "agility": 5,
-      "magAtk": 2
+      "thunderAtk": 2
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "thunderAtk",
         "value": 10
       }
     ]
@@ -196,6 +248,7 @@
     "category": "戦闘",
     "rarity": "★",
     "mpCost": 2,
+    "power": 10,
     "element": "闇",
     "bonus": {
       "hp": 10,
@@ -206,7 +259,13 @@
         "stat": "cruelty",
         "value": 15
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 1.0
+    }
   },
   {
     "id": 11,
@@ -216,16 +275,23 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "火",
     "bonus": {
-      "magAtk": 15
+      "fireAtk": 15
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "fireAtk",
         "value": 20
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "fireAtk",
+      "multiplier": 2.5
+    }
   },
   {
     "id": 12,
@@ -235,20 +301,28 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "闇",
     "bonus": {
       "control": 10
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "darkAtk",
         "value": 15
       },
       {
         "stat": "control",
         "value": 15
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "stun",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 2.5,
+      "turns": 1
+    }
   },
   {
     "id": 13,
@@ -258,17 +332,24 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "水",
     "bonus": {
-      "magAtk": 10,
+      "waterAtk": 10,
       "physAtk": 5
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "waterAtk",
         "value": 18
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "waterAtk",
+      "multiplier": 2.5
+    }
   },
   {
     "id": 14,
@@ -278,6 +359,7 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "無",
     "bonus": {
       "physAtk": 15
@@ -291,7 +373,13 @@
         "stat": "agility",
         "value": 10
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 2.5
+    }
   },
   {
     "id": 15,
@@ -320,6 +408,7 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "無",
     "bonus": {
       "physDef": 15
@@ -329,7 +418,16 @@
         "stat": "physDef",
         "value": 20
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "buff",
+      "target": "self",
+      "statUsed": "physDef",
+      "multiplier": 2.5,
+      "buffStat": "physDef",
+      "buffAmount": 25,
+      "turns": 3
+    }
   },
   {
     "id": 17,
@@ -339,6 +437,7 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "無",
     "bonus": {
       "leadership": 10,
@@ -349,7 +448,13 @@
         "stat": "leadership",
         "value": 20
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 2.5
+    }
   },
   {
     "id": 18,
@@ -359,6 +464,7 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "無",
     "bonus": {
       "mp": 20
@@ -372,7 +478,16 @@
         "stat": "responsibility",
         "value": 15
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "buff",
+      "target": "self",
+      "statUsed": "physAtk",
+      "multiplier": 2.5,
+      "buffStat": "physAtk",
+      "buffAmount": 25,
+      "turns": 3
+    }
   },
   {
     "id": 19,
@@ -401,21 +516,31 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "闇",
     "bonus": {
-      "magAtk": 10,
+      "darkAtk": 10,
       "cruelty": 10
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "darkAtk",
         "value": 20
       },
       {
         "stat": "cruelty",
         "value": 20
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "debuff",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 2.5,
+      "buffStat": "magDef",
+      "buffAmount": -25,
+      "turns": 3
+    }
   },
   {
     "id": 21,
@@ -425,6 +550,7 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "無",
     "bonus": {
       "physAtk": 20
@@ -434,7 +560,13 @@
         "stat": "physAtk",
         "value": 30
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 2.5
+    }
   },
   {
     "id": 22,
@@ -444,9 +576,10 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "闇",
     "bonus": {
-      "magAtk": 15,
+      "darkAtk": 15,
       "cruelty": 5
     },
     "requirements": [
@@ -458,7 +591,16 @@
         "stat": "cruelty",
         "value": 25
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "debuff",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 2.5,
+      "buffStat": "magDef",
+      "buffAmount": -25,
+      "turns": 3
+    }
   },
   {
     "id": 23,
@@ -468,6 +610,7 @@
     "category": "戦闘",
     "rarity": "★★",
     "mpCost": 5,
+    "power": 25,
     "element": "闇",
     "bonus": {
       "control": 15,
@@ -478,7 +621,13 @@
         "stat": "control",
         "value": 30
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 2.5
+    }
   },
   {
     "id": 24,
@@ -532,6 +681,7 @@
     "category": "戦闘",
     "rarity": "★★★",
     "mpCost": 10,
+    "power": 50,
     "element": "無",
     "bonus": {
       "physAtk": 25,
@@ -546,7 +696,13 @@
         "stat": "agility",
         "value": 40
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 5.0
+    }
   },
   {
     "id": 27,
@@ -556,6 +712,7 @@
     "category": "戦闘",
     "rarity": "★★★",
     "mpCost": 10,
+    "power": 50,
     "element": "闇",
     "bonus": {
       "magDef": 20,
@@ -570,7 +727,13 @@
         "stat": "control",
         "value": 20
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 5.0
+    }
   },
   {
     "id": 28,
@@ -580,21 +743,28 @@
     "category": "戦闘",
     "rarity": "★★★",
     "mpCost": 10,
+    "power": 50,
     "element": "雷",
     "bonus": {
-      "magAtk": 20,
+      "thunderAtk": 20,
       "physAtk": 10
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "thunderAtk",
         "value": 30
       },
       {
         "stat": "physAtk",
         "value": 30
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "thunderAtk",
+      "multiplier": 5.0
+    }
   },
   {
     "id": 29,
@@ -604,6 +774,7 @@
     "category": "戦闘",
     "rarity": "★★★",
     "mpCost": 10,
+    "power": 50,
     "element": "水",
     "bonus": {
       "physDef": 15,
@@ -614,7 +785,13 @@
         "stat": "magDef",
         "value": 35
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "waterAtk",
+      "multiplier": 5.0
+    }
   },
   {
     "id": 30,
@@ -708,11 +885,11 @@
     "rarity": "★★★",
     "element": "無",
     "bonus": {
-      "magAtk": 25
+      "nonElemAtk": 25
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "nonElemAtk",
         "value": 50
       }
     ]
@@ -743,6 +920,7 @@
     "category": "戦闘",
     "rarity": "★★★",
     "mpCost": 10,
+    "power": 50,
     "element": "無",
     "bonus": {
       "physAtk": 30,
@@ -754,7 +932,16 @@
         "stat": "cruelty",
         "value": 40
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "buff",
+      "target": "self",
+      "statUsed": "physAtk",
+      "multiplier": 5.0,
+      "buffStat": "physAtk",
+      "buffAmount": 50,
+      "turns": 3
+    }
   },
   {
     "id": 37,
@@ -765,12 +952,12 @@
     "rarity": "★★★",
     "element": "無",
     "bonus": {
-      "magAtk": 15,
+      "nonElemAtk": 15,
       "magDef": 15
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "nonElemAtk",
         "value": 40
       },
       {
@@ -787,16 +974,23 @@
     "category": "戦闘",
     "rarity": "★★★",
     "mpCost": 10,
+    "power": 50,
     "element": "雷",
     "bonus": {
-      "magAtk": 25
+      "thunderAtk": 25
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "thunderAtk",
         "value": 50
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "thunderAtk",
+      "multiplier": 5.0
+    }
   },
   {
     "id": 39,
@@ -806,6 +1000,7 @@
     "category": "戦闘",
     "rarity": "★★★",
     "mpCost": 10,
+    "power": 50,
     "element": "無",
     "bonus": {
       "physAtk": 15,
@@ -820,7 +1015,13 @@
         "stat": "agility",
         "value": 35
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 5.0
+    }
   },
   {
     "id": 40,
@@ -830,6 +1031,7 @@
     "category": "戦闘",
     "rarity": "★★★",
     "mpCost": 10,
+    "power": 50,
     "element": "闇",
     "bonus": {
       "hp": 40,
@@ -844,7 +1046,14 @@
         "stat": "cruelty",
         "value": 40
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "stun",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 5.0,
+      "turns": 2
+    }
   },
   {
     "id": 41,
@@ -854,21 +1063,28 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "火",
     "bonus": {
-      "magAtk": 30,
+      "fireAtk": 30,
       "cruelty": 10
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "fireAtk",
         "value": 60
       },
       {
         "stat": "cruelty",
         "value": 50
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "fireAtk",
+      "multiplier": 10.0
+    }
   },
   {
     "id": 42,
@@ -878,6 +1094,7 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "水",
     "bonus": {
       "physDef": 35
@@ -891,7 +1108,16 @@
         "stat": "physDef",
         "value": 40
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "buff",
+      "target": "self",
+      "statUsed": "magDef",
+      "multiplier": 10.0,
+      "buffStat": "physDef",
+      "buffAmount": 100,
+      "turns": 3
+    }
   },
   {
     "id": 43,
@@ -901,21 +1127,28 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "闇",
     "bonus": {
-      "magAtk": 20,
+      "darkAtk": 20,
       "luck": 10
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "darkAtk",
         "value": 70
       },
       {
         "stat": "control",
         "value": 40
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 10.0
+    }
   },
   {
     "id": 44,
@@ -944,6 +1177,7 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "無",
     "bonus": {
       "physAtk": 30,
@@ -958,7 +1192,13 @@
         "stat": "agility",
         "value": 60
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 10.0
+    }
   },
   {
     "id": 46,
@@ -986,21 +1226,28 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "闇",
     "bonus": {
       "mp": 30,
-      "magAtk": 5
+      "darkAtk": 5
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "darkAtk",
         "value": 70
       },
       {
         "stat": "control",
         "value": 50
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 10.0
+    }
   },
   {
     "id": 48,
@@ -1033,12 +1280,12 @@
     "rarity": "★★★★",
     "element": "無",
     "bonus": {
-      "magAtk": 20,
+      "nonElemAtk": 20,
       "mp": 20
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "nonElemAtk",
         "value": 80
       }
     ]
@@ -1074,21 +1321,31 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "火",
     "bonus": {
       "magDef": 25,
-      "magAtk": 10
+      "fireAtk": 10
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "fireAtk",
         "value": 80
       },
       {
         "stat": "control",
         "value": 40
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "buff",
+      "target": "self",
+      "statUsed": "magDef",
+      "multiplier": 10.0,
+      "buffStat": "magDef",
+      "buffAmount": 100,
+      "turns": 3
+    }
   },
   {
     "id": 52,
@@ -1098,6 +1355,7 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "闇",
     "bonus": {
       "physDef": 20,
@@ -1105,14 +1363,21 @@
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "darkAtk",
         "value": 70
       },
       {
         "stat": "cruelty",
         "value": 50
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "stun",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 10.0,
+      "turns": 3
+    }
   },
   {
     "id": 53,
@@ -1122,6 +1387,7 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "無",
     "bonus": {
       "physAtk": 30
@@ -1131,7 +1397,13 @@
         "stat": "physAtk",
         "value": 90
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 10.0
+    }
   },
   {
     "id": 54,
@@ -1159,6 +1431,7 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "闇",
     "bonus": {
       "hp": 40,
@@ -1173,7 +1446,13 @@
         "stat": "mp",
         "value": 50
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "heal",
+      "target": "self",
+      "statUsed": "magAtk",
+      "multiplier": 10.0
+    }
   },
   {
     "id": 56,
@@ -1206,21 +1485,28 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "水",
     "bonus": {
-      "magAtk": 20,
+      "waterAtk": 20,
       "cruelty": 15
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "waterAtk",
         "value": 100
       },
       {
         "stat": "cruelty",
         "value": 70
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "waterAtk",
+      "multiplier": 10.0
+    }
   },
   {
     "id": 58,
@@ -1230,16 +1516,23 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "水",
     "bonus": {
-      "magAtk": 35
+      "waterAtk": 35
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "waterAtk",
         "value": 120
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "waterAtk",
+      "multiplier": 10.0
+    }
   },
   {
     "id": 59,
@@ -1249,21 +1542,29 @@
     "category": "戦闘",
     "rarity": "★★★★",
     "mpCost": 20,
+    "power": 100,
     "element": "雷",
     "bonus": {
-      "magAtk": 25,
+      "thunderAtk": 25,
       "agility": 15
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "thunderAtk",
         "value": 110
       },
       {
         "stat": "control",
         "value": 80
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "stun",
+      "target": "enemy",
+      "statUsed": "thunderAtk",
+      "multiplier": 10.0,
+      "turns": 3
+    }
   },
   {
     "id": 60,
@@ -1291,10 +1592,11 @@
     "category": "戦闘",
     "rarity": "★★★★★",
     "mpCost": 50,
+    "power": 250,
     "element": "無",
     "bonus": {
       "physAtk": 50,
-      "magAtk": 10
+      "nonElemAtk": 10
     },
     "requirements": [
       {
@@ -1305,7 +1607,13 @@
         "stat": "agility",
         "value": 100
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 25.0
+    }
   },
   {
     "id": 62,
@@ -1360,6 +1668,7 @@
     "category": "戦闘",
     "rarity": "★★★★★",
     "mpCost": 50,
+    "power": 250,
     "element": "闇",
     "bonus": {
       "physAtk": 40,
@@ -1375,7 +1684,13 @@
         "stat": "hp",
         "value": 150
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 25.0
+    }
   },
   {
     "id": 65,
@@ -1385,6 +1700,7 @@
     "category": "戦闘",
     "rarity": "★★★★★",
     "mpCost": 50,
+    "power": 250,
     "element": "闇",
     "bonus": {
       "control": 50
@@ -1395,10 +1711,17 @@
         "value": 150
       },
       {
-        "stat": "magAtk",
+        "stat": "darkAtk",
         "value": 120
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "stun",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 25.0,
+      "turns": 6
+    }
   },
   {
     "id": 66,
@@ -1408,20 +1731,27 @@
     "category": "戦闘",
     "rarity": "★★★★★",
     "mpCost": 50,
+    "power": 250,
     "element": "無",
     "bonus": {
-      "magAtk": 60
+      "nonElemAtk": 60
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "nonElemAtk",
         "value": 180
       },
       {
         "stat": "mp",
         "value": 120
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 25.0
+    }
   },
   {
     "id": 67,
@@ -1476,21 +1806,28 @@
     "category": "戦闘",
     "rarity": "★★★★★",
     "mpCost": 50,
+    "power": 250,
     "element": "火",
     "bonus": {
-      "magAtk": 70,
+      "fireAtk": 70,
       "cruelty": 20
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "fireAtk",
         "value": 220
       },
       {
         "stat": "cruelty",
         "value": 150
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "fireAtk",
+      "multiplier": 25.0
+    }
   },
   {
     "id": 70,
@@ -1522,6 +1859,7 @@
     "category": "戦闘",
     "rarity": "★★★★★★",
     "mpCost": 100,
+    "power": 500,
     "element": "無",
     "bonus": {
       "physAtk": 90,
@@ -1532,7 +1870,13 @@
         "stat": "physAtk",
         "value": 300
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 50.0
+    }
   },
   {
     "id": 72,
@@ -1542,6 +1886,7 @@
     "category": "戦闘",
     "rarity": "★★★★★★",
     "mpCost": 100,
+    "power": 500,
     "element": "無",
     "bonus": {
       "magDef": 100,
@@ -1556,7 +1901,16 @@
         "stat": "physDef",
         "value": 250
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "buff",
+      "target": "self",
+      "statUsed": "magDef",
+      "multiplier": 50.0,
+      "buffStat": "magDef",
+      "buffAmount": 500,
+      "turns": 3
+    }
   },
   {
     "id": 73,
@@ -1566,6 +1920,7 @@
     "category": "戦闘",
     "rarity": "★★★★★★",
     "mpCost": 100,
+    "power": 500,
     "element": "闇",
     "bonus": {
       "control": 80,
@@ -1580,7 +1935,13 @@
         "stat": "cruelty",
         "value": 250
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 50.0
+    }
   },
   {
     "id": 74,
@@ -1590,20 +1951,27 @@
     "category": "戦闘",
     "rarity": "★★★★★★",
     "mpCost": 100,
+    "power": 500,
     "element": "水",
     "bonus": {
-      "magAtk": 100
+      "waterAtk": 100
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "waterAtk",
         "value": 320
       },
       {
         "stat": "mp",
         "value": 200
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "waterAtk",
+      "multiplier": 50.0
+    }
   },
   {
     "id": 75,
@@ -1655,21 +2023,28 @@
     "category": "戦闘",
     "rarity": "★★★★★★",
     "mpCost": 100,
+    "power": 500,
     "element": "雷",
     "bonus": {
-      "magAtk": 120,
+      "thunderAtk": 120,
       "agility": 30
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "thunderAtk",
         "value": 380
       },
       {
         "stat": "agility",
         "value": 250
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "thunderAtk",
+      "multiplier": 50.0
+    }
   },
   {
     "id": 78,
@@ -1679,10 +2054,11 @@
     "category": "戦闘",
     "rarity": "★★★★★★",
     "mpCost": 100,
+    "power": 500,
     "element": "闇",
     "bonus": {
       "cruelty": 100,
-      "magAtk": 50
+      "darkAtk": 50
     },
     "requirements": [
       {
@@ -1690,10 +2066,19 @@
         "value": 300
       },
       {
-        "stat": "magAtk",
+        "stat": "darkAtk",
         "value": 300
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "debuff",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 50.0,
+      "buffStat": "magDef",
+      "buffAmount": -500,
+      "turns": 3
+    }
   },
   {
     "id": 79,
@@ -1730,7 +2115,7 @@
         "value": 400
       },
       {
-        "stat": "magAtk",
+        "stat": "nonElemAtk",
         "value": 350
       }
     ]
@@ -1743,6 +2128,7 @@
     "category": "戦闘",
     "rarity": "★★★★★★",
     "mpCost": 100,
+    "power": 500,
     "element": "無",
     "bonus": {
       "physAtk": 180
@@ -1752,7 +2138,13 @@
         "stat": "physAtk",
         "value": 600
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "physAtk",
+      "multiplier": 50.0
+    }
   },
   {
     "id": 82,
@@ -1762,6 +2154,7 @@
     "category": "戦闘",
     "rarity": "★★★★★★",
     "mpCost": 100,
+    "power": 500,
     "element": "無",
     "bonus": {
       "physDef": 200,
@@ -1776,7 +2169,16 @@
         "stat": "hp",
         "value": 500
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "buff",
+      "target": "self",
+      "statUsed": "magDef",
+      "multiplier": 50.0,
+      "buffStat": "physDef",
+      "buffAmount": 500,
+      "turns": 3
+    }
   },
   {
     "id": 83,
@@ -1786,6 +2188,7 @@
     "category": "戦闘",
     "rarity": "★★★★★★",
     "mpCost": 100,
+    "power": 500,
     "element": "闇",
     "bonus": {
       "control": 200
@@ -1799,7 +2202,13 @@
         "stat": "leadership",
         "value": 400
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 50.0
+    }
   },
   {
     "id": 84,
@@ -1809,20 +2218,27 @@
     "category": "戦闘",
     "rarity": "★★★★★★",
     "mpCost": 100,
+    "power": 500,
     "element": "火",
     "bonus": {
-      "magAtk": 220
+      "fireAtk": 220
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "fireAtk",
         "value": 650
       },
       {
         "stat": "mp",
         "value": 500
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "fireAtk",
+      "multiplier": 50.0
+    }
   },
   {
     "id": 85,
@@ -1871,7 +2287,7 @@
     "element": "無",
     "bonus": {
       "magDef": 250,
-      "magAtk": 50
+      "nonElemAtk": 50
     },
     "requirements": [
       {
@@ -1892,6 +2308,7 @@
     "category": "戦闘",
     "rarity": "★★★★★★★",
     "mpCost": 200,
+    "power": 1000,
     "element": "水",
     "bonus": {
       "cruelty": 200,
@@ -1906,7 +2323,16 @@
         "stat": "control",
         "value": 500
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "debuff",
+      "target": "enemy",
+      "statUsed": "waterAtk",
+      "multiplier": 100.0,
+      "buffStat": "magDef",
+      "buffAmount": -1000,
+      "turns": 3
+    }
   },
   {
     "id": 89,
@@ -1934,17 +2360,24 @@
     "category": "戦闘",
     "rarity": "★★★★★★★",
     "mpCost": 200,
+    "power": 1000,
     "element": "光",
     "bonus": {
-      "magAtk": 250,
+      "lightAtk": 250,
       "physAtk": 100
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "lightAtk",
         "value": 850
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "lightAtk",
+      "multiplier": 100.0
+    }
   },
   {
     "id": 91,
@@ -1974,12 +2407,12 @@
     "rarity": "★★★★★★★",
     "element": "無",
     "bonus": {
-      "magAtk": 400,
+      "nonElemAtk": 400,
       "mp": 200
     },
     "requirements": [
       {
-        "stat": "magAtk",
+        "stat": "nonElemAtk",
         "value": 1500
       }
     ]
@@ -1992,6 +2425,7 @@
     "category": "戦闘",
     "rarity": "★★★★★★★",
     "mpCost": 200,
+    "power": 1000,
     "element": "無",
     "bonus": {
       "physDef": 500,
@@ -2006,7 +2440,16 @@
         "stat": "magDef",
         "value": 1200
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "buff",
+      "target": "self",
+      "statUsed": "magDef",
+      "multiplier": 100.0,
+      "buffStat": "magDef",
+      "buffAmount": 1000,
+      "turns": 3
+    }
   },
   {
     "id": 94,
@@ -2035,6 +2478,7 @@
     "category": "戦闘",
     "rarity": "★★★★★★★",
     "mpCost": 200,
+    "power": 1000,
     "element": "闇",
     "bonus": {
       "control": 500
@@ -2044,7 +2488,14 @@
         "stat": "control",
         "value": 1800
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "stun",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 100.0,
+      "turns": 21
+    }
   },
   {
     "id": 96,
@@ -2054,17 +2505,24 @@
     "category": "戦闘",
     "rarity": "★★★★★★★",
     "mpCost": 200,
+    "power": 1000,
     "element": "闇",
     "bonus": {
       "cruelty": 500,
-      "magAtk": 300
+      "darkAtk": 300
     },
     "requirements": [
       {
         "stat": "cruelty",
         "value": 1800
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "damage",
+      "target": "enemy",
+      "statUsed": "darkAtk",
+      "multiplier": 100.0
+    }
   },
   {
     "id": 97,
@@ -2097,6 +2555,7 @@
     "category": "戦闘",
     "rarity": "★★★★★★★",
     "mpCost": 200,
+    "power": 1000,
     "element": "光",
     "bonus": {
       "hp": 800,
@@ -2111,7 +2570,13 @@
         "stat": "responsibility",
         "value": 1000
       }
-    ]
+    ],
+    "combatEffect": {
+      "type": "heal",
+      "target": "self",
+      "statUsed": "magAtk",
+      "multiplier": 100.0
+    }
   },
   {
     "id": 99,
@@ -2141,7 +2606,7 @@
     "element": "無",
     "bonus": {
       "physAtk": 150,
-      "magAtk": 150,
+      "nonElemAtk": 150,
       "leadership": 200,
       "charisma": 200,
       "control": 200
@@ -2152,7 +2617,7 @@
         "value": 2000
       },
       {
-        "stat": "magAtk",
+        "stat": "nonElemAtk",
         "value": 2000
       },
       {
