@@ -1276,7 +1276,15 @@ function updateAll() {
     const s = gameState.stats;
     const i = gameState.innerTraits;
     const subs = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
-    const cp = Object.values(s).reduce((a,b)=>a+b,0) + Object.values(i).reduce((a,b)=>a+b,0) + Math.max(0, subs);
+    
+    // HPを戦闘力に反映させないように修正
+    let statsSum = 0;
+    for (let k in s) {
+        if (k !== 'hp') {
+            statsSum += s[k];
+        }
+    }
+    const cp = statsSum + Object.values(i).reduce((a,b)=>a+b,0) + Math.max(0, subs);
     
     let currentRank = ranks.find(r => r.id === gameState.currentRankId);
     let nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
