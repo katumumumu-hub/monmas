@@ -116,19 +116,21 @@
         .status-label { font-size: 0.7rem; color: #bcaed4; margin-bottom: 2px; }
         .status-value { font-size: 1rem; font-weight: bold; color: var(--accent-gold); }
 
-        /* 育成ゲーム風ステータス用の追加CSS */
         .status-section-title {
-            font-size: 0.9rem; font-weight: bold; color: var(--accent-gold);
+            font-size: 0.9rem;
+            font-weight: bold; color: var(--accent-gold);
             border-left: 4px solid var(--crystal-color);
             padding-left: 8px; margin-bottom: 8px;
             background: linear-gradient(90deg, rgba(92, 58, 130, 0.4), transparent);
         }
         .status-bar-container {
-            width: 100%; background: #1a0a25; height: 6px; border-radius: 3px; margin-top: 4px;
+            width: 100%;
+            background: #1a0a25; height: 6px; border-radius: 3px; margin-top: 4px;
             overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
         }
         .status-bar-fill {
-            height: 100%; background: linear-gradient(90deg, #d100ff, #00ffaa);
+            height: 100%;
+            background: linear-gradient(90deg, #d100ff, #00ffaa);
         }
 
         button {
@@ -238,7 +240,8 @@
 
         #monster-preview-container {
             flex-shrink: 0;
-            height: 140px; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5px; position: relative; overflow: hidden;
+            height: 140px; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 5px; position: relative; overflow: hidden;
         }
         #monster-preview-img { max-height: 100px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 0 10px rgba(209, 0, 255, 0.3)); }
         #monster-preview-info { font-size: 0.85rem; font-weight: bold; color: var(--accent-gold); margin-top: 5px; }
@@ -270,6 +273,22 @@
             background: #000; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; overflow-y: auto; font-size: 0.85rem; line-height: 1.5; color: #d1c1e5;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
         }
+
+        /* 侵略システム用CSS */
+        #invasion-screen { overflow: hidden; }
+        .invasion-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+        .invasion-item-btn { background: rgba(40,20,60,0.8); border: 1px solid var(--border-color); color: var(--text-color); padding: 12px; border-radius: 6px; text-align: left; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; gap: 4px;}
+        .invasion-item-btn.selected { border-color: var(--accent-gold); box-shadow: 0 0 10px rgba(229,176,92,0.3); background: rgba(60,30,80,0.9); }
+        .invasion-item-btn:disabled { opacity: 0.5; cursor: not-allowed; background: #1a0a25; border-color: #333; color: #666; }
+        
+        .invasion-preview { flex-shrink: 0; height: 48%; background: #05020a; border: 1px solid var(--accent-gold); border-radius: 8px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .invasion-preview-bg { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; opacity: 0.3; z-index: 0; }
+        .invasion-preview-content { position: relative; z-index: 1; padding: 15px; display: flex; flex-direction: column; height: 100%; box-sizing: border-box; text-shadow: 1px 1px 3px #000; }
+        .invasion-preview-title { font-size: 1.2rem; font-weight: bold; color: var(--accent-gold); margin-bottom: 8px; border-bottom: 1px solid rgba(229,176,92,0.5); padding-bottom: 5px;}
+        .invasion-preview-desc { font-size: 0.85rem; line-height: 1.4; color: #eee; margin-bottom: 12px; flex: 1; overflow-y: auto;}
+        .invasion-preview-info { font-size: 0.85rem; color: #bcaed4; margin-bottom: 6px; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px;}
+        .invasion-preview-info span { font-weight: bold; color: #fff; }
+        .invasion-start-btn { margin-top: 10px; background: linear-gradient(180deg, #8a2be2 0%, #4b0082 100%); flex-shrink: 0; padding: 12px;}
 
         @keyframes shake {
             0% { transform: translate(3px, 1px) rotate(0deg); }
@@ -328,10 +347,15 @@
                         <div class="status-value" id="display-next-name" style="font-size: 0.9rem;">---に昇格</div>
                     </div>
                 </div>
+                
                 <div class="status-item" style="margin-bottom:10px; flex-direction:row; justify-content:space-between; align-items:center;">
-                    <div class="status-label" style="margin:0;">配下総数</div>
-                    <div class="status-value" id="display-subordinates">0名</div>
+                    <div style="display:flex; flex-direction:column;">
+                        <div class="status-label" style="margin:0;">配下総数</div>
+                        <div class="status-value" id="display-subordinates">0名</div>
+                    </div>
+                    <button id="invasion-btn" onclick="handleInvasionBtn()" style="width: auto; padding: 10px 15px; font-size: 0.9rem; margin-left: 10px;" disabled>侵略 (50名～)</button>
                 </div>
+
                 <button onclick="startEvent()" style="margin-bottom: 8px;">イベント発生 (消費: 1)</button>
                 <button onclick="openTrainingScreen()" style="background: linear-gradient(180deg, #732323 0%, #2e0808 100%);">特訓で鍛える (消費: 1)</button>
             </div>
@@ -346,6 +370,16 @@
             <div id="level-list" class="level-grid"></div>
             <div style="text-align: center; padding: 10px 0; flex-shrink: 0;">
                 <button id="start-battle-btn" disabled onclick="initiateSelectedBattle()" style="width: 80%; background: linear-gradient(180deg, #732323 0%, #2e0808 100%); box-shadow: 0 0 10px rgba(255,0,0,0.3); font-size: 1.1rem; padding: 12px;">戦闘開始</button>
+            </div>
+        </div>
+
+        <div id="invasion-screen" class="screen">
+            <h3>侵略先選択</h3>
+            <div id="invasion-list-container" class="invasion-list"></div>
+            <div id="invasion-preview-area" class="invasion-preview">
+                <div style="color:#aaa; text-align:center; margin-top:40px;">
+                    上のリストから侵略先を選択してください
+                </div>
             </div>
         </div>
 
@@ -529,7 +563,9 @@ let skills = [];
 let events = [];
 let items = [];
 let monsters = [];
+let invasions = []; // 侵略データ
 const LABELS = {hp:'HP', mp:'MP', physAtk:'物理攻撃', magAtk:'魔法力', fireAtk:'火属性', waterAtk:'水属性', thunderAtk:'雷属性', darkAtk:'闇属性', lightAtk:'光属性', nonElemAtk:'無属性', magDef:'魔法防御', physDef:'物理防御', agility:'俊敏性', luck:'運', cruelty:'凶悪性', leadership:'統率力', charisma:'カリスマ', control:'支配欲', responsibility:'責任感', crystals:'魔力石'};
+
 let gameState = {
     lastPlayTime: Date.now(),
     crystals: 3,
@@ -538,8 +574,10 @@ let gameState = {
     innerTraits: { cruelty: 0, leadership: 0, charisma: 0, control: 0, responsibility: 0 },
     acquiredSkills: [],
     items: {},
-    clearedLevels: []
+    clearedLevels: [],
+    invasion: null // 侵略状態の保存用
 };
+
 let currentSelectedLevel = null; 
 let currentSkillTab = 'combat'; 
 
@@ -561,6 +599,7 @@ async function init() {
         events = await fetchJson('events.json');
         items = await fetchJson('items.json');
         monsters = await fetchJson('monsters.json');
+        invasions = await fetchJson('invasions.json');
 
         const SKILL_DIFFICULTY_MULTIPLIER = 1.8;
         skills.forEach(skill => {
@@ -573,6 +612,7 @@ async function init() {
                 });
             }
         });
+
         const saved = localStorage.getItem('devil_lord_save');
         if (saved) {
             try {
@@ -603,7 +643,7 @@ function showScreen(id) {
     document.getElementById(id).classList.add('active');
     
     const footerBtns = document.querySelectorAll('footer button');
-    if (id === 'event-screen' || id === 'battle-screen') {
+    if (id === 'event-screen' || id === 'battle-screen' || id === 'invasion-screen') {
         footerBtns.forEach(btn => btn.disabled = true);
     } else {
         footerBtns.forEach(btn => btn.disabled = false);
@@ -981,8 +1021,7 @@ async function startBattle(levelId) {
 function endBattle(levelId, monster, isWin) {
     if (isWin) playSE('finish'); else playSE('click');
     
-    document.getElementById('result-title').innerText = isWin ?
-        "特訓 勝利！" : "特訓 敗北…";
+    document.getElementById('result-title').innerText = isWin ? "特訓 勝利！" : "特訓 敗北…";
     document.getElementById('result-text').innerText = isWin ? `${monster.name} との死闘を制した！` : `${monster.name} に敗れ去った…。力をつけて出直そう。`;
     
     let changeLog = '';
@@ -1073,7 +1112,6 @@ function devResetSave() {
     }
 }
 
-// 開発用イベント参照画面の表示
 function showEventRefScreen() {
     showScreen('event-ref-screen');
     const listArea = document.getElementById('event-ref-list');
@@ -1099,7 +1137,6 @@ function renderEventRefDetail(ev) {
     const detailArea = document.getElementById('event-ref-detail');
     let html = `<div style="font-weight:bold; color:var(--accent-gold); margin-bottom:5px; border-bottom:1px solid var(--border-color); padding-bottom:5px;">ID:${ev.id} ${ev.title}</div>`;
     html += `<div style="font-size:0.8rem; margin-bottom:10px;">${ev.text}</div>`;
-
     let choices = Array.isArray(ev.choices) ? ev.choices : (ev.choices ? [ev.choices] : []);
     choices.forEach((c, idx) => {
         let conditions = Array.isArray(c.reqCondition) ? c.reqCondition : (c.reqCondition ? [c.reqCondition] : []);
@@ -1120,7 +1157,6 @@ function renderEventRefDetail(ev) {
         
         let reqStr = reqTextParts.length > 0 ? `<div style="font-size:0.75rem; color:#aaa;">要求: ${reqTextParts.join(', ')}</div>` : '<div style="font-size:0.75rem; color:#aaa;">要求: なし</div>';
         let rateColor = successRate >= 100 ? '#00ffaa' : (successRate >= 50 ? '#ffaa00' : '#ff5555');
-
         html += `
         <div style="background:rgba(0,0,0,0.5); padding:8px; border-radius:4px; border:1px solid #4a2b6e; margin-bottom:8px;">
             <div style="font-size:0.85rem; font-weight:bold; margin-bottom:3px;">選択肢${idx+1}: ${c.text}</div>
@@ -1277,7 +1313,6 @@ function updateAll() {
     const i = gameState.innerTraits;
     const subs = (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty;
     
-    // HPを戦闘力に反映させないように修正
     let statsSum = 0;
     for (let k in s) {
         if (k !== 'hp') {
@@ -1285,7 +1320,6 @@ function updateAll() {
         }
     }
     const cp = statsSum + Object.values(i).reduce((a,b)=>a+b,0) + Math.max(0, subs);
-    
     let currentRank = ranks.find(r => r.id === gameState.currentRankId);
     let nextRank = ranks.find(r => r.id === gameState.currentRankId + 1);
     if (nextRank && cp >= nextRank.reqCombatPower) {
@@ -1303,7 +1337,8 @@ function updateAll() {
     const video = document.getElementById('rank-video');
     const newSrc = currentRank.imagePath + "#t=0.001";
     if (video.src !== new URL(newSrc, document.baseURI).href) { video.src = newSrc;
-        video.muted = true; }
+        video.muted = true;
+    }
     
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     if (nextRank) {
@@ -1318,6 +1353,7 @@ function updateAll() {
     renderCrystalUI(currentRank);
     renderStats();
     renderItems(); 
+    updateInvasionUI(Math.max(0, subs)); // 侵略UIの更新
     save();
 }
 
@@ -1332,6 +1368,25 @@ function renderCrystalUI(rank) {
 }
 
 function updateTimer() {
+    // 侵略タイマーの更新
+    if (gameState.invasion && gameState.invasion.active) {
+        const now = Date.now();
+        const elapsed = now - gameState.invasion.startTime;
+        const remaining = gameState.invasion.durationMs - elapsed;
+        const btn = document.getElementById('invasion-btn');
+        
+        if (remaining <= 0) {
+            gameState.invasion.active = false;
+            gameState.invasion.completed = true;
+            save();
+            updateInvasionUI();
+        } else {
+            const m = Math.floor(remaining / 1000 / 60);
+            const s = Math.floor((remaining / 1000) % 60);
+            if(btn) btn.innerText = `侵略中 ${m}:${s.toString().padStart(2,'0')}`;
+        }
+    }
+
     if (ranks.length === 0) return;
     const currentRank = ranks.find(r => r.id === gameState.currentRankId);
     recoverCrystals();
@@ -1370,18 +1425,16 @@ function startEvent() {
                 const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : (gameState.innerTraits[req.stat] || 0);
                 const targetVal = req.value || 0;
               
-                 if (targetVal > 0) {
+                if (targetVal > 0) {
                     let rate = Math.floor((currentVal / targetVal) * 100);
                     if (rate > 100) rate = 100;
                     if (rate < successRate) successRate = rate;
-  
                 }
             }
             
             b.innerHTML = (c.text || "選択肢") + ` <span style="font-size:0.8rem; color:#aaa;">(成功率: ${successRate}%)</span>`;
             
             b.onclick = () => {
-            
                 let oldRank = gameState.currentRankId;
                 let oldSkillCount = gameState.acquiredSkills.length;
                 document.getElementById('result-title').innerText = "イベント結果";
@@ -1407,7 +1460,6 @@ function startEvent() {
                                     }
                                 }
                                 for (let e in dist) {
-                        
                                     const signStr = dist[e] > 0 ? "+" : "";
                                     document.getElementById('change-log').innerHTML += `${LABELS[e] || e}: ${signStr}${dist[e]}<br>`;
                                 }
@@ -1426,10 +1478,8 @@ function startEvent() {
                         if (!drop || !drop.itemId) return;
                         if (gameState.currentRankId >= (drop.minRankId || 1)) {
                             if (Math.random() < (drop.probability !== undefined ? drop.probability : 1)) {
-  
                                 gameState.items[drop.itemId] = (gameState.items[drop.itemId] || 0) + 1;
                                 const itemData = items.find(i => i.id === drop.itemId);
-                         
                                 if (itemData) droppedItemNames.push(itemData.name);
                             }
                         }
@@ -1440,14 +1490,10 @@ function startEvent() {
                     let rankedUp = (gameState.currentRankId > oldRank);
                     let skilledUp = (gameState.acquiredSkills.length > oldSkillCount);
                     let itemDropped = droppedItemNames.length > 0;
-                    
                     if (!rankedUp) { 
-                        if (skilledUp) { playSE('skill');
-                        } 
-                        else if (itemDropped) { playSE('item');
-                        } 
-                        else { playSE('finish');
-                        } 
+                        if (skilledUp) { playSE('skill'); } 
+                        else if (itemDropped) { playSE('item'); } 
+                        else { playSE('finish'); } 
                     }
                     
                     if (skilledUp) {
@@ -1464,8 +1510,7 @@ function startEvent() {
                     document.getElementById('result-text').innerText = c.failText || "失敗しました…";
                     updateAll();
                     let rankedUp = (gameState.currentRankId > oldRank);
-                    if (!rankedUp) { playSE('error');
-                    }
+                    if (!rankedUp) { playSE('error'); }
                 }
                 
                 showScreen('result-screen');
@@ -1483,12 +1528,9 @@ function startEvent() {
     }
 }
 
-// 育成ゲーム風にUIを更新するための修正版
 function renderStats() {
     const s = gameState.stats;
     const i = gameState.innerTraits;
-    
-    // HPとMPの特別枠描画
     const basicArea = document.getElementById('status-basic-area');
     basicArea.innerHTML = `
         <div style="flex: 1; background: rgba(30,15,45,0.8); border: 1px solid #7c4bb3; border-radius: 8px; padding: 10px; text-align: center;">
@@ -1500,19 +1542,15 @@ function renderStats() {
             <div style="font-size: 1.4rem; font-weight: bold; color: #1e90ff; text-shadow: 0 0 5px rgba(30,144,255,0.5);">${s.mp}</div>
         </div>
     `;
-
-    // パラメータを分類
     const mainKeys = ['physAtk', 'magAtk', 'physDef', 'magDef', 'agility', 'luck'];
     const elemKeys = ['fireAtk', 'waterAtk', 'thunderAtk', 'darkAtk', 'lightAtk', 'nonElemAtk'];
     const innerKeys = ['cruelty', 'leadership', 'charisma', 'control', 'responsibility'];
-
-    // 個別のリスト描画用の関数
+    
     const renderList = (keys, dataObj, targetId, colorType) => {
         const target = document.getElementById(targetId);
         target.innerHTML = '';
         keys.forEach(k => {
             const val = dataObj[k] || 0;
-            // 数値から適当なゲージ幅を算出（MAX想定500とするが超えても100%にする）
             const fillPct = Math.min(100, Math.max(0, (val / 500) * 100));
             
             let barColor = "linear-gradient(90deg, #5c3a82, #d100ff)";
@@ -1549,6 +1587,7 @@ function renderStats() {
 function renderItems() {
     const list = document.getElementById('inventory-list');
     list.innerHTML = '';
+   
     if (!gameState.items || Object.keys(gameState.items).length === 0) {
         list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>';
         return;
@@ -1565,22 +1604,18 @@ function renderItems() {
                     <div class="item-row">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <div style="font-weight:bold; font-size:1.05rem; color:var(--text-color);">
-                   
                                 <span class="item-rarity rarity-${itemData.rarity}">${itemData.rarity}</span>${itemData.name}
                             </div>
                             <div style="color:var(--accent-gold); font-weight:bold;">所持: ${count}</div>
                         </div>
-  
                         <div style="font-size:0.8rem; color:#aaa; margin-top:6px; line-height:1.4;">${itemData.description}</div>
                         <div style="font-size:0.8rem; color:var(--crystal-color); font-weight:bold; margin-top:4px;">【効果】 ${effectsText}</div>
                         <button class="item-use-btn" onclick="useItem(${itemData.id})">使う</button>
-                   
                     </div>`;
             }
         }
     }
-    if (!hasItem) { list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>';
-    }
+    if (!hasItem) { list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>'; }
 }
 
 function useItem(itemId) {
@@ -1612,6 +1647,249 @@ function useItem(itemId) {
         }
     }
     gameState.items[itemId]--; playSE('use_item'); alert(`${itemData.name} を使用した！`); save(); updateAll(); 
+}
+
+/* --- 侵略システムの新規ロジック群 --- */
+
+function updateInvasionUI(subs = -1) {
+    if (subs === -1) {
+        const s = gameState.stats;
+        const i = gameState.innerTraits;
+        subs = Math.max(0, (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty);
+    }
+    
+    const btn = document.getElementById('invasion-btn');
+    if (!btn) return;
+
+    if (gameState.invasion) {
+        if (gameState.invasion.completed) {
+            btn.innerText = "帰還 (タップ)";
+            btn.disabled = false;
+            btn.style.background = "linear-gradient(180deg, #b8860b, #ffd700)";
+            btn.style.color = "#000";
+            btn.style.boxShadow = "0 0 10px rgba(255, 215, 0, 0.6)";
+        } else if (gameState.invasion.active) {
+            btn.disabled = true;
+            btn.style.background = "var(--disabled-color)";
+            btn.style.color = "var(--text-color)";
+            btn.style.boxShadow = "none";
+        }
+    } else {
+        btn.style.background = "linear-gradient(180deg, #4b0082 0%, #2f004f 100%)";
+        btn.style.color = "var(--text-color)";
+        btn.style.boxShadow = "0 3px 6px rgba(0,0,0,0.4)";
+        if (subs >= 50) {
+            btn.innerText = "侵略へ";
+            btn.disabled = false;
+        } else {
+            btn.innerText = "侵略(50名～)";
+            btn.disabled = true;
+        }
+    }
+}
+
+function handleInvasionBtn() {
+    if (gameState.invasion && gameState.invasion.completed) {
+        completeInvasion();
+    } else if (!gameState.invasion) {
+        playSE('click');
+        openInvasionScreen();
+    }
+}
+
+let currentSelectedInvasion = null;
+
+function openInvasionScreen() {
+    showScreen('invasion-screen');
+    renderInvasionList();
+    currentSelectedInvasion = null;
+    document.getElementById('invasion-preview-area').innerHTML = `
+        <div style="color:#aaa; text-align:center; margin-top:40px;">
+            上のリストから侵略先を選択してください
+        </div>
+    `;
+}
+
+function renderInvasionList() {
+    const listArea = document.getElementById('invasion-list-container');
+    listArea.innerHTML = '';
+    
+    const s = gameState.stats;
+    const i = gameState.innerTraits;
+    const currentSubs = Math.max(0, (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty);
+
+    invasions.forEach(inv => {
+        const btn = document.createElement('button');
+        btn.className = 'invasion-item-btn';
+        
+        const canInvade = currentSubs >= inv.reqSubordinates;
+        
+        let html = `<div style="font-weight:bold; font-size:1.05rem;">${inv.name}</div>`;
+        html += `<div style="font-size:0.8rem; color:#aaa; margin-top:2px;">必要配下: ${inv.reqSubordinates}名 / 推奨戦闘力: ${inv.recCombatPower}</div>`;
+        
+        if (!canInvade) {
+            btn.disabled = true;
+            html += `<div style="color:#ff5555; font-size:0.75rem; margin-top:4px;">配下が不足しています</div>`;
+        }
+        
+        btn.innerHTML = html;
+        
+        btn.onclick = () => {
+            if (btn.disabled) return;
+            playSE('click');
+            document.querySelectorAll('.invasion-item-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectInvasionLocation(inv, currentSubs);
+        };
+        
+        listArea.appendChild(btn);
+    });
+}
+
+function selectInvasionLocation(inv, currentSubs) {
+    currentSelectedInvasion = inv;
+    const previewArea = document.getElementById('invasion-preview-area');
+    
+    // 侵略時間の計算式: 配下数が多いほど短縮される（最短はJSONで定義された時間）
+    let ratio = inv.reqSubordinates / currentSubs;
+    let timeMinutes = Math.floor(inv.baseTimeMinutes * ratio);
+    if (timeMinutes < inv.minTimeMinutes) timeMinutes = inv.minTimeMinutes;
+    
+    let dropsHtml = "";
+    if (inv.dropItems) {
+        let allDrops = [];
+        if(inv.dropItems.normal) allDrops.push("通常枠");
+        if(inv.dropItems.rare) allDrops.push("<span style='color:#ffdf00;'>レア枠</span>");
+        if(inv.dropItems.superRare) allDrops.push("<span style='color:#ff3333; font-weight:bold;'>激レア枠</span>");
+        dropsHtml = allDrops.join(" / ");
+    }
+    
+    let innerHtml = "";
+    if (inv.innerTraitRewards) {
+        innerHtml = Object.keys(inv.innerTraitRewards).map(k => LABELS[k]).join("、");
+    }
+
+    previewArea.innerHTML = `
+        <img class="invasion-preview-bg" src="${inv.imagePath || ''}" alt="">
+        <div class="invasion-preview-content">
+            <div class="invasion-preview-title">${inv.name}</div>
+            <div class="invasion-preview-desc">${inv.description}</div>
+            <div class="invasion-preview-info">▶ 予想所要時間: <span>約 ${timeMinutes} 分</span></div>
+            <div class="invasion-preview-info">▶ 獲得可能アイテム: <span>${dropsHtml || 'なし'}</span></div>
+            <div class="invasion-preview-info">▶ 成長見込み(内面性): <span>${innerHtml || 'なし'}</span></div>
+            
+            <button class="invasion-start-btn" onclick="startInvasion(${inv.id}, ${timeMinutes})">この地域へ出撃する</button>
+        </div>
+    `;
+}
+
+function startInvasion(invId, timeMinutes) {
+    if (gameState.invasion && (gameState.invasion.active || gameState.invasion.completed)) {
+        alert("すでに侵略部隊が出撃中です！");
+        return;
+    }
+    
+    if (!confirm("侵略部隊を出撃させますか？\n(帰還するまで報酬は受け取れません)")) return;
+    
+    playSE('click');
+    
+    gameState.invasion = {
+        active: true,
+        completed: false,
+        locationId: invId,
+        startTime: Date.now(),
+        durationMs: timeMinutes * 60 * 1000
+    };
+    
+    save();
+    updateAll();
+    showScreen('home-screen');
+}
+
+function completeInvasion() {
+    if (!gameState.invasion || !gameState.invasion.completed) return;
+    
+    const invData = invasions.find(i => i.id === gameState.invasion.locationId);
+    if (!invData) {
+        gameState.invasion = null;
+        updateAll();
+        return;
+    }
+
+    const s = gameState.stats;
+    const i = gameState.innerTraits;
+    const currentSubs = Math.max(0, (s.physAtk + s.magAtk + s.magDef + s.physDef + s.agility + s.luck) + i.leadership + i.charisma - i.cruelty);
+    
+    let statsSum = 0;
+    for (let k in s) { if (k !== 'hp') statsSum += s[k]; }
+    const currentCp = statsSum + Object.values(i).reduce((a,b)=>a+b,0) + currentSubs;
+
+    // 報酬計算用倍率ロジック: 戦闘力が推奨値を上回るほどボーナス
+    const cpRatio = Math.max(1.0, currentCp / (invData.recCombatPower || 1));
+    const bonusMultiplier = Math.sqrt(cpRatio); // ドロップ率用
+    const amountMultiplier = 1.0 + (cpRatio - 1) * 0.1; // ドロップ数用
+    
+    let changeLog = '';
+    let itemLog = '';
+    
+    // 内面性の報酬計算
+    if (invData.innerTraitRewards) {
+        for (let trait in invData.innerTraitRewards) {
+            let baseVal = invData.innerTraitRewards[trait];
+            // 戦闘力に応じて最大3倍までスケール
+            let actualVal = Math.floor(baseVal * Math.min(3.0, (1.0 + (cpRatio - 1) * 0.2)));
+            if (gameState.innerTraits[trait] !== undefined) {
+                gameState.innerTraits[trait] += actualVal;
+                changeLog += `${LABELS[trait] || trait}: +${actualVal}<br>`;
+            }
+        }
+    }
+    
+    // アイテムドロップ計算
+    const categories = ['normal', 'rare', 'superRare'];
+    let droppedItems = [];
+    categories.forEach(cat => {
+        if (invData.dropItems && invData.dropItems[cat]) {
+            invData.dropItems[cat].forEach(drop => {
+                let actualRate = Math.min(1.0, drop.baseRate * bonusMultiplier);
+                if (Math.random() < actualRate) {
+                    let amount = Math.max(1, Math.floor((Math.random() * 2 + 1) * amountMultiplier));
+                    if (cat === 'rare') amount = Math.max(1, Math.floor(amount * 0.5));
+                    if (cat === 'superRare') amount = 1; // 激レアは固定1個
+                    
+                    gameState.items[drop.itemId] = (gameState.items[drop.itemId] || 0) + amount;
+                    
+                    const itemData = items.find(it => it.id === drop.itemId);
+                    if (itemData) {
+                        let color = "#00ffaa";
+                        if(cat === 'rare') color = "#ffdf00";
+                        if(cat === 'superRare') color = "#ff3333";
+                        droppedItems.push(`<span style="color:${color};">🎁 ${itemData.name} x${amount}</span>`);
+                    }
+                }
+            });
+        }
+    });
+
+    if (droppedItems.length > 0) {
+        itemLog = droppedItems.join('<br>');
+    } else {
+        itemLog = "<span style='color:#aaa;'>めぼしい戦利品はなかった...</span>";
+    }
+
+    gameState.invasion = null; // 侵略状態リセット
+    save();
+    updateAll();
+
+    // 結果表示
+    document.getElementById('result-title').innerText = "侵略 帰還";
+    document.getElementById('result-text').innerText = `【${invData.name}】から侵略部隊が帰還した！`;
+    document.getElementById('change-log').innerHTML = changeLog;
+    document.getElementById('skill-log').innerHTML = '';
+    document.getElementById('item-log').innerHTML = itemLog;
+    
+    playSE('finish');
+    showScreen('result-screen');
 }
 
 function save() { localStorage.setItem('devil_lord_save', JSON.stringify(gameState)); }
