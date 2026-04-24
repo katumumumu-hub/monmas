@@ -1103,7 +1103,33 @@ function checkAndRenderSkills() {
                 }
                 
                 const powerEl = document.getElementById('detail-skill-power');
-                if (skill.power) {
+                if (skill.combatEffect) {
+                    let effectText = '';
+                    const ce = skill.combatEffect;
+                    const targetStr = ce.target === 'enemy' ? '敵' : (ce.target === 'self' ? '自身' : '対象');
+                    
+                    switch(ce.type) {
+                        case 'damage':
+                            effectText = `${targetStr}にダメージ (基本威力: ${skill.power || 0})`;
+                            break;
+                        case 'heal':
+                            effectText = `${targetStr}のHPを回復 (基本回復力: ${skill.power || 0})`;
+                            break;
+                        case 'buff':
+                            effectText = `${targetStr}の${LABELS[ce.buffStat] || ce.buffStat}を${ce.buffAmount}上昇 (${ce.turns}ターン)`;
+                            break;
+                        case 'debuff':
+                            effectText = `${targetStr}の${LABELS[ce.buffStat] || ce.buffStat}を${Math.abs(ce.buffAmount)}減少 (${ce.turns}ターン)`;
+                            break;
+                        case 'stun':
+                            effectText = `${targetStr}をスタン状態にする (${ce.turns}ターン)`;
+                            break;
+                        default:
+                            effectText = `威力: ${skill.power}`;
+                    }
+                    powerEl.innerText = effectText;
+                    powerEl.style.display = 'block';
+                } else if (skill.power) {
                     powerEl.innerText = `威力: ${skill.power}`;
                     powerEl.style.display = 'block';
                 } else {
