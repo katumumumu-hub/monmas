@@ -718,5 +718,725 @@
         "itemDrops": []
       }
     ]
+  },
+  {
+    "id": 21,
+    "title": "捕虜の人間の尋問",
+    "text": "地下牢で見張りをしていると、捕らえられた人間の騎士が命乞いをしてきた。",
+    "minRankId": 1,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "容赦なく拷問する",
+        "reqCondition": [{"stat": "cruelty", "value": 15}, {"stat": "physAtk", "value": 10}],
+        "successText": "徹底的に痛めつけ、人間の軍勢に関する有益な情報を吐かせた。魔族としての格が上がった。",
+        "failText": "力が足りず、逆に反抗されて逃げられそうになった…",
+        "statChanges": {"cruelty": 10, "leadership": 5, "hp": -2},
+        "itemDrops": [ { "itemId": 11, "probability": 0.5, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "精神魔法で操る",
+        "reqCondition": [{"stat": "control", "value": 20}],
+        "successText": "精神を完全に支配し、人間の国へスパイとして送り込んだ。",
+        "failText": "精神の抵抗にあい、術が弾かれてしまった…",
+        "statChanges": {"control": 10, "charisma": 5, "mp": -5},
+        "itemDrops": [ { "itemId": 12, "probability": 0.4, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "面倒なので無視する",
+        "reqCondition": [],
+        "successText": "関わるのが面倒になり、牢屋の扉を閉めて立ち去った。",
+        "failText": "",
+        "statChanges": {"agility": 2, "cruelty": -2},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "title": "魔界のキノコ狩り",
+    "text": "食糧調達のため、不気味な森へ入った。怪しく光るキノコが生えている。",
+    "minRankId": 1,
+    "weight": 90,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "光るキノコをかじる",
+        "reqCondition": [{"stat": "luck", "value": 20}],
+        "successText": "強烈な味がしたが、体中に不思議な魔力がみなぎってきた！",
+        "failText": "酷い腹痛に見舞われ、丸一日寝込む羽目になった…",
+        "statChanges": {"mp": 15, "luck": 5, "hp": -5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "魔法で成分を分析する",
+        "reqCondition": [{"stat": "magDef", "value": 15}],
+        "successText": "安全な部分だけを選別し、有用な薬効成分を抽出した。",
+        "failText": "分析を誤り、毒ガスを浴びてしまった…",
+        "statChanges": {"magDef": 5, "control": 5, "hp": -2},
+        "itemDrops": [ { "itemId": 1, "probability": 0.6, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "安全そうな普通のキノコを採る",
+        "reqCondition": [],
+        "successText": "リスクは冒さず、見慣れた普通のキノコだけを収穫して帰還した。",
+        "failText": "",
+        "statChanges": {"responsibility": 2, "hp": 5},
+        "itemDrops": [ { "itemId": 3, "probability": 0.8, "minRankId": 1 } ]
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "title": "サボり魔のゴブリン",
+    "text": "見回りをしていると、配下のゴブリンたちが仕事の途中で勝手に休んでいるのを発見した。",
+    "minRankId": 1,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "鞭打って働かせる",
+        "reqCondition": [{"stat": "cruelty", "value": 20}],
+        "successText": "恐怖でゴブリンたちを震え上がらせ、通常の倍の速度で働かせた。",
+        "failText": "威圧感が足りず、ヘラヘラと笑いながら逃げられた…",
+        "statChanges": {"cruelty": 10, "leadership": -2},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "指揮官として鼓舞する",
+        "reqCondition": [{"stat": "leadership", "value": 20}],
+        "successText": "巧みな演説で彼らのやる気を引き出し、士気を高めることに成功した。",
+        "failText": "誰も話を聞いてくれず、虚しさだけが残った…",
+        "statChanges": {"leadership": 10, "charisma": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "一緒になってサボる",
+        "reqCondition": [],
+        "successText": "仕事なんか知るか！彼らと一緒に酒を飲み、すっかり打ち解けた。",
+        "failText": "",
+        "statChanges": {"charisma": 10, "responsibility": -10, "hp": 10},
+        "itemDrops": [ { "itemId": 6, "probability": 0.5, "minRankId": 1 } ]
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "title": "武器庫の点検",
+    "text": "魔王軍の武器庫の点検を命じられた。誰も見ていないようだ。",
+    "minRankId": 1,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "こっそり武器を盗む",
+        "reqCondition": [{"stat": "agility", "value": 20}, {"stat": "luck", "value": 15}],
+        "successText": "誰にも気づかれず、良質な武器を自分のものにした。",
+        "failText": "運悪く巡回兵に見つかり、厳しい罰を受けた…",
+        "statChanges": {"luck": -5, "cruelty": 5},
+        "itemDrops": [ { "itemId": 14, "probability": 0.8, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "完璧に磨き上げる",
+        "reqCondition": [{"stat": "responsibility", "value": 20}],
+        "successText": "新品同様に磨き上げ、上官から見事な仕事ぶりだと褒められた。",
+        "failText": "途中で飽きてしまい、適当に終わらせた…",
+        "statChanges": {"responsibility": 15, "physDef": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "武器の陰で昼寝する",
+        "reqCondition": [],
+        "successText": "点検したふりをして隠れて寝た。体調がすこぶる良い。",
+        "failText": "",
+        "statChanges": {"hp": 15, "responsibility": -5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "title": "勇者の噂",
+    "text": "「人間界に強力な勇者が現れた」という噂で、軍の中に動揺が走っている。",
+    "minRankId": 2,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "先制の奇襲作戦を提案する",
+        "reqCondition": [{"stat": "leadership", "value": 25}],
+        "successText": "大胆な作戦を上層部に進言し、一部隊の指揮権を与えられた！",
+        "failText": "説得力がなく、「口だけの奴」と冷笑された…",
+        "statChanges": {"leadership": 15, "charisma": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "偽情報を流して混乱を鎮める",
+        "reqCondition": [{"stat": "control", "value": 20}],
+        "successText": "「勇者は大したことない」と巧みに噂を流し、軍の士気を維持した。",
+        "failText": "嘘が見破られ、余計に混乱を招いてしまった…",
+        "statChanges": {"control": 10, "luck": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "自分には関係ないと取り合わない",
+        "reqCondition": [],
+        "successText": "勇者など知ったことか。自分の業務だけを淡々とこなした。",
+        "failText": "",
+        "statChanges": {"responsibility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "title": "不気味な石像",
+    "text": "魔王城の庭園で、これまで見たことのない不気味な悪魔の石像を見つけた。目が光っている気がする。",
+    "minRankId": 2,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "怪しいので物理で破壊する",
+        "reqCondition": [{"stat": "physAtk", "value": 30}],
+        "successText": "粉々に砕き散らすと、中から隠されていた古代のメダルが出てきた。",
+        "failText": "石像は異常に硬く、手が痺れただけだった…",
+        "statChanges": {"physAtk": 5, "hp": -5},
+        "itemDrops": [ { "itemId": 11, "probability": 1.0, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "闇魔法で呪いを解く",
+        "reqCondition": [{"stat": "darkAtk", "value": 20}, {"stat": "magDef", "value": 20}],
+        "successText": "石像に込められた呪いを解呪し、純粋な魔力として吸収した。",
+        "failText": "呪いに反発され、一時的に視界が奪われた…",
+        "statChanges": {"darkAtk": 10, "mp": 15},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "供え物をして祈ってみる",
+        "reqCondition": [],
+        "successText": "石像の前に食べ物を置いて祈った。何となく運が向いてきた気がする。",
+        "failText": "",
+        "statChanges": {"luck": 10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "title": "魔王城のまかない",
+    "text": "食堂で食事の時間だ。今日のメインディッシュは希少な「地獄竜の肉」らしいが、数が少ない。",
+    "minRankId": 1,
+    "weight": 100,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "力ずくで肉を奪い取る",
+        "reqCondition": [{"stat": "physAtk", "value": 25}],
+        "successText": "周りの魔族を突き飛ばし、見事一番大きな肉塊を手に入れた！力が漲る！",
+        "failText": "乱闘に負け、今日の夕食は抜きになってしまった…",
+        "statChanges": {"hp": 20, "physAtk": 5, "cruelty": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "料理長に愛想を振りまく",
+        "reqCondition": [{"stat": "charisma", "value": 20}],
+        "successText": "料理長と仲良くなり、こっそり特大の肉を取り分けてもらった。",
+        "failText": "不気味な笑顔だと思われ、逆に警戒された…",
+        "statChanges": {"hp": 15, "charisma": 5, "luck": 5},
+        "itemDrops": [ { "itemId": 6, "probability": 0.5, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "残飯で我慢する",
+        "reqCondition": [],
+        "successText": "争いを避け、余り物の謎のスープを啜った。意外と腹持ちが良い。",
+        "failText": "",
+        "statChanges": {"physDef": 5, "responsibility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "title": "闇魔法の実験台",
+    "text": "マッドサイエンティスト気質の上位魔族から、新しい闇魔法の実験台になれと命令された。",
+    "minRankId": 2,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "気合で耐え抜く",
+        "reqCondition": [{"stat": "magDef", "value": 30}, {"stat": "hp", "value": 30}],
+        "successText": "凄まじい激痛に耐えきった！実験は成功し、魔力耐性が飛躍的に向上した。",
+        "failText": "耐えきれずに気絶し、しばらく体調を崩した…",
+        "statChanges": {"magDef": 20, "hp": -20, "mp": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "魔法を逆流させる",
+        "reqCondition": [{"stat": "nonElemAtk", "value": 25}, {"stat": "control", "value": 20}],
+        "successText": "魔法の術式を解析して逆流させた。上位魔族は驚き、お前を弟子として認めた。",
+        "failText": "制御に失敗し、周囲ごと爆発に巻き込まれた…",
+        "statChanges": {"nonElemAtk": 15, "control": 10, "charisma": 10},
+        "itemDrops": [ { "itemId": 13, "probability": 0.8, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "隙を見て逃げ出す",
+        "reqCondition": [],
+        "successText": "準備をしている隙に一目散に逃げた。後で怒られるだろうが命よりマシだ。",
+        "failText": "",
+        "statChanges": {"agility": 10, "responsibility": -10},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "title": "迷子のペット",
+    "text": "魔将軍のペットである狂暴なケルベロス（地獄犬）が逃げ出しているのを発見した。",
+    "minRankId": 2,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "力で押さえつけて捕獲する",
+        "reqCondition": [{"stat": "physAtk", "value": 25}, {"stat": "leadership", "value": 15}],
+        "successText": "暴れるケルベロスを腕力でねじ伏せ、魔将軍の元へ連れ帰った。褒美を貰えた。",
+        "failText": "噛みつかれて重傷を負ってしまった…",
+        "statChanges": {"physAtk": 5, "charisma": 10, "hp": -10},
+        "itemDrops": [ { "itemId": 17, "probability": 0.8, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "餌でおびき寄せる",
+        "reqCondition": [{"stat": "luck", "value": 20}],
+        "successText": "たまたま持っていた骨肉を投げると、大人しくついてきた。運が良かった。",
+        "failText": "餌には目もくれず、そのままどこかへ消えていった…",
+        "statChanges": {"luck": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "関わりたくないので見なかったことにする",
+        "reqCondition": [],
+        "successText": "将軍のペットに手を出して怪我をするのは馬鹿らしい。気配を消して立ち去った。",
+        "failText": "",
+        "statChanges": {"agility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "title": "怨霊の井戸",
+    "text": "廃墟の中で、怨念が渦巻く古い井戸を見つけた。中から死者の声が聞こえる。",
+    "minRankId": 2,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "怨念を自らの力として吸収する",
+        "reqCondition": [{"stat": "darkAtk", "value": 30}],
+        "successText": "死者の魂を飲み込み、強力な闇の魔力を手に入れた！",
+        "failText": "怨霊に精神を侵食されそうになり、慌てて井戸から離れた…",
+        "statChanges": {"darkAtk": 20, "cruelty": 10, "mp": -10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "結界を張って封印する",
+        "reqCondition": [{"stat": "magDef", "value": 25}],
+        "successText": "井戸に強力な封印を施し、周囲の安全を確保した。魔族らしからぬ善行だ。",
+        "failText": "結界が破られ、怨霊の反撃を受けてしまった…",
+        "statChanges": {"magDef": 15, "responsibility": 10, "cruelty": -5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "適当に石を投げ入れて立ち去る",
+        "reqCondition": [],
+        "successText": "ポチャンという音を聞いて満足し、その場を離れた。",
+        "failText": "",
+        "statChanges": {"cruelty": 2, "luck": 2},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "title": "偽物の魔導具",
+    "text": "後輩の魔族が「すごい魔導具を拾った！」と自慢してきたが、どう見ても偽物だ。",
+    "minRankId": 1,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "本物だと騙して買い取る",
+        "reqCondition": [{"stat": "charisma", "value": 25}],
+        "successText": "後輩を言葉巧みに丸め込み、タダ同然で偽物を巻き上げ、別の商人に高く売りつけた。",
+        "failText": "騙そうとしたのがバレて、口論になってしまった…",
+        "statChanges": {"charisma": 10, "cruelty": 5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "偽物だと指摘して破壊する",
+        "reqCondition": [{"stat": "physAtk", "value": 20}],
+        "successText": "「こんなものはゴミだ」と握り潰してみせた。後輩は震え上がった。",
+        "failText": "握り潰そうとしたが硬くて壊せず、気まずい空気が流れた…",
+        "statChanges": {"physAtk": 5, "leadership": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "「すごいな」と適当に相槌を打つ",
+        "reqCondition": [],
+        "successText": "面倒なので適当におだてておいた。後輩は喜んで去っていった。",
+        "failText": "",
+        "statChanges": {"responsibility": -2, "charisma": 2},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "title": "密輸商人の誘い",
+    "text": "裏道で密輸商人に「人間界の禁制品を流さないか？」と持ちかけられた。",
+    "minRankId": 2,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "一枚噛んで利益を得る",
+        "reqCondition": [{"stat": "luck", "value": 25}, {"stat": "charisma", "value": 15}],
+        "successText": "上手く取引をまとめ、莫大な利益の分け前を手に入れた。",
+        "failText": "取引の途中で巡回兵に見つかり、慌てて逃げ出した…",
+        "statChanges": {"luck": 10, "charisma": 5, "responsibility": -10},
+        "itemDrops": [ { "itemId": 11, "probability": 1.0, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "軍の規律として商人を取り締まる",
+        "reqCondition": [{"stat": "responsibility", "value": 30}],
+        "successText": "商人を捕縛して上官に突き出した。軍規に忠実な態度が評価された。",
+        "failText": "商人に逃げられ、証拠も隠滅されてしまった…",
+        "statChanges": {"responsibility": 20, "leadership": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "関わらずに無視する",
+        "reqCondition": [],
+        "successText": "面倒事に巻き込まれるのは御免だ。聞こえなかったフリをして立ち去った。",
+        "failText": "",
+        "statChanges": {"agility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "title": "魔界温泉の発見",
+    "text": "山岳地帯のパトロール中、誰も知らない隠し温泉（マグマ混じり）を発見した。",
+    "minRankId": 1,
+    "weight": 90,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "自分の縄張りとして占拠する",
+        "reqCondition": [{"stat": "leadership", "value": 30}],
+        "successText": "配下に見張りをさせ、自分専用の贅沢な温泉地を作り上げた。",
+        "failText": "他の魔物に占拠されてしまい、追い出された…",
+        "statChanges": {"leadership": 10, "charisma": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "とりあえず浸かって休む",
+        "reqCondition": [{"stat": "hp", "value": 20}],
+        "successText": "マグマの熱さが心地よい。日頃の疲れが完全に吹き飛んだ！",
+        "failText": "思ったより熱すぎて火傷してしまった…",
+        "statChanges": {"hp": 30, "physDef": 5},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "上層部に報告して報奨金を貰う",
+        "reqCondition": [],
+        "successText": "素直に報告し、ちょっとした金一封をもらった。",
+        "failText": "",
+        "statChanges": {"responsibility": 10, "luck": 5},
+        "itemDrops": [ { "itemId": 11, "probability": 0.5, "minRankId": 1 } ]
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "title": "スライムの大量発生",
+    "text": "地下倉庫でスライムが大量発生し、食糧を食い荒らしている！",
+    "minRankId": 2,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "火炎魔法で一網打尽にする",
+        "reqCondition": [{"stat": "fireAtk", "value": 30}],
+        "successText": "大火力で倉庫ごと焼き払った。食糧も少し焦げたが、スライムは全滅した。",
+        "failText": "火力が足りず、増殖のスピードに追いつけなかった…",
+        "statChanges": {"fireAtk": 15, "cruelty": 5, "responsibility": -5},
+        "itemDrops": [ { "itemId": 14, "probability": 0.6, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "魔力でスライムを従える",
+        "reqCondition": [{"stat": "control", "value": 25}],
+        "successText": "スライムの集合意識をハッキングし、配下として使役することに成功した。",
+        "failText": "制御しきれず、スライムの波に飲み込まれそうになった…",
+        "statChanges": {"control": 15, "leadership": 10},
+        "itemDrops": [ { "itemId": 12, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "見なかったことにして扉を閉める",
+        "reqCondition": [],
+        "successText": "誰か他の奴が片付けるだろう。そっと扉を閉めた。",
+        "failText": "",
+        "statChanges": {"responsibility": -10, "agility": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "title": "呪われた武具",
+    "text": "戦場で、異様なオーラを放つ「呪われた剣」が突き刺さっているのを見つけた。",
+    "minRankId": 2,
+    "weight": 60,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "呪いごと力として振るう",
+        "reqCondition": [{"stat": "cruelty", "value": 30}, {"stat": "magDef", "value": 20}],
+        "successText": "呪いの声に屈することなく、圧倒的な破壊力を手に入れた。",
+        "failText": "剣の呪いに精神を喰われかけ、手放した…",
+        "statChanges": {"physAtk": 20, "cruelty": 15, "hp": -10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "無属性魔法で呪いを浄化する",
+        "reqCondition": [{"stat": "nonElemAtk", "value": 25}],
+        "successText": "見事に呪いを打ち消し、純粋な名剣として扱いやすくした。",
+        "failText": "浄化しきれず、剣は砕け散ってしまった…",
+        "statChanges": {"nonElemAtk": 10, "control": 10},
+        "itemDrops": [ { "itemId": 14, "probability": 0.8, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "不吉なので触らない",
+        "reqCondition": [],
+        "successText": "触らぬ神に祟りなし。そのまま通り過ぎた。",
+        "failText": "",
+        "statChanges": {"luck": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "title": "脱走兵の追跡",
+    "text": "魔王軍から逃げ出した臆病な脱走兵の追跡を命じられた。",
+    "minRankId": 2,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "俊敏性を活かして追い詰める",
+        "reqCondition": [{"stat": "agility", "value": 30}],
+        "successText": "風のような速度で先回りし、逃げ道を塞いで捕獲した。",
+        "failText": "見失ってしまい、取り逃がした…",
+        "statChanges": {"agility": 15, "responsibility": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "罠を張って待ち伏せる",
+        "reqCondition": [{"stat": "luck", "value": 25}],
+        "successText": "脱走兵が通りそうな道に罠を仕掛け、見事に生け捕りにした。",
+        "failText": "罠には別の野良魔物が掛かっており、脱走兵には逃げられた…",
+        "statChanges": {"luck": 10, "control": 5},
+        "itemDrops": [ { "itemId": 6, "probability": 0.5, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "適当に探したフリをする",
+        "reqCondition": [],
+        "successText": "「見つかりませんでした」と報告した。探すのが面倒だったのだ。",
+        "failText": "",
+        "statChanges": {"responsibility": -10, "cruelty": -5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "title": "魔将軍の巡回",
+    "text": "泣く子も黙る冷酷な魔将軍が、部隊の抜き打ち視察にやってきた。",
+    "minRankId": 3,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "自慢の武力を誇示する",
+        "reqCondition": [{"stat": "physAtk", "value": 45}],
+        "successText": "模擬戦で素晴らしい一撃を放ち、将軍から直々に目をかけられた！",
+        "failText": "気合が空回りし、無様な姿を晒してしまった…",
+        "statChanges": {"physAtk": 10, "charisma": 20, "leadership": 10},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "完璧な報告書で媚びる",
+        "reqCondition": [{"stat": "responsibility", "value": 35}, {"stat": "charisma", "value": 30}],
+        "successText": "淀みない報告と見事な書類整理で、事務的な有能さを認められた。",
+        "failText": "報告に穴があり、激しく叱責された…",
+        "statChanges": {"responsibility": 20, "charisma": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 3,
+        "text": "目立たないように最後尾に並ぶ",
+        "reqCondition": [],
+        "successText": "息を潜めてやり過ごした。特に何も起きなかったが、安心感はある。",
+        "failText": "",
+        "statChanges": {"agility": 5, "luck": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "title": "謎の霊薬",
+    "text": "戦利品の中に、ラベルの読めない怪しげな薬瓶が混ざっていた。",
+    "minRankId": 1,
+    "weight": 80,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "一か八か自分で飲む",
+        "reqCondition": [{"stat": "hp", "value": 40}],
+        "successText": "内臓が焼けるような痛みの後、肉体が限界を超えて強化された！",
+        "failText": "猛毒だったらしく、血を吐いて倒れた…",
+        "statChanges": {"hp": 20, "physAtk": 10, "physDef": 10},
+        "itemDrops": []
+      },
+      {
+        "choiceId": 2,
+        "text": "捕虜に飲ませて実験する",
+        "reqCondition": [{"stat": "cruelty", "value": 25}],
+        "successText": "捕虜が悶え苦しむ様子を観察し、毒薬としての効果を記録した。悪趣味な知識が増えた。",
+        "failText": "捕虜が薬でパワーアップしてしまい、暴れられてしまった…",
+        "statChanges": {"cruelty": 15, "control": 5},
+        "itemDrops": [ { "itemId": 1, "probability": 0.5, "minRankId": 1 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "危険なので捨てる",
+        "reqCondition": [],
+        "successText": "中身を地面に捨てた。地面が少し溶けたのを見て、飲まなくて正解だったと安堵した。",
+        "failText": "",
+        "statChanges": {"responsibility": 5, "luck": 2},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "title": "闇夜の奇襲",
+    "text": "夜営中、人間の討伐隊による奇襲を受けた！周囲は混乱している。",
+    "minRankId": 2,
+    "weight": 70,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "闇魔法で反撃する",
+        "reqCondition": [{"stat": "darkAtk", "value": 30}, {"stat": "physDef", "value": 20}],
+        "successText": "闇の帳を下ろして敵の視界を奪い、一方的に討ち取った！",
+        "failText": "不意打ちを喰らい、魔法を唱える前に手傷を負った…",
+        "statChanges": {"darkAtk": 15, "charisma": 10, "hp": -10},
+        "itemDrops": [ { "itemId": 11, "probability": 0.8, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "俊敏に敵将の首だけを狙う",
+        "reqCondition": [{"stat": "agility", "value": 35}],
+        "successText": "混乱に乗じて敵将の背後に忍び寄り、暗殺に成功。討伐隊は散り散りに逃げた。",
+        "failText": "護衛に阻まれ、撤退を余儀なくされた…",
+        "statChanges": {"agility": 20, "cruelty": 10},
+        "itemDrops": [ { "itemId": 14, "probability": 0.5, "minRankId": 2 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "草むらに隠れて死んだふりをする",
+        "reqCondition": [],
+        "successText": "息を止めてやり過ごした。プライドはずたずただが、無傷で生き残った。",
+        "failText": "",
+        "statChanges": {"charisma": -10, "luck": 5},
+        "itemDrops": []
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "title": "謀反の気配",
+    "text": "有力な魔族が魔王への反乱を企てているという密談を立ち聞きしてしまった。",
+    "minRankId": 3,
+    "weight": 50,
+    "choices": [
+      {
+        "choiceId": 1,
+        "text": "単騎で反乱軍を潰す",
+        "reqCondition": [{"stat": "physAtk", "value": 45}, {"stat": "hp", "value": 40}],
+        "successText": "首謀者たちの集まりに乗り込み、全員を物理的に粉砕した。魔王からの評価は絶大だ。",
+        "failText": "多勢に無勢、返り討ちにあって瀕死の重傷を負った…",
+        "statChanges": {"physAtk": 15, "hp": -25, "charisma": 20, "leadership": 10},
+        "itemDrops": [ { "itemId": 17, "probability": 1.0, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 2,
+        "text": "反乱軍に取り入り内側から操る",
+        "reqCondition": [{"stat": "control", "value": 35}, {"stat": "charisma", "value": 25}],
+        "successText": "同志のふりをして反乱軍を掌握し、自分の都合の良いように利用した。",
+        "failText": "スパイだとバレてしまい、命からがら逃げ出した…",
+        "statChanges": {"control": 20, "charisma": 15, "cruelty": 10},
+        "itemDrops": [ { "itemId": 13, "probability": 0.8, "minRankId": 3 } ]
+      },
+      {
+        "choiceId": 3,
+        "text": "上層部に密告する",
+        "reqCondition": [],
+        "successText": "すぐに直属の上官へ報告した。反乱は未然に防がれ、忠誠心を褒められた。",
+        "failText": "",
+        "statChanges": {"responsibility": 15, "luck": 5},
+        "itemDrops": []
+      }
+    ]
   }
 ]
