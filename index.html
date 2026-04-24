@@ -56,8 +56,7 @@
             margin-bottom: 8px;
         }
 
-        #crystal-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 5px;
-        }
+        #crystal-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 5px; }
         .crystal-icon { 
             width: 16px;
             height: 16px; 
@@ -69,8 +68,7 @@
         }
         .crystal-empty { background: #1a0a25; box-shadow: inset 0 0 5px #000;
             transform: rotate(45deg) scale(0.8); opacity: 0.5; }
-        #crystal-timer { font-size: 0.8rem; color: #a894c2;
-        }
+        #crystal-timer { font-size: 0.8rem; color: #a894c2; }
 
         main {
             flex: 1;
@@ -80,10 +78,8 @@
             overflow: hidden;
         }
 
-        .screen { display: none;
-            flex: 1; flex-direction: column; height: 100%; overflow: hidden;}
-        .screen.active { display: flex;
-        }
+        .screen { display: none; flex: 1; flex-direction: column; height: 100%; overflow: hidden;}
+        .screen.active { display: flex; }
 
         .rank-image-box {
             flex: 1 1 0;
@@ -106,11 +102,9 @@
             object-fit: cover; 
         }
 
-        .home-bottom-area { flex-shrink: 0;
-        }
+        .home-bottom-area { flex-shrink: 0; }
 
-        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;
-        }
+        .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
         .status-item { 
             background: rgba(30, 15, 45, 0.7);
             padding: 8px; 
@@ -120,10 +114,8 @@
             flex-direction: column; 
             justify-content: center;
         }
-        .status-label { font-size: 0.7rem; color: #bcaed4; margin-bottom: 2px;
-        }
-        .status-value { font-size: 1rem; font-weight: bold; color: var(--accent-gold);
-        }
+        .status-label { font-size: 0.7rem; color: #bcaed4; margin-bottom: 2px; }
+        .status-value { font-size: 1rem; font-weight: bold; color: var(--accent-gold); }
 
         button {
             background: var(--btn-bg);
@@ -138,8 +130,7 @@
             box-shadow: 0 3px 6px rgba(0,0,0,0.4);
             transition: transform 0.1s;
         }
-        button:active { transform: scale(0.98);
-        }
+        button:active { transform: scale(0.98); }
         
         button:disabled, button.disabled-btn { 
             background: var(--disabled-color);
@@ -147,11 +138,9 @@
             opacity: 0.5; 
             cursor: not-allowed; 
         }
-        button.disabled-btn:active { transform: scale(1);
-        }
+        button.disabled-btn:active { transform: scale(1); }
 
-        .reason-text { font-size: 0.75rem; color: #ff5555; display: block; margin-top: 3px; font-weight: normal;
-        }
+        .reason-text { font-size: 0.75rem; color: #ff5555; display: block; margin-top: 3px; font-weight: normal; }
 
         #skill-detail-panel {
             background: var(--panel-color);
@@ -161,7 +150,6 @@
             margin-top: 10px;
             display: none;
             flex-shrink: 0;
-            /* 詳細パネルを下部に固定し、縮まないようにする */
         }
 
         footer { 
@@ -181,61 +169,32 @@
             font-weight: bold;
             color: #d1c1e5;
         }
-        footer button:last-child { border-right: none;
-        }
-        footer button:disabled { background: #1a082e; color: #555; opacity: 1;
-        }
+        footer button:last-child { border-right: none; }
+        footer button:disabled { background: #1a082e; color: #555; opacity: 1; }
 
-        .dev-tools { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px;
-        }
-        .dev-btn { padding: 4px 8px; font-size: 0.7rem; width: auto; border-radius: 4px; border:none;
-            cursor: pointer; }
-        .btn-max { background: #ffaa00; color: #000;
-        }
-        .btn-reset { background: #cc3333; color: #fff;
-        }
+        .dev-tools { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px; }
+        .dev-btn { padding: 4px 8px; font-size: 0.7rem; width: auto; border-radius: 4px; border:none; cursor: pointer; }
+        .btn-max { background: #ffaa00; color: #000; }
+        .btn-reset { background: #cc3333; color: #fff; }
 
-        /* スキル画面のスクロールを外す（リストのみスクロールさせるため） */
-        #event-screen, #result-screen, #status-screen, #item-screen { overflow-y: auto;
-        }
+        #event-screen, #result-screen, #status-screen, #item-screen { overflow-y: auto; }
         
-        .event-box { background: var(--panel-color);
-            padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px;
-        }
-        h3 { color: var(--accent-gold); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;
-            flex-shrink: 0; }
+        .event-box { background: var(--panel-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; }
+        h3 { color: var(--accent-gold); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; flex-shrink: 0; }
         
-        .item-row { background: rgba(30,15,50,0.8);
-            padding: 12px; border-radius: 6px; margin-bottom: 10px; border: 1px solid #4a2b6e;
-        }
-        .item-rarity { font-size: 0.75rem; padding: 2px 6px; border-radius: 3px; margin-right: 6px;
-            font-weight: bold; border: 1px solid currentColor;}
-        .rarity-SS { color: #ff3333;
-            text-shadow: 0 0 5px #ff0000; }
-        .rarity-S { color: #ffdf00;
-        }
-        .rarity-A { color: #d100ff;
-        }
-        .rarity-B { color: #33aaff;
-        }
-        .rarity-C { color: #33ff33;
-        }
-        .rarity-D { color: #aaaaaa;
-        }
-        .rarity-E { color: #888888;
-        }
-        .rarity-F { color: #555555;
-        }
-        .item-use-btn { background: #4a2b6e; padding: 6px 12px; font-size: 0.8rem; width: auto;
-            border-radius: 4px; border: 1px solid #7c4bb3; margin-top: 8px;}
+        .item-row { background: rgba(30,15,50,0.8); padding: 12px; border-radius: 6px; margin-bottom: 10px; border: 1px solid #4a2b6e; }
+        .item-rarity { font-size: 0.75rem; padding: 2px 6px; border-radius: 3px; margin-right: 6px; font-weight: bold; border: 1px solid currentColor;}
+        .rarity-SS { color: #ff3333; text-shadow: 0 0 5px #ff0000; }
+        .rarity-S { color: #ffdf00; }
+        .rarity-A { color: #d100ff; }
+        .rarity-B { color: #33aaff; }
+        .rarity-C { color: #33ff33; }
+        .rarity-D { color: #aaaaaa; }
+        .rarity-E { color: #888888; }
+        .rarity-F { color: #555555; }
+        .item-use-btn { background: #4a2b6e; padding: 6px 12px; font-size: 0.8rem; width: auto; border-radius: 4px; border: 1px solid #7c4bb3; margin-top: 8px;}
 
-        /* スキルタブ用スタイル */
-        .skill-tab-container {
-            display: flex;
-            gap: 5px; 
-            margin-bottom: 10px; 
-            flex-shrink: 0;
-        }
+        .skill-tab-container { display: flex; gap: 5px; margin-bottom: 10px; flex-shrink: 0; }
         .skill-tab {
             flex: 1;
             padding: 10px;
@@ -246,13 +205,8 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        .skill-tab.active {
-            background: var(--btn-bg);
-            border-color: var(--accent-gold);
-            font-weight: bold;
-        }
+        .skill-tab.active { background: var(--btn-bg); border-color: var(--accent-gold); font-weight: bold; }
 
-        /* 特訓画面のレイアウト修正 */
         .level-grid { 
             display: grid;
             grid-template-columns: repeat(5, 1fr); 
@@ -263,132 +217,67 @@
             width: 90%; 
             margin: 0 auto;
         }
-        .level-btn { background: #2a1540; border: 1px solid var(--border-color); color: var(--text-color);
-            padding: 12px 5px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; cursor: pointer; text-align: center;
-            transition: all 0.2s;}
-        .level-btn.cleared { background: #1a3320; border-color: #33cc66; color: #aaffaa;
-        }
-        .level-btn:disabled { background: #111; color: #555; border-color: #333; cursor: not-allowed;
-        }
+        .level-btn { background: #2a1540; border: 1px solid var(--border-color); color: var(--text-color); padding: 12px 5px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; cursor: pointer; text-align: center; transition: all 0.2s;}
+        .level-btn.cleared { background: #1a3320; border-color: #33cc66; color: #aaffaa; }
+        .level-btn:disabled { background: #111; color: #555; border-color: #333; cursor: not-allowed; }
 
-        /* 特訓プレビュー用スタイル */
         #monster-preview-container {
-            flex-shrink: 0;
-            height: 140px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 5px;
-            position: relative;
-            overflow: hidden;
+            flex-shrink: 0; height: 140px; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5px; position: relative; overflow: hidden;
         }
-        #monster-preview-img { max-height: 100px; max-width: 100%; object-fit: contain;
-            filter: drop-shadow(0 0 10px rgba(209, 0, 255, 0.3)); }
-        #monster-preview-info { font-size: 0.85rem;
-            font-weight: bold; color: var(--accent-gold); margin-top: 5px; }
+        #monster-preview-img { max-height: 100px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 0 10px rgba(209, 0, 255, 0.3)); }
+        #monster-preview-info { font-size: 0.85rem; font-weight: bold; color: var(--accent-gold); margin-top: 5px; }
 
-        /* 戦闘画面のレイアウト修正 */
-        .battle-ui { display: flex;
-            flex-direction: column; height: 100%; gap: 10px; }
+        .battle-ui { display: flex; flex-direction: column; height: 100%; gap: 10px; }
         .battle-enemy-area { 
-            flex: 2;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center;
-            background: rgba(0,0,0,0.5); 
-            border-radius: 8px; 
-            padding: 10px; 
-            border: 1px solid var(--border-color);
-            position: relative;
+            flex: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border-radius: 8px; padding: 10px; border: 1px solid var(--border-color); position: relative;
         }
-        .enemy-name { font-size: 1.2rem; font-weight: bold; color: #ff5555; margin-bottom: 5px;
-            text-shadow: 0 0 5px #ff0000; }
-        .enemy-image { 
-            max-width: 260px;
-            max-height: 260px;
-            width: 100%;
-            object-fit: contain; 
-            margin-bottom: 10px; 
-            transition: opacity 0.3s;
-        }
+        .enemy-name { font-size: 1.2rem; font-weight: bold; color: #ff5555; margin-bottom: 5px; text-shadow: 0 0 5px #ff0000; }
+        .enemy-image { max-width: 260px; max-height: 260px; width: 100%; object-fit: contain; margin-bottom: 10px; transition: opacity 0.3s; }
         
-        .hp-container { width: 100%;
-            background: #222; border-radius: 10px; border: 1px solid #555; height: 18px; overflow: hidden; margin-bottom: 5px; position: relative;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);}
-        .hp-bar { height: 100%;
-            background: linear-gradient(90deg, #228b22, #32cd32); width: 100%; transition: width 0.3s ease;
-        }
-        .hp-bar.enemy { background: linear-gradient(90deg, #8b0000, #ff4500);
-        }
-        .hp-text { position: absolute; top: 0; left: 0; width: 100%; text-align: center;
-            font-size: 0.75rem; line-height: 18px; font-weight: bold; color: #fff; text-shadow: 1px 1px 2px #000;}
+        .hp-container { width: 100%; background: #222; border-radius: 10px; border: 1px solid #555; height: 18px; overflow: hidden; margin-bottom: 5px; position: relative; box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);}
+        .hp-bar { height: 100%; background: linear-gradient(90deg, #228b22, #32cd32); width: 100%; transition: width 0.3s ease; }
+        .hp-bar.enemy { background: linear-gradient(90deg, #8b0000, #ff4500); }
+        .hp-bar.mp { background: linear-gradient(90deg, #1e90ff, #00bfff); }
+        .hp-text { position: absolute; top: 0; left: 0; width: 100%; text-align: center; font-size: 0.75rem; line-height: 18px; font-weight: bold; color: #fff; text-shadow: 1px 1px 2px #000;}
 
-        .battle-player-area { padding: 10px;
-            background: rgba(30, 15, 45, 0.8); border-radius: 8px; border: 1px solid var(--border-color);}
+        .buff-area { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; min-height: 20px; width: 100%; justify-content: flex-start; }
+        .buff-icon { font-size: 0.7rem; padding: 2px 4px; border-radius: 3px; color: #fff; background: rgba(0,0,0,0.6); border: 1px solid #888; }
+        .buff-icon.buff { border-color: #32cd32; color: #32cd32; }
+        .buff-icon.debuff { border-color: #ff4500; color: #ff4500; }
+        .buff-icon.stun { border-color: #ffd700; color: #ffd700; }
+
+        .battle-player-area { padding: 10px; background: rgba(30, 15, 45, 0.8); border-radius: 8px; border: 1px solid var(--border-color);}
         
         .battle-log-area { 
-            flex: 0.6;
-            background: #000; 
-            border: 1px solid var(--border-color); 
-            border-radius: 8px; 
-            padding: 10px; 
-            overflow-y: auto; 
-            font-size: 0.85rem; 
-            line-height: 1.5; 
-            color: #d1c1e5;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            flex: 0.6; background: #000; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; overflow-y: auto; font-size: 0.85rem; line-height: 1.5; color: #d1c1e5; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
         }
 
         @keyframes shake {
-            0% { transform: translate(3px, 1px) rotate(0deg);
-            }
-            10% { transform: translate(-1px, -2px) rotate(-1deg);
-            }
-            20% { transform: translate(-3px, 0px) rotate(1deg);
-            }
-            30% { transform: translate(3px, 2px) rotate(0deg);
-            }
-            40% { transform: translate(1px, -1px) rotate(1deg);
-            }
-            50% { transform: translate(-1px, 2px) rotate(-1deg);
-            }
-            60% { transform: translate(-3px, 1px) rotate(0deg);
-            }
-            70% { transform: translate(3px, 1px) rotate(-1deg);
-            }
-            80% { transform: translate(-1px, -1px) rotate(1deg);
-            }
-            90% { transform: translate(1px, 2px) rotate(0deg);
-            }
-            100% { transform: translate(0px, 0px) rotate(0deg);
-            }
+            0% { transform: translate(3px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(0px, 0px) rotate(0deg); }
         }
-        .anim-shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
-        }
+        .anim-shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
         
         @keyframes flashRed {
-            0% { background-color: rgba(255, 0, 0, 0.6);
-            }
-            100% { background-color: transparent;
-            }
+            0% { background-color: rgba(255, 0, 0, 0.6); }
+            100% { background-color: transparent; }
         }
-        .anim-flash { animation: flashRed 0.4s ease-out;
-        }
+        .anim-flash { animation: flashRed 0.4s ease-out; }
         
         @keyframes fadeOutDown {
-            0% { opacity: 1;
-                transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(30px);
-            }
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(30px); }
         }
-        .anim-defeat { animation: fadeOutDown 1s forwards;
-        }
+        .anim-defeat { animation: fadeOutDown 1s forwards; }
     </style>
 </head>
 <body>
@@ -405,30 +294,25 @@
     </header>
 
     <main>
-    
         <div id="home-screen" class="screen active">
             <div class="rank-image-box" onclick="playRankVideo()">
                 <video id="rank-video" muted playsinline preload="metadata" src=""></video>
             </div>
             
             <div class="home-bottom-area">
-                <div 
-                    class="status-grid">
+                <div class="status-grid">
                     <div class="status-item"><div class="status-label">戦闘力</div><div class="status-value" id="display-combat-power">0</div></div>
                     <div class="status-item">
                         <div class="status-label" id="display-next-req">戦闘力---で</div>
                         <div class="status-value" id="display-next-name" style="font-size: 0.9rem;">---に昇格</div>
- 
                     </div>
                 </div>
-                <div class="status-item" style="margin-bottom:10px;
-                    flex-direction:row; justify-content:space-between; align-items:center;">
+                <div class="status-item" style="margin-bottom:10px; flex-direction:row; justify-content:space-between; align-items:center;">
                     <div class="status-label" style="margin:0;">配下総数</div>
                     <div class="status-value" id="display-subordinates">0名</div>
                 </div>
                 <button onclick="startEvent()" style="margin-bottom: 8px;">イベント発生 (消費: 1)</button>
-                <button 
-                    onclick="openTrainingScreen()" style="background: linear-gradient(180deg, #732323 0%, #2e0808 100%);">特訓で鍛える (消費: 1)</button>
+                <button onclick="openTrainingScreen()" style="background: linear-gradient(180deg, #732323 0%, #2e0808 100%);">特訓で鍛える (消費: 1)</button>
             </div>
         </div>
 
@@ -437,14 +321,10 @@
             <div id="monster-preview-container">
                 <img id="monster-preview-img" src="" style="display:none;">
                 <div id="monster-preview-info">レベルを選択してください</div>
- 
             </div>
             <div id="level-list" class="level-grid"></div>
-            <div style="text-align: center;
-                padding: 10px 0; flex-shrink: 0;">
-                <button id="start-battle-btn" disabled onclick="initiateSelectedBattle()" style="width: 80%;
-                    background: linear-gradient(180deg, #732323 0%, #2e0808 100%); box-shadow: 0 0 10px rgba(255,0,0,0.3); font-size: 1.1rem;
-                    padding: 12px;">戦闘開始</button>
+            <div style="text-align: center; padding: 10px 0; flex-shrink: 0;">
+                <button id="start-battle-btn" disabled onclick="initiateSelectedBattle()" style="width: 80%; background: linear-gradient(180deg, #732323 0%, #2e0808 100%); box-shadow: 0 0 10px rgba(255,0,0,0.3); font-size: 1.1rem; padding: 12px;">戦闘開始</button>
             </div>
         </div>
 
@@ -452,32 +332,32 @@
             <div class="battle-ui" id="battle-ui-area">
                 <div class="battle-enemy-area">
                     <div class="enemy-name" id="battle-enemy-name">未知のモンスター</div>
-                
                     <img class="enemy-image" id="battle-enemy-img" src="" alt="敵画像">
+                    <div id="battle-enemy-buffs" class="buff-area" style="width: 90%; justify-content: center;"></div>
                     <div style="width: 90%;">
                         <div class="hp-container">
                             <div class="hp-bar enemy" id="battle-enemy-hp-bar" style="width: 100%;"></div>
-            
                             <div class="hp-text" id="battle-enemy-hp-text">HP: ???/???</div>
                         </div>
                     </div>
                 </div>
                 
-     
                 <div class="battle-player-area">
-                    <div style="font-weight: bold;
-                        color: var(--accent-gold); margin-bottom: 5px;">自分（魔族）</div>
+                    <div style="font-weight: bold; color: var(--accent-gold); margin-bottom: 5px;">自分（魔族）</div>
+                    <div id="battle-player-buffs" class="buff-area"></div>
                     <div class="hp-container">
                         <div class="hp-bar" id="battle-player-hp-bar" style="width: 100%;"></div>
                         <div class="hp-text" id="battle-player-hp-text">HP: 100/100</div>
                     </div>
- 
+                    <div class="hp-container">
+                        <div class="hp-bar mp" id="battle-player-mp-bar" style="width: 100%;"></div>
+                        <div class="hp-text" id="battle-player-mp-text">MP: 50/50</div>
+                    </div>
                 </div>
                 
                 <div class="battle-log-area" id="battle-log"></div>
 
-                <button id="temp-end-battle-btn" style="padding: 10px;
-                    font-size: 0.9rem; display: none;">[結果を見る]</button>
+                <button id="temp-end-battle-btn" style="padding: 10px; font-size: 0.9rem; display: none;">[結果を見る]</button>
             </div>
         </div>
 
@@ -485,8 +365,7 @@
             <div class="event-box" style="flex:1;">
                 <h3 id="event-title">イベント</h3>
                 <p id="event-text" style="line-height:1.5;"></p>
-                <div id="choices-area" 
-                    style="display:flex; flex-direction:column; gap:10px; margin-top:20px;"></div>
+                <div id="choices-area" style="display:flex; flex-direction:column; gap:10px; margin-top:20px;"></div>
             </div>
         </div>
 
@@ -494,15 +373,11 @@
             <div class="event-box" style="flex:1;">
                 <h3 id="result-title">結果</h3>
                 <p id="result-text" style="line-height:1.5;"></p>
-                <div id="change-log" 
-                    style="color:var(--crystal-color); margin-top: 15px; font-size: 0.9rem; font-weight:bold;"></div>
-                <div id="skill-log" style="color:#ffdf00;
-                    margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
-                <div id="item-log" style="color:#00ffaa;
-                    margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
+                <div id="change-log" style="color:var(--crystal-color); margin-top: 15px; font-size: 0.9rem; font-weight:bold;"></div>
+                <div id="skill-log" style="color:#ffdf00; margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
+                <div id="item-log" style="color:#00ffaa; margin-top: 10px; font-size: 0.95rem; font-weight:bold;"></div>
             </div>
-            <button onclick="playSE('click');
-                showScreen('home-screen')">ホームへ</button>
+            <button onclick="playSE('click'); showScreen('home-screen')">ホームへ</button>
         </div>
 
         <div id="status-screen" class="screen">
@@ -513,33 +388,23 @@
         </div>
 
         <div id="skill-screen" class="screen">
-          
             <h3>取得済みスキル</h3>
             <div class="skill-tab-container">
                 <button id="tab-combat" class="skill-tab active" onclick="switchSkillTab('combat')">戦闘</button>
                 <button id="tab-noncombat" class="skill-tab" onclick="switchSkillTab('noncombat')">非戦闘</button>
             </div>
-            <div id="acquired-skills-list" style="display:flex;
-                flex-direction:column; gap:8px; flex:1; overflow-y:auto; padding-bottom:5px;"></div>
+            <div id="acquired-skills-list" style="display:flex; flex-direction:column; gap:8px; flex:1; overflow-y:auto; padding-bottom:5px;"></div>
             
             <div id="skill-detail-panel">
-                <div id="detail-skill-name" style="font-weight:bold;
-                    font-size:1.1rem; color:var(--accent-gold); border-bottom:1px solid var(--border-color); padding-bottom:5px;"></div>
-                <div style="display:flex;
-                    justify-content:flex-start; gap: 15px; margin-top: 8px;">
-                    <div id="detail-skill-element" style="color:#ff7777;
-                        font-size:0.85rem; font-weight:bold; display:none;"></div>
-                    <div id="detail-skill-mp" style="color:#00aaff;
-                        font-size:0.85rem; font-weight:bold; display:none;"></div>
-                    <div id="detail-skill-power" style="color:#ffaa00;
-                        font-size:0.85rem; font-weight:bold; display:none;"></div>
+                <div id="detail-skill-name" style="font-weight:bold; font-size:1.1rem; color:var(--accent-gold); border-bottom:1px solid var(--border-color); padding-bottom:5px;"></div>
+                <div style="display:flex; justify-content:flex-start; gap: 15px; margin-top: 8px;">
+                    <div id="detail-skill-element" style="color:#ff7777; font-size:0.85rem; font-weight:bold; display:none;"></div>
+                    <div id="detail-skill-mp" style="color:#00aaff; font-size:0.85rem; font-weight:bold; display:none;"></div>
+                    <div id="detail-skill-power" style="color:#ffaa00; font-size:0.85rem; font-weight:bold; display:none;"></div>
                 </div>
-                <div id="detail-skill-bonus" style="color:var(--crystal-color);
-                    font-size:0.85rem; font-weight:bold; margin: 8px 0;"></div>
-                <div id="detail-skill-req" style="color:#ffdf00;
-                    font-size:0.8rem; margin-bottom: 8px;"></div>
-                <div id="detail-skill-desc" style="font-size:0.85rem;
-                    line-height:1.4;"></div>
+                <div id="detail-skill-bonus" style="color:var(--crystal-color); font-size:0.85rem; font-weight:bold; margin: 8px 0;"></div>
+                <div id="detail-skill-req" style="color:#ffdf00; font-size:0.8rem; margin-bottom: 8px;"></div>
+                <div id="detail-skill-desc" style="font-size:0.85rem; line-height:1.4;"></div>
             </div>
         </div>
 
@@ -550,13 +415,10 @@
     </main>
 
     <footer>
-        <button onclick="playSE('click');
-            showScreen('home-screen')">ホーム</button>
+        <button onclick="playSE('click'); showScreen('home-screen')">ホーム</button>
         <button onclick="playSE('click'); showScreen('item-screen')">アイテム</button>
-        <button onclick="playSE('click');
-            showScreen('skill-screen')">スキル</button>
-        <button onclick="playSE('click');
-            showScreen('status-screen')">ステータス</button>
+        <button onclick="playSE('click'); showScreen('skill-screen')">スキル</button>
+        <button onclick="playSE('click'); showScreen('status-screen')">ステータス</button>
     </footer>
 </div>
 
@@ -580,7 +442,6 @@ function playTone(freq, type, duration, vol=0.1, delay=0) {
     osc.type = type;
     osc.frequency.setValueAtTime(freq, startTime);
     
-    
     gain.gain.setValueAtTime(0, startTime);
     gain.gain.linearRampToValueAtTime(vol, startTime + 0.02);
     gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
@@ -596,34 +457,25 @@ function playSE(type) {
     initAudio();
     switch(type) {
         case 'click':      
-            playTone(800, 'sine', 0.1, 0.05, 0);
-            break;
+            playTone(800, 'sine', 0.1, 0.05, 0); break;
         case 'error':      
-            playTone(150, 'sawtooth', 0.3, 0.05, 0);
-            playTone(140, 'sawtooth', 0.4, 0.05, 0.15); break;
+            playTone(150, 'sawtooth', 0.3, 0.05, 0); playTone(140, 'sawtooth', 0.4, 0.05, 0.15); break;
         case 'finish':     
-            playTone(523.25, 'sine', 0.3, 0.05, 0);
-            playTone(659.25, 'sine', 0.3, 0.05, 0.1); playTone(783.99, 'sine', 0.4, 0.05, 0.2); break;
+            playTone(523.25, 'sine', 0.3, 0.05, 0); playTone(659.25, 'sine', 0.3, 0.05, 0.1); playTone(783.99, 'sine', 0.4, 0.05, 0.2); break;
         case 'item':
-            playTone(1046.50, 'sine', 0.1, 0.05, 0);
-            playTone(1318.51, 'sine', 0.2, 0.05, 0.1); break;
+            playTone(1046.50, 'sine', 0.1, 0.05, 0); playTone(1318.51, 'sine', 0.2, 0.05, 0.1); break;
         case 'use_item':
-            playTone(600, 'sine', 0.4, 0.05, 0);
-            playTone(800, 'triangle', 0.3, 0.03, 0.1); break;
+            playTone(600, 'sine', 0.4, 0.05, 0); playTone(800, 'triangle', 0.3, 0.03, 0.1); break;
         case 'skill':      
-            playTone(880, 'square', 0.2, 0.03, 0);
-            playTone(1108.73, 'square', 0.2, 0.03, 0.1); playTone(1318.51, 'square', 0.2, 0.03, 0.2); playTone(1760, 'square', 0.6, 0.03, 0.3); break;
+            playTone(880, 'square', 0.2, 0.03, 0); playTone(1108.73, 'square', 0.2, 0.03, 0.1); playTone(1318.51, 'square', 0.2, 0.03, 0.2); playTone(1760, 'square', 0.6, 0.03, 0.3); break;
         case 'rankup':     
-            playTone(392.00, 'triangle', 0.2, 0.08, 0);
-            playTone(392.00, 'triangle', 0.2, 0.08, 0.15); playTone(392.00, 'triangle', 0.2, 0.08, 0.30); playTone(523.25, 'triangle', 0.6, 0.08, 0.45); break;
+            playTone(392.00, 'triangle', 0.2, 0.08, 0); playTone(392.00, 'triangle', 0.2, 0.08, 0.15); playTone(392.00, 'triangle', 0.2, 0.08, 0.30); playTone(523.25, 'triangle', 0.6, 0.08, 0.45); break;
         case 'hit':
-            playTone(180, 'square', 0.1, 0.1, 0);
-            break;
+            playTone(180, 'square', 0.1, 0.1, 0); break;
         case 'hit_heavy':
             playTone(100, 'sawtooth', 0.2, 0.15, 0); break;
         case 'defeat':
-            playTone(150, 'sawtooth', 0.2, 0.1, 0);
-            playTone(100, 'sawtooth', 0.3, 0.1, 0.1); playTone(50, 'sawtooth', 0.6, 0.1, 0.3); break;
+            playTone(150, 'sawtooth', 0.2, 0.1, 0); playTone(100, 'sawtooth', 0.3, 0.1, 0.1); playTone(50, 'sawtooth', 0.6, 0.1, 0.3); break;
     }
 }
 
@@ -644,7 +496,7 @@ let gameState = {
     clearedLevels: []
 };
 let currentSelectedLevel = null; 
-let currentSkillTab = 'combat'; // 現在選択されているスキルタブ
+let currentSkillTab = 'combat'; 
 
 async function init() {
     try {
@@ -671,7 +523,6 @@ async function init() {
                 let reqs = Array.isArray(skill.requirements) ? skill.requirements : [skill.requirements];
                 reqs.forEach(req => {
                     if (req && req.value) {
-                   
                         req.value = Math.ceil(req.value * SKILL_DIFFICULTY_MULTIPLIER);
                     }
                 });
@@ -803,6 +654,18 @@ function initiateSelectedBattle() {
     }
 }
 
+function getElementMultiplier(attackElem, defenseElem) {
+    if(attackElem === '火' && defenseElem === '水') return 0.5;
+    if(attackElem === '火' && defenseElem === '雷') return 1.5;
+    if(attackElem === '水' && defenseElem === '雷') return 0.5;
+    if(attackElem === '水' && defenseElem === '火') return 1.5;
+    if(attackElem === '雷' && defenseElem === '火') return 0.5;
+    if(attackElem === '雷' && defenseElem === '水') return 1.5;
+    if(attackElem === '闇' && defenseElem === '光') return 1.5;
+    if(attackElem === '光' && defenseElem === '闇') return 1.5;
+    return 1.0;
+}
+
 async function startBattle(levelId) {
     if(gameState.stats.hp <= 0) {
         playSE('error');
@@ -823,25 +686,79 @@ async function startBattle(levelId) {
     try {
         const enemyName = monster.name || `未知のモンスター (Lv.${levelId})`;
         const enemyMaxHp = monster.stats ? (monster.stats.hp || 1) : 1;
-        let enemyHp = enemyMaxHp;
         
-        const playerMaxHp = gameState.stats.hp;
-        let playerHp = playerMaxHp; 
-        
+        const pStats = gameState.stats;
+        const pInner = gameState.innerTraits;
+        const pSubs = Math.max(0, (pStats.physAtk + pStats.magAtk + pStats.magDef + pStats.physDef + pStats.agility + pStats.luck) + pInner.leadership + pInner.charisma - pInner.cruelty);
+
+        let battlePlayer = {
+            name: "自分",
+            isPlayer: true,
+            hp: pStats.hp,
+            maxHp: pStats.hp,
+            mp: pStats.mp || 0,
+            maxMp: pStats.mp || 0,
+            element: '無',
+            buffs: [],
+            getStat: function(s) {
+                let base = (pStats[s] !== undefined ? pStats[s] : (pInner[s] || 0));
+                base += Math.floor(pSubs / 10);
+                this.buffs.forEach(b => { if(b.stat === s) base += b.amount; });
+                return Math.max(0, base);
+            }
+        };
+
+        let battleEnemy = {
+            name: enemyName,
+            isPlayer: false,
+            hp: enemyMaxHp,
+            maxHp: enemyMaxHp,
+            mp: monster.stats.mp || 9999,
+            maxMp: monster.stats.mp || 9999,
+            element: monster.element || '無',
+            buffs: [],
+            getStat: function(s) {
+                let base = (monster.stats[s] || 0);
+                this.buffs.forEach(b => { if(b.stat === s) base += b.amount; });
+                return Math.max(0, base);
+            }
+        };
+
         const imgEl = document.getElementById('battle-enemy-img');
         const uiAreaEl = document.getElementById('battle-ui-area');
         imgEl.classList.remove('anim-shake', 'anim-defeat');
         imgEl.style.opacity = '1';
         imgEl.style.transform = 'none';
         document.getElementById('battle-enemy-name').innerText = enemyName;
-        document.getElementById('battle-enemy-hp-text').innerText = `HP: ${enemyHp}/${enemyMaxHp}`;
-        document.getElementById('battle-player-hp-text').innerText = `HP: ${playerHp}/${playerMaxHp}`;
-        document.getElementById('battle-enemy-hp-bar').style.width = '100%';
-        document.getElementById('battle-player-hp-bar').style.width = '100%';
         imgEl.src = monster.imagePath || '';
 
         const logArea = document.getElementById('battle-log');
         logArea.innerHTML = `<span style="color:#ff5555; font-size: 1.1rem; font-weight:bold;">${enemyName} が現れた！</span><br><br>`;
+
+        function updateBattleUI() {
+            document.getElementById('battle-enemy-hp-text').innerText = `HP: ${Math.max(0, battleEnemy.hp)}/${battleEnemy.maxHp}`;
+            document.getElementById('battle-enemy-hp-bar').style.width = Math.max(0, (battleEnemy.hp / battleEnemy.maxHp) * 100) + '%';
+            
+            document.getElementById('battle-player-hp-text').innerText = `HP: ${Math.max(0, battlePlayer.hp)}/${battlePlayer.maxHp}`;
+            document.getElementById('battle-player-hp-bar').style.width = Math.max(0, (battlePlayer.hp / battlePlayer.maxHp) * 100) + '%';
+            document.getElementById('battle-player-mp-text').innerText = `MP: ${Math.max(0, battlePlayer.mp)}/${battlePlayer.maxMp}`;
+            document.getElementById('battle-player-mp-bar').style.width = Math.max(0, (battlePlayer.mp / battlePlayer.maxMp) * 100) + '%';
+
+            const renderBuffs = (entity, elemId) => {
+                const el = document.getElementById(elemId);
+                el.innerHTML = '';
+                entity.buffs.forEach(b => {
+                    const span = document.createElement('span');
+                    span.className = `buff-icon ${b.type}`;
+                    span.innerText = `${b.label}(${b.turns})`;
+                    el.appendChild(span);
+                });
+            };
+            renderBuffs(battlePlayer, 'battle-player-buffs');
+            renderBuffs(battleEnemy, 'battle-enemy-buffs');
+        }
+
+        updateBattleUI();
 
         playSE('click');
         const currentRank = ranks.find(r => r.id === gameState.currentRankId);
@@ -856,45 +773,118 @@ async function startBattle(levelId) {
         endBtn.style.display = 'none';
         await sleep(1000);
         
-        let turn = 1;
-        while(playerHp > 0 && enemyHp > 0) {
-            logArea.innerHTML += `<span style="color:#a894c2;">--- ターン ${turn} ---</span><br>`;
-            let pAgi = gameState.stats.agility || 0;
-            let eAgi = monster.stats.agility || 0;
-            let isPlayerFirst = pAgi >= eAgi;
-            if (pAgi === eAgi) isPlayerFirst = Math.random() > 0.5;
+        const executeTurn = async (attacker, defender) => {
+            if(attacker.hp <= 0 || defender.hp <= 0) return;
 
-            const executeAttack = async (attacker) => {
-                if(playerHp <= 0 || enemyHp <= 0) return;
-                let isPlayer = attacker === 'player';
-                let atkName = isPlayer ? "自分" : enemyName;
-                let defName = isPlayer ?
-                enemyName : "自分";
+            let isStunned = attacker.buffs.some(b => b.type === 'stun');
+            if (isStunned) {
+                logArea.innerHTML += `${attacker.name}はスタンして動けない！<br>`;
+                logArea.scrollTop = logArea.scrollHeight;
+                await sleep(800);
+                return;
+            }
+
+            let usableSkills = [];
+            if (attacker.isPlayer) {
+                let pSkills = gameState.acquiredSkills.map(id => skills.find(s => s.id === id)).filter(s => s && s.category === '戦闘');
+                usableSkills = pSkills.filter(s => s.mpCost <= attacker.mp);
+            } else {
+                let eSkills = (monster.skills || []).map(id => skills.find(s => s.id === id)).filter(s => s);
+                usableSkills = eSkills.filter(s => s.mpCost <= attacker.mp);
+            }
+
+            let selectedSkill = null;
+            if (usableSkills.length > 0) {
+                selectedSkill = usableSkills[Math.floor(Math.random() * usableSkills.length)];
+            }
+
+            if (selectedSkill) {
+                attacker.mp -= selectedSkill.mpCost;
+                updateBattleUI();
+                logArea.innerHTML += `${attacker.name}は【${selectedSkill.name}】を使用した！<br>`;
                 
-                let pAtk = isPlayer ? Math.max(gameState.stats.physAtk, gameState.stats.magAtk) : Math.max(monster.stats.physAtk, monster.stats.magAtk);
-                let isMag = isPlayer ?
-                gameState.stats.magAtk > gameState.stats.physAtk : monster.stats.magAtk > monster.stats.physAtk;
-                let def = isPlayer ?
-                (isMag ? monster.stats.magDef : monster.stats.physDef) : (isMag ? gameState.stats.magDef : gameState.stats.physDef);
-                
-                let damage = Math.max(1, Math.floor(pAtk - (def / 2)));
-                let luck = isPlayer ? gameState.stats.luck : monster.stats.luck;
-                let isCrit = Math.random() < (luck * 0.01);
-                if (isPlayer && monster.weaknessSkills && Array.isArray(monster.weaknessSkills)) {
-                    let hasWeakness = gameState.acquiredSkills.some(sid => monster.weaknessSkills.includes(sid));
-                    if(hasWeakness) {
+                let alignBonus = 1.0;
+                if (!attacker.isPlayer && attacker.element === selectedSkill.element && attacker.element !== '無') alignBonus = 1.5;
+
+                let ce = selectedSkill.combatEffect || { type: 'damage', target: 'enemy', statUsed: 'physAtk', multiplier: 1.0 };
+                let target = ce.target === 'self' ? attacker : defender;
+
+                if (ce.type === 'damage') {
+                    let atkStat = attacker.getStat(ce.statUsed || 'physAtk');
+                    let isMag = ['magAtk', 'fireAtk', 'waterAtk', 'thunderAtk', 'darkAtk', 'lightAtk', 'nonElemAtk'].includes(ce.statUsed);
+                    let defStat = target.getStat(isMag ? 'magDef' : 'physDef');
+                    
+                    let damage = Math.max(1, Math.floor(atkStat * ce.multiplier - defStat / 2));
+                    
+                    let elemMult = getElementMultiplier(selectedSkill.element, target.element);
+                    damage = Math.floor(damage * elemMult * alignBonus);
+
+                    let luck = attacker.getStat('luck');
+                    let isCrit = Math.random() < (luck * 0.01);
+                    damage = Math.floor(damage * (0.85 + Math.random() * 0.3));
+                    if (isCrit) damage = Math.floor(damage * 1.5);
+
+                    if (attacker.isPlayer && monster.weaknessSkills && monster.weaknessSkills.includes(selectedSkill.id)) {
                         damage = Math.floor(damage * 1.5);
                         logArea.innerHTML += `<span style="color:#ffdf00;">弱点を突いた！</span> `;
                     }
-                }
 
+                    if (elemMult > 1.0) logArea.innerHTML += `<span style="color:#ffdf00;">効果はばつぐんだ！</span> `;
+                    else if (elemMult < 1.0) logArea.innerHTML += `<span style="color:#888;">効果はいまひとつのようだ。</span> `;
+                    if (alignBonus > 1.0) logArea.innerHTML += `<span style="color:#ffdf00;">属性共鳴！</span> `;
+                    if (isCrit) logArea.innerHTML += `<span style="color:#ff3333; font-weight:bold;">痛恨の一撃！</span> `;
+
+                    target.hp -= damage;
+                    logArea.innerHTML += `${target.name}に <b>${damage}</b> のダメージ！<br>`;
+                    
+                    if (attacker.isPlayer) {
+                        playSE('hit');
+                        imgEl.classList.remove('anim-shake');
+                        void imgEl.offsetWidth; 
+                        imgEl.classList.add('anim-shake');
+                    } else {
+                        playSE('hit_heavy');
+                        uiAreaEl.classList.remove('anim-flash');
+                        void uiAreaEl.offsetWidth;
+                        uiAreaEl.classList.add('anim-flash');
+                    }
+                } else if (ce.type === 'heal') {
+                    let healBase = attacker.getStat(ce.statUsed || 'magAtk');
+                    let healAmount = Math.floor(healBase * ce.multiplier * alignBonus);
+                    target.hp = Math.min(target.maxHp, target.hp + healAmount);
+                    if (alignBonus > 1.0) logArea.innerHTML += `<span style="color:#ffdf00;">属性共鳴！</span> `;
+                    logArea.innerHTML += `<span style="color:#32cd32;">${target.name}のHPが <b>${healAmount}</b> 回復した！</span><br>`;
+                    playSE('use_item');
+                } else if (ce.type === 'buff' || ce.type === 'debuff') {
+                    let bName = LABELS[ce.buffStat] || ce.buffStat;
+                    target.buffs.push({ stat: ce.buffStat, amount: ce.buffAmount, turns: ce.turns, type: ce.type, label: bName });
+                    let updown = ce.buffAmount > 0 ? '上昇' : '低下';
+                    logArea.innerHTML += `<span style="color:${ce.type==='buff'?'#32cd32':'#ff4500'};">${target.name}の${bName}が${updown}した！(${ce.turns}ターン)</span><br>`;
+                    playSE('skill');
+                } else if (ce.type === 'stun') {
+                    target.buffs.push({ stat: 'none', amount: 0, turns: ce.turns, type: 'stun', label: 'スタン' });
+                    logArea.innerHTML += `<span style="color:#ffd700;">${target.name}はスタン状態になった！(${ce.turns}ターン)</span><br>`;
+                    playSE('skill');
+                }
+            } else {
+                let atkName = attacker.name;
+                let defName = defender.name;
+                let pAtk = Math.max(attacker.getStat('physAtk'), attacker.getStat('magAtk'));
+                let isMag = attacker.getStat('magAtk') > attacker.getStat('physAtk');
+                let def = defender.getStat(isMag ? 'magDef' : 'physDef');
+                
+                let damage = Math.max(1, Math.floor(pAtk - (def / 2)));
+                let luck = attacker.getStat('luck');
+                let isCrit = Math.random() < (luck * 0.01);
+                
                 damage = Math.floor(damage * (0.85 + Math.random() * 0.3));
-                if (isCrit) {
-                    damage = Math.floor(damage * 1.5);
-                    logArea.innerHTML += `<span style="color:#ff3333; font-weight:bold;">痛恨の一撃！</span> `;
-                }
+                if (isCrit) damage = Math.floor(damage * 1.5);
 
-                if (isPlayer) {
+                if (isCrit) logArea.innerHTML += `<span style="color:#ff3333; font-weight:bold;">痛恨の一撃！</span> `;
+                defender.hp -= damage;
+                logArea.innerHTML += `${atkName}の通常攻撃！ ${defName}に <b>${damage}</b> のダメージ！<br>`;
+                
+                if (attacker.isPlayer) {
                     playSE('hit');
                     imgEl.classList.remove('anim-shake');
                     void imgEl.offsetWidth; 
@@ -905,37 +895,46 @@ async function startBattle(levelId) {
                     void uiAreaEl.offsetWidth;
                     uiAreaEl.classList.add('anim-flash');
                 }
+            }
 
-                logArea.innerHTML += `${atkName}の攻撃！ ${defName}に <b>${damage}</b> のダメージ！<br>`;
-                if (isPlayer) {
-                    enemyHp -= damage;
-                    document.getElementById('battle-enemy-hp-text').innerText = `HP: ${Math.max(0, enemyHp)}/${enemyMaxHp}`;
-                    document.getElementById('battle-enemy-hp-bar').style.width = Math.max(0, (enemyHp / enemyMaxHp) * 100) + '%';
-                } else {
-                    playerHp -= damage;
-                    document.getElementById('battle-player-hp-text').innerText = `HP: ${Math.max(0, playerHp)}/${playerMaxHp}`;
-                    document.getElementById('battle-player-hp-bar').style.width = Math.max(0, (playerHp / playerMaxHp) * 100) + '%';
-                }
-                
-                logArea.scrollTop = logArea.scrollHeight;
-                if (enemyHp <= 0 && isPlayer) {
-                    playSE('defeat');
-                    imgEl.classList.add('anim-defeat');
-                }
-                
-                await sleep(800);
-            };
-
-            await executeAttack(isPlayerFirst ? 'player' : 'enemy');
-            await executeAttack(isPlayerFirst ? 'enemy' : 'player');
+            updateBattleUI();
+            logArea.scrollTop = logArea.scrollHeight;
             
+            if (defender.hp <= 0 && attacker.isPlayer) {
+                playSE('defeat');
+                imgEl.classList.add('anim-defeat');
+            }
+            
+            await sleep(800);
+        };
+
+        let turn = 1;
+        while(battlePlayer.hp > 0 && battleEnemy.hp > 0) {
+            logArea.innerHTML += `<span style="color:#a894c2;">--- ターン ${turn} ---</span><br>`;
+            
+            let pAgi = battlePlayer.getStat('agility');
+            let eAgi = battleEnemy.getStat('agility');
+            let isPlayerFirst = pAgi >= eAgi;
+            if (pAgi === eAgi) isPlayerFirst = Math.random() > 0.5;
+
+            await executeTurn(isPlayerFirst ? battlePlayer : battleEnemy, isPlayerFirst ? battleEnemy : battlePlayer);
+            if(battlePlayer.hp > 0 && battleEnemy.hp > 0) {
+                await executeTurn(isPlayerFirst ? battleEnemy : battlePlayer, isPlayerFirst ? battlePlayer : battleEnemy);
+            }
+            
+            battlePlayer.buffs.forEach(b => b.turns--);
+            battlePlayer.buffs = battlePlayer.buffs.filter(b => b.turns > 0);
+            battleEnemy.buffs.forEach(b => b.turns--);
+            battleEnemy.buffs = battleEnemy.buffs.filter(b => b.turns > 0);
+            
+            updateBattleUI();
             logArea.innerHTML += `<br>`;
             turn++;
         }
 
-        let isWin = playerHp > 0;
+        let isWin = battlePlayer.hp > 0;
         logArea.innerHTML += isWin ?
-        `<span style="color:#00ffaa; font-weight:bold; font-size:1.1rem;">${enemyName} を打ち倒した！</span><br>` : `<span style="color:#ff5555; font-weight:bold; font-size:1.1rem;">${enemyName} に敗北した…</span><br>`;
+            `<span style="color:#00ffaa; font-weight:bold; font-size:1.1rem;">${enemyName} を打ち倒した！</span><br>` : `<span style="color:#ff5555; font-weight:bold; font-size:1.1rem;">${enemyName} に敗北した…</span><br>`;
         logArea.scrollTop = logArea.scrollHeight;
 
         endBtn.style.display = 'block';
@@ -952,7 +951,7 @@ function endBattle(levelId, monster, isWin) {
     if (isWin) playSE('finish'); else playSE('click');
     
     document.getElementById('result-title').innerText = isWin ?
-    "特訓 勝利！" : "特訓 敗北…";
+        "特訓 勝利！" : "特訓 敗北…";
     document.getElementById('result-text').innerText = isWin ? `${monster.name} との死闘を制した！` : `${monster.name} に敗れ去った…。力をつけて出直そう。`;
     
     let changeLog = '';
@@ -965,8 +964,7 @@ function endBattle(levelId, monster, isWin) {
                 monster.firstClearReward.forEach(reward => {
                     gameState.items[reward.itemId] = (gameState.items[reward.itemId] || 0) + reward.amount;
                     const it = items.find(i => i.id === reward.itemId);
-                    if (it) itemLog += `<br>🎁 初回クリア報酬: ${it.name} 
-x${reward.amount} を獲得！`;
+                    if (it) itemLog += `<br>🎁 初回クリア報酬: ${it.name} x${reward.amount} を獲得！`;
                 });
             }
         }
@@ -1063,7 +1061,7 @@ function switchSkillTab(tab) {
     currentSkillTab = tab;
     document.getElementById('tab-combat').classList.toggle('active', tab === 'combat');
     document.getElementById('tab-noncombat').classList.toggle('active', tab === 'noncombat');
-    document.getElementById('skill-detail-panel').style.display = 'none'; // タブ切り替え時は詳細を隠す
+    document.getElementById('skill-detail-panel').style.display = 'none';
     checkAndRenderSkills();
 }
 
@@ -1075,29 +1073,24 @@ function checkAndRenderSkills() {
         for (let req of reqs) {
             if (!req || !req.stat) continue;
             const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : (gameState.innerTraits[req.stat] || 0);
-            if (currentVal < (req.value 
-|| 0)) { meetsReq = false; break; }
+            if (currentVal < (req.value || 0)) { meetsReq = false; break; }
         }
         if (meetsReq && !gameState.acquiredSkills.includes(skill.id)) {
             gameState.acquiredSkills.push(skill.id);
             isNewSkillAcquired = true;
             if (skill.bonus) {
                 for (let k in skill.bonus) {
-            
                     if (gameState.stats[k] !== undefined) gameState.stats[k] += skill.bonus[k];
                     else if (gameState.innerTraits[k] !== undefined) gameState.innerTraits[k] += skill.bonus[k];
                 }
-                gameState.stats.magAtk = (gameState.stats.fireAtk ||
-0) + (gameState.stats.waterAtk || 0) + (gameState.stats.thunderAtk || 0) + (gameState.stats.darkAtk || 0) + (gameState.stats.lightAtk || 0) + (gameState.stats.nonElemAtk || 0);
+                gameState.stats.magAtk = (gameState.stats.fireAtk || 0) + (gameState.stats.waterAtk || 0) + (gameState.stats.thunderAtk || 0) + (gameState.stats.darkAtk || 0) + (gameState.stats.lightAtk || 0) + (gameState.stats.nonElemAtk || 0);
             }
         }
     });
-    if (isNewSkillAcquired) { checkAndRenderSkills(); return;
-    }
+    if (isNewSkillAcquired) { checkAndRenderSkills(); return; }
 
     const list = document.getElementById('acquired-skills-list');
     list.innerHTML = '';
-// タブによるフィルタリング
     const filteredSkills = gameState.acquiredSkills.filter(skillId => {
         const skill = skills.find(s => s.id === skillId);
         if (!skill) return false;
@@ -1122,7 +1115,6 @@ function checkAndRenderSkills() {
                 document.getElementById('skill-detail-panel').style.display = 'block';
                 document.getElementById('detail-skill-name').innerHTML = `<span style="color:var(--crystal-color); margin-right:5px;">${skill.rarity || ''}</span>${skill.name}`;
                 
-            
                 const elementEl = document.getElementById('detail-skill-element');
                 if (skill.element) {
                     elementEl.innerText = `属性: ${skill.element}`;
@@ -1152,12 +1144,10 @@ function checkAndRenderSkills() {
                             effectText = `${targetStr}のHPを回復 (基本回復力: ${skill.power || 0})`;
                             break;
                         case 'buff':
-                            effectText = `${targetStr}の${LABELS[ce.buffStat] ||
-ce.buffStat}を${ce.buffAmount}上昇 (${ce.turns}ターン)`;
+                            effectText = `${targetStr}の${LABELS[ce.buffStat] || ce.buffStat}を${ce.buffAmount}上昇 (${ce.turns}ターン)`;
                             break;
                         case 'debuff':
-                            effectText = `${targetStr}の${LABELS[ce.buffStat] ||
-ce.buffStat}を${Math.abs(ce.buffAmount)}減少 (${ce.turns}ターン)`;
+                            effectText = `${targetStr}の${LABELS[ce.buffStat] || ce.buffStat}を${Math.abs(ce.buffAmount)}減少 (${ce.turns}ターン)`;
                             break;
                         case 'stun':
                             effectText = `${targetStr}をスタン状態にする (${ce.turns}ターン)`;
@@ -1213,7 +1203,7 @@ function updateAll() {
     const video = document.getElementById('rank-video');
     const newSrc = currentRank.imagePath + "#t=0.001";
     if (video.src !== new URL(newSrc, document.baseURI).href) { video.src = newSrc;
-        video.muted = true; }
+    video.muted = true; }
     
     document.getElementById('display-combat-power').innerText = cp.toLocaleString();
     if (nextRank) {
@@ -1274,11 +1264,12 @@ function startEvent() {
             
             let conditions = Array.isArray(c.reqCondition) ? c.reqCondition : (c.reqCondition ? [c.reqCondition] : []);
             let successRate = 100;
-            
+           
             for (let req of conditions) {
                 if (!req || !req.stat) continue;
                 const currentVal = gameState.stats[req.stat] !== undefined ? gameState.stats[req.stat] : (gameState.innerTraits[req.stat] || 0);
                 const targetVal = req.value || 0;
+              
                 if (targetVal > 0) {
                     let rate = Math.floor((currentVal / targetVal) * 100);
                     if (rate > 100) rate = 100;
@@ -1293,7 +1284,6 @@ function startEvent() {
                 let oldSkillCount = gameState.acquiredSkills.length;
                 document.getElementById('result-title').innerText = "イベント結果";
                 document.getElementById('change-log').innerHTML = ''; document.getElementById('skill-log').innerHTML = ''; document.getElementById('item-log').innerHTML = '';
-                
                 const isSuccess = Math.random() * 100 < successRate;
                 
                 if (isSuccess) {
@@ -1339,7 +1329,6 @@ function startEvent() {
                             }
                         }
                     });
-                    
                     const prevSkillCount = gameState.acquiredSkills.length;
                     updateAll(); 
                     
@@ -1377,7 +1366,8 @@ function startEvent() {
         playSE('click');
         const currentRank = ranks.find(r => r.id === gameState.currentRankId);
         if (gameState.crystals >= currentRank.maxCrystals) gameState.lastPlayTime = Date.now();
-        gameState.crystals--; save(); renderCrystalUI(currentRank); updateTimer(); showScreen('event-screen');
+        gameState.crystals--;
+        save(); renderCrystalUI(currentRank); updateTimer(); showScreen('event-screen');
     } catch (e) {
         console.error("イベント展開エラー:", e); playSE('error');
         alert("イベントのデータに不備があるため中断しました。\nエラー内容: " + e.message);
@@ -1412,24 +1402,18 @@ function renderItems() {
                     <div class="item-row">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <div style="font-weight:bold; font-size:1.05rem; color:var(--text-color);">
-                   
                                 <span class="item-rarity rarity-${itemData.rarity}">${itemData.rarity}</span>${itemData.name}
                             </div>
                             <div style="color:var(--accent-gold); font-weight:bold;">所持: ${count}</div>
-       
                         </div>
-  
                         <div style="font-size:0.8rem; color:#aaa; margin-top:6px; line-height:1.4;">${itemData.description}</div>
                         <div style="font-size:0.8rem; color:var(--crystal-color); font-weight:bold; margin-top:4px;">【効果】 ${effectsText}</div>
-                        
-<button class="item-use-btn" onclick="useItem(${itemData.id})">使う</button>
-                   
+                        <button class="item-use-btn" onclick="useItem(${itemData.id})">使う</button>
                     </div>`;
             }
         }
     }
-    if (!hasItem) { list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>';
-    }
+    if (!hasItem) { list.innerHTML = '<div style="color:#888; text-align:center; padding: 20px 0;">アイテムを所持していません。</div>'; }
 }
 
 function useItem(itemId) {
